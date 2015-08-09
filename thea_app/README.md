@@ -26,27 +26,28 @@ Repository for the development of Thea 2.0. This repo includes both front end an
 
 <h4 name="project-structure">Project Structure</h4>
 <h5>Thea App</h5>
+Folder-structure is inspired by <a href="https://www.youtube.com/watch?v=o5E894TmHJg">Flux Tutorial - Writing a Simple App in Flux and React</a>. For an introduction to the Flux-architecture, see <a href="www.vg.no">FLUX</a>.
 
 <pre>
 <code>
 .
-├── dist                        # Compiled files 
+├── dist                        # Compiled distribution files 
 ├── node_modules                # Package-files installed by npm
-├── src                         # Source files
-│   ├── js                      # JavaScript files
+├── src                         # 
+│   ├── js                      # 
 │   │   ├── actions             # 
-|   │   │   ├── AppActions.js   # 
+|   │   │   ├── AppActions.js   # Contains all methods that will be executed based on actions from components
 │   │   ├── components          # 
-|   │   │   ├── app.js          # 
+|   │   │   ├── app.js          # Defines components that can fire actions to AppAction.js
 │   │   ├── constants           # 
-|   │   │   ├── AppConstants.js # 
+|   │   │   ├── AppConstants.js # Defines constants in order to check which actionType is fired by components
 │   │   ├── dispatcher          # 
-|   │   │   ├── AppDispatcher.js# 
+|   │   │   ├── AppDispatcher.js# Event system that broadcasts events from actions to AppStore.js and registers callbacks
 │   │   ├── stores              # 
-|   │   │   ├── AppStore.js     # 
-│   │   ├── main.js             # 
-│   ├── index.html              # 
-├── gulpfile.js                 # Runs tasks, and updates on changes
+|   │   │   ├── AppStore.js     # Responds to dispatched events. Holds models, and is the only thing in the app that knows how to update data
+│   │   ├── main.js             # Grabs React and App
+│   ├── index.html              # Application entry point
+├── gulpfile.js                 # Runs tasks, and updates index.html in dist-folder on changes
 ├── package.json                # Lists all packages downloaded and installed by npm install
 └── README.md                   # Readme-file
 </code>
@@ -60,7 +61,7 @@ Repository for the development of Thea 2.0. This repo includes both front end an
   <code>React</code><br>
   React is a UI library developed at Facebook to facilitate the creation of interactive, stateful & reusable UI components.
   Reactify is a Browserify transform for JSX (a superset of JS used by React.js)<br><br>
-  <code>Flux</code><br>c
+  <code>Flux</code><br>
   An application architecture for React utilizing a unidirectional data flow.<br><br>
   <code>Semantic UI</code><br>
   Semantic is a UI framework designed for theming.<br><br>
