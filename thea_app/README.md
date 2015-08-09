@@ -19,9 +19,9 @@ Read this http://jmfurlott.com/tutorial-setting-up-a-simple-isomorphic-react-app
 <ol>
   <li>Install <a href="https://nodejs.org"> Node.js</a> </li>
   <li>Clone project</li>
-  <li>Run: <code>$ npm install --save-dev babel babel-loader express jade react react-hot-loader react-router webpack webpack-dev-server nodemon</code></li>
+  <li>Run: <code>npm install --save-dev babel babel-loader express jade react react-hot-loader react-router webpack webpack-dev-server nodemon</code></li>
   <li>Run <code>npm start</code></li>
-  <li>Visit localhost:3000/li>
+  <li>Visit localhost:3000</li>
   <li>Have a great day!</li>
 </ol>
 
