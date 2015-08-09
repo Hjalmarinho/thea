@@ -14,6 +14,8 @@ Repository for the development of Thea 2.0. This repo includes both front end an
 
 
 <h4 name="getting-started">Getting Started</h4>
+Read this http://jmfurlott.com/tutorial-setting-up-a-simple-isomorphic-react-app/
+
 <ol>
   <li>Clone project</li>
   <li>Install <a href="https://nodejs.org"> Node.js</a> </li>
