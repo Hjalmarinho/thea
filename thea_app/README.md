@@ -14,12 +14,15 @@ Repository for the development of Thea 2.0. This repo includes both front end an
 
 
 <h4 name="getting-started">Getting Started</h4>
+Read this http://jmfurlott.com/tutorial-setting-up-a-simple-isomorphic-react-app/
+
 <ol>
-  <li>Clone project</li>
   <li>Install <a href="https://nodejs.org"> Node.js</a> </li>
-  <li>Open cmd in project folder and run <code>npm install</code></li>
-  <li>Run <code>gulp</code>. If <code>gulp</code> is not recognized, run <code>npm install -g gulp</code></li>
-  <li>Run application by opening <code>dist/index.html</code></li>
+  <li>Clone project</li>
+  <li>Run: <code>npm install --save-dev babel babel-loader express jade react react-hot-loader react-router webpack webpack-dev-server nodemon</code></li>
+  <li>Run <code>npm start</code></li>
+  <li>Visit localhost:3000</li>
+  <li>Have a great day!</li>
 </ol>
 
 <h4 name="project-structure">Project Structure</h4>
