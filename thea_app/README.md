@@ -1,5 +1,4 @@
 # thea
-Repository for the development of Thea 2.0. This repo includes both front end and back end, in perfect harmony.
 
 
 <ul>
@@ -11,11 +10,10 @@ Repository for the development of Thea 2.0. This repo includes both front end an
 </ul>
 
 <h4 name="what-is-this">What is this?</h4>
-<h5>Thea App</h5>
-<h5>Thea Server</h5>
+Repository for the development of Thea 2.0. This repo includes both front end and back end, in perfect harmony.
+
 
 <h4 name="getting-started">Getting Started</h4>
-<h5>Thea App</h5>
 <ol>
   <li>Clone project</li>
   <li>Install <a href="https://nodejs.org"> Node.js</a> </li>
@@ -25,7 +23,6 @@ Repository for the development of Thea 2.0. This repo includes both front end an
 </ol>
 
 <h4 name="project-structure">Project Structure</h4>
-<h5>Thea App</h5>
 Folder-structure is inspired by <a href="https://www.youtube.com/watch?v=o5E894TmHJg">Flux Tutorial - Writing a Simple App in Flux and React</a>. For an introduction to the Flux-architecture, see <a href="www.vg.no">FLUX</a>.
 
 <pre>
@@ -53,11 +50,9 @@ Folder-structure is inspired by <a href="https://www.youtube.com/watch?v=o5E894T
 </code>
 </pre>
 
-<h5>Thea Server</h5>
 
 
 <h4 name="frameworks-and-libraries">Frameworks and Libraries</h4>
-<h5>Thea App</h5>
   <code>React</code><br>
   React is a UI library developed at Facebook to facilitate the creation of interactive, stateful & reusable UI components.
   Reactify is a Browserify transform for JSX (a superset of JS used by React.js)<br><br>
