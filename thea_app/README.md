@@ -33,7 +33,7 @@ Repository for the development of Thea 2.0. This repo includes both front end an
 ├── dist                        # Compiled files 
 ├── node_modules                # Package-files installed by npm
 ├── src                         # Source files
-│   ├── js                      # 
+│   ├── js                      # JavaScript files
 │   │   ├── actions             # 
 |   │   │   ├── AppActions.js   # 
 │   │   ├── components          # 
@@ -47,8 +47,8 @@ Repository for the development of Thea 2.0. This repo includes both front end an
 │   │   ├── main.js             # 
 │   ├── index.html              # 
 ├── gulpfile.js                 # Runs tasks, and updates on changes
-├── package.json                # All packages included by npm install
-└── README.md                   #Readme-file
+├── package.json                # Lists all packages downloaded and installed by npm install
+└── README.md                   # Readme-file
 </code>
 </pre>
 
@@ -58,13 +58,14 @@ Repository for the development of Thea 2.0. This repo includes both front end an
 <h4 name="frameworks-and-libraries">Frameworks and Libraries</h4>
 <h5>Thea App</h5>
   <code>React</code><br>
-  React is.. Reactify is...<br><br>
-  <code>Flux</code><br>
+  React is a UI library developed at Facebook to facilitate the creation of interactive, stateful & reusable UI components.
+  Reactify is a Browserify transform for JSX (a superset of JS used by React.js)<br><br>
+  <code>Flux</code><br>c
   An application architecture for React utilizing a unidirectional data flow.<br><br>
   <code>Semantic UI</code><br>
   Semantic is a UI framework designed for theming.<br><br>
   <code>Gulp</code><br>
-  Gulp is.. gulp-browserify is... gulp-concat is...<br><br>
+  Gulp is a task runner which uses Node.js. Gulp-browserify enables the app to be run in the browser. Gulp-concat concatinates all js-files into a main.js. <br><br>
   <code>es6-promise</code><br>
   A lightweight library that provides tools for organizing asynchronous code.<br><br>
   <code>object-assign</code><br>
