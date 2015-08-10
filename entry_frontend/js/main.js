@@ -5,4 +5,22 @@ $( document ).ready(function() {
     $('.ui.dropdown')
     .dropdown()
     ;
+
+$('.ui.form')
+  .form({
+    fields: {
+      name: {
+        identifier  : 'name',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Please enter your name'
+          }
+        ]
+      }
+    }
+  })
+;
+
+
 });
