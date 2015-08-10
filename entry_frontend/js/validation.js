@@ -4,8 +4,8 @@ $( document ).ready(function() {
 	$('.ui.form')
 	.form({
 		fields: {
-			fornavn: {
-				identifier  : 'fornavn',
+			first_name: {
+				identifier  : 'first_name',
 				rules: [
 				{
 					type   : 'empty',
@@ -13,8 +13,8 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			etternavn: {
-				identifier  : 'etternavn',
+			last_name: {
+				identifier  : 'last_name',
 				rules: [
 				{
 					type   : 'empty',
@@ -22,8 +22,8 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			fodselsdato: {
-				identifier  : 'fodselsdato',
+			birthdate: {
+				identifier  : 'birthdate',
 				rules: [
 				{
 					type   : 'empty',
@@ -31,8 +31,8 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			kjonn: {
-				identifier  : 'kjonn',
+			gender: {
+				identifier  : 'gender',
 				rules: [
 				{
 					type   : 'empty',
@@ -40,8 +40,8 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			student: {
-				identifier  : 'student',
+			is_student: {
+				identifier  : 'is_student',
 				rules: [
 				{
 					type   : 'empty',
@@ -49,8 +49,8 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			epost: {
-				identifier  : 'epost',
+			email: {
+				identifier  : 'email',
 				rules: [
 				{
 					type   : 'email',
@@ -62,8 +62,8 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			mobil: {
-				identifier  : 'mobil',
+			phone: {
+				identifier  : 'phone',
 				rules: [
 				{
 					type   : 'empty',
@@ -71,8 +71,8 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			klubb: {
-				identifier  : 'klubb',
+			club: {
+				identifier  : 'club',
 				rules: [
 				{
 					type   : 'empty',
@@ -80,8 +80,8 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			idrett: {
-				identifier  : 'idrett',
+			sport: {
+				identifier  : 'sport',
 				rules: [
 				{
 					type   : 'empty',
@@ -89,8 +89,8 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			lag: {
-				identifier  : 'lag',
+			team: {
+				identifier  : 'team',
 				rules: [
 				{
 					type   : 'empty',
@@ -98,8 +98,8 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			avtalevilkar: {
-				identifier  : 'avtalevilkar',
+			terms: {
+				identifier  : 'terms',
 				rules: [
 				{
 					type   : 'checked',
