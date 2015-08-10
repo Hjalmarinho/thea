@@ -1,8 +1,7 @@
-package com.thea.backend.simplerest;
+package com.thea.backend.sandbox;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-
 
 @Path("test")
 public class SimpleService {
