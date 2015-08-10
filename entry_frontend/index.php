@@ -16,11 +16,13 @@
   <!-- Include semantic UI -->
   <link rel="stylesheet" type="text/css" href="css/semantic.min.css">
   <script type="text/javascript" src="js/semantic.min.js"></script>
-
+ 
   <!-- Include custom css -->
   <link rel="stylesheet" type="text/css" href="css/style.css">
+
   <!-- Include custom js -->
   <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="js/validation.js"></script>
 
 </head>
 <body>
@@ -28,7 +30,7 @@
 
   <div class="ui container">
 
-    <form class="ui form">
+    <form class="ui form" id="entry-form" role="form">
 
       <!-- PERSONLIG INFORMASJON -->
       <h4 class="ui dividing header">Personlig informasjon</h4>
@@ -51,13 +53,13 @@
         <label class="field two wide">Fødselsdato</label>
         <div class="fields">
           <div class="two wide field">
-            <input type="text" name="dag" placeholder="dd" maxlength="2">
+            <input type="text" name="fodselsdato" placeholder="dd" maxlength="2">
           </div>
           <div class="two wide field">
-            <input type="text" name="maned" placeholder="mm" maxlength="2">
+            <input type="text" name="fodselsdato" placeholder="mm" maxlength="2">
           </div>
           <div class="four wide field">
-            <input type="text" name="ar" placeholder="yyyy" maxlength="4">
+            <input type="text" name="fodselsdato" placeholder="yyyy" maxlength="4">
           </div>
         </div>
       </div>
@@ -106,13 +108,7 @@
         <div class="field four wide">
           <select class="ui search dropdown" name="klubb">
             <option value="">Hvilken klubb?</option>
-            <option>BISI</option>
-            <option>HiSSI</option>
-            <option>Janus</option>
-            <option>MSI</option>
-            <option>NTNUI</option>
-            <option>Placebo</option>
-            <option>Steindølene</option>
+
           </select>
         </div>
       </div>
@@ -152,9 +148,7 @@
 
       <div class="inline fields">
         <label class="field two wide"></label>
-        <button class="ui basic button" name="flere-idretter">
-          Delta i flere idretter
-        </button>
+        <div class="ui basic button" name="flere-idretter"> Delta i flere idretter</div>
       </div>
 
       <!-- BILDE OG TILLEGG -->
@@ -162,9 +156,7 @@
 
       <div class="inline fields">
         <label class="field two wide">Bilde</label>
-        <button class="ui button" name="bilde">
-          Last opp bilde
-        </button>
+        <div class="ui button" name="bilde">Last opp bilde</div>
       </div>
 
       <div class="inline fields">
@@ -193,18 +185,21 @@
 
       <div class="inline fields">
         <label class="field two wide">Avtalevilkår</label>
-        <div class="ui checkbox">
+        <div class="field">
+          <div class="ui checkbox">
           <input type="checkbox" name="avtalevilkar">
-          <label>Jeg har lest og bekrefter avtalevilkårene.</label>
+            <label>Jeg har lest og forstått avtalevilkårene</label>
+          </div>
         </div>
       </div>
 
       <div class="inline fields">
         <label class="field two wide"></label>
-        <button class="ui green button" name="meld-pa">
+        <button class="ui green submit button" name="meld-pa">
           Meld på
         </button>
       </div>
+      <div class="ui error message"></div>
 
     </form>
 
