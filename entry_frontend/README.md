@@ -19,16 +19,17 @@ Repository for the development of Thea 2.0. This repo includes the frontend for 
 <pre>
 <code>
 .
-├── css                         # 
-	├── semantic.min            # 
-	├── style.css            	# 
-├── js                          # 
-	├── api_handler.js          # 
-	├── main.js            		# 
-	├── semantic.min.js         # 
-	├── validation.js           # 
-├── index.php                   # 
-└── README.md                   # Readme-file
+├── css                       # 
+	+ semantic.min            # 
+	+ style.css            	  # 
+├── js                        # 
+	+ api_handler.js          # 
+	+ main.js            	  # 
+	+ semantic.min.js         # 
+	+ validation.js           # 
++ index.php                   # 
++ README.md                   # Readme-file
+
 </code>
 </pre>
 
