@@ -5,6 +5,7 @@ This folder contains the rock solid foundation of thea; the backend.
 <ul>
   <li><em><a href="#development-setup">Development setup</a></em></li>
   <li><em><a href="#depolyment">Deploying thea backend</a></em></li>
+  <li><em><a href="#testserver">Connecting to thea testserver</a></em></li>
 </ul>
 
 <h4 name="development-setup">Development setup</h4>
@@ -26,3 +27,10 @@ IMPORTANT: If you have Java 32-bit installed on your machine, all of the followi
 
 <h4 name="depolyment">Deploying thea backend</h4>
 <i>To be continued...</i>
+
+<h4 name="testserver">Connecting to thea testserver</h4>
+<h5>MySQL database</h5>
+<b>Hostname:</b> 92.62.34.78 <br>
+<b>Username:</b> thea-remote <br>
+<b>Password:</b> HUmMxGs8NdrQ <br>
+<b>Database:</b> thea-test <br>
