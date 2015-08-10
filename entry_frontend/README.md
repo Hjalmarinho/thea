@@ -1,15 +1,10 @@
-# thea
+This repo includes the frontend for allowing participants make entries.
 <ul>
-  <li><em><a href="#what-is-this">What is this?</a></em></li>
   <li><em><a href="#getting-started">Getting Started</a></em></li>
   <li><em><a href="#project-structure">Project Structure</a></em></li>
   <li><em><a href="#frameworks-and-libraries">Frameworks and Libraries</a></em></li>
   <li><em><a href="#team-members">Team Members</a></em></li>
 </ul>
-
-<h4 name="what-is-this">What is this?</h4>
-Repository for the development of Thea 2.0. This repo includes the frontend for entries.
-
 
 <h4 name="getting-started">Getting Started</h4>
 
