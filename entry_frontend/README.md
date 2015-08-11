@@ -22,6 +22,12 @@ This repo includes the frontend for allowing participants make entries.
 	+ main.js            	  # 
 	+ semantic.min.js         # 
 	+ validation.js           # 
+├── view_components           #
+	+ head.php 				  #
+	+ personal_info.php       #
+	+ portrait_additions.php  # 
++ entry_participant.php 	  #
++ entry_team.php 			  #
 + index.php                   # 
 + README.md                   # Readme-file
 

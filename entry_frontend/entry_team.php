@@ -1,88 +1,47 @@
+<!-- ******************************************************************
+[Entry Team]
 
-<?php include("head.php"); ?>
+Project:      Thea 
+Version:      2.0
+Last change:  11/08/2015
+Author:       Øystein Molnes
+Primary use:  View allowing contact persons to register teams for an event.
+*********************************************************************** -->
+
+<!DOCTYPE html>
+<html>
+
+<!-- Insert view for the head -->
+<?php require("view_components/head.php"); ?>
 <body>
 
   <div class="ui container">
 
     <form class="ui form" id="entry_form" role="form">
 
-      <!-- PERSONLIG INFORMASJON -->
-      <h4 class="ui dividing header">Personlig informasjon</h4>
+      <!-- Insert view for entering personal information -->
+      <?php require("view_components/personal_info.php"); ?>
 
-      <div class="inline fields">
-        <label class="field two wide">Fornavn</label>
-        <div class="field four wide">
-          <input type="text" name="first_name">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <label class="field two wide">Etternavn</label>
-        <div class="field four wide">
-          <input type="text" name="last_name">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <label class="field two wide">Fødselsdato</label>
-        <div class="fields">
-          <div class="two wide field">
-            <input type="text" name="birthdate" placeholder="dd" maxlength="2">
-          </div>
-          <div class="two wide field">
-            <input type="text" name="birthdate" placeholder="mm" maxlength="2">
-          </div>
-          <div class="four wide field">
-            <input type="text" name="birthdate" placeholder="yyyy" maxlength="4">
-          </div>
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <label class="field two wide">Kjønn</label>
-        <div class="field four wide">
-          <select class="ui dropdown" name="gender">
-            <option value="">Hvilket kjønn?</option>
-            <option value="1">Mann</option>
-            <option value="0">Kvinne</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <label class="field two wide">Student</label>
-        <div class="field four wide">
-          <select class="ui dropdown" name="is_student">
-            <option value="">Er du student?</option>
-            <option value="1">Student</option>
-            <option value="0">Ikke student</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <label class="field two wide">Epost</label>
-        <div class="field four wide">
-          <input type="email" name="email">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <label class="field two wide">Mobil</label>
-        <div class="field four wide">
-          <input type="text" name="phone">
-        </div>
-      </div>
-
-      <!-- DELTAKERINFORMASJON -->
-      <h4 class="ui dividing header">Deltakerinformasjon</h4>
+      <!-- LAG- OG DELTAKERINFORMASJON -->
+      <h4 class="ui dividing header">Lag- og deltakerinformasjon</h4>
 
       <div class="inline fields">
         <label class="field two wide">Klubb</label>
         <div class="field four wide">
           <select class="ui search dropdown" name="club" id="clubs">
-            <option value="">Hvilken klubb?</option>
+            <option value="">Hvilken klubb tilhører laget?</option>
 
+          </select>
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <label class="field two wide">Medlem</label>
+        <div class="field four wide">
+          <select class="ui dropdown" name="member">
+            <option value="">Er du medlem av klubben?</option>
+            <option value="1">Ja</option>
+            <option value="0">Nei</option>
           </select>
         </div>
       </div>
@@ -91,72 +50,48 @@
         <label class="field two wide">Idrett</label>
         <div class="field four wide">
           <select class="ui search dropdown" name="sports" id="sports">
-            <option value="">Hvilken idrett?</option>
+            <option value="">Hvilken idrett skal laget delta i?</option>
           </select>
         </div>
       </div>
 
-
       <div class="inline fields">
-        <label class="field two wide">Lag</label>
+        <label class="field two wide">Lagnavn</label>
         <div class="field four wide">
-          <select class="ui search dropdown" name="teams" id="teams">
-            <option value="">Hvilket lag?</option>
+          <input type="text" name="team_name">
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <label class="field two wide">Klasse</label>
+        <div class="field four wide">
+          <select class="ui dropdown" name="team_gender">
+            <option value="">I hvilken klasse spiller laget?</option>
+            <option value="1">Herre</option>
+            <option value="0">Dame</option>
+            <option value="0">Mix</option>
           </select>
         </div>
       </div>
 
       <div class="inline fields">
-        <label class="field two wide"></label>
-        <div class="ui basic button"> Delta i flere idretter</div>
-      </div>
-
-      <!-- BILDE OG TILLEGG -->
-      <h4 class="ui dividing header">Bilde og tillegg</h4>
-
-      <div class="inline fields">
-        <label class="field two wide">Bilde</label>
-        <div class="ui button" name="portrait">Last opp bilde</div>
-      </div>
-
-      <div class="inline fields">
-        <label class="field two wide">Tillegg</label>
-        <div class="grouped fields">
-          <div class="field">
-          <div class="ui checkbox" style="margin-top: 10px;">
-              <input type="checkbox">
-              <label>Overnatting  (300,-)</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui checkbox" style="margin-top: 10px;">
-              <input type="checkbox">
-              <label>Bussbillett  (90,-)</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui checkbox" style="margin-top: 10px;">
-              <input type="checkbox" checked="checked">
-              <label>Bankett  (0,-)</label>
-            </div>
-          </div>
+        <label class="field two wide">Spillende</label>
+        <div class="field four wide">
+          <select class="ui dropdown" name="is_playing">
+            <option value="">Skal du spille på laget?</option>
+            <option value="1">Ja</option>
+            <option value="0">Nei</option>
+          </select>
         </div>
       </div>
 
-      <div class="inline fields">
-        <label class="field two wide">Avtalevilkår</label>
-        <div class="field">
-          <div class="ui checkbox">
-          <input type="checkbox" name="terms">
-            <label>Jeg har lest og forstått avtalevilkårene</label>
-          </div>
-        </div>
-      </div>
+      <!-- Insert view for portrait image and additions-->
+      <?php require("view_components/portrait_additions.php"); ?>
 
       <div class="inline fields">
         <label class="field two wide"></label>
         <button class="ui green submit button">
-          Meld på
+          Meld på lag
         </button>
       </div>
       <div class="ui error message"></div>

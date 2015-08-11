@@ -4,15 +4,15 @@
 Project:		Thea 
 Version:		2.0
 Last change:	11/08/2015
-Author:			Thor Håkon Bredesen, Erik Frøseth, Øystein Molnes
-Primary use:	Entries for  
+Author:			Øystein Molnes
+Primary use:	Style Thea 2.0 pages for making entries
 /*------------------------------------------------------------------
 [Table of contents]
 
 1. Body
 2. Layout
-3. Headers
-4. Text
+3. Text
+4. Color
 -------------------------------------------------------------------*/
 
 
@@ -27,20 +27,20 @@ body{
 	margin-bottom: 50px;
 }
 
-
 /*	2. Layout														*/
 /*------------------------------------------------------------------*/
 .center{
 	text-align: center ;
 }
 
-
-/*	3. Headers														*/
+/*	3. Text															*/
 /*------------------------------------------------------------------*/
 h4{
-	color: #999 !important; 
+	color: #00B5AD !important; 
 }
 
-
-/*	4. Text														*/
+/*	4. Color															*/
 /*------------------------------------------------------------------*/
+.color-teal{
+	color: #00B5AD;
+}

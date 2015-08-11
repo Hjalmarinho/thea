@@ -1,3 +1,13 @@
+// **********************************************************************
+//  [GUI Validation]
+//
+//  Project:        Thea 
+//  Version:        2.0
+//  Last change:    11/08/2015
+//  Author:         Øystein Molnes
+//  Primary use:    Validate user input
+// ***********************************************************************
+
 $( document ).ready(function() {
 
 	// Form validation
@@ -71,8 +81,8 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			club: {
-				identifier  : 'club',
+			clubs: {
+				identifier  : 'clubs',
 				rules: [
 				{
 					type   : 'empty',
@@ -80,8 +90,17 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			sport: {
-				identifier  : 'sport',
+			member: {
+				identifier  : 'member',
+				rules: [
+				{
+					type   : 'empty',
+					prompt : 'Angi om du er medlem av klubben din'
+				}
+				]
+			},
+			sports: {
+				identifier  : 'sports',
 				rules: [
 				{
 					type   : 'empty',
@@ -89,12 +108,39 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			team: {
-				identifier  : 'team',
+			teams: {
+				identifier  : 'teams',
 				rules: [
 				{
 					type   : 'empty',
 					prompt : 'Velg lag'
+				}
+				]
+			},
+			team_name: {
+				identifier  : 'team_name',
+				rules: [
+				{
+					type   : 'empty',
+					prompt : 'Skriv lagnavn'
+				}
+				]
+			},
+			team_gender: {
+				identifier  : 'team_gender',
+				rules: [
+				{
+					type   : 'empty',
+					prompt : 'Angi hvilken klasse laget skal delta i'
+				}
+				]
+			},
+			is_playing: {
+				identifier  : 'is_playing',
+				rules: [
+				{
+					type   : 'empty',
+					prompt : 'Angi om du skal spille på laget eller ikke'
 				}
 				]
 			},
