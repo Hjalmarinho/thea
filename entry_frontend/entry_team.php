@@ -27,13 +27,14 @@ Primary use:  View allowing contact persons to register teams for an event.
 
       <!-- LAG- OG DELTAKERINFORMASJON -->
       <h4 class="ui dividing header">Lag- og deltakerinformasjon</h4>
+      <div id="ticket_id" data-value="2"></div>
 
       <div class="inline fields">
         <label class="field two wide">Klubb</label>
         <div class="field four wide">
           <select class="ui search dropdown" name="club" id="clubs">
             <option value="">Hvilken klubb tilhører laget?</option>
-
+            <!-- Clubs are populated here from api_handler on page load -->
           </select>
         </div>
       </div>
@@ -54,6 +55,7 @@ Primary use:  View allowing contact persons to register teams for an event.
         <div class="field four wide">
           <select class="ui search dropdown" name="sports" id="sports">
             <option value="">Hvilken idrett skal laget delta i?</option>
+            <!-- Sports are populated here from api_handler on page load -->
           </select>
         </div>
       </div>
@@ -93,7 +95,7 @@ Primary use:  View allowing contact persons to register teams for an event.
 
       <div class="inline fields">
         <label class="field two wide"></label>
-        <button class="ui green submit button">
+        <button class="ui teal submit button" onclick="submitParticipantForm()">
           Meld på lag
         </button>
       </div>

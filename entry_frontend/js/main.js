@@ -11,21 +11,21 @@
 $( document ).ready(function() {
     // Initialize dropdown
     $('.ui.dropdown')
-    .dropdown()
-    ;
+    .dropdown();
 
     //API-calls on page load
-    getClubs();
-    getSports();
+    getClubs(displayClubs);
+    getSports(displaySports);
+    getAdditions(displayAdditions);
 
     // Get and display exercises for the sport that has been selected
     $('#sports').on('change', function() {
-        getExercises( $( "#sports" ).val() ); 
+        getExercises( $( "#sports" ).val(), displayExercises ); 
     });
  
 });
 
-// Populate dropdown with clubs from REST-api
+// Populate dropdown with clubs received from REST-api
 function displayClubs(clubs){
     if(clubs){
         $.each(clubs, function(i, club){
@@ -34,7 +34,7 @@ function displayClubs(clubs){
     }
 }
 
-// Populate dropdown with sports from REST-api
+// Populate dropdown with sports received from REST-api
 function displaySports(sports){
     if(sports){
        $.each(sports, function(i, sport){
@@ -43,7 +43,7 @@ function displaySports(sports){
     }  
 }
 
-// Generate checkboxes for exercises from REST-api
+// Generate checkboxes for exercises received from REST-api
 function displayExercises(exercises){
     $('#exercises').empty();
 	$('#teams_container').hide();
@@ -56,10 +56,14 @@ function displayExercises(exercises){
     		});  
     	}else{
     		var exercise = exercises[0];
+            $('#exercises').append(generateCheckbox(exercise.exercise_id, exercise.exercise_description)); 
+            $('#exercises input').each(function(){
+                $(this).attr("checked", true);
+            });
     		if(exercise.is_teamexercise){
     			$('#teams_container').show();
     			//Get teams for this exercise and populate teams dropdown
-    			getTeams( exercise.exercise_id );
+    			getTeams( exercise.exercise_id, displayTeams );
 
     		}else{
     			$('#teams_container').hide();
@@ -68,13 +72,75 @@ function displayExercises(exercises){
     }  
 }
 
+// Generate checkboxes for exercises received from REST-api
+function displayAdditions(additions){
+    if(additions){
+       $.each(additions, function(i, addition){
+            var label = addition.addition_description+' ('+addition.addition_fee+' ,-)';
+            $('#additions').append(generateCheckbox(addition.addition_id, label)); 
+       });   
+    }  
+}
+
+// Generate checkboxes for exercises received from REST-api
+function displayTeams(teams){
+    $('#teams').empty();
+    if(teams){
+       $.each(teams, function(i, team){
+            $('#teams').append('<option value='+team.team_id+'>'+team.team_name+'</option>'); 
+       });   
+    }  
+}
+
 //Called when a participant clicks the submit-button 
 function submitParticipantForm(){
 	var participantForm = $('#participant_form');
 
-    if(  participantForm.form('is valid')  ){
-        postParticipant(participantForm);
-    }
+    // if(  participantForm.form('is valid')  ){
+        //Serialize the form into a json-object in order to post the participant to the REST-api
+        var jsonForm = {};
+        //Personal information
+        jsonForm["first_name"] = $('#first_name').val();
+        jsonForm["last_name"] = $('#last_name').val();
+        jsonForm["birthdate"] = $('#birthdate').val();
+        jsonForm["gender"] =    $('#gender').val();
+        jsonForm["is_student"] = (($('#is_student').val()  == 1) ? true : false);
+        jsonForm["email"] = $('#email').val();
+        jsonForm["phone"] = $('#phone').val();
+
+        //Participant information
+        jsonForm["ticket_id"] = $('#ticket_id').data('value');
+        jsonForm["club_id"] = $('#clubs').val();
+        jsonForm["is_member"] = (($('#is_member').val()  == 1) ? true : false);
+        jsonForm["sports"] = [];
+
+        //Portrait and additions
+        jsonForm["allergies"] = $('#allergies').val();
+        jsonForm["portrait"] = 'This is an image converted into a string';
+        jsonForm["additions"] = [];
+
+
+
+        //Add sports and checked exercises
+        var sport_id = $("#sports").val();
+        var exercises = [];
+        $('#exercises input:checked').each(function(){
+            var exercise_id = $(this).attr('value');
+            var team_id = $("#teams").val()
+            exercises.push({exercise_id , team_id });
+        });
+        jsonForm["sports"].push({sport_id, exercises});
+
+
+        //Add all checked additions
+        $('#additions input:checked').each(function(){
+            var addition_id = $(this).attr('value');
+            jsonForm["additions"].push({addition_id});
+        });
+
+        //Post the participant using the REST-api
+        postParticipant(jsonForm);
+    // }
 }
 
 // Create and return a checkbox with given value and label
