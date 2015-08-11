@@ -11,8 +11,11 @@ Primary use:  View allowing contact persons to register teams for an event.
 <!DOCTYPE html>
 <html>
 
-<!-- Insert view for the head -->
-<?php require("view_components/head.php"); ?>
+<head>
+  <!-- Insert view for the head -->
+  <?php require("view_components/head.php"); ?>
+</head>
+
 <body>
 
   <div class="ui container">

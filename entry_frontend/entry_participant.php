@@ -11,13 +11,16 @@ Primary use:  View allowing participants to register for an event.
 <!DOCTYPE html>
 <html>
 
-<!-- Insert view for the head -->
-<?php require("view_components/head.php"); ?>
+<head>
+  <!-- Insert view for the head -->
+  <?php require("view_components/head.php"); ?>
+</head>
+
 <body>
 
   <div class="ui container">
 
-    <form class="ui form" id="entry_form" role="form">
+    <form class="ui form" id="participant_form" method="POST">
 
       <!-- Insert view for entering personal information -->
       <?php require("view_components/personal_info.php"); ?>
@@ -54,22 +57,26 @@ Primary use:  View allowing participants to register for an event.
         </div>
       </div>
 
-
       <div class="inline fields">
+        <label class="field two wide"></label>
+        <div class="field four wide">
+          <div class="grouped fields" id="exercises">
+
+            <!-- Exercises are displayed from api_handler when a sport is selected -->
+          </div>
+        </div>
+      </div>
+
+      <div class="inline fields" id="teams_container" style="display:none">
         <label class="field two wide">Lag</label>
         <div class="field four wide">
-          <select class="ui search dropdown" name="teams" id="teams">
+          <select class="ui search dropdown" name="teams" id="teams" >
             <option value="">Hvilket lag skal du spille for?</option>
+            <option value="1">NTNUI</option>
           </select>
         </div>
       </div>
 
-      <div class="inline fields">
-        <label class="field two wide">Tilleggsfelt</label>
-        <div class="field four wide">
-          <input type="text" name="additional">
-        </div>
-      </div>
 
       <div class="inline fields">
         <label class="field two wide"></label>
@@ -81,9 +88,9 @@ Primary use:  View allowing participants to register for an event.
       
       <div class="inline fields">
         <label class="field two wide"></label>
-        <button class="ui teal submit button">
+        <div class="ui teal button" onclick="submitParticipantForm()">
           Meld på
-        </button>
+        </div>
       </div>
       <div class="ui error message"></div>
 
