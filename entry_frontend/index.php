@@ -1,5 +1,9 @@
 
-<?php include("head.php"); ?>
+<!DOCTYPE html>
+<html>
+
+<!-- Sett inn html-head  -->
+<?php include("view_components/head.php"); ?>
 <body>
 
   <div class="ui container center">

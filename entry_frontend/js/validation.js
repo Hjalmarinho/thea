@@ -71,8 +71,8 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			club: {
-				identifier  : 'club',
+			clubs: {
+				identifier  : 'clubs',
 				rules: [
 				{
 					type   : 'empty',
@@ -80,8 +80,17 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			sport: {
-				identifier  : 'sport',
+			member: {
+				identifier  : 'member',
+				rules: [
+				{
+					type   : 'empty',
+					prompt : 'Angi om du er medlem av klubben din'
+				}
+				]
+			},
+			sports: {
+				identifier  : 'sports',
 				rules: [
 				{
 					type   : 'empty',
@@ -89,8 +98,8 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			team: {
-				identifier  : 'team',
+			teams: {
+				identifier  : 'teams',
 				rules: [
 				{
 					type   : 'empty',

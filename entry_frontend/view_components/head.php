@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html>
 <head>
   <!-- Standard Meta -->
   <meta charset="utf-8" />
@@ -7,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
   <!-- Site Properities -->
-  <title>Responsive Elements - Semantic</title>
+  <title>Thea 2.0</title>
 
   <!-- Include jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
