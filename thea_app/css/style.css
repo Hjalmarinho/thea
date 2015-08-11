@@ -1,0 +1,53 @@
+/*------------------------------------------------------------------
+[Master Stylesheet]
+
+Project:		Thea 
+Version:		2.0
+Last change:	11/08/2015
+Author:			Thor Håkon Bredesen, Erik Frøseth, Øystein Molnes
+Primary use:	Administration  
+/*------------------------------------------------------------------
+[Table of contents]
+
+1. Body
+2. Layout
+3. Headers
+4. Text
+-------------------------------------------------------------------*/
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.7/semantic.min.css');
+
+/*	1. Body															*/
+/*------------------------------------------------------------------*/
+body{
+
+}
+.ui.vertical.menu {
+    width: 100%;
+}
+
+.ui.menu{
+	border-radius: 0;
+	min-height: 100%;
+}
+
+.item, .header.item{
+	margin-left: 10px;
+}
+
+/*	2. Layout														*/
+/*------------------------------------------------------------------*/
+.center{
+	text-align: center ;
+}
+
+
+/*	3. Headers														*/
+/*------------------------------------------------------------------*/
+h4{
+	color: #999 !important; 
+}
+
+
+/*	4. Text														*/
+/*------------------------------------------------------------------*/
