@@ -1,16 +1,26 @@
+<!-- ******************************************************************
+[Entry Team]
+
+Project:      Thea 
+Version:      2.0
+Last change:  11/08/2015
+Author:       Øystein Molnes
+Primary use:  View allowing contact persons to register teams for an event.
+*********************************************************************** -->
 
 <!DOCTYPE html>
 <html>
 
-<?php include("view_components/head.php"); ?>
+<!-- Insert view for the head -->
+<?php require("view_components/head.php"); ?>
 <body>
 
   <div class="ui container">
 
     <form class="ui form" id="entry_form" role="form">
 
-      <!-- Sett inn personlig informasjon view -->
-      <?php include("view_components/personal_info.php"); ?>
+      <!-- Insert view for entering personal information -->
+      <?php require("view_components/personal_info.php"); ?>
 
       <!-- LAG- OG DELTAKERINFORMASJON -->
       <h4 class="ui dividing header">Lag- og deltakerinformasjon</h4>
@@ -75,8 +85,8 @@
         </div>
       </div>
 
-      <!-- Sett inn bilde og tillegg view -->
-      <?php include("view_components/portrait_additions.php"); ?>
+      <!-- Insert view for portrait image and additions-->
+      <?php require("view_components/portrait_additions.php"); ?>
 
       <div class="inline fields">
         <label class="field two wide"></label>

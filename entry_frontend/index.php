@@ -1,9 +1,19 @@
+<!-- ******************************************************************
+[Index start-page]
+
+Project:		Thea 
+Version:		2.0
+Last change:	11/08/2015
+Author:			Øystein Molnes
+Primary use:	Start page for the entry sites. Allows users to 
+				select ticket type.
+*********************************************************************** -->
 
 <!DOCTYPE html>
 <html>
 
-<!-- Sett inn html-head  -->
-<?php include("view_components/head.php"); ?>
+<!-- Insert view for the head -->
+<?php require("view_components/head.php"); ?>
 <body>
 
   <div class="ui container center">

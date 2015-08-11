@@ -1,3 +1,13 @@
+// **********************************************************************
+//  [GUI Validation]
+//
+//  Project:        Thea 
+//  Version:        2.0
+//  Last change:    11/08/2015
+//  Author:         Øystein Molnes
+//  Primary use:    Validate user input
+// ***********************************************************************
+
 $( document ).ready(function() {
 
 	// Form validation
@@ -104,6 +114,33 @@ $( document ).ready(function() {
 				{
 					type   : 'empty',
 					prompt : 'Velg lag'
+				}
+				]
+			},
+			team_name: {
+				identifier  : 'team_name',
+				rules: [
+				{
+					type   : 'empty',
+					prompt : 'Skriv lagnavn'
+				}
+				]
+			},
+			team_gender: {
+				identifier  : 'team_gender',
+				rules: [
+				{
+					type   : 'empty',
+					prompt : 'Angi hvilken klasse laget skal delta i'
+				}
+				]
+			},
+			is_playing: {
+				identifier  : 'is_playing',
+				rules: [
+				{
+					type   : 'empty',
+					prompt : 'Angi om du skal spille på laget eller ikke'
 				}
 				]
 			},

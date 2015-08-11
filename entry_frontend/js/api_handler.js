@@ -1,3 +1,14 @@
+// **********************************************************************
+//  [Api Handler]
+
+//  Project:        Thea 
+//  Version:        2.0
+//  Last change:    11/08/2015
+//  Author:         Øystein Molnes
+//  Primary use:    Handle communication with the REST-api, and 
+//                  updating the View
+// ***********************************************************************
+
 $( document ).ready(function() {
     //API-calls on page load
     getClubs();
