@@ -11,21 +11,23 @@ Primary use:	Start page for the entry sites. Allows users to
 
 <!DOCTYPE html>
 <html>
+<head>
+	<!-- Insert view for the head -->
+	<?php require("view_components/head.php"); ?>
+</head>
 
-<!-- Insert view for the head -->
-<?php require("view_components/head.php"); ?>
 <body>
 
-  <div class="ui container center">
+	<div class="ui container center">
 
-    <a href="entry_participant.php">
-      <button class="ui teal button">Meld på deltaker</button>
-    </a>
+		<a href="entry_participant.php">
+			<button class="ui teal button">Meld på deltaker</button>
+		</a>
 
-    <a href="entry_team.php">
-      <button class="ui button">Meld på lag</button>
-    </a>
+		<a href="entry_team.php">
+			<button class="ui button">Meld på lag</button>
+		</a>
 
-  </div>
+	</div>
 </body>
 </html>

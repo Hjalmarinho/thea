@@ -108,15 +108,6 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			teams: {
-				identifier  : 'teams',
-				rules: [
-				{
-					type   : 'empty',
-					prompt : 'Velg lag'
-				}
-				]
-			},
 			team_name: {
 				identifier  : 'team_name',
 				rules: [
@@ -155,6 +146,4 @@ $( document ).ready(function() {
 			}
 		}
 	})
-	;
- 
 });
