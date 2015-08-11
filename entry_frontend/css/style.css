@@ -1,10 +1,46 @@
-.container
-{
-    margin-top   : 50px;
-    margin-bottom: 50px;
+/*------------------------------------------------------------------
+[Master Stylesheet]
+
+Project:		Thea 
+Version:		2.0
+Last change:	11/08/2015
+Author:			Thor Håkon Bredesen, Erik Frøseth, Øystein Molnes
+Primary use:	Entries for  
+/*------------------------------------------------------------------
+[Table of contents]
+
+1. Body
+2. Layout
+3. Headers
+4. Text
+-------------------------------------------------------------------*/
+
+
+/*	1. Body															*/
+/*------------------------------------------------------------------*/
+body{
+
 }
 
-h4
-{
-    color        : #999 !important; 
+.container{
+	margin-top: 50px;
+	margin-bottom: 50px;
 }
+
+
+/*	2. Layout														*/
+/*------------------------------------------------------------------*/
+.center{
+	text-align: center ;
+}
+
+
+/*	3. Headers														*/
+/*------------------------------------------------------------------*/
+h4{
+	color: #999 !important; 
+}
+
+
+/*	4. Text														*/
+/*------------------------------------------------------------------*/
