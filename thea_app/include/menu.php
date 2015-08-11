@@ -4,7 +4,7 @@
     Thea
   	</div>
   
-  <a class="item" href="index.php">
+  <a class="item" href="accreditation.php">
     Akkreditering
   </a>
   <div class="item">
