@@ -2,6 +2,7 @@
 
 	<div class="ui vertical segment">
 		<h1>Dashboard</h1>
+		<div id="sports"></div>
 		
 	</div>
 

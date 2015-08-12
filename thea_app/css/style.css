@@ -13,6 +13,7 @@ Primary use:	Administration
 2. Layout
 3. Headers
 4. Text
+5. Menu
 -------------------------------------------------------------------*/
 
 @import url('semantic.min.css');
@@ -30,13 +31,14 @@ body{
 	border-radius: 0;
 	min-height: 100%;
 }
-
-.item, .header.item{
-	margin-left: 10px;
+.margin-top-30{
+	margin-top: 40px;
 }
 
-.margin-top-20{
-	margin-top: 20px;
+@media only screen and (min-width: 1200px){
+.ui.container {
+    margin-left: -14px!important;
+    margin-right: 0px!important;
 }
 
 /*	2. Layout														*/
@@ -55,3 +57,38 @@ h4{
 
 /*	4. Text														*/
 /*------------------------------------------------------------------*/
+
+i.header{
+	font-style: normal;
+	font-size: 30px;
+	margin-top: 10px;
+}
+
+
+/*	5. Menu															*/
+/*------------------------------------------------------------------*/
+
+
+.ui.left.sidebar{
+	width: 260px;
+}
+
+html.ios {
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+html.ios,
+html.ios body {
+  height: initial !important;
+}
+
+#menubutton{
+	visibility: hidden;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 1200px) {
+	#menubutton{
+		visibility: visible;
+	}
+}

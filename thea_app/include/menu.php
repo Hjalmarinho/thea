@@ -1,6 +1,4 @@
-<div class="ui vertical menu">
-	
-	<div class="header item">
+<div class="header item">
     Thea
   	</div>
   
@@ -35,4 +33,3 @@
   <a class="item">
     Om Thea 2.0
   </a>
-</div>

@@ -18,16 +18,23 @@
 		<?php // Include shared javascript ?>
 		<script src="js/shared.js"></script>
 		<?php // Include page specific js ?>
+		<script src="js/api_handler.js"></script>
 	    <?php
 
 		$file = basename($_SERVER["SCRIPT_FILENAME"], ".php");
 	    	echo "<script src='js/" . $file . ".js'></script>";	    ?>
 	</head>
 	<body>
-	<div class="ui grid">
-		<div class="three wide column">
-
-			<?php require 'include/menu.php';?>
+		<div class="ui sidebar inverted vertical menu" id="toc">
+		  	<?php require 'include/menu.php';?>
 		</div>
+		<div class="pusher">
+		  	<div class="ui grid container">
+		  		<div class="large screen only three wide column">
+					<div class="ui vertical inverted menu">
+						<?php require 'include/menu.php';?>
+					</div>
+		  		</div>	  
 
-		<div class="thirteen wide column">
+					<div class="ui thirteen wide column margin-top-30">
+				
