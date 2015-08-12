@@ -5,7 +5,7 @@ $(document).ready(function(){
 		$('.ui.sidebar').sidebar('toggle');
 	});
 
-	getParticipants(displayParticipants);
+
 });
 
 function displayParticipants(participants){
