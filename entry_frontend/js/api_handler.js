@@ -35,17 +35,21 @@ function doGet(urlGET, callback){
 }
 
 // Perform POST-call to REST-api with given URL.
-function doPost(urlPOST, json){
+function doPost(urlPOST, jsonData, callback){
+    console.log(jsonData);
     $.ajax({
         type: 'POST',
+        contentType: "application/json",
         url: urlPOST,
-        data: json,
+        data: jsonData,
+        dataType: "json",
         success: function(result){
             if(result.error){
-                // TODO: do something with the potential errorfrom server, and return
-                console.log(result.data);
+                // TODO: do something with the potential error from server, and return
+                callback(result.data);
             }else{
-                console.log(result.data);
+                //TODO: the POST was successful
+                callback(result.data);
             }
         },
         error: function(){
@@ -55,31 +59,31 @@ function doPost(urlPOST, json){
 }
 
 // http://docs.thea.apiary.io/#reference/club/clubs/list-all-clubs
-function getClubs(callback){
+function apiGetClubs(callback){
     doGet(baseURL+'clubs', callback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sports/list-all-sports
-function getSports(callback){
+function apiGetSports(callback){
     doGet(baseURL+'sports', callback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
-function getExercises(sportID, callback){
+function apiGetExercises(sportID, callback){
     doGet(baseURL+'sports/'+sportID+'/exercises', callback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
-function getTeams(exerciseID, callback){
+function apiGetTeams(exerciseID, callback){
     doGet(baseURL+'exercises/'+exerciseID+'/teams', callback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
-function getAdditions(callback){
+function apiGetAdditions(callback){
     doGet(baseURL+'additions/', callback);
 }
 
 // http://docs.thea.apiary.io/#reference/participant/participants/add-a-participant
-function postParticipant(json){
-    doPost(baseURL+'participants/', json);
+function apiPostParticipant(json, callback){
+    doPost(baseURL+'participants/', json, callback);
 }
