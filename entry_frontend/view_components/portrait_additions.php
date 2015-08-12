@@ -3,43 +3,20 @@
 
  <div class="inline fields">
   <label class="field two wide">Bilde</label>
-  <div class="ui button" name="portrait">Last opp portrettbilde</div>
+  <div class="ui button" name="portrait" id="portrait">Last opp portrettbilde</div>
 </div>
 
 <div class="inline fields">
   <label class="field two wide">Tillegg</label>
-  <div class="grouped fields">
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox" checked="checked">
-        <label>Bankett  (0,-)</label>
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox">
-        <label>Overnatting  (300,-)</label>
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox">
-        <label>Bussbillett  (90,-)</label>
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox">
-        <label>Genser  (350,-)</label>
-      </div>
-    </div>
+  <div class="grouped fields" id="additions">
+    <!-- Additions-checkboxes are populated here from api_handler on page load -->
   </div>
 </div>
 
 <div class="inline fields">
   <label class="field two wide">Allergier</label>
   <div class="field four wide">
-    <input type="text" name="allergies">
+    <input type="text" name="allergies" id="allergies">
   </div>
 </div>
 

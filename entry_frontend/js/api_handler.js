@@ -27,36 +27,59 @@ function doGet(urlGET, callback){
             }else{
                 callback(result.data);
             }
+        },
+        error: function(){
+            alert('Got an error from server while running GET');
+        } 
+    });
+}
+
+// Perform POST-call to REST-api with given URL.
+function doPost(urlPOST, json){
+    $.ajax({
+        type: 'POST',
+        url: urlPOST,
+        data: json,
+        success: function(result){
+            if(result.error){
+                // TODO: do something with the potential errorfrom server, and return
+                console.log(result.data);
+            }else{
+                console.log(result.data);
+            }
+        },
+        error: function(){
+            alert('Got an error from server while running POST');
         } 
     });
 }
 
 // http://docs.thea.apiary.io/#reference/club/clubs/list-all-clubs
-function getClubs(){
-    doGet(baseURL+'clubs', displayClubs);
+function getClubs(callback){
+    doGet(baseURL+'clubs', callback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sports/list-all-sports
-function getSports(){
-    doGet(baseURL+'sports', displaySports);
-}
-
-// http://docs.thea.apiary.io/#reference/sport/sports/list-all-sports
-function getSports(){
-    doGet(baseURL+'sports', displaySports);
+function getSports(callback){
+    doGet(baseURL+'sports', callback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
-function getExercises(sportID){
-    doGet(baseURL+'sports/'+sportID+'/exercises', displayExercises);
+function getExercises(sportID, callback){
+    doGet(baseURL+'sports/'+sportID+'/exercises', callback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
-function getTeams(exerciseID){
-    console.log('Display teams for '+exerciseID);
+function getTeams(exerciseID, callback){
+    doGet(baseURL+'exercises/'+exerciseID+'/teams', callback);
+}
+
+// http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
+function getAdditions(callback){
+    doGet(baseURL+'additions/', callback);
 }
 
 // http://docs.thea.apiary.io/#reference/participant/participants/add-a-participant
-function postParticipant(form){
-    console.log('Post participant');
+function postParticipant(json){
+    doPost(baseURL+'participants/', json);
 }

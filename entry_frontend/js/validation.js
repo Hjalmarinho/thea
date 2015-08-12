@@ -90,8 +90,8 @@ $( document ).ready(function() {
 				}
 				]
 			},
-			member: {
-				identifier  : 'member',
+			is_member: {
+				identifier  : 'is_member',
 				rules: [
 				{
 					type   : 'empty',
