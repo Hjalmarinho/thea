@@ -1,16 +1,14 @@
 <?php require 'header.php';?>
 
-
-
+	
+	
 <div class="ui items">
-  <div class="item">
-    <div class="content">
+
     <div class="header">
-        <i class="large sidebar icon" id="menubutton"></i>
-        <i class="header">Deltakere</i>
+        <!-- <i class="large sidebar icon" id="menubutton"></i> -->
+        <h1>Deltakere</h1>
       </div>
-    </div>
-  </div>
+
 </div>
 
 <div class="wee">

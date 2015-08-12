@@ -28,7 +28,12 @@
 		<div class="ui sidebar inverted vertical menu" id="toc">
 		  	<?php require 'include/menu.php';?>
 		</div>
+		<div class="ui black big fixed launch right attached button margin-top-30" id="menubutton">
+			<i class="content icon"></i>
+			<span class="text">Menu</span>
+		</div>
 		<div class="pusher">
+			  	
 		  	<div class="ui grid container">
 		  		<div class="large screen only three wide column">
 					<div class="ui vertical inverted menu">

@@ -23,9 +23,6 @@ Primary use:	Administration
 body{
 
 }
-.ui.vertical.menu {
-    width: 100%;
-}
 
 .ui.menu{
 	border-radius: 0;
@@ -83,8 +80,15 @@ html.ios body {
 }
 
 #menubutton{
-	visibility: hidden;
+	display: none;
 	cursor: pointer;
+}
+
+#menubutton .fixed.launch.button{
+	position: fixed;
+	top: 97px;
+	left: -1px;
+	overflow: hidden;
 }
 
 @media screen and (max-width: 1200px) {
