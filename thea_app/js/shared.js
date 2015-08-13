@@ -1,29 +1,27 @@
 $(document).ready(function(){
-	$('.wee').hide().transition('fade up', '750ms');
+	$('.fade-in').hide().transition('fade up', '750ms');
 
 	$("#menubutton").click( function(){
 		$('.ui.sidebar').sidebar('toggle');
 	});
 
+	var maincontent = $('#maincontent')
+	$(window).resize(function(){
+		if($(window).width() < 992){
+			$(maincontent).removeClass('thirteen wide column margin-top-30').addClass('sixteen wide column margin-top-30');
+		} else if ($(window).width() > 977){
+			if($(maincontent).hasClass('sixteen wide column margin-top-30')){
+				$(maincontent).removeClass('sixteen wide column margin-top-30').addClass('thirteen wide column margin-top-30');
+			}
+		}
+		
+	})
+
+	$('.ui.checkbox').checkbox();
 
 });
 
-function displayParticipants(participants){
-	$.each(participants, function (i, participant){
-		var first_name = participant.person.first_name
-		var last_name = participant.person.last_name
-		var gender = customGenderFormat(participant.person.gender)
-		var club = participant.club.club_name
-		var phone = participant.person.phone
-		var email = participant.person.email
-		var time_registrated = new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#")
-		var entry_id = participant.entry_id
-		var tablerow = '<tr value="' + entry_id + '"><td>' + first_name + '</td><td>' + last_name + '</td><td>' + 
-					   gender + '</td><td>' + club + '</td><td>' + phone + '</td><td>' + email + '</td><td>' + 
-					   time_registrated + '</td></tr>'
-		$('#participants').append(tablerow)
-	});
-}
+
 
 function customGenderFormat(gender){
 	return(gender == "Male"?"Mann":"Dame")

@@ -44,6 +44,10 @@ function getParticipants(callback){
     doGet(baseURL + 'participants', callback);
 }
 
+function getParticipant(entry_id, callback){
+    doGet(baseURL + 'participants/' + entry_id, callback)
+}
+
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
 function getExercises(sportID){
     doGet(baseURL+'sports/'+sportID+'/exercises', displayExercises);

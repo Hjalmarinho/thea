@@ -16,26 +16,35 @@ Primary use:	Administration
 5. Menu
 -------------------------------------------------------------------*/
 
-@import url('semantic.min.css');
-
 /*	1. Body															*/
 /*------------------------------------------------------------------*/
-body{
 
+html, body{
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
 }
 
-.ui.menu{
-	border-radius: 0;
+.pusher{
 	min-height: 100%;
 }
+
+
+
 .margin-top-30{
 	margin-top: 40px;
 }
 
-@media only screen and (min-width: 1200px){
 .ui.container {
     margin-left: -14px!important;
     margin-right: 0px!important;
+    height: 100%;
+}
+
+@media only screen and (max-width: 991px){
+.ui.container {
+    margin-left: auto!important;
+    margin-right: auto!important;
 }
 
 /*	2. Layout														*/
@@ -79,20 +88,31 @@ html.ios body {
   height: initial !important;
 }
 
+.ui.vertical.menu{
+	width:100%;
+	border-radius: 0px;
+}
+/*
+.ui.vertical.menu{
+	border-radius: 0px;
+	min-height: 100%;
+	width:  100% !important;
+}
+*/
 #menubutton{
 	display: none;
 	cursor: pointer;
 }
 
-#menubutton .fixed.launch.button{
-	position: fixed;
-	top: 97px;
-	left: -1px;
-	overflow: hidden;
-}
-
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 992px) {
 	#menubutton{
 		visibility: visible;
 	}
+}
+
+/*	6. Form															*/
+/*------------------------------------------------------------------*/
+
+#participantform .ui.form{
+	border: 0px;
 }

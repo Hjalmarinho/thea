@@ -11,7 +11,6 @@
 
 </div>
 
-<div class="wee">
 <table class="ui sortable celled striped table">
   <thead>
     <tr>
@@ -27,6 +26,6 @@
   <tbody id="participants">
   </tbody>
 </table>
-</div>
+
 
 <?php require 'footer.php';?>
