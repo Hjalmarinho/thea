@@ -42,7 +42,7 @@ Primary use:  View allowing contact persons to register teams for an event.
       <div class="inline fields">
         <label class="field two wide">Medlem</label>
         <div class="field four wide">
-          <select class="ui dropdown" name="member">
+          <select class="ui dropdown" name="is_member">
             <option value="">Er du medlem av klubben?</option>
             <option value="1">Ja</option>
             <option value="0">Nei</option>
@@ -50,7 +50,7 @@ Primary use:  View allowing contact persons to register teams for an event.
         </div>
       </div>
 
-      <div class="inline fields">
+      <div class="inline fields" id="sports_div">
         <label class="field two wide">Idrett</label>
         <div class="field four wide">
           <select class="ui search dropdown" name="sports" id="sports">
@@ -61,16 +61,25 @@ Primary use:  View allowing contact persons to register teams for an event.
       </div>
 
       <div class="inline fields">
+        <label class="field two wide"></label>
+        <div class="field four wide">
+          <div class="grouped fields" id="exercises">
+            <!-- Exercise-checkboxes are populated here from api_handler when a sport is selected -->
+          </div>
+        </div>
+      </div>
+
+      <div class="inline fields">
         <label class="field two wide">Lagnavn</label>
         <div class="field four wide">
-          <input type="text" name="team_name">
+          <input type="text" name="team_name" id="team_name">
         </div>
       </div>
 
       <div class="inline fields">
         <label class="field two wide">Klasse</label>
         <div class="field four wide">
-          <select class="ui dropdown" name="team_gender">
+          <select class="ui dropdown" name="team_gender" id="team_gender">
             <option value="">I hvilken klasse spiller laget?</option>
             <option value="1">Herre</option>
             <option value="0">Dame</option>
@@ -82,7 +91,7 @@ Primary use:  View allowing contact persons to register teams for an event.
       <div class="inline fields">
         <label class="field two wide">Spillende</label>
         <div class="field four wide">
-          <select class="ui dropdown" name="is_playing">
+          <select class="ui dropdown" name="is_playing" id="is_playing">
             <option value="">Skal du spille på laget?</option>
             <option value="1">Ja</option>
             <option value="0">Nei</option>

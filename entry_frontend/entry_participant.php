@@ -43,7 +43,7 @@ Primary use:  View allowing participants to register for an event.
       <div class="inline fields">
         <label class="field two wide">Medlem</label>
         <div class="field four wide">
-          <select class="ui dropdown" name="is_member" id="is_member">
+          <select class="ui dropdown" name="is_clubmember" id="is_clubmember">
             <option value="">Er du medlem av klubben?</option>
             <option value="1">Ja</option>
             <option value="0">Nei</option>
@@ -66,6 +66,7 @@ Primary use:  View allowing participants to register for an event.
         <div class="field four wide">
           <div class="grouped fields" id="exercises">
             <!-- Exercise-checkboxes are populated here from api_handler when a sport is selected -->
+
           </div>
         </div>
       </div>
@@ -73,9 +74,9 @@ Primary use:  View allowing participants to register for an event.
       <div class="inline fields" id="teams_container" style="display:none">
         <label class="field two wide">Lag</label>
         <div class="field four wide">
-          <select class="ui search dropdown" name="teams" id="teams" >
-            <option value="">Hvilket lag skal du spille for?</option>
-            <!-- Teams are populated here from api_handler on when a sport/exercise is selected -->
+          <select class="ui search dropdown" name="teams" id="teams">
+            <option value="">Hvilket lag skal du delta med?</option>
+            <!-- Teams are populated here from api_handler when a team sport is selected -->
           </select>
         </div>
       </div>

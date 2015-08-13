@@ -5,7 +5,7 @@
 //  Version:        2.0
 //  Last change:    11/08/2015
 //  Author:         Øystein Molnes
-//  Primary use:    Handles communication with the REST-api, and 
+//  Primary use:    Handles communication with the API, and 
 //                  updates the view(html)
 // ***********************************************************************
 
@@ -15,7 +15,7 @@ var baseURL = 'http://92.62.34.78:8080/thea-backend/v1/';
 var participantsURL = baseURL + 'participants/'
 
 
-// Perform GET-call to REST-api with given URL. Run callback-function with the result
+// Perform GET-call to API with given URL. Run callback-function with the result
 function doGet(urlGET, callback){
     $.ajax({
         type: 'GET',
@@ -23,63 +23,68 @@ function doGet(urlGET, callback){
         success: function(result){
             if(result.error){
                 // TODO: do something with the potential error, and return
+                console.log(result.error);
                 callback(result.data);
             }else{
                 callback(result.data);
             }
         },
         error: function(){
-            alert('Got an error from server while running GET');
+            console.log('Got an error from server while running GET');
         } 
     });
 }
 
-// Perform POST-call to REST-api with given URL.
-function doPost(urlPOST, json){
+// Perform POST-call to API with given URL.
+function doPost(urlPOST, jsonData, callback){
+    console.log(jsonData);
     $.ajax({
         type: 'POST',
+        contentType: "application/json",
         url: urlPOST,
-        data: json,
+        data: JSON.stringify(jsonData),
+        dataType: "json",
         success: function(result){
             if(result.error){
-                // TODO: do something with the potential errorfrom server, and return
-                console.log(result.data);
+                // TODO: do something with the potential error from server, and return
+                console.log(result.error);
+                callback(result.data);
             }else{
-                console.log(result.data);
+                callback(result.data);
             }
         },
         error: function(){
-            alert('Got an error from server while running POST');
+            console.log('Got an error from server while running POST');
         } 
     });
 }
 
 // http://docs.thea.apiary.io/#reference/club/clubs/list-all-clubs
-function getClubs(callback){
+function apiGetClubs(callback){
     doGet(baseURL+'clubs', callback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sports/list-all-sports
-function getSports(callback){
+function apiGetSports(callback){
     doGet(baseURL+'sports', callback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
-function getExercises(sportID, callback){
+function apiGetExercises(sportID, callback){
     doGet(baseURL+'sports/'+sportID+'/exercises', callback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
-function getTeams(exerciseID, callback){
+function apiGetTeams(exerciseID, callback){
     doGet(baseURL+'exercises/'+exerciseID+'/teams', callback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
-function getAdditions(callback){
+function apiGetAdditions(callback){
     doGet(baseURL+'additions/', callback);
 }
 
 // http://docs.thea.apiary.io/#reference/participant/participants/add-a-participant
-function postParticipant(json){
-    doPost(baseURL+'participants/', json);
+function apiPostParticipant(json, callback){
+    doPost(baseURL+'participants/', json, callback);
 }
