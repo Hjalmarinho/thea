@@ -21,7 +21,7 @@ function GetURLParameter(sParam){
 
 var entry_id = GetURLParameter('entry_id');
 
-getParticipant(entry_id, displayParticipant);
+apiGetParticipant(entry_id, displayParticipant);
 
 function displayParticipant(participant){
 	var time_registrated = new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#")

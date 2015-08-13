@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	getParticipants(displayParticipants);
+	apiGetParticipants(displayParticipants);
 })
 
 function displayParticipants(participants){
