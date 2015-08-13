@@ -133,6 +133,7 @@ function submitParticipantForm(){
         person["gender"]     = $('#gender').val();
         person["birthdate"]  = $('#birthdate').val();
         person["allergies"]  = $('#allergies').val();
+        person["portrait"]  = 'This is an image converted into a string';
         jsonForm["person"]   = person;
         
         //Participant information
@@ -144,14 +145,11 @@ function submitParticipantForm(){
 
         jsonForm["exercises"] = uiGetExercises(ticket_id);
         
-        //Portrait and additions
-        jsonForm["portrait"] = 'This is an image converted into a string';
+        //Additions
         jsonForm["additions"] = [];
-        
         
         //Add all checked additions
         jsonForm["additions"] = uiGetAdditions();
-
 
         //Post the participant using the REST-api
         apiPostParticipant(jsonForm, redirectToPayment);

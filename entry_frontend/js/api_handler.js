@@ -23,13 +23,14 @@ function doGet(urlGET, callback){
         success: function(result){
             if(result.error){
                 // TODO: do something with the potential error, and return
+                console.log(result.error);
                 callback(result.data);
             }else{
                 callback(result.data);
             }
         },
         error: function(){
-            alert('Got an error from server while running GET');
+            console.log('Got an error from server while running GET');
         } 
     });
 }
@@ -41,11 +42,12 @@ function doPost(urlPOST, jsonData, callback){
         type: 'POST',
         contentType: "application/json",
         url: urlPOST,
-        data: jsonData,
+        data: JSON.stringify(jsonData),
         dataType: "json",
         success: function(result){
             if(result.error){
                 // TODO: do something with the potential error from server, and return
+                console.log(result.error);
                 callback(result.data);
             }else{
                 //TODO: the POST was successful
@@ -53,7 +55,7 @@ function doPost(urlPOST, jsonData, callback){
             }
         },
         error: function(){
-            alert('Got an error from server while running POST');
+            console.log('Got an error from server while running POST');
         } 
     });
 }
