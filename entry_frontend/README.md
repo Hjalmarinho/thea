@@ -16,15 +16,15 @@ The frontend-project can be run by downloading the project folder, entry_fronten
 <pre>
 <code>
 .
-├── css						# Styling folder
+├── css					  # Styling folder
 	+ semantic.min			# Styling file for Semantic UI
 	+ style.css				# Custom styling file
-├── js						# JavaScript folder
+├── js					  # JavaScript folder
 	+ api_handler.js		# Handles communication with the API
 	+ main.js				# Main functions used by the entry-GUI. Calls api_handler and updates the GUI.
 	+ semantic.min.js		# JavaScript file for Semantic UI
 	+ validation.js			# Validation-rules for the entry-form
-├── view_components			# GUI components to be included in several files
+├── view_components		  # GUI components to be included in several files
 	+ head.php				# The head-component
 	+ personal_info.php		# Personal info-GUI of the form
 	+ portrait_additions.php# Portrait and additions-GUI of the form
