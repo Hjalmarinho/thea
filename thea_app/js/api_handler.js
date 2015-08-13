@@ -92,3 +92,7 @@ function apiPostParticipant(json, callback){
 function apiGetParticipant(entry_id, callback){
     doGet(baseURL + 'participants/' + entry_id, callback)
 }
+
+function apiGetParticipants(callback){
+    doGet(baseURL + 'participants/', callback)
+}
