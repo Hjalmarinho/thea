@@ -6,6 +6,17 @@ $(document).ready(function(){
 	});
 
 	$('.ui.rating').rating();
+	$('#selectgender').val('Male');
+
+
+})
+
+var entry_id = GetURLParameter('entry_id');
+
+apiGetParticipant(entry_id, displayParticipant);
+
+$('#selectgender').on('change', function(){
+	console.log('changed')
 })
 
 function GetURLParameter(sParam){
@@ -19,9 +30,6 @@ function GetURLParameter(sParam){
 	}
 }
 
-var entry_id = GetURLParameter('entry_id');
-
-apiGetParticipant(entry_id, displayParticipant);
 
 function displayParticipant(participant){
 	var time_registrated = new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#")
@@ -29,8 +37,12 @@ function displayParticipant(participant){
 	$('#first_name').attr('value', participant.person.first_name)
 	$('#last_name').attr('value', participant.person.last_name)
 	$('#time_registrated').text('Påmeldt: ' + time_registrated)
-	$('#selectgender').val(participant.person.gender)
-	$('#selectgender option:selected').change()
+
+	$('#selectgender').val(participant.person.gender).change()
+
+		console.log($('#selectgender').val())
+
+
 	if(participant.is_student){
 		$('#studentCheckbox').val($('#studentCheckbox').prop('checked', true))
 	}

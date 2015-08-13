@@ -58,8 +58,8 @@
 			</div><div class="field">
 			<select class="ui fluid dropdown" id="selectgender">
 				<option value="">Velg kjønn</option>
-				<option value="Female">Dame</option>
-				<option value="Male">Herre</option>
+				<option value="Female" >Dame</option>
+				<option value="Male" >Herre</option>
 			</select>
 		</div>
 		</div>
