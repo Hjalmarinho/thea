@@ -50,7 +50,6 @@ function doPost(urlPOST, jsonData, callback){
                 console.log(result.error);
                 callback(result.data);
             }else{
-                //TODO: the POST was successful
                 callback(result.data);
             }
         },

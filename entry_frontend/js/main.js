@@ -49,10 +49,8 @@ function displayClubs(clubs){
 function displaySports(sports){
     if(sports){
        $.each(sports, function(i, sport){
-
             var ticket_id = $('#ticket_id').data('value');
-
-            //Display only sports having a team_exercise when the user is adding a team
+            //Display only sports having a team_exercise if user is adding a team
             if( ticket_id == TICKET_ID_TEAM && hasTeamExercise(sport)){
                 $('#sports').append('<option value='+sport.sport_id+'>'+sport.sport_description+'</option>'); 
             }
@@ -68,7 +66,6 @@ function displaySports(sports){
 function displayExercises(exercises){
     $('#exercises').empty();
     $('#teams_container').hide();
-
     if(exercises){
         //Display checkboxes for each available exercise if there are many
         $.each(exercises, function(i, exercise){
@@ -86,8 +83,8 @@ function displayExercises(exercises){
 function displayAdditions(additions){
     if(additions){
        $.each(additions, function(i, addition){
-            var label = addition.addition_description+' ('+addition.addition_fee+' ,-)';
-            $('#additions').append(generateCheckbox(addition.addition_id, label)); 
+            var addition_label = addition.addition_description+' ('+addition.addition_fee+' ,-)';
+            $('#additions').append(generateCheckbox(addition.addition_id, addition_label)); 
        });   
     }  
 }
@@ -159,6 +156,8 @@ function submitParticipantForm(){
 
 //      HELP FUNCTIONS
 // ***********************************************************************
+
+//Iterate the additions-checkboxes and see which have been checked
 function uiGetAdditions(){
     var additions = [];
     $('#additions input:checked').each(function(){
@@ -168,6 +167,7 @@ function uiGetAdditions(){
     return additions;
 }
 
+//Iterate the exercise-checkboxes and see which have been checked, or if a team is to be added
 function uiGetExercises(ticket_id){
     var exercises = [];
 
@@ -198,6 +198,7 @@ function uiGetExercises(ticket_id){
     return exercises;
 }
 
+//Check whether a sport has any team exercises
 function hasTeamExercise(sport){
     var hasTeamExercise = false;
 
