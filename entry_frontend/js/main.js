@@ -97,7 +97,6 @@ function displayTeams(teams){
     $('#teams').empty();
     if(teams){
        $.each(teams, function(i, team){
-            console.log(team);
             $('#teams').append('<option value='+team.team_id+'>'+team.team_name+'</option>'); 
        });   
     }  
@@ -122,28 +121,34 @@ function submitParticipantForm(){
         var jsonForm = {};
 
         //Personal information
-        jsonForm["first_name"] = $('#first_name').val();
-        jsonForm["last_name"] = $('#last_name').val();
-        jsonForm["birthdate"] = $('#birthdate').val();
-        jsonForm["gender"] =    $('#gender').val();
+        jsonForm["is_clubmember"] = (($('#is_clubmember').val()  == 1) ? true : false);
         jsonForm["is_student"] = (($('#is_student').val()  == 1) ? true : false);
-        jsonForm["email"] = $('#email').val();
-        jsonForm["phone"] = $('#phone').val();
-
+        jsonForm["travel_information"] = $('#travel_information').val();
+        
+        var person = {};
+        person["first_name"] = $('#first_name').val();
+        person["last_name"]  = $('#last_name').val();
+        person["phone"]      = $('#phone').val();
+        person["email"]      = $('#email').val();
+        person["gender"]     = $('#gender').val();
+        person["birthdate"]  = $('#birthdate').val();
+        person["allergies"]  = $('#allergies').val();
+        jsonForm["person"]   = person;
+        
         //Participant information
-        jsonForm["ticket_id"] = parseInt($('#ticket_id').data('value'));
-        jsonForm["club_id"] = parseInt($('#clubs').val());
-        jsonForm["is_member"] = (($('#is_member').val()  == 1) ? true : false);
-        jsonForm["exercises"] = [];
+        var club_id = parseInt($('#clubs').val());
+        jsonForm["club"] = {club_id};
 
+        var ticket_id = parseInt($('#ticket_id').data('value')); 
+        jsonForm["ticket"] = {ticket_id};
+
+        jsonForm["exercises"] = uiGetExercises(ticket_id);
+        
         //Portrait and additions
-        jsonForm["allergies"] = $('#allergies').val();
         jsonForm["portrait"] = 'This is an image converted into a string';
         jsonForm["additions"] = [];
-
-        //Add sport with checked exercises
-        jsonForm["exercises"] = uiGetExercises(jsonForm["ticket_id"]);
-
+        
+        
         //Add all checked additions
         jsonForm["additions"] = uiGetAdditions();
 
@@ -173,19 +178,23 @@ function uiGetExercises(ticket_id){
         $('#exercises input:checked').each(function(){
             var exercise_id = parseInt($(this).attr('value'));
             var team_id = parseInt($("#teams").val());
+            var team = {team_id};
 
-            exercises.push({exercise_id , team_id });
+            exercises.push({exercise_id , team });
         });
     }
     //Add exercise with team info for team
     else if(ticket_id == TICKET_ID_TEAM){
         $('#exercises input:checked').each(function(){
             var exercise_id = parseInt($(this).attr('value'));
+            var is_playing = (($('#is_playing').val()  == 1) ? true : false);
             var team_name = $("#team_name").val(); 
             var gender = $("#team_gender").val();
-            var is_playing = (($('#is_playing').val()  == 1) ? true : false);
+            var team_number = 0;
 
-            exercises.push({exercise_id , team_name, gender, is_playing });
+            var team = {team_name, gender, team_number};
+
+            exercises.push({exercise_id ,  is_playing, team });
         });
     } 
     return exercises;

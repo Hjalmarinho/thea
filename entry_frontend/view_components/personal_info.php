@@ -57,3 +57,20 @@
     <input type="text" name="phone" id="phone">
   </div>
 </div>
+
+<div class="inline fields">
+  <label class="field two wide">Reiseinfo</label>
+  <div class="field four wide">
+    <select class="ui search dropdown" name="travel_information" id="travel_information">
+      <option value="">Hvilken by reiser du fra?</option>
+      <option value="0">Alta</option>
+      <option value="1">Bergen</option>
+      <option value="2">Kristiansand</option>
+      <option value="3">Oslo</option>
+      <option value="4">Stavanger</option>
+      <option value="5">Trondheim</option>
+      <option value="6">Tromsø</option>
+      <option value="7">Ålesund</option>
+    </select>
+  </div>
+</div>

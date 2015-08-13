@@ -43,7 +43,7 @@ Primary use:  View allowing participants to register for an event.
       <div class="inline fields">
         <label class="field two wide">Medlem</label>
         <div class="field four wide">
-          <select class="ui dropdown" name="is_member" id="is_member">
+          <select class="ui dropdown" name="is_clubmember" id="is_clubmember">
             <option value="">Er du medlem av klubben?</option>
             <option value="1">Ja</option>
             <option value="0">Nei</option>
