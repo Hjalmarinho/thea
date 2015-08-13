@@ -16,6 +16,6 @@ function displayParticipants(participants){
 		var tablerow = '<tr><td><a href="./participant.php?entry_id=' + entry_id +'">' + first_name + '</a></td><td>' + last_name + '</td><td>' + 
 					   gender + '</td><td>' + club + '</td><td>' + phone + '</td><td><a href="mailto:' + email + '">' + email + '</a></td><td>' + 
 					   time_registrated + '</td></tr>'
-		$('participantsdiv').append(tablerow)
+		$(participantsdiv).append(tablerow)
 	});
 }
