@@ -71,12 +71,16 @@ Primary use:  View allowing participants to register for an event.
         </div>
       </div>
 
-      <div id="teams_container" style="display:none">
-        <select class="ui search dropdown" name="teams" id="teams" >
-          <option value="">Hvilket lag skal du delta med?</option>
-          <!-- Teams are populated here from api_handler on when a sport/exercise is selected -->
-        </select>
+      <div class="inline fields" id="teams_container" style="display:none">
+        <label class="field two wide">Lag</label>
+        <div class="field four wide">
+          <select class="ui search dropdown" name="teams" id="teams">
+            <option value="">Hvilket lag skal du delta med?</option>
+            <!-- Teams are populated here from api_handler when a team sport is selected -->
+          </select>
+        </div>
       </div>
+
 
       <div class="inline fields">
         <label class="field two wide"></label>
