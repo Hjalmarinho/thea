@@ -1,8 +1,9 @@
 <?php require('header.php'); ?>
 
 <div class="ui grid">
-	<div class="ten wide column">
-		<table class="ui sortable celled striped compact table">
+
+	<div class="ten wide column" >
+		<table id="accreditations" class="ui sortable celled striped compact table" style="cursor: pointer">
 			<thead>
 				<tr>
 					<th>Fornavn</th>
@@ -10,10 +11,11 @@
 					<th>Klubb</th>
 				</tr>
 			</thead>
-			<tbody id="accreditations">
+			<tbody id="accreditations_body">
 			</tbody>
 		</table>
-	</div>
+	</div> <!-- /table column -->
+
 	<div class="six wide column">
 		<div class="ui special cards">
 			<div class="card">
@@ -35,8 +37,9 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
+	</div> <!-- /card column -->
+
+</div> <!-- /ui grid -->
 
 <?php require('footer.php'); ?>
 

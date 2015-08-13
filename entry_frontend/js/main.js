@@ -120,7 +120,7 @@ function submitParticipantForm(){
         //Personal information
         jsonForm["is_clubmember"] = (($('#is_clubmember').val()  == 1) ? true : false);
         jsonForm["is_student"] = (($('#is_student').val()  == 1) ? true : false);
-        jsonForm["travel_information"] = $('#travel_information').val();
+        jsonForm["travel_information"] = $('#travel_information  option:selected').text();
         
         var person = {};
         person["first_name"] = $('#first_name').val();
