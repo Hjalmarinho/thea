@@ -8,6 +8,7 @@
 	    <?php // Include Semantic UI ?>
 		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.7/semantic.min.js"></script> -->
 		<script src="js/semantic.min.js"></script>
+		<script src="js/tablesort.js"></script>
 		<link rel="stylesheet" href="css/semantic.min.css"></link>
 		<link rel="stylesheet" href="css/style.css"></link>
 	    <?php // Include React ?>

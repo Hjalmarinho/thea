@@ -19,6 +19,9 @@ $(document).ready(function(){
 
 	$('.ui.checkbox').checkbox();
 
+	//Initialize tablesort
+	$('table').tablesort();
+
 });
 
 
