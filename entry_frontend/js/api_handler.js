@@ -5,7 +5,7 @@
 //  Version:        2.0
 //  Last change:    11/08/2015
 //  Author:         Øystein Molnes
-//  Primary use:    Handles communication with the REST-api, and 
+//  Primary use:    Handles communication with the API, and 
 //                  updates the view(html)
 // ***********************************************************************
 
@@ -15,7 +15,7 @@ var baseURL = 'http://92.62.34.78:8080/thea-backend/v1/';
 var participantsURL = baseURL + 'participants/'
 
 
-// Perform GET-call to REST-api with given URL. Run callback-function with the result
+// Perform GET-call to API with given URL. Run callback-function with the result
 function doGet(urlGET, callback){
     $.ajax({
         type: 'GET',
@@ -35,7 +35,7 @@ function doGet(urlGET, callback){
     });
 }
 
-// Perform POST-call to REST-api with given URL.
+// Perform POST-call to API with given URL.
 function doPost(urlPOST, jsonData, callback){
     console.log(jsonData);
     $.ajax({

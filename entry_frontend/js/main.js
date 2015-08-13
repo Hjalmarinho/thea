@@ -15,7 +15,7 @@ $( document ).ready(function() {
     $('.ui.dropdown')
     .dropdown();
 
-    //REST-api-calls on page load, parameter is the callback-function
+    //API-calls on page load, parameter is the callback-function
     apiGetClubs(displayClubs);
     apiGetSports(displaySports);
     apiGetAdditions(displayAdditions);
@@ -36,7 +36,7 @@ const TICKET_ID_TEAM= 2;
 //      UPDATE GUI FUNCTIONS
 // ***********************************************************************
 
-// Populate dropdown with clubs received from REST-api
+// Populate dropdown with clubs received from API
 function displayClubs(clubs){
     if(clubs){
         $.each(clubs, function(i, club){
@@ -45,7 +45,7 @@ function displayClubs(clubs){
     }
 }
 
-// Populate dropdown with sports received from REST-api
+// Populate dropdown with sports received from API
 function displaySports(sports){
     if(sports){
        $.each(sports, function(i, sport){
@@ -62,7 +62,7 @@ function displaySports(sports){
     }  
 }
 
-// Generate checkboxes for exercises received from REST-api
+// Generate checkboxes for exercises received from API
 function displayExercises(exercises){
     $('#exercises').empty();
     $('#teams_container').hide();
@@ -79,7 +79,7 @@ function displayExercises(exercises){
     }  
 }
 
-// Generate checkboxes for exercises received from REST-api
+// Generate checkboxes for exercises received from API
 function displayAdditions(additions){
     if(additions){
        $.each(additions, function(i, addition){
@@ -89,7 +89,7 @@ function displayAdditions(additions){
     }  
 }
 
-// Generate checkboxes for teams received from REST-api
+// Generate checkboxes for teams received from API
 function displayTeams(teams){
     $('#teams').empty();
     if(teams){
@@ -114,7 +114,7 @@ function submitParticipantForm(){
 
     // if(  participantForm.form('is valid')  ){
 
-        //Serialize the form into a json-object in order to post the participant to the REST-api
+        //Serialize the form into a json-object in order to post the participant to the API
         var jsonForm = {};
 
         //Personal information
@@ -148,7 +148,7 @@ function submitParticipantForm(){
         //Add all checked additions
         jsonForm["additions"] = uiGetAdditions();
 
-        //Post the participant using the REST-api
+        //Post the participant using the API
         apiPostParticipant(jsonForm, redirectToPayment);
     // }
 }
