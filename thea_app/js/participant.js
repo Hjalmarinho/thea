@@ -42,6 +42,17 @@ function displayParticipant(participant){
 		
 	}
 	$('#club_name').text(participant.club.club_name)
-	console.log(participant.is_clubmember)
+	$('.participantname').text(participant.person.first_name + ' ' + participant.person.last_name)
+	$('#travel_information').attr('value', participant.travel_information)
+	$('#allergies').attr('value', participant.person.allergies)
+	$('#email').attr('value', participant.person.email)
+	$('#phone').attr('value', participant.person.phone)
+	if(participant.comment != null){
+		$('#comment').text(participant.comment)
+	}
+	var birthdate = participant.person.birthdate.split('-')
+	$('#birthday').attr('value', birthdate[2])
+	$('#birthyear').attr('value', birthdate[0])
+	console.log(participant.person.birthdate.split('-'))
 	console.log(participant)
 }

@@ -4,7 +4,7 @@
 
 	<div class="header">
 		<!-- <i class="large sidebar icon" id="menubutton"></i> -->
-		<h1>Øystein Molnes</h1>
+		<h1 class="participantname">Deltaker</h1>
 	</div>
 
 </div>
@@ -26,10 +26,10 @@
 		<div class="inline fields">
 			<div class="five wide field">
 				<label>Fødselsdato: </label>
-				<input type="text" name="birthdate" id="birthdate" placeholder="dd">
+				<input type="text" name="birthdate" id="birthday" placeholder="dd">
 			</div>
 			<div class="four wide field">
-				<select class="ui fluid dropdown">
+				<select class="ui fluid dropdown" id="birthmonth">
 				<option value="">mm</option>
 				<option value="AL">januar</option>
 				<option value="AK">februar</option>
@@ -47,7 +47,7 @@
 				
 			</div>
 			<div class="three wide field">
-				<input type="text" name="birthdate" id="birthdate" placeholder="yyyy">
+				<input type="text" name="birthdate" id="birthyear" placeholder="yyyy">
 				
 			</div>
 		</div>
@@ -101,22 +101,22 @@
 
 		<div class="inline field">
 			<label>Reiseinformasjon: </label>
-			<input type="text" value="Reiser fra Ski på ski">
+			<input type="text" value="Reiser fra Ski på ski" id="travel_information">
 		</div>
 
 		<div class="inline field">
 			<label>Allergier: </label>
-			<input type="text" value="Nei">
+			<input type="text" value="Nei" id="allergies">
 		</div>
 
 		<div class="inline field">
 			<label>E-post: </label>
-			<input type="text" value="oystein.molnes@gmail.com">
+			<input type="text" value="oystein.molnes@gmail.com" id="email">
 		</div>
 
 		<div class="inline field">
 			<label>Telefonnummer: </label>
-			<input type="text" value="987 65 432">
+			<input type="text" value="987 65 432" id="phone">
 		</div>
 
 		Har betalt: 550kr
@@ -138,13 +138,13 @@
 				<img src="http://semantic-ui.com/images/avatar/large/elliot.jpg">
 			</div>
 			<div class="content">
-				<a class="header">Øystein Molnes</a>
+				<a class="header participantname">Deltaker</a>
 				<div class="meta">
 					<span class="date" id="time_registrated"></span>
 				</div>
 			</div>
 			<div class="extra content">
-				<div class="ui star rating" data-rating="3"></div>
+				<span id="comment">Ingen kommentarer</span>
 			</div>
 		</div>
 	</div>
