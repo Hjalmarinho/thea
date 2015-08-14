@@ -1,13 +1,18 @@
 <?php require('header.php'); ?>
 
 <div class="ui grid">
+	<!-- Search field -->
+	<div class="row">
+		<div class="ten wide column" >
+			<!-- Search field -->
+			<div class="ui icon input">
+				<input type="text" id="search_input" placeholder="Søk...">
+				<i class="search icon"></i>
+			</div>
+		</div>
+	</div>
 
 	<div class="ten wide column" >
-		<!-- Search field -->
-		<div class="ui icon input">
-		<input type="text" id="search_input" placeholder="Søk...">
-			<i class="search icon"></i>
-		</div>
 
 		<!-- Participants table -->
 		<table id="participants_table" class="ui sortable celled striped table" style="cursor: pointer">
@@ -25,7 +30,7 @@
 	</div> <!-- /table column -->
 
 	<div class="six wide column" >
-		<div class="ui special cards">
+		<div class="ui special link cards">
 			<div class="card" id="participant_card" style="display: none">
 				<div class="blurring dimmable image">
 					<div class="ui dimmer">
@@ -46,7 +51,12 @@
 					<br>
 					<p id="card_accreditated_mark" style="display:none"><i class="checkmark green icon"></i>Akkreditert</p>
 				</div>
-				<div class="extra content" id="card_comment"></div>
+				<div class="extra content">
+					<div class="ui large transparent left icon input">
+						<i class="comment outline icon"></i>
+						<input type="text" placeholder="Skriv en kommentar..." id="card_comment">
+					</div>
+				</div>
 			</div>
 		</div>
 	</div> <!-- /card column -->

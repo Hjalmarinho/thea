@@ -6,6 +6,9 @@ $(document).ready(function(){
 	});
 
 	apiGetParticipants(displayParticipants);
+	$('#participant_card')
+	  .transition('fade up')
+	;
 });
 
 //Make participants table searchable
@@ -53,7 +56,7 @@ function displayParticipant(participant){
 	$('#participant_card').val(participant.entry_id);
 	$('#card_name').text(participant.person.first_name+' '+participant.person.last_name);
 	$('#card_time_registrated').text(new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#"));
-	$('#card_comment').text('Dette er en hardkodet kommentar om denne deltakeren');
+	$('#card_comment').val('Dette er en hardkodet kommentar om denne deltakeren, som skal kunne endres her.');
 	
 	//Display green check-icon if participant has been accreditated
 	displayAccreditated(participant.entry_id, participant.accreditated);
@@ -65,6 +68,9 @@ function displayParticipant(participant){
 
 //Display green check-icon and accreditation-button dependent on whether the participant has been accreditated
 function displayAccreditated(entry_id, accreditated){
+	$('#participant_card').transition('fade', '0ms');
+	$('#participant_card').transition('fade up', '750ms');
+
 
 	var check_icon;
 	if(accreditated){
