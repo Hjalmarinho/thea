@@ -5,10 +5,12 @@ $(document).ready(function(){
   		on: 'hover'
 	});
 
-	apiGetParticipants(displayParticipants);
 	$('#participant_card')
 	  .transition('fade up')
 	;
+
+	apiGetParticipants(displayParticipants);
+	
 });
 
 //Make participants table searchable
@@ -24,27 +26,96 @@ function initiateSearch(){
 	});
 }
 
+//      UPDATE GUI FUNCTIONS
+// ***********************************************************************
+
 //Populate table-body with all participants
 function displayParticipants(participants){
-	var participants_table_body = ('#participants_table_body')
+	var participants_table_body = ('#participants_table_body');
 	$.each(participants, function (i, participant){
 
-		var background_color = "";
-		if(participant.accreditated){
-			background_color = "background-color: rgba(34, 190, 52, .2)";
-		}else{
-			background_color = "background-color: rgba(257, 257, 257, 1)";
-		}
-		var tablerow = 		'<tr style="'+background_color+'" value="'+participant.entry_id+'" onclick="participantClicked('+participant.entry_id+')">'+ 
+		var tablerow = 	$('<tr value="'+participant.entry_id+'" onclick="participantClicked('+participant.entry_id+')">'+ 
 								'<td>' + participant.person.first_name +' '+participant.person.last_name + '</a></td>'+
-								'<td>' + participant.club.club_name + '</td>'
-							'</tr>';
-							
+								'<td>' + participant.club.club_name + '</td>'+
+							'</tr>');
+
+		//Display green check-icon if participant has been accreditated
+		setBackgroundColor($(tablerow), participant.accreditated);
 
 		$(participants_table_body).append(tablerow);
 	});
 	initiateSearch();
 };	
+
+// Display a participant on the card
+function displayParticipant(participant){
+	$('#participant_card').val(participant.entry_id);
+	$('#card_name').text(participant.person.first_name+' '+participant.person.last_name);
+
+	//TODO: Print out additions
+
+	$('#card_time_registrated').text(new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#"));
+	$('#card_comment').val(participant.comment);
+	
+	//Display green check-icon if participant has been accreditated
+	displayAccreditated(participant.entry_id, participant.accreditated);
+
+	$('#participant_card').show();
+	$('.ui.sticky')
+	  .sticky({
+	    context: '#participant_card'
+	  })
+	;
+
+};
+
+//Callback function when a participant has been accreditated
+function participantAccreditated(accreditation){
+	displayAccreditated(accreditation.entry_id, accreditation.accreditated);
+}
+
+//Display green check-icon and accreditation-button dependent on whether the participant has been accreditated
+function displayAccreditated(entry_id, accreditated){
+	$('#participant_card').transition('fade', '0ms');
+	$('#participant_card').transition('fade down', '500ms');
+
+
+	if(accreditated){
+		$('#button_unaccreditate').show();
+		$('#button_accreditate').hide();
+		$('#card_accreditated_mark').show();
+		setBackgroundColor($('#participant_card'), true);
+	}
+	else{
+		$('#button_accreditate').show();
+		$('#button_unaccreditate').hide();
+		$('#card_accreditated_mark').hide();
+		setBackgroundColor($('#participant_card'), false);
+	}
+
+	//Display in the table if participant is accreditated or not
+	$('#participants_table tr').each(function() {
+		var tr_value =  $(this).attr("value");
+		if(tr_value == entry_id){
+			setBackgroundColor($(this), accreditated);
+		}
+	 });
+}
+
+function displayCommentSaved(comment){
+	console.log(comment);
+}
+
+function setBackgroundColor(div, accreditated){
+	if(accreditated){
+		div.css("background-color", "rgba(34, 190, 52, .2)");
+	}else{
+		div.css("background-color", "rgba(257, 257, 257, 1)");
+	}
+}
+
+//      POST/PUT/GET TO API FUNCTIONS
+// ***********************************************************************
 
 //Called when a participant in the table is clicked
 function participantClicked(entry_id){
@@ -54,69 +125,11 @@ function participantClicked(entry_id){
 	}
 }
 
-// Display a participant on the card
-function displayParticipant(participant){
-	$('#participant_card').val(participant.entry_id);
-	$('#card_name').text(participant.person.first_name+' '+participant.person.last_name);
-	$('#card_time_registrated').text(new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#"));
-	$('#card_comment').val(participant.comment);
-	
-	//Display green check-icon if participant has been accreditated
-	displayAccreditated(participant.entry_id, participant.accreditated);
-
-	$('#participant_card').show();
-
-
-};
-
-//Display green check-icon and accreditation-button dependent on whether the participant has been accreditated
-function displayAccreditated(entry_id, accreditated){
-	$('#participant_card').transition('fade', '0ms');
-	$('#participant_card').transition('fade up', '500ms');
-
-
-	if(accreditated){
-		$('#button_unaccreditate').show();
-		$('#button_accreditate').hide();
-		$('#card_accreditated_mark').show();
-		$('#participant_card').css("background-color", "rgba(34, 190, 52, .2)");
-	}
-	else{
-		$('#button_accreditate').show();
-		$('#button_unaccreditate').hide();
-		$('#card_accreditated_mark').hide();
-		$('#participant_card').css("background-color", "rgba(257, 257, 257, 1)");
-
-	}
-
-	//Display in the table if participant is accreditated or not
-	$('#participants_table tr').each(function() {
-		var tr_value =  $(this).attr("value");
-		if(tr_value == entry_id){
-			if(accreditated){
-				$(this).css("background-color", "rgba(34, 190, 52, .2)");
-			}else{
-				$(this).css("background-color", "rgba(257, 257, 257, 1)");
-			}
-		}
-	 });
-}
-
-
-function displayCommentSaved(comment){
-	console.log(comment);
-}
-
 //Accreditate participant by getting the entry_id from the value-attribute of the participant_card
 function accreditateParticipant(accreditated){
 	var entry_id = $( '#participant_card' ).val();
 	var jsonData = {"accreditated": accreditated};
 	apiPutAccreditation(entry_id, jsonData, participantAccreditated);
-}
-
-//Callback function when a participant has been accreditated
-function participantAccreditated(accreditation){
-	displayAccreditated(accreditation.entry_id, accreditation.accreditated);
 }
 
 //Called when user clicks the "Lagre kommentar"-button
@@ -127,3 +140,4 @@ function saveComment(){
 
 	apiPutComment(entry_id, jsonData, displayCommentSaved);
 }
+

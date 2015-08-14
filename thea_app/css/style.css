@@ -116,3 +116,9 @@ html.ios body {
 #participantform .ui.form{
 	border: 0px;
 }
+
+/*	7. Colors														*/
+/*------------------------------------------------------------------*/
+.background-green{
+	background-color: rgba(34, 190, 52, .2);
+}
