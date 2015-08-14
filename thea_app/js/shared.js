@@ -5,7 +5,7 @@ $(document).ready(function(){
 		$('.ui.sidebar').sidebar('toggle');
 	});
 
-	var maincontent = $('#maincontent')
+	var maincontent = $('#context')
 	$(window).resize(function(){
 		if($(window).width() < 992){
 			$(maincontent).removeClass('thirteen wide column margin-top-30').addClass('sixteen wide column margin-top-30');

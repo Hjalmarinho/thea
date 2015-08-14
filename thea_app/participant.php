@@ -154,7 +154,7 @@
 	<div class="ui six wide column">
 
 		<div class="ui special cards">
-			<div class="card">
+			<div class="fluid card">
 				<div class="blurring dimmable image">
 					<div class="ui dimmer">
 						<div class="content">
@@ -178,7 +178,7 @@
 		</div>
 
 		<div class="field sixteen wide">				
-				<button class="ui button">Oppdater</button>
+			<button class="fluid ui button">Fits container</button>
 
 		</div>
 	</div> <!-- /.six.wide.column -->
