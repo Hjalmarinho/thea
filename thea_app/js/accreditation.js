@@ -54,6 +54,10 @@ function displayParticipant(participant){
 
 	//TODO: Print out additions
 
+	
+	$('#card_img').attr('src', '')
+	apiGetPortrait(participant.entry_id, displayPortrait);
+
 	$('#card_time_registrated').text(new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#"));
 	$('#card_comment').val(participant.comment);
 	
@@ -68,6 +72,10 @@ function displayParticipant(participant){
 	;
 
 };
+
+function displayPortrait(image){
+	$('#card_portrait').attr('src', 'data:image/jpeg;base64,' + image.image_data)
+}
 
 //Callback function when a participant has been accreditated
 function participantAccreditated(accreditation){

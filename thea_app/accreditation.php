@@ -29,7 +29,6 @@
 	</div> <!-- /table column -->
 
 	<div class="six wide column" >
-
 		<!-- Participant card -->
 		<div class="ui sticky special cards">
 			<div class="card" id="participant_card" style="display: none">
@@ -42,7 +41,7 @@
 							</div>
 						</div>
 					</div>
-					<img src="http://semantic-ui.com/images/avatar/large/elliot.jpg">
+					<img src="http://semantic-ui.com/images/avatar/large/elliot.jpg" id="card_portrait">
 				</div>
 				<div class="content" id="participant_content">
 					<a class="header" id="card_name"></a>
