@@ -3,15 +3,22 @@
 <div class="ui grid">
 
 	<div class="ten wide column" >
-		<table id="participants" class="ui sortable celled striped table" style="cursor: pointer">
+		<!-- Search field -->
+		<div class="ui icon input">
+		<input type="text" id="search_input" placeholder="Søk...">
+			<i class="search icon"></i>
+		</div>
+
+		<!-- Participants table -->
+		<table id="participants_table" class="ui sortable celled striped table" style="cursor: pointer">
 			<thead>
 				<tr>
-					<th>Fornavn</th>
-					<th class="ascending">Etternavn</th>
-					<th>Klubb</th>
+					<th class="five wide ascending">Fornavn</th>
+					<th class="ten wide">Klubb</th>
+					<th class="one wide">Akkreditert</th>
 				</tr>
 			</thead>
-			<tbody id="participants_body">				
+			<tbody id="participants_table_body">				
 
 			</tbody>
 		</table>

@@ -5,25 +5,39 @@ $(document).ready(function(){
   		on: 'hover'
 	});
 
-
 	apiGetParticipants(displayParticipants);
-
 });
+
+//Make participants table searchable
+function initiateSearch(){
+	var $rows = $('#participants_table tbody tr');
+	$('#search_input').keyup(function() {
+	    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+	    
+	    $rows.show().filter(function() {
+	        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+	        return !~text.indexOf(val);
+	    }).hide();
+	});
+}
 
 //Populate table-body with all participants
 function displayParticipants(participants){
-	var participants_body = ('#participants_body')
+	var participants_table_body = ('#participants_table_body')
 	$.each(participants, function (i, participant){
+		var check_icon = '';
+		if(participant.accreditated){
+			check_icon = '<i class="checkmark green icon"></i>';
+		}
 
 		var tablerow = 		'<tr onclick="participantClicked('+participant.entry_id+')">'+ 
-								'<td>' + participant.person.first_name + '</a></td>'+
-								'<td>' + participant.person.last_name + '</td>'+
+								'<td>' + participant.person.first_name +' '+participant.person.last_name + '</a></td>'+
 								'<td>' + participant.club.club_name + '</td>'+
+								'<td value="'+participant.entry_id+'">' + check_icon +'</td>'+
 							'</tr>';
-		$(participants_body).append(tablerow);
+		$(participants_table_body).append(tablerow);
 	});
-
-
+	initiateSearch();
 };	
 
 //Called when a participant in the table is clicked
@@ -36,33 +50,46 @@ function participantClicked(entry_id){
 
 // Display a participant on the card
 function displayParticipant(participant){
-	$('#participant_card').show();
 	$('#participant_card').val(participant.entry_id);
 	$('#card_name').text(participant.person.first_name+' '+participant.person.last_name);
-
-	var time_registrated = new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#")
-	$('#card_time_registrated').text(time_registrated);
-
-	//Display green check-icon if participant has been accreditated
-	displayAccreditated(participant.accreditated);
-
+	$('#card_time_registrated').text(new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#"));
 	$('#card_comment').text('Dette er en hardkodet kommentar om denne deltakeren');
+	
+	//Display green check-icon if participant has been accreditated
+	displayAccreditated(participant.entry_id, participant.accreditated);
+
+	$('#participant_card').show();
+
+
 };
 
 //Display green check-icon and accreditation-button dependent on whether the participant has been accreditated
-function displayAccreditated(accreditated){
+function displayAccreditated(entry_id, accreditated){
+
+	var check_icon;
 	if(accreditated){
 		$('#button_unaccreditate').show();
 		$('#button_accreditate').hide();
 		$('#card_accreditated_mark').show();
 		$('#participant_card').css("background-color", "rgba(34, 190, 52, .2)");
+		check_icon = '<i class="checkmark green icon"></i>';
 	}
 	else{
 		$('#button_accreditate').show();
 		$('#button_unaccreditate').hide();
 		$('#card_accreditated_mark').hide();
 		$('#participant_card').css("background-color", " rgba(257, 257, 257, 1)");
+		check_icon = '';
+
 	}
+
+	//Display in the table if participant is accreditated or not
+	$('#participants_table td').each(function() {
+		var td_value =  $(this).attr("value");
+		if(td_value == entry_id){
+			$(this).html(check_icon);
+		}
+	 });
 }
 
 
@@ -75,5 +102,5 @@ function accreditateParticipant(accreditated){
 
 //Callback function when a participant has been accreditated
 function participantAccreditated(accreditation){
-	displayAccreditated(accreditation.accreditated);
+	displayAccreditated(accreditation.entry_id, accreditation.accreditated);
 }
