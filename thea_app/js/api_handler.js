@@ -112,8 +112,9 @@ function apiGetParticipants(callback){
     doGet(baseURL + 'participants/', callback)
 }
 
-function apiPutParticipant(entry_id, jsonData, callback, comment)
+function apiPutParticipant(entry_id, jsonData, callback, comment){
     doPut(baseURL + 'participants/' + entry_id, jsonData, callback, {'comment': comment})
+}
 
 function apiPutAccreditation(entry_id, jsonData, callback){
     doPut(baseURL + 'participants/'+entry_id+'/accreditated', jsonData, callback, {})
