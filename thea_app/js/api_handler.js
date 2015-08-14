@@ -12,7 +12,6 @@
 
 // URLs used to call the API
 var baseURL = 'http://92.62.34.78:8080/thea-backend/v1/';
-var participantsURL = baseURL + 'participants/'
 
 
 // Perform GET-call to API with given URL. Run callback-function with the result
@@ -21,13 +20,7 @@ function doGet(urlGET, callback){
         type: 'GET',
         url: urlGET,
         success: function(result){
-            if(result.error){
-                // TODO: do something with the potential error, and return
-                console.log(result.error);
-                callback(result.data);
-            }else{
-                callback(result.data);
-            }
+            handleResult(result, callback);
         },
         error: function(){
             console.log('Got an error from server while running GET');
@@ -37,7 +30,6 @@ function doGet(urlGET, callback){
 
 // Perform POST-call to API with given URL.
 function doPost(urlPOST, jsonData, callback){
-    console.log(jsonData);
     $.ajax({
         type: 'POST',
         contentType: "application/json",
@@ -45,18 +37,40 @@ function doPost(urlPOST, jsonData, callback){
         data: JSON.stringify(jsonData),
         dataType: "json",
         success: function(result){
-            if(result.error){
-                // TODO: do something with the potential error from server, and return
-                console.log(result.error);
-                callback(result.data);
-            }else{
-                callback(result.data);
-            }
+            handleResult(result, callback);
         },
         error: function(){
             console.log('Got an error from server while running POST');
         } 
     });
+}
+
+// Perform PUT-call to API with given URL.
+function doPut(urlPUT, jsonData, callback){
+    $.ajax({
+        type: 'PUT',
+        contentType: "application/json",
+        url: urlPUT,
+        data: JSON.stringify(jsonData),
+        dataType: "json",
+        success: function(result){
+            handleResult(result, callback);
+        },
+        error: function(){
+            console.log('Got an error from server while running PUT');
+        } 
+    });    
+}
+
+//Handle result from the API
+function handleResult(result, callback){
+    if(result.error){
+        // TODO: do something with the potential error from server, and return
+        console.log(result.error);
+        callback(result.data);
+    }else{
+        callback(result.data);
+    }
 }
 
 // http://docs.thea.apiary.io/#reference/club/clubs/list-all-clubs
@@ -85,8 +99,8 @@ function apiGetAdditions(callback){
 }
 
 // http://docs.thea.apiary.io/#reference/participant/participants/add-a-participant
-function apiPostParticipant(json, callback){
-    doPost(baseURL+'participants/', json, callback);
+function apiPostParticipant(jsonData, callback){
+    doPost(baseURL+'participants/', jsonData, callback);
 }
 
 function apiGetParticipant(entry_id, callback){
@@ -95,4 +109,8 @@ function apiGetParticipant(entry_id, callback){
 
 function apiGetParticipants(callback){
     doGet(baseURL + 'participants/', callback)
+}
+
+function apiPutAccreditation(entry_id, jsonData, callback){
+    doPut(baseURL + 'participants/'+entry_id+'/accreditated', jsonData, callback)
 }
