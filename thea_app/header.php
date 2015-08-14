@@ -41,11 +41,10 @@
 			  	
 		  	<div class="ui grid container">
 		  		<div class="computer only three wide column" >
-		  		<!-- Ikke bra! -->
 					<div class="ui vertical inverted menu" >
 						<?php require 'include/menu.php';?>
 					</div>
 		  		</div>	  
 
-					<div class="ui thirteen wide column margin-top-30 fade-in" id="maincontent">
+					<div class="ui thirteen wide column margin-top-30 fade-in" id="context">
 				

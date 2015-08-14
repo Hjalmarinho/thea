@@ -37,18 +37,18 @@
 				<div class="field four wide">
 					<select class="ui fluid dropdown" id="birthmonth">
 						<option value="">mm</option>
-						<option value="AL">januar</option>
-						<option value="AK">februar</option>
-						<option value="AZ">mars</option>
-						<option value="AR">april</option>
-						<option value="AR">mai</option>
-						<option value="AR">juni</option>
-						<option value="AR">juli</option>
-						<option value="AR">august</option>
-						<option value="AR">september</option>
-						<option value="AR">oktober</option>
-						<option value="AR">november</option>
-						<option value="AR">desember</option>
+						<option value="01">januar</option>
+						<option value="02">februar</option>
+						<option value="03">mars</option>
+						<option value="04">april</option>
+						<option value="05">mai</option>
+						<option value="06">juni</option>
+						<option value="07">juli</option>
+						<option value="08">august</option>
+						<option value="09">september</option>
+						<option value="10">oktober</option>
+						<option value="11">november</option>
+						<option value="12">desember</option>
 					</select>
 				</div>
 
@@ -71,12 +71,7 @@
 			<div class="inline fields">
 				<label class="field four wide">Klubb: </label>
 				<div class="field nine wide">
-					<select class="ui fluid dropdown">
-						<option value="">Velg klubb</option>
-						<option value="AL">NTNUI</option>
-						<option value="AK">TSI</option>
-						<option value="AZ">OSI</option>
-						<option value="AR">Studentspretten</option>
+					<select class="ui fluid dropdown" id="clubs">
 					</select>
 				</div>
 			</div>

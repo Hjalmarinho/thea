@@ -6,18 +6,15 @@ $(document).ready(function(){
 	});
 
 	$('.ui.rating').rating();
-	$('#selectgender').val('Male');
 
+	apiGetParticipant(entry_id, displayParticipant);
+
+	apiGetClubs(displayClubs)
 
 })
 
 var entry_id = GetURLParameter('entry_id');
 
-apiGetParticipant(entry_id, displayParticipant);
-
-$('#selectgender').on('change', function(){
-	console.log('changed')
-})
 
 function GetURLParameter(sParam){
 	var sPageURL = window.location.search.substring(1);
@@ -30,6 +27,14 @@ function GetURLParameter(sParam){
 	}
 }
 
+function displayClubs(clubs){
+    if(clubs){
+        $.each(clubs, function(i, club){
+           $('#clubs').append('<option value='+club.club_id+'>'+club.club_name+'</option>');      
+       });
+    }
+}
+
 
 function displayParticipant(participant){
 	var time_registrated = new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#")
@@ -38,10 +43,11 @@ function displayParticipant(participant){
 	$('#last_name').attr('value', participant.person.last_name)
 	$('#time_registrated').text('Påmeldt: ' + time_registrated)
 
-	$('#selectgender').val(participant.person.gender).change()
+	$('#selectgender').val(participant.person.gender)
 
-		console.log($('#selectgender').val())
-
+	console.log('Kjønn: ' + $('#selectgender').val())
+	$('#clubs').val(participant.club.club_id)
+	console.log('Klubb: ' + $('#clubs').val())
 
 	if(participant.is_student){
 		$('#studentCheckbox').val($('#studentCheckbox').prop('checked', true))
@@ -64,7 +70,8 @@ function displayParticipant(participant){
 	}
 	var birthdate = participant.person.birthdate.split('-')
 	$('#birthday').attr('value', birthdate[2])
+	$('#birthmonth').val(birthdate[1])
+	console.log('Bursdagsmåned: ' + $('#birthmonth').val())
 	$('#birthyear').attr('value', birthdate[0])
-	console.log(participant.person.birthdate.split('-'))
 	console.log(participant)
 }

@@ -22,6 +22,10 @@ $(document).ready(function(){
 	//Initialize tablesort
 	$('table').tablesort();
 
+	$('.ui.sticky').sticky({
+    	context: '#context'
+  	});
+
 });
 
 
