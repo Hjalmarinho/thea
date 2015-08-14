@@ -52,6 +52,7 @@ function displayParticipant(participant){
 	if(participant.is_student){
 		$('#studentCheckbox').val($('#studentCheckbox').prop('checked', true))
 	}
+	console.log('Klubbmedlem: ' + participant.is_clubmember)
 	if(participant.is_clubmember){
 		$('#clubmemberCheckbox').val($('#clubmemberCheckbox').prop('checked', true))
 	}
@@ -59,7 +60,6 @@ function displayParticipant(participant){
 		$('#accreditatedCheckbox').val($('#accreditatedCheckbox').prop('checked', true))
 		
 	}
-	$('#club_name').text(participant.club.club_name)
 	$('.participantname').text(participant.person.first_name + ' ' + participant.person.last_name)
 	$('#travel_information').attr('value', participant.travel_information)
 	$('#allergies').attr('value', participant.person.allergies)

@@ -13,23 +13,21 @@
 		<div class="ui form" id="entry-form">
 
 			<div class="inline fields">	
-				<label class="field four wide">Fornavn: </label>
+				<label class="field four wide">Fornavn</label>
 				<div class="field nine wide">
 					<input type="text" value="" id="first_name">
 				</div>
 			</div>
 			
 			<div class="inline fields">
-				<label class="field four wide">Etternavn: </label>
+				<label class="field four wide">Etternavn</label>
 				<div class="field nine wide">
 					<input type="text" value="" id="last_name">
 				</div>
 			</div>
 
-		
-
 			<div class="inline fields">
-				<label class="field four wide">Fødselsdato: </label>
+				<label class="field four wide">Fødselsdato</label>
 				<div class="field two wide">
 					<input type="text" name="birthdate" id="birthday" placeholder="dd">
 				</div>
@@ -69,65 +67,74 @@
 			</div>
 
 			<div class="inline fields">
-				<label class="field four wide">Klubb: </label>
-				<div class="field nine wide">
-					<select class="ui fluid dropdown" id="clubs">
-					</select>
-				</div>
-			</div>
-
-			<div class="inline field">
-				<div class="ui checkbox">
-					<input type="checkbox" tabindex="0" class="hidden" id="accreditatedCheckbox">
-					<label>Akkreditert</label>
-				</div>
-			</div>
-
-			<div class="inline field">
-				<div class="ui checkbox">
-					<input type="checkbox" tabindex="0" class="hidden" id="studentCheckbox">
-					<label>Student</label>
-				</div>
-			</div>
-
-			<div class="inline field">
-				<div class="ui checkbox">
-					<input type="checkbox" tabindex="0" class="hidden" id="clubmemberCheckbox">
-					<label>Medlem av <span id="club_name"></span></label>
+					<label class="field four wide">Student</label>
+				<div class="ui fitted checkbox">
+					<input type="checkbox" tabindex="0" id="studentCheckbox">
 				</div>
 			</div>
 
 			<div class="inline fields">
-				<label class="field four wide">Reiseinformasjon: </label>
-				<div class="field nine wide">
-					 <input type="text" value="" id="travel_information">
-					
-				</div>
-			</div>
-
-			<div class="inline fields">
-				<label class="field four wide">Allergier: </label>
-				<div class="field nine wide">
-					<input type="text" value="" id="allergies">
-				</div>
-			</div>
-
-			<div class="inline fields">
-				<label class="field four wide">E-post: </label>
+				<label class="field four wide">E-post</label>
 				<div class="field nine wide">
 					<input type="text" value="" id="email">
 					</div>
 			</div>
 
 			<div class="inline fields">
-				<label class="field four wide">Telefonnummer: </label>
+				<label class="field four wide">Telefonnummer</label>
 				<div class="field nine wide">
 					<input type="text" value="" id="phone">
 				</div>
 			</div>
 
 			<div class="inline fields">
-				<label class="field four wide">Betaling: </label>
+				<label class="field four wide">Reiseinformasjon</label>
+				<div class="field nine wide">
+					 <input type="text" value="" id="travel_information">
+				</div>
+			</div>
+
+			<div class="inline fields">
+				<label class="field four wide">Allergier</label>
+				<div class="field nine wide">
+					<input type="text" value="" id="allergies">
+				</div>
+			</div>
+
+			<h4 class="ui dividing header">Deltakerinformasjon</h4>
+
+			<div class="inline fields">
+				<label class="field four wide">Klubb</label>
+				<div class="field nine wide">
+					<select class="ui fluid dropdown" id="clubs">
+					</select>
+				</div>
+			</div>
+
+
+			<div class="inline fields">
+					<label class="field four wide">Medlem av klubb </label>
+				<div class="ui checkbox">
+					<input type="checkbox" tabindex="0" id="clubmemberCheckbox">
+				</div>
+			</div>
+
+			<div class="inline fields">
+					<label class="field four wide">Akkreditert</label>
+				<div class="ui checkbox">
+					<input type="checkbox" tabindex="0" class="hidden" id="accreditatedCheckbox">
+				</div>
+			</div>
+
+			<h4 class="ui dividing header">Betaling</h4>
+			
+			<div class="inline fields">
+				<label class="field four wide">Har betalt </label>
+				<span class="field six wide">500,-</span>
+			</div>
+
+			<div class="inline fields">
+				<label class="field four wide">Refundering</label>
 				<div class="field six wide">
 					<input type="text" value="" id="payment">
 				</div>
@@ -136,9 +143,13 @@
 				</div>
 			</div>
 
-			Har betalt: 550kr
-		</div>
-	</div>
+			<div class="inline fields">
+				<label class="field four wide">Blitt refundert </label>
+				<span class="field six wide">250,-</span>
+			</div>
+
+		</div><!-- /.form -->
+	</div> <!-- /.ten.wide.column -->
 
 	<div class="ui six wide column">
 
@@ -170,7 +181,7 @@
 				<button class="ui button">Oppdater</button>
 
 		</div>
-	</div>
+	</div> <!-- /.six.wide.column -->
 
 <div class="row">
 	<div class="sixteen wide column">
