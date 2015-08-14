@@ -28,16 +28,19 @@ function initiateSearch(){
 function displayParticipants(participants){
 	var participants_table_body = ('#participants_table_body')
 	$.each(participants, function (i, participant){
-		var check_icon = '';
-		if(participant.accreditated){
-			check_icon = '<i class="checkmark green icon"></i>';
-		}
 
-		var tablerow = 		'<tr onclick="participantClicked('+participant.entry_id+')">'+ 
+		var background_color = "";
+		if(participant.accreditated){
+			background_color = "background-color: rgba(34, 190, 52, .2)";
+		}else{
+			background_color = "background-color: rgba(257, 257, 257, 1)";
+		}
+		var tablerow = 		'<tr style="'+background_color+'" value="'+participant.entry_id+'" onclick="participantClicked('+participant.entry_id+')">'+ 
 								'<td>' + participant.person.first_name +' '+participant.person.last_name + '</a></td>'+
-								'<td>' + participant.club.club_name + '</td>'+
-								'<td value="'+participant.entry_id+'">' + check_icon +'</td>'+
+								'<td>' + participant.club.club_name + '</td>'
 							'</tr>';
+							
+
 		$(participants_table_body).append(tablerow);
 	});
 	initiateSearch();
@@ -72,28 +75,29 @@ function displayAccreditated(entry_id, accreditated){
 	$('#participant_card').transition('fade up', '500ms');
 
 
-	var check_icon;
 	if(accreditated){
 		$('#button_unaccreditate').show();
 		$('#button_accreditate').hide();
 		$('#card_accreditated_mark').show();
 		$('#participant_card').css("background-color", "rgba(34, 190, 52, .2)");
-		check_icon = '<i class="checkmark green icon"></i>';
 	}
 	else{
 		$('#button_accreditate').show();
 		$('#button_unaccreditate').hide();
 		$('#card_accreditated_mark').hide();
-		$('#participant_card').css("background-color", " rgba(257, 257, 257, 1)");
-		check_icon = '';
+		$('#participant_card').css("background-color", "rgba(257, 257, 257, 1)");
 
 	}
 
 	//Display in the table if participant is accreditated or not
-	$('#participants_table td').each(function() {
-		var td_value =  $(this).attr("value");
-		if(td_value == entry_id){
-			$(this).html(check_icon);
+	$('#participants_table tr').each(function() {
+		var tr_value =  $(this).attr("value");
+		if(tr_value == entry_id){
+			if(accreditated){
+				$(this).css("background-color", "rgba(34, 190, 52, .2)");
+			}else{
+				$(this).css("background-color", "rgba(257, 257, 257, 1)");
+			}
 		}
 	 });
 }

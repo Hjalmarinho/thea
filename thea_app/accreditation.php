@@ -15,12 +15,11 @@
 	<div class="ten wide column" >
 
 		<!-- Participants table -->
-		<table id="participants_table" class="ui sortable celled striped table" style="cursor: pointer">
+		<table id="participants_table" class="ui sortable celled striped table" style="cursor: pointer" onclick="initiateSearch()">
 			<thead>
 				<tr>
 					<th class="five wide ascending">Navn</th>
 					<th class="ten wide">Klubb</th>
-					<th class="one wide">Akkreditert</th>
 				</tr>
 			</thead>
 			<tbody id="participants_table_body">				
