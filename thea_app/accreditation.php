@@ -13,7 +13,7 @@
 		<table id="participants_table" class="ui sortable celled striped table" style="cursor: pointer">
 			<thead>
 				<tr>
-					<th class="five wide ascending">Fornavn</th>
+					<th class="five wide ascending">Navn</th>
 					<th class="ten wide">Klubb</th>
 					<th class="one wide">Akkreditert</th>
 				</tr>

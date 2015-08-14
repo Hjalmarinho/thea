@@ -101,7 +101,7 @@ function displayTeams(teams){
 
 //Redirect user to payment-page
 function redirectToPayment(data){
-    // window.open(data.payment_url);
+    window.open(data.payment_url);
 }
 
 

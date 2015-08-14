@@ -21,13 +21,7 @@ function doGet(urlGET, callback){
         type: 'GET',
         url: urlGET,
         success: function(result){
-            if(result.error){
-                // TODO: do something with the potential error, and return
-                console.log(result.error);
-                callback(result.data);
-            }else{
-                callback(result.data);
-            }
+            handleResult(result, callback);
         },
         error: function(){
             console.log('Got an error from server while running GET');
@@ -45,18 +39,23 @@ function doPost(urlPOST, jsonData, callback){
         data: JSON.stringify(jsonData),
         dataType: "json",
         success: function(result){
-            if(result.error){
-                // TODO: do something with the potential error from server, and return
-                console.log(result.error);
-                callback(result.data);
-            }else{
-                callback(result.data);
-            }
+            handleResult(result, callback);
         },
         error: function(){
             console.log('Got an error from server while running POST');
         } 
     });
+}
+
+//Handle result from the API
+function handleResult(result, callback){
+    if(result.error){
+        // TODO: do something with the potential error from server, and return
+        // console.log(result.data);
+        callback(result.data);
+    }else{
+        callback(result.data);
+    }
 }
 
 // http://docs.thea.apiary.io/#reference/club/clubs/list-all-clubs
