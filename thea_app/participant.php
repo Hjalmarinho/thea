@@ -4,11 +4,27 @@
 
 	<div class="header">
 		<!-- <i class="large sidebar icon" id="menubutton"></i> -->
-		<h1 class="participantname">Deltaker</h1>
+		<h1 class="ui dividing participantname">Deltaker</h1>
 	</div>
 
 </div>
-<div class="ui grid">
+
+<div class="ui modal" id="approve-update">
+	<i class="close icon"></i>
+  <div class="header">
+    Er du sikker?
+  </div>
+  <div class="content">
+    Skriv en kommentar din gjøk
+    <textarea rows="4" id="update-comment" style="max-width:100%;width:100%;"></textarea>
+  </div>
+  <div class="actions">
+    <div class="ui button">Avbryt</div>
+    <div class="ui button">Oppdater</div>
+  </div>
+</div>
+
+<div class="ui stackable two column grid">
 	<div class="ui ten wide column">
 		<div class="ui form" id="entry-form">
 
@@ -153,8 +169,7 @@
 
 	<div class="ui six wide column">
 
-		<div class="ui special cards">
-			<div class="fluid card">
+		<div class="ui fluid special card">
 				<div class="blurring dimmable image">
 					<div class="ui dimmer">
 						<div class="content">
@@ -172,14 +187,13 @@
 					</div>
 				</div>
 				<div class="extra content">
-					<span id="comment">Ingen kommentarer</span>
+					<textarea rows="4" id="comment" style="max-width:100%;width:100%;">Ingen kommentarer</textarea>
 				</div>
-			</div>
 		</div>
 
 		<div class="field sixteen wide">				
-			<button class="fluid ui button">Fits container</button>
-
+			<button class="fluid ui button" onclick="updateParticipant()" id="updateParticipant">Oppdater deltaker</button>
+			<!-- <button class="fluid ui button" onclick="updateParticipant()" id="updateParticipant">Oppdater deltaker</button> -->
 		</div>
 	</div> <!-- /.six.wide.column -->
 

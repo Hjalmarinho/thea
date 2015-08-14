@@ -26,6 +26,8 @@ $(document).ready(function(){
     	context: '#context'
   	});
 
+  	$('.ui.small.modal').modal('show');
+
 });
 
 

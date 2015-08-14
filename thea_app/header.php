@@ -10,7 +10,7 @@
 		<script src="js/semantic.min.js"></script>
 		<script src="js/tablesort.js"></script>
 		<link rel="stylesheet" href="css/semantic.min.css"></link>
-		<link rel="stylesheet" href="css/style.css"></link>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
 	    <?php // Include React ?>
 		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script> -->
 		<script src="js/react.js"></script>

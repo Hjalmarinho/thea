@@ -46,12 +46,13 @@ function doPost(urlPOST, jsonData, callback){
 }
 
 // Perform PUT-call to API with given URL.
-function doPut(urlPUT, jsonData, callback){
+function doPut(urlPUT, jsonData, callback, headerData){
     $.ajax({
         type: 'PUT',
         contentType: "application/json",
         url: urlPUT,
         data: JSON.stringify(jsonData),
+        header: headerData,
         dataType: "json",
         success: function(result){
             handleResult(result, callback);
@@ -111,6 +112,9 @@ function apiGetParticipants(callback){
     doGet(baseURL + 'participants/', callback)
 }
 
+function apiPutParticipant(entry_id, jsonData, callback, comment)
+    doPut(baseURL + 'participants/' + entry_id, jsonData, callback, {'comment': comment})
+
 function apiPutAccreditation(entry_id, jsonData, callback){
-    doPut(baseURL + 'participants/'+entry_id+'/accreditated', jsonData, callback)
+    doPut(baseURL + 'participants/'+entry_id+'/accreditated', jsonData, callback, {})
 }
