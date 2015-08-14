@@ -30,7 +30,9 @@
 	</div> <!-- /table column -->
 
 	<div class="six wide column" >
-		<div class="ui special link cards">
+
+		<!-- Participant card -->
+		<div class="ui special cards">
 			<div class="card" id="participant_card" style="display: none">
 				<div class="blurring dimmable image">
 					<div class="ui dimmer">
@@ -56,6 +58,10 @@
 						<i class="comment outline icon"></i>
 						<input type="text" placeholder="Skriv en kommentar..." id="card_comment">
 					</div>
+				</div>
+				<div class="ui bottom attached button" id="button_comment" onclick="saveComment()">
+					<i class="add icon"></i>
+					Lagre kommentar
 				</div>
 			</div>
 		</div>

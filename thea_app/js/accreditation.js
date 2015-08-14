@@ -56,7 +56,7 @@ function displayParticipant(participant){
 	$('#participant_card').val(participant.entry_id);
 	$('#card_name').text(participant.person.first_name+' '+participant.person.last_name);
 	$('#card_time_registrated').text(new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#"));
-	$('#card_comment').val('Dette er en hardkodet kommentar om denne deltakeren, som skal kunne endres her.');
+	$('#card_comment').val(participant.comment);
 	
 	//Display green check-icon if participant has been accreditated
 	displayAccreditated(participant.entry_id, participant.accreditated);
@@ -69,7 +69,7 @@ function displayParticipant(participant){
 //Display green check-icon and accreditation-button dependent on whether the participant has been accreditated
 function displayAccreditated(entry_id, accreditated){
 	$('#participant_card').transition('fade', '0ms');
-	$('#participant_card').transition('fade up', '750ms');
+	$('#participant_card').transition('fade up', '500ms');
 
 
 	var check_icon;
@@ -99,6 +99,10 @@ function displayAccreditated(entry_id, accreditated){
 }
 
 
+function displayCommentSaved(comment){
+	console.log(comment);
+}
+
 //Accreditate participant by getting the entry_id from the value-attribute of the participant_card
 function accreditateParticipant(accreditated){
 	var entry_id = $( '#participant_card' ).val();
@@ -109,4 +113,13 @@ function accreditateParticipant(accreditated){
 //Callback function when a participant has been accreditated
 function participantAccreditated(accreditation){
 	displayAccreditated(accreditation.entry_id, accreditation.accreditated);
+}
+
+//Called when user clicks the "Lagre kommentar"-button
+function saveComment(){
+	var entry_id = $( '#participant_card' ).val();
+	var comment = $('#card_comment').val();
+	var jsonData = {"comment": comment};
+
+	apiPutComment(entry_id, jsonData, displayCommentSaved);
 }
