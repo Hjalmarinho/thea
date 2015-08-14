@@ -24,7 +24,8 @@
 					<div class="ui dimmer">
 						<div class="content">
 							<div class="center">
-								<div class="ui inverted button" onclick="accreditateParticipant()">Akkrediter</div>
+								<div id="button_accreditate" class="ui inverted green button" onclick="accreditateParticipant(true)">Akkrediter</div>
+								<div id="button_unaccreditate" class="ui inverted red button" onclick="accreditateParticipant(false)">Avakkrediter</div>
 							</div>
 						</div>
 					</div>

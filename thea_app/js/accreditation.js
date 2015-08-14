@@ -44,25 +44,36 @@ function displayParticipant(participant){
 	$('#card_time_registrated').text(time_registrated);
 
 	//Display green check-icon if participant has been accreditated
-	if(participant.accreditated){
-		$('#card_accreditated_mark').show();
-	}
-	else{
-		$('#card_accreditated_mark').hide();
-	}
+	displayAccreditated(participant.accreditated);
 
 	$('#card_comment').text('Dette er en hardkodet kommentar om denne deltakeren');
 };
 
+//Display green check-icon and accreditation-button dependent on whether the participant has been accreditated
+function displayAccreditated(accreditated){
+	if(accreditated){
+		$('#button_unaccreditate').show();
+		$('#button_accreditate').hide();
+		$('#card_accreditated_mark').show();
+		$('#participant_card').css("background-color", "rgba(34, 190, 52, .2)");
+	}
+	else{
+		$('#button_accreditate').show();
+		$('#button_unaccreditate').hide();
+		$('#card_accreditated_mark').hide();
+		$('#participant_card').css("background-color", " rgba(257, 257, 257, 1)");
+	}
+}
+
 
 //Accreditate participant by getting the entry_id from the value-attribute of the participant_card
-function accreditateParticipant(){
+function accreditateParticipant(accreditated){
 	var entry_id = $( '#participant_card' ).val();
-	var jsonData = {"accreditated": true};
+	var jsonData = {"accreditated": accreditated};
 	apiPutAccreditation(entry_id, jsonData, participantAccreditated);
 }
 
 //Callback function when a participant has been accreditated
 function participantAccreditated(accreditation){
-	$('#accreditated_mark').show();
+	displayAccreditated(accreditation.accreditated);
 }
