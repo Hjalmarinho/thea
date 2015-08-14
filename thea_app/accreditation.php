@@ -31,7 +31,7 @@
 	<div class="six wide column" >
 
 		<!-- Participant card -->
-		<div class="ui special cards">
+		<div class="ui special cards sticky">
 			<div class="card" id="participant_card" style="display: none">
 				<div class="blurring dimmable image">
 					<div class="ui dimmer">
