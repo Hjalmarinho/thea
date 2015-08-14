@@ -11,29 +11,33 @@
 					<th>Klubb</th>
 				</tr>
 			</thead>
-			<tbody id="accreditations_body">
+			<tbody id="accreditations_body">				
+
 			</tbody>
 		</table>
 	</div> <!-- /table column -->
 
-	<div class="six wide column">
+	<div class="six wide column" >
 		<div class="ui special cards">
-			<div class="card">
+			<div class="card" id="accreditant_card" style="display: none">
 				<div class="blurring dimmable image">
 					<div class="ui dimmer">
 						<div class="content">
 							<div class="center">
-								<div class="ui inverted button">Akkrediter</div>
+								<div class="ui inverted button" onclick="accreditateParticipant()">Akkrediter</div>
 							</div>
 						</div>
 					</div>
 					<img src="http://semantic-ui.com/images/avatar/large/elliot.jpg">
 				</div>
 				<div class="content">
-					<a class="header">Øystein Molnes</a>
+					<a class="header" id="card_name">Øystein Molnes</a>
 					<div class="meta">
 						<span class="date" id="time_registrated"></span>
 					</div>
+				</div>
+				<div class="extra content" id="comment">
+						Denne brukeren har ingen kommentar...
 				</div>
 			</div>
 		</div>

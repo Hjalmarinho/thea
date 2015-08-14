@@ -162,7 +162,8 @@ function uiGetAdditions(){
     var additions = [];
     $('#additions input:checked').each(function(){
         var addition_id = parseInt($(this).attr('value'));
-        additions.push({addition_id});
+        var num_items = parseInt('1');
+        additions.push({addition_id, num_items});
     });
     return additions;
 }
