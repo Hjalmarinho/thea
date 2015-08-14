@@ -39,7 +39,7 @@
 		</div>-->
 		<div class="pusher">
 			  	
-		  	<div class="ui grid container">
+		  	<div class="ui grid">
 		  		<div class="computer only three wide column" >
 					<div class="ui vertical inverted menu" >
 						<?php require 'include/menu.php';?>

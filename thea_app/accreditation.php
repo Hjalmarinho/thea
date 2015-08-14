@@ -1,30 +1,44 @@
 <?php require('header.php'); ?>
 
 <div class="ui grid">
+	<!-- Search field -->
+	<div class="row">
+		<div class="ten wide column" >
+			<!-- Search field -->
+			<div class="ui icon input">
+				<input type="text" id="search_input" placeholder="Søk...">
+				<i class="search icon"></i>
+			</div>
+		</div>
+	</div>
 
 	<div class="ten wide column" >
-		<table id="participants" class="ui sortable celled striped table" style="cursor: pointer">
+
+		<!-- Participants table -->
+		<table id="participants_table" class="ui sortable celled striped table" style="cursor: pointer" onclick="initiateSearch()">
 			<thead>
 				<tr>
-					<th>Fornavn</th>
-					<th class="ascending">Etternavn</th>
-					<th>Klubb</th>
+					<th class="five wide ascending">Navn</th>
+					<th class="ten wide">Klubb</th>
 				</tr>
 			</thead>
-			<tbody id="participants_body">				
+			<tbody id="participants_table_body">				
 
 			</tbody>
 		</table>
 	</div> <!-- /table column -->
 
 	<div class="six wide column" >
-		<div class="ui special cards">
+
+		<!-- Participant card -->
+		<div class="ui sticky special cards">
 			<div class="card" id="participant_card" style="display: none">
 				<div class="blurring dimmable image">
 					<div class="ui dimmer">
 						<div class="content">
 							<div class="center">
-								<div class="ui inverted button" onclick="accreditateParticipant()">Akkrediter</div>
+								<div id="button_accreditate" class="ui inverted green button" onclick="accreditateParticipant(true)">Akkrediter</div>
+								<div id="button_unaccreditate" class="ui inverted red button" onclick="accreditateParticipant(false)">Avakkrediter</div>
 							</div>
 						</div>
 					</div>
@@ -38,7 +52,16 @@
 					<br>
 					<p id="card_accreditated_mark" style="display:none"><i class="checkmark green icon"></i>Akkreditert</p>
 				</div>
-				<div class="extra content" id="card_comment"></div>
+				<div class="extra content">
+					<div class="ui large transparent left icon input">
+						<i class="comment outline icon"></i>
+						<input type="text" placeholder="Skriv en kommentar..." id="card_comment">
+					</div>
+				</div>
+				<div class="ui bottom attached button" id="button_comment" onclick="saveComment()">
+					<i class="add icon"></i>
+					Lagre kommentar
+				</div>
 			</div>
 		</div>
 	</div> <!-- /card column -->
