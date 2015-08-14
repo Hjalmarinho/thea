@@ -178,7 +178,7 @@
 							</div>
 						</div>
 					</div>
-					<img src="http://semantic-ui.com/images/avatar/large/elliot.jpg">
+					<img id="portrait" src="http://semantic-ui.com/images/avatar/large/elliot.jpg">
 				</div>
 				<div class="content">
 					<a class="header participantname">Deltaker</a>

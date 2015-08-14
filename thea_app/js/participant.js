@@ -17,6 +17,8 @@ $(document).ready(function(){
 
 	apiGetClubs(displayClubs)
 
+	apiGetPortrait(entry_id, displayPortrait)
+
 })
 
 	var local_person_id, local_user_id, local_entry_id, local_time_registrated, local_ticket_id, local_status
@@ -34,6 +36,10 @@ function GetURLParameter(sParam){
 			return sParameterName[1];
 		}
 	}
+}
+
+function displayPortrait(image){
+	$('#portrait').attr('src', 'data:image/jpeg;base64,' + image.image_data)
 }
 
 function displayClubs(clubs){

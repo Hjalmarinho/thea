@@ -123,3 +123,7 @@ function apiPutAccreditation(entry_id, jsonData, callback){
 function apiPutComment(entry_id, jsonData, callback){
     doPut(baseURL + 'participants/'+entry_id+'/comment', jsonData, callback)
 }
+
+function apiGetPortrait(entry_id, callback){
+    doGet(baseURL + 'participants/' + entry_id + '/portrait', callback)
+}
