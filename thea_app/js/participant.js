@@ -1,10 +1,5 @@
 $(document).ready(function(){
 	
-
-
-
-	$('.ui.dropdown').dropdown()
-
 	$('.special.card .image').dimmer({
   		on: 'hover'
 	});
@@ -13,20 +8,21 @@ $(document).ready(function(){
         $('#approve-update').modal('show');    
      });
 
-	apiGetParticipant(entry_id, displayParticipant);
-
 	apiGetClubs(displayClubs)
-
-	apiGetPortrait(entry_id, displayPortrait)
+	apiGetParticipant(local_entry_id, displayParticipant);
+	apiGetPortrait(local_entry_id, displayPortrait)
 
 })
 
-	var local_person_id, local_user_id, local_entry_id, local_time_registrated, local_ticket_id, local_status
-
-	var entry_id = GetURLParameter('entry_id');
+//Global variables, updated in displayParticipant
+var local_entry_id = GetURLParameter('entry_id');
+var local_status
+var local_birthdate
+var local_time_registrated
+var local_ticket_id
+var local_person_id
+var local_user_id
 	
-
-
 function GetURLParameter(sParam){
 	var sPageURL = window.location.search.substring(1);
 	var sURLVariables = sPageURL.split('&');
@@ -50,8 +46,18 @@ function displayClubs(clubs){
     }
 }
 
-
 function displayParticipant(participant){
+
+	console.log(participant)
+	//Update global variables
+	local_status = participant.status
+	local_time_registrated = participant.time_registrated
+	local_ticket_id = participant.ticket_id
+	local_person_id = participant.person.person_id
+	local_user_id = participant.person.user_id
+	console.log(local_user_id)
+
+	//Caching div id's
 	var id_first_name = $('#first_name')
 	var id_last_name = $('#last_name')
 	var id_gender = $('#selectgender')
@@ -69,29 +75,21 @@ function displayParticipant(participant){
 	var id_birthmonth = $('#birthmonth')
 	var id_birthyear = $('#birthyear')
 	var id_time_registrated = $('#time_registrated')
+	var dropdown = $('.ui.dropdown')
 
-	var local_person_id = participant.person.person_id
-	var local_user_id = participant.person.user_id
-	var local_entry_id = participant.entry_id
-	var local_time_registrated = participant.time_registrated
-	var local_ticket_id = participant.ticket_id
-	var local_status = participant.status
 	var time_registrated = new Date(local_time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#")
 
 	id_first_name.val(participant.person.first_name)
 	id_last_name.val(participant.person.last_name)
-	id_time_registrated.text('Påmeldt: ' + local_time_registrated)
+	id_time_registrated.text('Påmeldt: ' + time_registrated)
 
-	id_gender.val(participant.person.gender)
+	dropdown.has(id_gender).dropdown('set selected', participant.person.gender);
 
-	console.log('Kjønn: ' + id_gender.val())
-	id_clubs.val(participant.club.club_id)
-	console.log('Klubb: ' + id_clubs.val())
+	dropdown.has(id_clubs).dropdown('set selected', participant.club.club_id);
 
 	if(participant.is_student){
 		id_student.val(id_student.prop('checked', true))
 	}
-	console.log('Klubbmedlem: ' + participant.is_clubmember)
 	if(participant.is_clubmember){
 		id_clubmember.val(id_clubmember.prop('checked', true))
 	}
@@ -107,16 +105,18 @@ function displayParticipant(participant){
 	if(participant.comment != null){
 		id_comment.text(participant.comment)
 	}
+
 	var birthdate = participant.person.birthdate.split('-')
 	id_birthday.val(birthdate[2])
-	id_birthmonth.val(birthdate[1])
-	console.log('Bursdagsmåned: ' + id_birthmonth.val())
+	dropdown.has(id_birthmonth).dropdown('set selected', new Date(local_time_registrated).customFormat("#MMM#"));
 	id_birthyear.val(birthdate[0])
-	console.log(participant)
 }
 
 function updateParticipant(){
+
 	var local_birthdate = $('#birthyear').val() + '-' + $('#birthmonth').val() + '-' + $('#birthday').val()
+	var comment = $('#update-comment').val()
+	
 	var putObject = {}
 	putObject['accreditated'] = $('#accreditatedCheckbox').is(':checked')
 	putObject['comment'] = $('#comment').val()
@@ -133,7 +133,7 @@ function updateParticipant(){
 	putObject.club['club_name'] = $('#clubs option[value="' + $('#clubs').val() + '"').text()
 
 	putObject['person'] = {}
-	putObject.person['first_name'] = id_first_name.val()
+	putObject.person['first_name'] = $('#first_name').val()
 	putObject.person['last_name'] = $('#last_name').val()
 	putObject.person['gender'] = $('#selectgender').val()
 	putObject.person['birthdate'] = local_birthdate
@@ -144,6 +144,6 @@ function updateParticipant(){
 	putObject.person['portrait_id'] = 'null'
 	putObject.person['user_id'] = local_user_id
 
-	apiPutParticipant(local_entry_id, putObject, null , comment)
+	//apiPutParticipant(local_entry_id, putObject, null , comment)
 	console.log(putObject)
 }

@@ -10,22 +10,21 @@
 </div>
 
 <div class="ui modal" id="approve-update">
-	<i class="close icon"></i>
   <div class="header">
-    Er du sikker?
+    Er du sikker at du vil endre <span class="participantname"></span>?
   </div>
   <div class="content">
-    Skriv en kommentar din gjøk
+    Gjør det lettere å forstå hva som har skjedd, skriv en kommentar!
     <textarea rows="4" id="update-comment" style="max-width:100%;width:100%;"></textarea>
   </div>
   <div class="actions">
-    <div class="ui button">Avbryt</div>
-    <div class="ui button">Oppdater</div>
+    <div class="ui button close">Avbryt</div>
+    <div class="ui button close" onclick="updateParticipant()" >Oppdater</div>
   </div>
 </div>
 
 <div class="ui stackable two column grid">
-	<div class="ui ten wide column">
+	<div class="eight wide column">
 		<div class="ui form" id="entry-form">
 
 			<div class="inline fields">	
@@ -51,18 +50,18 @@
 				<div class="field four wide">
 					<select class="ui fluid dropdown" id="birthmonth">
 						<option value="">mm</option>
-						<option value="01">januar</option>
-						<option value="02">februar</option>
-						<option value="03">mars</option>
-						<option value="04">april</option>
-						<option value="05">mai</option>
-						<option value="06">juni</option>
-						<option value="07">juli</option>
-						<option value="08">august</option>
-						<option value="09">september</option>
-						<option value="10">oktober</option>
-						<option value="11">november</option>
-						<option value="12">desember</option>
+						<option value="Jan">januar</option>
+						<option value="Feb">februar</option>
+						<option value="Mar">mars</option>
+						<option value="Apr">april</option>
+						<option value="Mai">mai</option>
+						<option value="Jun">juni</option>
+						<option value="Jul">juli</option>
+						<option value="Aug">august</option>
+						<option value="Sep">september</option>
+						<option value="Okt">oktober</option>
+						<option value="Nov">november</option>
+						<option value="Des">desember</option>
 					</select>
 				</div>
 
@@ -167,9 +166,9 @@
 		</div><!-- /.form -->
 	</div> <!-- /.ten.wide.column -->
 
-	<div class="ui six wide column">
+	<div class="six wide column">
 
-		<div class="ui fluid special card">
+		<div class="ui special card">
 				<div class="blurring dimmable image">
 					<div class="ui dimmer">
 						<div class="content">
@@ -188,12 +187,13 @@
 				</div>
 				<div class="extra content">
 					<textarea rows="4" id="comment" style="max-width:100%;width:100%;">Ingen kommentarer</textarea>
+
+					<button class="fluid ui button" id="updateParticipant">Oppdater deltaker</button>
 				</div>
 		</div>
 
 		<div class="field sixteen wide">				
-			<button class="fluid ui button" onclick="updateParticipant()" id="updateParticipant">Oppdater deltaker</button>
-			<!-- <button class="fluid ui button" onclick="updateParticipant()" id="updateParticipant">Oppdater deltaker</button> -->
+			
 		</div>
 	</div> <!-- /.six.wide.column -->
 

@@ -5,6 +5,9 @@ $(document).ready(function(){
 		$('.ui.sidebar').sidebar('toggle');
 	});
 
+		$('.ui.dropdown').dropdown()
+
+
 	var maincontent = $('#context')
 	$(window).resize(function(){
 		if($(window).width() < 992){
@@ -36,8 +39,7 @@ function customGenderFormat(gender){
 	return(gender == "Male"?"Mann":"Dame")
 }
 
-Date.prototype.customFormat = function(formatString)
-{
+Date.prototype.customFormat = function(formatString){
     var YYYY,YY,MMMM,MMM,MM,M,DDDD,DDD,DD,D,hhh,hh,h,mm,m,ss,s,ampm,AMPM,dMod,th;
     var dateObject = this;
     YY = ((YYYY=dateObject.getFullYear())+"").slice(-2);
