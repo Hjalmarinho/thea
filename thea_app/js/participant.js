@@ -8,6 +8,10 @@ $(document).ready(function(){
         $('#approve-update').modal('show');    
      });
 
+	$('#creditParticipant').click(function(){
+        $('#credit-update').modal('show');    
+     });
+
 	apiGetClubs(displayClubs)
 	apiGetParticipant(local_entry_id, displayParticipant);
 	apiGetPortrait(local_entry_id, displayPortrait)
@@ -48,14 +52,13 @@ function displayClubs(clubs){
 
 function displayParticipant(participant){
 
-	console.log(participant)
+	//console.log(participant)
 	//Update global variables
 	local_status = participant.status
 	local_time_registrated = participant.time_registrated
 	local_ticket_id = participant.ticket_id
 	local_person_id = participant.person.person_id
 	local_user_id = participant.person.user_id
-	console.log(local_user_id)
 
 	//Caching div id's
 	var id_first_name = $('#first_name')
@@ -146,4 +149,13 @@ function updateParticipant(){
 
 	//apiPutParticipant(local_entry_id, putObject, null , comment)
 	console.log(putObject)
+}
+
+function creditParticipant(){
+	var payment = $('#payment')
+	if(payment.val()){
+		console.log($('#first_name').val() + ' ' + $('#last_name').val() + ' ble kreditert ' + payment.val())
+	} else{
+		console.log("Du har ikke skrevet inn et beløp")
+	}
 }

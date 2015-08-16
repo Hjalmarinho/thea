@@ -23,6 +23,20 @@
   </div>
 </div>
 
+<div class="ui modal" id="credit-update">
+  <div class="header">
+    Er du sikker på at du vil refundere <span class="participantname"></span>?
+  </div>
+  <div class="content">
+    Gjør det lettere å huske hvorfor du refunderte penger, skriv en kommentar!
+    <textarea rows="4" id="update-comment" style="max-width:100%;width:100%;"></textarea>
+  </div>
+  <div class="actions">
+    <div class="ui button close">Avbryt</div>
+    <div class="ui button close" onclick="creditParticipant()" >Refunder</div>
+  </div>
+</div>
+
 <div class="ui stackable two column grid">
 	<div class="eight wide column">
 		<div class="ui form" id="entry-form">
@@ -154,7 +168,7 @@
 					<input type="text" value="" id="payment">
 				</div>
 				<div class="field five wide">
-					<button class="ui button">Refunder</button>
+					<button class="ui button" id="creditParticipant">Refunder</button>
 				</div>
 			</div>
 
@@ -188,7 +202,7 @@
 				<div class="extra content">
 					<textarea rows="4" id="comment" style="max-width:100%;width:100%;">Ingen kommentarer</textarea>
 
-					<button class="fluid ui button" id="updateParticipant">Oppdater deltaker</button>
+					<button class="fluid ui button" id="updateParticipant">Oppdater deltakerinformasjon</button>
 				</div>
 		</div>
 
