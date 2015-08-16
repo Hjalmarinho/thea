@@ -5,12 +5,12 @@
 //  Version:        2.0
 //  Last change:    11/08/2015
 //  Author:         Øystein Molnes
-//  Primary use:    Handles communication with the API, and 
-//                  updates the view(html)
+//  Primary use:    Handles communication with the API, documentet at 
+//                  http://docs.thea.apiary.io/#, and updates the view(html)
 // ***********************************************************************
 
 
-// URLs used to call the API
+// URL used to call the API
 var baseURL = 'http://92.62.34.78:8080/thea-backend/v1/';
 
 
@@ -74,46 +74,26 @@ function handleResult(result, callback){
     }
 }
 
-// http://docs.thea.apiary.io/#reference/club/clubs/list-all-clubs
-function apiGetClubs(callback){
-    doGet(baseURL+'clubs', callback);
-}
-
-// http://docs.thea.apiary.io/#reference/sport/sports/list-all-sports
-function apiGetSports(callback){
-    doGet(baseURL+'sports', callback);
-}
-
-// http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
-function apiGetExercises(sportID, callback){
-    doGet(baseURL+'sports/'+sportID+'/exercises', callback);
-}
-
-// http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
-function apiGetTeams(exerciseID, callback){
-    doGet(baseURL+'exercises/'+exerciseID+'/teams', callback);
-}
-
-// http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
-function apiGetAdditions(callback){
-    doGet(baseURL+'additions/', callback);
-}
-
-// http://docs.thea.apiary.io/#reference/participant/participants/add-a-participant
-function apiPostParticipant(jsonData, callback){
-    doPost(baseURL+'participants/', jsonData, callback);
+//      PARTICIPANTS
+// ***********************************************************************
+function apiGetParticipants(callback){
+    doGet(baseURL + 'participants/', callback)
 }
 
 function apiGetParticipant(entry_id, callback){
     doGet(baseURL + 'participants/' + entry_id, callback)
 }
 
-function apiGetParticipants(callback){
-    doGet(baseURL + 'participants/', callback)
-}
-
 function apiPutParticipant(entry_id, jsonData, callback, comment){
     doPut(baseURL + 'participants/' + entry_id, jsonData, callback, {'comment': comment})
+}
+
+function apiPostParticipant(jsonData, callback){
+    doPost(baseURL+'participants/', jsonData, callback);
+}
+
+function apiGetPortrait(entry_id, callback){
+    doGet(baseURL + 'participants/' + entry_id + '/portrait', callback)
 }
 
 function apiPutAccreditation(entry_id, jsonData, callback){
@@ -123,7 +103,27 @@ function apiPutAccreditation(entry_id, jsonData, callback){
 function apiPutComment(entry_id, jsonData, callback){
     doPut(baseURL + 'participants/'+entry_id+'/comment', jsonData, callback)
 }
+//      SPORTS, EXERCISES, CLUBS, TEAMS
+// ***********************************************************************
+function apiGetSports(callback){
+    doGet(baseURL+'sports', callback);
+}
 
-function apiGetPortrait(entry_id, callback){
-    doGet(baseURL + 'participants/' + entry_id + '/portrait', callback)
+function apiGetExercises(sportID, callback){
+    doGet(baseURL+'sports/'+sportID+'/exercises', callback);
+}
+
+function apiGetTeams(exerciseID, callback){
+    doGet(baseURL+'exercises/'+exerciseID+'/teams', callback);
+}
+
+function apiGetClubs(callback){
+    doGet(baseURL+'clubs', callback);
+}
+
+
+//      EXTRAS
+// ***********************************************************************
+function apiGetAdditions(callback){
+    doGet(baseURL+'additions/', callback);
 }
