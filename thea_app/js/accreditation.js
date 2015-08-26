@@ -5,10 +5,6 @@ $(document).ready(function(){
   		on: 'hover'
 	});
 
-	$('#participant_card')
-	  .transition('fade up')
-	;
-
 	apiGetParticipants(displayParticipants);
 	
 });
@@ -34,8 +30,9 @@ function displayParticipants(participants){
 	var participants_table_body = ('#participants_table_body');
 	$.each(participants, function (i, participant){
 
-		var tablerow = 	$('<tr value="'+participant.entry_id+'" onclick="participantClicked('+participant.entry_id+')">'+ 
-								'<td>' + participant.person.first_name +' '+participant.person.last_name + '</a></td>'+
+		var tablerow = 	$('<tr value="'+ participant.entry_id + '" onclick="participantClicked(' + participant.entry_id + ')">'+ 
+								'<td>' + participant.person.first_name + '</td>'+
+								'<td>' + participant.person.last_name + '</td>'+
 								'<td>' + participant.club.club_name + '</td>'+
 							'</tr>');
 
@@ -58,18 +55,13 @@ function displayParticipant(participant){
 	$('#card_img').attr('src', '')
 	apiGetPortrait(participant.entry_id, displayPortrait);
 
-	$('#card_time_registrated').text(new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#"));
+	$('#card_time_registrated').text('Påmeldt ' + new Date(participant.time_registrated).customFormat("#DD#. #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#"));
 	$('#card_comment').val(participant.comment);
 	
 	//Display green check-icon if participant has been accreditated
 	displayAccreditated(participant.entry_id, participant.accreditated);
 
 	$('#participant_card').show();
-	$('.ui.sticky')
-	  .sticky({
-	    context: '#participant_card'
-	  })
-	;
 
 };
 
@@ -84,9 +76,6 @@ function participantAccreditated(accreditation){
 
 //Display green check-icon and accreditation-button dependent on whether the participant has been accreditated
 function displayAccreditated(entry_id, accreditated){
-	$('#participant_card').transition('fade', '0ms');
-	$('#participant_card').transition('fade down', '500ms');
-
 
 	if(accreditated){
 		$('#button_unaccreditate').show();
@@ -112,6 +101,11 @@ function displayAccreditated(entry_id, accreditated){
 
 function displayCommentSaved(comment){
 	console.log(comment);
+	$('#card_comment').hide();
+	$('#comment_message').show();
+	$('#comment_message').delay(1000).fadeOut();
+	$('#card_comment').delay(1400).fadeIn();
+
 }
 
 function setBackgroundColor(div, accreditated){

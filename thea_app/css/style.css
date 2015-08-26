@@ -1,4 +1,4 @@
-/*------------------------------------------------------------------
+/*/*------------------------------------------------------------------
 [Master Stylesheet]
 
 Project:		Thea 
@@ -61,7 +61,7 @@ i.header{
 }
 
 
-/*	5. Menu															*/
+	5. Menu															
 /*------------------------------------------------------------------*/
 
 
@@ -114,9 +114,30 @@ html.ios body {
 	max-width: 300px;
 }
 
+textarea {
+	width: 100%;
+	color: black;
+	border: none;
+	background-color: transparent;
+}
+
+textarea:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.message {
+	background-color: transparent !important;
+}
+
 /*	7. Colors														*/
 /*------------------------------------------------------------------*/
 .background-green{
 	background-color: rgba(34, 190, 52, .2);
 
+}
+
+.success{
+	color: #4D824F;
 }

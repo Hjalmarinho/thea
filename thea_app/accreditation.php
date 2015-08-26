@@ -18,19 +18,20 @@
 		<table id="participants_table" class="ui sortable celled striped table" style="cursor: pointer" onclick="initiateSearch()">
 			<thead>
 				<tr>
-					<th class="five wide ascending">Navn</th>
-					<th class="ten wide">Klubb</th>
+					<th class="four wide ascending">Fornavn</th>
+					<th class="four wide ascending">Etternavn</th>
+					<th class="seven wide">Klubb</th>
 				</tr>
 			</thead>
 			<tbody id="participants_table_body">				
-
+				<!-- Participants are populated here when a call has been made to the API from api_handler.js -->
 			</tbody>
 		</table>
 	</div> <!-- /table column -->
 
 	<div class="six wide column" >
 		<!-- Participant card -->
-		<div class="ui sticky special cards">
+		<div class="ui special cards">
 			<div class="card" id="participant_card" style="display: none">
 				<div class="blurring dimmable image">
 					<div class="ui dimmer">
@@ -49,20 +50,25 @@
 						<span class="date" id="card_time_registrated"></span>
 					</div>
 					<br>
-					<p id="card_accreditated_mark" style="display:none"><i class="checkmark green icon"></i>Akkreditert</p>
+					<p id="card_accreditated_mark" style="display:none" class="success"><i class="checkmark icon"></i>Akkreditert</p>
 				</div>
 				<div class="extra content">
-					<div class="ui large transparent left icon input">
-						<i class="comment outline icon"></i>
-						<input type="text" placeholder="Skriv en kommentar..." id="card_comment">
+					<textarea rows="4" id="card_comment" placeholder="Ingen kommentarer..."></textarea>
+					<!-- Displayed when the comment is saved -->
+					<div class="ui icon success  message" id="comment_message" style="display:none">
+						<i class="checkmark icon"></i>
+						<div class="content">
+							<p>Kommentar lagret</p>
+						</div>
 					</div>
 				</div>
+
 				<div class="ui bottom attached button" id="button_comment" onclick="saveComment()">
-					<i class="add icon"></i>
 					Lagre kommentar
 				</div>
-			</div>
+			</div> <!-- /card -->
 		</div>
+
 	</div> <!-- /card column -->
 
 </div> <!-- /ui grid -->
