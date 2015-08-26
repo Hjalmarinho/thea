@@ -24,6 +24,11 @@ $( document ).ready(function() {
     $('#sports').on('change', function() {
         apiGetExercises( $( "#sports" ).val(), displayExercises ); 
     });
+
+    //Prevent submitting form when pushing ENTER
+    $('#search').bind('keypress keydown keyup', function(e){
+       if(e.keyCode == 13) { e.preventDefault(); }
+    });
 });
 
 
@@ -128,7 +133,7 @@ function submitParticipantForm(){
         person["phone"]      = $('#phone').val();
         person["email"]      = $('#email').val();
         person["gender"]     = $('#gender').val();
-        person["birthdate"]  = $('#birthdate').val();
+        person["birthdate"]  = $('#birthyear').val()+ '-' + $('#birthmonth').val() + '-' + $('#birthday').val();
         person["allergies"]  = $('#allergies').val();
         person["portrait"]  = 'This is an image converted into a string';
         jsonForm["person"]   = person;
