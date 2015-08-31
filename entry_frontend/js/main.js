@@ -27,10 +27,10 @@ $( document ).ready(function() {
 
     //Display confirm-modal if the form is valid
     $('#entry_button').click(function(){
-       if(  $('#entry_form').form('is valid')  ){
+       // if(  $('#entry_form').form('is valid')  ){
             createConfirmModal();
             $('#confirm_modal').modal('show');    
-       }
+       // }
 
     }); 
 
@@ -171,6 +171,7 @@ function createConfirmModal(){
 //Redirect user to payment-page
 function redirectToPayment(data){
     window.open(data.payment_url);
+
 }
 
 //      POST TO API FUNCTIONS
@@ -186,6 +187,11 @@ function submitParticipantForm(){
     apiPostParticipant(jsonForm, redirectToPayment);
 }
 
+//Called when a user has completed payment 
+function completeEntry(transaction_id){
+    apiPutTransaction(transaction_id, function(){ return true; });
+}
+
 
 //      HELP FUNCTIONS
 // ***********************************************************************
@@ -194,10 +200,14 @@ function submitParticipantForm(){
 function createJSON(){
 
     var jsonForm = {};
+    var entry = {};
+    jsonForm["redirect_url"] = 'entry_frontend/completed.php';
+    jsonForm["entry"] = entry;
+
     //Personal information
-    jsonForm["is_clubmember"] = (($('#is_clubmember').val()  == 1) ? true : false);
-    jsonForm["is_student"] = (($('#is_student').val()  == 1) ? true : false);
-    jsonForm["travel_information"] = $('#travel_information  option:selected').text();
+    entry["is_clubmember"] = (($('#is_clubmember').val()  == 1) ? true : false);
+    entry["is_student"] = (($('#is_student').val()  == 1) ? true : false);
+    entry["travel_information"] = $('#travel_information  option:selected').text();
 
     var person = {};
     person["first_name"] = $('#first_name').val();
@@ -208,22 +218,22 @@ function createJSON(){
     person["birthdate"]  = $('#birthyear').val()+ '-' + $('#birthmonth').val() + '-' + $('#birthday').val();
     person["allergies"]  = $('#allergies').val();
     person["portrait"]  = 'This is an image converted into a string';
-    jsonForm["person"]   = person;
+    entry["person"]   = person;
 
     //Participant information
     var club_id = parseInt($('#clubs').val());
-    jsonForm["club"] = {club_id};
+    entry["club"] = {club_id};
 
     var ticket_id = parseInt($('#ticket_id').data('value')); 
-    jsonForm["ticket"] = {ticket_id};
+    entry["ticket"] = {ticket_id};
 
-    jsonForm["exercises"] = uiGetExercises(ticket_id);
+    entry["exercises"] = uiGetExercises(ticket_id);
 
     //Additions
-    jsonForm["additions"] = [];
+    entry["additions"] = [];
 
     //Add all checked additions
-    jsonForm["additions"] = uiGetAdditions();
+    entry["additions"] = uiGetAdditions();
 
     return jsonForm;
 }

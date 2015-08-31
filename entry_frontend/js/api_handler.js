@@ -47,6 +47,24 @@ function doPost(urlPOST, jsonData, callback){
     });
 }
 
+// Perform PUT-call to API with given URL.
+function doPut(urlPUT, jsonData, callback){
+    console.log(urlPUT);
+    $.ajax({
+        type: 'PUT',
+        contentType: "application/json",
+        url: urlPUT,
+        data: JSON.stringify(jsonData),
+        dataType: "json",
+        success: function(result){
+            handleResult(result, callback);
+        },
+        error: function(){
+            console.log('Got an error from server while running PUT');
+        } 
+    });    
+}
+
 //Handle result from the API
 function handleResult(result, callback){
     if(result.error){
@@ -86,4 +104,9 @@ function apiGetAdditions(callback){
 // http://docs.thea.apiary.io/#reference/participant/participants/add-a-participant
 function apiPostParticipant(json, callback){
     doPost(baseURL+'participants/', json, callback);
+}
+
+//http://docs.thea.apiary.io/#reference/transaction/transactionsidprocess/complete-a-participant-registration
+function apiPutTransaction(transactionID, callback){
+    doPut(baseURL+'transactions/'+transactionID+'/process', {}, callback);
 }
