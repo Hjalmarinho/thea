@@ -51,7 +51,7 @@ function doPost(urlPOST, jsonData, callback){
 function handleResult(result, callback){
     if(result.error){
         // TODO: do something with the potential error from server, and return
-        // console.log(result.data);
+        console.log(result.error);
         callback(result.data);
     }else{
         callback(result.data);

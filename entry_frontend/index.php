@@ -21,11 +21,15 @@ Primary use:	Start page for the entry sites. Allows users to
 	<div class="ui container center">
 
 		<a href="entry_participant.php">
-			<button class="ui teal button">Meld på deltaker</button>
+			<button class="ui blue button">Meld på deltaker</button>
 		</a>
 
 		<a href="entry_team.php">
 			<button class="ui button">Meld på lag</button>
+		</a>
+
+		<a href="entry_supporter.php">
+			<button class="ui button">Meld på supporter</button>
 		</a>
 
 	</div>

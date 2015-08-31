@@ -22,7 +22,7 @@ Primary use:  View allowing contact persons to register teams for an event.
     <div class="ui grid">
       <div class="six wide column">
 
-        <form class="ui form" id="entry_form" role="form">
+        <form class="ui form" id="entry_form">
 
           <!-- Insert view for entering personal information -->
           <?php require("view_components/personal_info.php"); ?>
@@ -106,14 +106,18 @@ Primary use:  View allowing contact persons to register teams for an event.
 
           <div class="inline fields">
             <label class="field four wide"></label>
-            <button class="ui teal submit button" onclick="submitParticipantForm()">
-              Meld på lag
-            </button>
+            <div class="ui blue submit button" id="entry_button">
+              Meld på
+            </div>
           </div>
           <div class="ui error message"></div>
         </form>
       </div> <!-- /column -->
     </div> <!-- /grid -->
   </div> <!-- /container -->
+
+    <!-- Insert the confirm modal -->
+  <?php require("view_components/confirm_modal.php"); ?>
+
 </body>
 </html>
