@@ -212,7 +212,7 @@
 	</div> <!-- /.six.wide.column -->
 
 <div class="row">
-	<div class="sixteen wide column">
+	<div class="fourteen wide column">
 
 		<div class="ui segments">
 			<div class="ui segment">
