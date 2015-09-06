@@ -22,7 +22,7 @@ Primary use:  View allowing participants to register for an event.
     <div class="ui grid">
       <div class="six wide column">
 
-        <form class="ui form" id="participant_form"  onsubmit="return false;">
+        <form class="ui form" id="entry_form">
 
           <!-- Insert view for entering personal information -->
           <?php require("view_components/personal_info.php"); ?>
@@ -94,9 +94,9 @@ Primary use:  View allowing participants to register for an event.
 
           <div class="inline fields">
             <label class="field four wide"></label>
-            <button class="ui teal button" onclick="submitParticipantForm()">
+            <div class="ui blue submit button" id="entry_button">
               Meld på
-            </button>
+            </div>
           </div>
           <div class="ui error message"></div>
 
@@ -104,5 +104,9 @@ Primary use:  View allowing participants to register for an event.
       </div> <!-- /column -->
     </div> <!-- /grid -->
   </div> <!-- /container -->
+
+  <!-- Insert the confirm modal -->
+  <?php require("view_components/confirm_modal.php"); ?>
+
 </body>
 </html>
