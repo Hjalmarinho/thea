@@ -127,3 +127,13 @@ function apiGetClubs(callback){
 function apiGetAdditions(callback){
     doGet(baseURL+'additions/', callback);
 }
+
+//      EVENTS
+// ***********************************************************************
+function apiGetEvents(callback){
+    doGet(baseURL+'events/', callback);
+}
+
+function apiPostEvent(jsonData, callback){
+    doPost(baseURL+'events/', jsonData, callback);
+}
