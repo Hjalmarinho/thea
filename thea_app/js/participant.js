@@ -60,7 +60,7 @@ function displayParticipant(participant){
 	//Update global variables
 	local_status = participant.status
 	local_time_registrated = participant.time_registrated
-	local_ticket_id = participant.ticket_id
+	local_ticket_id = participant.ticket.ticket_id
 	local_person_id = participant.person.person_id
 	local_user_id = participant.person.user_id
 
@@ -117,6 +117,10 @@ function displayParticipant(participant){
 	id_birthday.val(birthdate[2])
 	dropdown.has(id_birthmonth).dropdown('set selected', new Date(participant.person.birthdate).customFormat("#MMM#"));
 	id_birthyear.val(birthdate[0])
+
+	if(local_status == "Cancelled"){
+		console.log("BÆSJ")
+	}
 }
 
 function updateParticipant(){
