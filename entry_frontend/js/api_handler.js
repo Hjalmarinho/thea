@@ -32,6 +32,7 @@ function doGet(urlGET, callback){
 // Perform POST-call to API with given URL.
 function doPost(urlPOST, jsonData, callback){
     console.log(jsonData);
+    console.log(urlPOST);
     $.ajax({
         type: 'POST',
         contentType: "application/json",
@@ -99,6 +100,10 @@ function apiGetTeams(exerciseID, callback){
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
 function apiGetAdditions(callback){
     doGet(baseURL+'additions/', callback);
+}
+
+function apiPostPortrait(json, callback){
+    doPost(baseURL+'portraits/', json, callback);
 }
 
 // http://docs.thea.apiary.io/#reference/participant/participants/add-a-participant

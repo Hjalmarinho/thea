@@ -6,8 +6,10 @@
 <!-- Site Properities -->
 <title>Thea 2.0</title>
 
-<!-- Include jQuery -->
+<!-- Include jQuery and jCrop -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.Jcrop.min.css">
 
 <!-- Include semantic UI -->
 <link rel="stylesheet" type="text/css" href="css/semantic.min.css">

@@ -13,6 +13,7 @@ Primary use:	Style Thea 2.0 pages for making entries
 2. Layout
 3. Text
 4. Color
+5. Input
 -------------------------------------------------------------------*/
 
 
@@ -39,7 +40,7 @@ h4{
 	color: #2185D0 !important; 
 }
 
-/*	4. Color															*/
+/*	4. Color													    */
 /*------------------------------------------------------------------*/
 .color-teal{
 	color: #00B5AD;
@@ -51,4 +52,11 @@ h4{
 
 .color-blue{
 	color: #2185D0;
+}
+
+/*	5. Input													    */
+/*------------------------------------------------------------------*/
+/*Hides a radio-button for the jcrop*/
+.jcrop-keymgr{
+	opacity: 0;
 }
