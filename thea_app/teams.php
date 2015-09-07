@@ -16,6 +16,7 @@
         <th class="ascending">Navn</th>
         <th>Idrett</th>
         <th>Klubb</th>
+        <th>Kjønn</th>
         <th>Kontaktperson</th>
     </tr>
   </thead>
