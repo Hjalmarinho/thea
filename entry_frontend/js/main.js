@@ -25,21 +25,30 @@ $( document ).ready(function() {
         apiGetExercises( $( "#sports" ).val(), displayExercises ); 
     });
 
+    //Display team_dropdown if a team_exercise is selected
+    $('input:checkbox').change(
+    function(){
+        alert('checked');
+    });
+
     //Display confirm-modal if the form is valid
     $('#entry_button').click(function(){
        // if(  $('#entry_form').form('is valid')  ){
             createConfirmModal();
             $('#confirm_modal').modal('show');    
        // }
+    });
 
-    }); 
+    //Display image-modal for portrait-upload
+    $('#image_button').click(function(){
+        $('#image_modal').modal('show');    
+    });
 
+    //Prevent entry_form from submitting when clicking "Meld på"
     $("#entry_form").submit(function(event){
         event.preventDefault();
     });
 });
-
-
 
 //Constants
 const TICKET_ID_PARTICIPANT = 1;
@@ -83,13 +92,20 @@ function displayExercises(exercises){
     if(exercises){
         //Display checkboxes for each available exercise if there are many
         $.each(exercises, function(i, exercise){
+            $('#exercises').append(generateCheckbox(exercise.exercise_description, exercise.exercise_id)); 
             if(exercise.is_teamexercise){
                 //Get teams for this exercise and populate teams dropdown
                 apiGetTeams( exercise.exercise_id, displayTeams );
                 $('#teams_container').show();
             }
-            $('#exercises').append(generateCheckbox(exercise.exercise_description, exercise.exercise_id)); 
         });  
+        //If sport has only one exercise, check and hide it
+        if(exercises.length == 1){
+            $('#exercises input').each(function(){
+                $(this).attr('checked', true);
+                $(this).parent().css("display", "none");
+            });
+        }
     }  
 }
 
@@ -111,6 +127,13 @@ function displayTeams(teams){
         $('#teams').append('<option value='+team.team_id+'>'+team.team_name+'</option>'); 
     });   
  }  
+}
+
+//Create GUI to allow user to add another sport
+function addSport(){
+    var $exercise_box = $("#exercise_box").clone();
+    $exercise_box.attr('id', 'exercise_box2');
+    $("#exercise_box").after($exercise_box);
 }
 
 //When user clicks "Meld på" a confirm-modal is populated with the data that the user has entered
@@ -158,7 +181,7 @@ function createConfirmModal(){
     $('#confirm_additions_container').empty();
     var additions_html = '';
 
-    additions_html += generateLabelPair('Bilde', 'This is an image converted into a string');
+    additions_html += '<img src="' + $('#portrait').attr('src') + '" style="width:150px; height:200px;"/>';
     $('#additions input:checked').each(function(){
         additions_html += generateLabelPair('Tillegg', $(this).attr('id') );
     });
@@ -171,7 +194,46 @@ function createConfirmModal(){
 //Redirect user to payment-page
 function redirectToPayment(data){
     window.open(data.payment_url);
+}
 
+//Display selected image in image-modal and set cropping
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('.jcrop-holder').remove();
+            $('#portrait_crop').replaceWith('<img id="portrait_crop" src="' + e.target.result + '"/>');
+            $('#portrait_crop').height(200);
+            $('#portrait_crop').Jcrop({
+                            aspectRatio: 3/4,
+                            setSelect: [0, 200, 150, 0],
+                            onChange: updatePreview,
+                            onSelect: updatePreview
+                        });
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function updatePreview(coords) {
+    if(parseInt(coords.w)) {
+        // Show image preview
+        var imageObj = $("#portrait_crop")[0];
+        var canvas = $("#portrait_preview")[0];
+        var context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(imageObj, coords.x, coords.y, coords.w, coords.h, 0, 0, canvas.width, canvas.height);
+    }
+}
+
+//Preview the cropped portrait 
+function submitPortrait(){
+    var canvas = $("#portrait_preview")[0];
+
+
+    $('#portrait').attr("src", canvas.toDataURL());
+    $('#image_modal').modal('hide');
+    $('#portrait').show();
 }
 
 //      POST TO API FUNCTIONS
@@ -179,6 +241,12 @@ function redirectToPayment(data){
 
 //Called when a participant clicks the submit-button 
 function submitParticipantForm(){
+
+    //First upload portrait (we are uploading the base64-string from img-src)
+    var jsonPortrait = {};
+    jsonPortrait["portrait_data"] = $('#portrait').attr('src').split(',')[1];
+    // jsonPortrait["portrait_data"] = "R0lGODlhDwAPAKECAAAAzMzM/////wAAACwAAAAADwAPAAACIISPeQHsrZ5ModrLlN48CXF8m2iQ3YmmKqVlRtW4MLwWACH+H09wdGltaXplZCBieSBVbGVhZCBTbWFydFNhdmVyIQAAOw==";
+    apiPostPortrait ( jsonPortrait, function(){ return true });
 
     //Serialize the form into a json-object in order to post the participant to the API
     var jsonForm = createJSON();
@@ -199,6 +267,7 @@ function completeEntry(transaction_id){
 //Constructs a JSON-object from the data that has been entered in the GUI
 function createJSON(){
 
+
     var jsonForm = {};
     var entry = {};
     jsonForm["redirect_url"] = 'entry_frontend/completed.php';
@@ -217,7 +286,6 @@ function createJSON(){
     person["gender"]     = $('#gender').val();
     person["birthdate"]  = $('#birthyear').val()+ '-' + $('#birthmonth').val() + '-' + $('#birthday').val();
     person["allergies"]  = $('#allergies').val();
-    person["portrait"]  = 'This is an image converted into a string';
     entry["person"]   = person;
 
     //Participant information

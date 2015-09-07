@@ -18,6 +18,9 @@
   <a class="item" href="users.php">
     Brukere
   </a>
+  <a class="item" href="nsi_event.php">
+    Arrangementer
+  </a>
   <a class="item" href="event.php">
     Endre arrangement
   </a>
