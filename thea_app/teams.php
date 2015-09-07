@@ -5,7 +5,7 @@
     <div class="header">
         <!-- <i class="large sidebar icon" id="menubutton"></i> -->
         <h1>Lag</h1>
-        <button>Legg til lag</button>
+        <button class="ui floated right button" id="addTeam">Legg til lag</button>
       </div>
 
 </div>

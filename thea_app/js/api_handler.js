@@ -103,6 +103,10 @@ function apiPutAccreditation(entry_id, jsonData, callback){
 function apiPutComment(entry_id, jsonData, callback){
     doPut(baseURL + 'participants/'+entry_id+'/comment', jsonData, callback)
 }
+
+function apiCancelParticipant(entry_id, callback, comment){
+    doPut(baseURL + 'participants/' + entry_id + "/cancel", "", callback, {'comment': comment})
+}
 //      SPORTS, EXERCISES, CLUBS, TEAMS
 // ***********************************************************************
 function apiGetSports(callback){

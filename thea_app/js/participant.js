@@ -12,6 +12,10 @@ $(document).ready(function(){
         $('#credit-update').modal('show');    
      });
 
+	$('#cancelParticipant').click(function(){
+		$('#cancel-modal').modal('show');
+	});
+
 	apiGetClubs(displayClubs)
 	apiGetParticipant(local_entry_id, displayParticipant);
 	apiGetPortrait(local_entry_id, displayPortrait)
@@ -52,7 +56,7 @@ function displayClubs(clubs){
 
 function displayParticipant(participant){
 
-	//console.log(participant)
+	console.log(participant)
 	//Update global variables
 	local_status = participant.status
 	local_time_registrated = participant.time_registrated
@@ -111,13 +115,14 @@ function displayParticipant(participant){
 
 	var birthdate = participant.person.birthdate.split('-')
 	id_birthday.val(birthdate[2])
-	dropdown.has(id_birthmonth).dropdown('set selected', new Date(local_time_registrated).customFormat("#MMM#"));
+	dropdown.has(id_birthmonth).dropdown('set selected', new Date(participant.person.birthdate).customFormat("#MMM#"));
 	id_birthyear.val(birthdate[0])
 }
 
 function updateParticipant(){
 
-	var local_birthdate = $('#birthyear').val() + '-' + $('#birthmonth').val() + '-' + $('#birthday').val()
+	monthToNumber($('#birthmonth').val())
+	var local_birthdate = $('#birthyear').val() + '-' + monthToNumber($('#birthmonth').val()) + '-' + $('#birthday').val()
 	var comment = $('#update-comment').val()
 	
 	var putObject = {}
@@ -127,9 +132,11 @@ function updateParticipant(){
 	putObject['is_clubmember'] = $('#clubmemberCheckbox').is(':checked')
 	putObject['is_student'] = $('#studentCheckbox').is(':checked')
 	putObject['status'] = local_status
-	putObject['ticket_id'] = local_ticket_id
 	putObject['time_registrated'] = local_time_registrated
 	putObject['travel_information'] = $('#travel_information').val()
+
+	putObject['ticket'] = {}
+	putObject.ticket['ticket_id'] = local_ticket_id
 
 	putObject['club'] = {}
 	putObject.club['club_id'] = $('#clubs').val()
@@ -147,7 +154,7 @@ function updateParticipant(){
 	putObject.person['portrait_id'] = 'null'
 	putObject.person['user_id'] = local_user_id
 
-	//apiPutParticipant(local_entry_id, putObject, null , comment)
+	apiPutParticipant(local_entry_id, putObject, function(){} , comment)
 	console.log(putObject)
 }
 
@@ -158,4 +165,57 @@ function creditParticipant(){
 	} else{
 		console.log("Du har ikke skrevet inn et beløp")
 	}
+}
+
+function cancelParticipant(){
+	var comment = $('#cancel-comment').val()
+	apiCancelParticipant(local_entry_id, participantIsCanceled, comment)
+	console.log("kansellert")
+}
+
+function participantIsCanceled(){
+	console.log("som faen")
+}
+
+function monthToNumber(month){
+		var value;
+	switch(month){
+		case "Jan":
+			value = 01
+			break;
+		case "Feb":
+			value = 02
+			break;
+		case "Mar":
+			value = 03
+			break;
+		case "Apr":
+			value = 04
+			break;
+		case "Mai":
+			value = 05
+			break;
+		case "Jun":
+			value = 06
+			break;
+		case "Jul":
+			value = 07
+			break;
+		case "Aug":
+			value = 08
+			break;
+		case "Sep":
+			value = 09
+			break;
+		case "Okt":
+			value = 10
+			break;
+		case "Nov":
+			value = 11
+			break;
+		case "Des":
+			value = 12
+			break;
+	}
+	return value 
 }

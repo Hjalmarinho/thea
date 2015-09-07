@@ -37,6 +37,20 @@
   </div>
 </div>
 
+<div class="ui modal" id="cancel-modal">
+  <div class="header">
+    Er du sikker på at du vil kansellere <span class="participantname"></span>?
+  </div>
+  <div class="content">
+    Gjør det lettere å huske hvorfor du kansellerte, skriv en kommentar!
+    <textarea rows="4" id="cancel-comment" style="max-width:100%;width:100%;"></textarea>
+  </div>
+  <div class="actions">
+    <div class="ui button close">Avbryt</div>
+    <div class="ui button close" onclick="cancelParticipant()" >Kanseller</div>
+  </div>
+</div>
+
 <div class="ui stackable two column grid">
 	<div class="eight wide column">
 		<div class="ui form" id="entry-form">
@@ -202,7 +216,12 @@
 				<div class="extra content">
 					<textarea rows="4" id="comment" style="max-width:100%;width:100%;">Ingen kommentarer</textarea>
 
+
 					<button class="fluid ui button" id="updateParticipant">Oppdater deltakerinformasjon</button>
+					<div class="ui divider"></div>
+					<button class="fluid ui button" id="recieptParticipant">Deltakerens kvittering</button>
+					<div class="ui divider"></div>
+					<button class="fluid red ui button" id="cancelParticipant">Kanseller deltaker</button>
 				</div>
 		</div>
 
