@@ -19,19 +19,27 @@ Primary use:	Start page for the entry sites. Allows users to
 <body>
 
 	<div class="ui container center">
+		<div class="ui grid">
+			<div class="computer only three wide column"></div>
+			<div class="three wide computer twelve wide mobile column">
+				<a href="entry_participant.php">
+					<button class="ui blue button">Meld på deltaker</button>
+				</a>
+			</div>
 
-		<a href="entry_participant.php">
-			<button class="ui blue button">Meld på deltaker</button>
-		</a>
+			<div class="three wide computer twelve wide mobile column">
+				<a href="entry_team.php">
+					<button class="ui button">Meld på lag</button>
+				</a>
+			</div>
 
-		<a href="entry_team.php">
-			<button class="ui button">Meld på lag</button>
-		</a>
-
-		<a href="entry_supporter.php">
-			<button class="ui button">Meld på supporter</button>
-		</a>
-
+			<div class="three wide computer twelve wide mobile column">
+				<a href="entry_supporter.php">
+					<button class="ui button">Meld på supporter</button>
+				</a>
+			</div>
+			<div class="computer only three wide computer column"></div>
+		</div>
 	</div>
 </body>
 </html>

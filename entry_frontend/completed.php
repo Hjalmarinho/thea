@@ -13,6 +13,12 @@ Primary use:	This page is displayed when an entry has been completed
 <head>
 	<!-- Insert view for the head -->
 	<?php require("view_components/head.php"); ?>
+
+	<script> 
+	$( document ).ready(function() {
+		completeEntry();
+	}
+	</script>
 </head>
 
 <body>

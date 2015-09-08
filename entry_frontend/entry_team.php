@@ -20,7 +20,7 @@ Primary use:  View allowing contact persons to register teams for an event.
 
   <div class="ui container">
     <div class="ui grid">
-      <div class="six wide column">
+      <div class="six wide computer ten wide tablet fourteen wide mobile column">
 
         <form class="ui form" id="entry_form">
 

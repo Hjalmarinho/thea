@@ -27,10 +27,10 @@ $( document ).ready(function() {
 
     //Display confirm-modal if the form is valid
     $('#entry_button').click(function(){
-       // if(  $('#entry_form').form('is valid')  ){
+       if(  $('#entry_form').form('is valid')  ){
             createConfirmModal();
             $('#confirm_modal').modal('show');    
-       // }
+       }
     });
 
     //Display image-modal for portrait-upload
@@ -81,6 +81,7 @@ function displaySports(sports){
 
 // Generate checkboxes for exercises received from API
 function displayExercises(exercises){
+    console.log(exercises);
     $('#exercises').empty();
     $('#teams_container').hide();
     if(exercises){
@@ -209,6 +210,7 @@ function createConfirmModal(){
 
 //Redirect user to payment-page
 function redirectToPayment(data){
+    console.log(data);
     window.open(data.payment_url);
 }
 
@@ -252,7 +254,6 @@ function updatePreview(coords) {
 function confirmPortrait(){
     var canvas = $("#portrait_preview")[0];
 
-
     $('#portrait').attr("src", canvas.toDataURL());
     $('#image_modal').modal('hide');
     $('#portrait').show();
@@ -272,6 +273,7 @@ function submitParticipantForm(){
 
 //Called when a user has completed payment 
 function completeEntry(transaction_id){
+    console.log(transaction_id);
     apiPutTransaction(transaction_id, function(){ return true; });
 }
 
