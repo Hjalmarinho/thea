@@ -31,18 +31,20 @@ function displayEventSaved(data){
 	console.log(data);
 }
 
-function saveEvent(){
+function postEvent(){
 	var eventJSON = {};
 	eventJSON["event_organizer"] = parseInt($('#event_organizer').val());
 	eventJSON["event_type"] = $('#event_type').val();
-	eventJSON["event_description"]= $('#event_description').val();
-	eventJSON["event_admin"] = $('#event_admin').val();
+	eventJSON["event_description"] = $('#event_description').val();
+	var event_admin = {};
+	event_admin["email"] = $('#event_admin').val();
+	eventJSON["event_admin"] = event_admin;
 	eventJSON["event_email"] = $('#event_email').val();
 	eventJSON["event_start"] = $('#event_start_year').val()+ '-' + $('#event_start_month').val() + '-' + $('#event_start_day').val();
 	eventJSON["event_end"] = $('#event_end_year').val()+ '-' + $('#event_end_month').val() + '-' + $('#event_end_day').val();
 	eventJSON["terms_text"] = "terms_text";
 	eventJSON["terms_url"] = "terms_url";
 
-	console.log(eventJSON);
+
 	apiPostEvent(eventJSON, displayEventSaved);
 }

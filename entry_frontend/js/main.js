@@ -227,7 +227,7 @@ function updatePreview(coords) {
 }
 
 //Preview the cropped portrait 
-function submitPortrait(){
+function confirmPortrait(){
     var canvas = $("#portrait_preview")[0];
 
 

@@ -15,15 +15,6 @@
 			<option value="">Velg studentidrettsarrangement</option>
 		</select>
 
-		<div class="ui buttons" style="margin-top: 50px;">
-			<button class="ui button active">Akkreditering</button>
-			<button class="ui button">Deltakere</button>
-			<button class="ui button">Overnatting</button>
-			<button class="ui button">Kommentarer</button>
-			<button class="ui button">Bankett</button>
-			<button class="ui button">Deltakermatrisa</button>
-		</div>
-
 	</div>
 </div> <!-- /ui grid -->
 <?php require('footer.php'); ?>
@@ -57,7 +48,7 @@
             <div class="field twelve wide">
               <select class="ui search dropdown" name="event_type" id="event_type">
                 <option value="">Hva slags arrangement er det?</option>
-                <option value="1">Studentleker</option>
+                <option value="SL">SL</option>
               </select>
             </div>
           </div>
@@ -155,7 +146,7 @@
     <div class="ui deny button">
       Avbryt
     </div>
-    <div class="ui positive right labeled icon button" onclick="saveEvent()">
+    <div class="ui positive right labeled icon button" onclick="postEvent()">
       Lagre
       <i class="checkmark icon"></i>
     </div>

@@ -48,6 +48,6 @@
   </div>
   <div class="actions">
     <div class="ui button close">Avbryt</div>
-    <div class="ui blue button" onclick="submitPortrait()">Ferdig</div>
+    <div class="ui blue button" onclick="confirmPortrait()">Ferdig</div>
   </div>
 </div>  <!-- /image modal -->
