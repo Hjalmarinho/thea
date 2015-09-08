@@ -136,9 +136,24 @@ function displayTeams(teams){
 
 //Create GUI to allow user to add another sport
 function addSport(){
-    var $exercise_box = $("#exercise_box").clone();
-    $exercise_box.attr('id', 'exercise_box2');
-    $("#exercise_box").after($exercise_box);
+    var $sports_box = $("#sports_box").clone();
+
+    var $remove_btn =  '<div class="inline fields">'+
+                            '<label class="field four wide"></label>'+
+                            '<div class="ui button" onclick="removeSport(this)"> Fjern</div>'+
+                        '</div>';
+
+    $sports_box.append($remove_btn);
+    $sports_box.find('.divider').remove();
+    $sports_box.append('<div class="ui divider" /div>');
+    $("#sports_container").append($sports_box);
+    apiGetSports(displaySports);
+
+}
+
+
+function removeSport(removeButton){
+    $( removeButton ).closest('#sports_box').remove();
 }
 
 //When user clicks "Meld på" a confirm-modal is populated with the data that the user has entered
@@ -203,6 +218,11 @@ function redirectToPayment(data){
     window.open(data.payment_url);
 }
 
+
+
+//      PORTRAIT CROPPING
+// ***********************************************************************
+
 //Display selected image in image-modal and set cropping
 function readURL(input) {
     if (input.files && input.files[0]) {
@@ -222,6 +242,7 @@ function readURL(input) {
     }
 }
 
+//Update preview of the cropped image
 function updatePreview(coords) {
     if(parseInt(coords.w)) {
         // Show image preview
@@ -233,7 +254,7 @@ function updatePreview(coords) {
     }
 }
 
-//Preview the cropped portrait 
+//Confirm the cropped portrait and close modal
 function confirmPortrait(){
     var canvas = $("#portrait_preview")[0];
 

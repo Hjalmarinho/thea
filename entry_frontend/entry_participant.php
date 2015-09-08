@@ -54,45 +54,47 @@ Primary use:  View allowing participants to register for an event.
           </div>
 
           <!-- This box can be copied in order to allow users to entry for several sports -->
-          <!-- <div id="exercise_box"> -->
-            <div class="inline fields">
-              <label class="field four wide">Idrett</label>
-              <div class="field twelve wide">
-                <select class="ui search dropdown" name="sports" id="sports">
-                  <option value="">Hvilken idrett skal du delta i?</option>
-                  <!-- Sports are populated here from api_handler on page load -->
-                </select>
-              </div>
-            </div>
-
-            <div class="inline fields">
-              <label class="field four wide"></label>
-              <div class="field twelve wide">
-                <div class="grouped fields" id="exercises">
-                  <!-- Exercise-checkboxes are populated here from api_handler when a sport is selected -->
-
+          <div id="sports_container">
+            <div id="sports_box">
+              <div class="inline fields">
+                <label class="field four wide">Idrett</label>
+                <div class="field twelve wide">
+                  <select class="ui search dropdown" name="sports" id="sports">
+                    <option value="">Hvilken idrett skal du delta i?</option>
+                    <!-- Sports are populated here from api_handler on page load -->
+                  </select>
                 </div>
               </div>
-            </div>
 
-            <div class="inline fields" id="teams_container" style="display:none">
-              <label class="field four wide">Lag</label>
-              <div class="field twelve wide">
-                <select class="ui search dropdown" name="teams" id="teams">
-                  <option value="">Hvilket lag skal du delta med?</option>
-                  <!-- Teams are populated here from api_handler when a team sport is selected -->
-                </select>
+              <div class="inline fields">
+                <label class="field four wide"></label>
+                <div class="field twelve wide">
+                  <div class="grouped fields" id="exercises">
+                    <!-- Exercise-checkboxes are populated here from api_handler when a sport is selected -->
+
+                  </div>
+                </div>
               </div>
+
+              <div class="inline fields" id="teams_container" style="display:none">
+                <label class="field four wide">Lag</label>
+                <div class="field twelve wide">
+                  <select class="ui search dropdown" name="teams" id="teams">
+                    <option value="">Hvilket lag skal du delta med?</option>
+                    <!-- Teams are populated here from api_handler when a team sport is selected -->
+                  </select>
+                </div>
+              </div>
+              <div class="ui divider"> </div>
             </div>
-            <!-- <div class="ui divider"> </div> -->
-          <!-- </div> -->
+          </div>
 
 
 
-<!--           <div class="inline fields">
+          <div class="inline fields">
             <label class="field four wide"></label>
             <div class="ui button" onclick="addSport()"> Delta i flere idretter</div>
-          </div> -->
+          </div>
 
           <!-- Insert view for portrait image and additions-->
           <?php require("view_components/portrait_additions.php"); ?>
