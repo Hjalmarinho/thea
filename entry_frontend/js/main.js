@@ -25,12 +25,6 @@ $( document ).ready(function() {
         apiGetExercises( $( "#sports" ).val(), displayExercises ); 
     });
 
-    //Display team_dropdown if a team_exercise is selected
-    $('input:checkbox').change(
-    function(){
-        alert('checked');
-    });
-
     //Display confirm-modal if the form is valid
     $('#entry_button').click(function(){
        // if(  $('#entry_form').form('is valid')  ){
@@ -203,7 +197,7 @@ function createConfirmModal(){
     $('#confirm_additions_container').empty();
     var additions_html = '';
 
-    additions_html += '<img src="' + $('#portrait').attr('src') + '" style="width:150px; height:200px;"/>';
+    additions_html += '<img src="' + $('#portrait').attr('src') + '" style="width:75px; height:100px;"/>';
     $('#additions input:checked').each(function(){
         additions_html += generateLabelPair('Tillegg', $(this).attr('id') );
     });
@@ -269,13 +263,6 @@ function confirmPortrait(){
 
 //Called when a participant clicks the submit-button 
 function submitParticipantForm(){
-
-    //First upload portrait (we are uploading the base64-string from img-src)
-    var jsonPortrait = {};
-    jsonPortrait["portrait_data"] = $('#portrait').attr('src').split(',')[1];
-    // jsonPortrait["portrait_data"] = "R0lGODlhDwAPAKECAAAAzMzM/////wAAACwAAAAADwAPAAACIISPeQHsrZ5ModrLlN48CXF8m2iQ3YmmKqVlRtW4MLwWACH+H09wdGltaXplZCBieSBVbGVhZCBTbWFydFNhdmVyIQAAOw==";
-    apiPostPortrait ( jsonPortrait, function(){ return true });
-
     //Serialize the form into a json-object in order to post the participant to the API
     var jsonForm = createJSON();
 
@@ -298,7 +285,7 @@ function createJSON(){
 
     var jsonForm = {};
     var entry = {};
-    jsonForm["redirect_url"] = 'entry_frontend/completed.php';
+    jsonForm["redirect_url"] = 'http://thea.no/entry_frontend/completed.php';
     jsonForm["entry"] = entry;
 
     //Personal information
@@ -314,6 +301,9 @@ function createJSON(){
     person["gender"]     = $('#gender').val();
     person["birthdate"]  = $('#birthyear').val()+ '-' + $('#birthmonth').val() + '-' + $('#birthday').val();
     person["allergies"]  = $('#allergies').val();
+    var portrait   = {};
+    portrait["portrait_data"] = $('#portrait').attr('src').split(',')[1];
+    person["portrait"] = portrait;
     entry["person"]   = person;
 
     //Participant information
