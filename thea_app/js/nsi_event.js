@@ -33,7 +33,7 @@ function displayEventSaved(data){
 
 function saveEvent(){
 	var eventJSON = {};
-	eventJSON["event_organizer"] = $('#event_organizer').val();
+	eventJSON["event_organizer"] = parseInt($('#event_organizer').val());
 	eventJSON["event_type"] = $('#event_type').val();
 	eventJSON["event_description"]= $('#event_description').val();
 	eventJSON["event_admin"] = $('#event_admin').val();

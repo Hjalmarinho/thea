@@ -2,6 +2,9 @@
 
 <div class="ui grid">
 	<div class="column ten wide">
+
+    <h1>Arrangementer</h1>
+
 		<button class="ui icon button" onclick="showEventModal()">
 			<i class="icon plus"></i>Opprett arrangement 
 		</button>

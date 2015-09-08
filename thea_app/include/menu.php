@@ -24,6 +24,9 @@
   <a class="item" href="event.php">
     Endre arrangement
   </a>
+  <a class="item" href="sports.php">
+    Idretter
+  </a>
   <a class="item">
     Portretter
   </a>
