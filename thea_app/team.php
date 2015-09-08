@@ -23,6 +23,20 @@
   </div>
 </div>
 
+<div class="ui modal" id="cancel-modal">
+  <div class="header">
+    Er du sikker at du vil kansellere <span class="teamname"></span>?
+  </div>
+  <div class="content">
+    Gjør det lettere å forstå hva som har skjedd, skriv en kommentar!
+    <textarea rows="4" id="update-comment" style="max-width:100%;width:100%;"></textarea>
+  </div>
+  <div class="actions">
+    <div class="ui button close">Avbryt</div>
+    <div class="ui button close" onclick="updateParticipant()" >Oppdater</div>
+  </div>
+</div>
+
 <div class="ui stackable two column grid">
 	<div class="eight wide column">
 		<div class="ui form" id="entry-form">
@@ -43,6 +57,14 @@
 			</div>
 
 			<div class="inline fields">
+				<label class="field four wide">Øvelse</label>
+				<div class="field nine wide">
+					<select class="ui fluid dropdown" id="exercises">
+					</select>
+				</div>
+			</div>
+
+			<div class="inline fields">
 				<label class="field four wide">Klubb</label>
 				<div class="field nine wide">
 					<select class="ui fluid dropdown" id="clubs">
@@ -57,7 +79,7 @@
 						<option value="">Velg lagets kjønn</option>
 						<option value="Female" >Dame</option>
 						<option value="Male" >Herre</option>
-						<option value="Male" >Mix</option>
+						<option value="Mix" >Mix</option>
 					</select>
 				</div>
 			</div>
@@ -65,7 +87,8 @@
 			<div class="inline fields">
 				<label class="field four wide">Lagleder</label>
 				<div class="field nine wide">
-					<select class="ui fluid dropdown" id="clubs">
+					<select class="ui fluid dropdown" id="teamleader">
+						<option value="">Velg lagleder</option>
 					</select>
 				</div>
 			</div>
@@ -74,11 +97,12 @@
 		<h4 class="ui dividing header">Lagmedlemmer</h4>
 	<div class="ui fourteen wide column">
 		
-	<div class="ui segments">
-			<div class="ui segment"><i class="red remove icon"></i> <a href="./participant.php?entry_id=4">Erik Frøseth</a></div>
-			<div class="ui segment"><i class="red remove icon"></i> <a href="./participant.php?entry_id=5">Øystein Molnes</a></div>
-			<div class="ui segment"><i class="green plus icon"></i></div>
-		</div>
+		<table class="ui very basic table">
+			<tbody id="teammembers">
+
+			</tbody>
+		</table>
+
 	</div>
 
 	</div> <!-- /.ten.wide.column -->
@@ -91,7 +115,7 @@
 					
 					<button class="fluid ui button" id="updateTeam">Oppdater laget</button>
 					<div class="ui divider"></div>
-					<button class="fluid red ui button" id="deleteParticipant">Slett laget</button>
+					<button class="fluid red ui button" id="cancelTeam">Kanseller laget</button>
 				</div>
 		</div>
 

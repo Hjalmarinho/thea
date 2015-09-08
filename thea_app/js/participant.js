@@ -31,16 +31,7 @@ var local_ticket_id
 var local_person_id
 var local_user_id
 	
-function GetURLParameter(sParam){
-	var sPageURL = window.location.search.substring(1);
-	var sURLVariables = sPageURL.split('&');
-	for (var i = 0; i < sURLVariables.length; i++){
-		var sParameterName = sURLVariables[i].split('=');
-		if (sParameterName[0] == sParam){
-			return sParameterName[1];
-		}
-	}
-}
+
 
 function displayPortrait(image){
 	$('#portrait').attr('src', 'data:image/jpeg;base64,' + image.image_data)
@@ -56,7 +47,7 @@ function displayClubs(clubs){
 
 function displayParticipant(participant){
 
-	console.log(participant)
+	//console.log(participant)
 	//Update global variables
 	local_status = participant.status
 	local_time_registrated = participant.time_registrated
@@ -119,7 +110,7 @@ function displayParticipant(participant){
 	id_birthyear.val(birthdate[0])
 
 	if(local_status == "Cancelled"){
-		console.log("BÆSJ")
+		id_participantname.append(' <span style="color:#d01919;">(kansellert)</span>')
 	}
 }
 
@@ -181,45 +172,3 @@ function participantIsCanceled(){
 	console.log("som faen")
 }
 
-function monthToNumber(month){
-		var value;
-	switch(month){
-		case "Jan":
-			value = 01
-			break;
-		case "Feb":
-			value = 02
-			break;
-		case "Mar":
-			value = 03
-			break;
-		case "Apr":
-			value = 04
-			break;
-		case "Mai":
-			value = 05
-			break;
-		case "Jun":
-			value = 06
-			break;
-		case "Jul":
-			value = 07
-			break;
-		case "Aug":
-			value = 08
-			break;
-		case "Sep":
-			value = 09
-			break;
-		case "Okt":
-			value = 10
-			break;
-		case "Nov":
-			value = 11
-			break;
-		case "Des":
-			value = 12
-			break;
-	}
-	return value 
-}

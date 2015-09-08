@@ -121,6 +121,10 @@ function apiGetTeams(exerciseID, callback){
     doGet(baseURL+'exercises/'+exerciseID+'/teams', callback);
 }
 
+function apiGetTeam(teamId, callback){
+    doGet(baseURL + 'teams/' + teamId, callback)
+}
+
 function apiGetClubs(callback){
     doGet(baseURL+'clubs', callback);
 }

@@ -13,15 +13,16 @@ function displayParticipants(participants){
 		var email = participant.person.email
 		var time_registrated = new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#")
 		var entry_id = participant.entry_id
+		var tablerow
 		if(participant.status == "Cancelled"){
-			var tablerow = '<tr bgcolor="#d01919"><td><a href="./participant.php?entry_id=' + entry_id +'">' + first_name + '</a></td><td>' + last_name + '</td><td>' + 
-				gender + '</td><td>' + club + '</td><td>' + phone + '</td><td><a href="mailto:' + email + '">' + email + '</a></td><td>' + 
-				time_registrated + '</td></tr>'
+			tablerow = '<tr bgcolor="#d01919"><td><a href="./participant.php?entry_id=' + entry_id +'">' + first_name + '</a></td><td>' + last_name + '</td><td>' + 
+			gender + '</td><td>' + club + '</td><td>' + phone + '</td><td><a href="mailto:' + email + '">' + email + '</a></td><td>' + 
+			time_registrated + '</td></tr>'
 		
 		}else{
-			var tablerow = '<tr><td><a href="./participant.php?entry_id=' + entry_id +'">' + first_name + '</a></td><td>' + last_name + '</td><td>' + 
-				gender + '</td><td>' + club + '</td><td>' + phone + '</td><td><a href="mailto:' + email + '">' + email + '</a></td><td>' + 
-				time_registrated + '</td></tr>'
+			tablerow = '<tr><td><a href="./participant.php?entry_id=' + entry_id +'">' + first_name + '</a></td><td>' + last_name + '</td><td>' + 
+			gender + '</td><td>' + club + '</td><td>' + phone + '</td><td><a href="mailto:' + email + '">' + email + '</a></td><td>' + 
+			time_registrated + '</td></tr>'
 			
 		}
 		$(participantsdiv).append(tablerow)

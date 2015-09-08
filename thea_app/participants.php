@@ -12,7 +12,7 @@
 
 </div>
 
-<table class="ui sortable celled striped table">
+<table class="ui sortable celled table">
   <thead>
     <tr>
 	    <th class="ascending">Fornavn</th>

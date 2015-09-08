@@ -33,7 +33,16 @@ $(document).ready(function(){
 
 });
 
-
+function GetURLParameter(sParam){
+	var sPageURL = window.location.search.substring(1);
+	var sURLVariables = sPageURL.split('&');
+	for (var i = 0; i < sURLVariables.length; i++){
+		var sParameterName = sURLVariables[i].split('=');
+		if (sParameterName[0] == sParam){
+			return sParameterName[1];
+		}
+	}
+}
 
 function customGenderFormat(gender){
 	return(gender == "Male"?"Mann":"Dame")
@@ -58,4 +67,47 @@ Date.prototype.customFormat = function(formatString){
     mm=(m=dateObject.getMinutes())<10?('0'+m):m;
     ss=(s=dateObject.getSeconds())<10?('0'+s):s;
     return formatString.replace("#hhh#",hhh).replace("#hh#",hh).replace("#h#",h).replace("#mm#",mm).replace("#m#",m).replace("#ss#",ss).replace("#s#",s).replace("#ampm#",ampm).replace("#AMPM#",AMPM);
+}
+
+function monthToNumber(month){
+		var value;
+	switch(month){
+		case "Jan":
+			value = 01
+			break;
+		case "Feb":
+			value = 02
+			break;
+		case "Mar":
+			value = 03
+			break;
+		case "Apr":
+			value = 04
+			break;
+		case "Mai":
+			value = 05
+			break;
+		case "Jun":
+			value = 06
+			break;
+		case "Jul":
+			value = 07
+			break;
+		case "Aug":
+			value = 08
+			break;
+		case "Sep":
+			value = 09
+			break;
+		case "Okt":
+			value = 10
+			break;
+		case "Nov":
+			value = 11
+			break;
+		case "Des":
+			value = 12
+			break;
+	}
+	return value 
 }
