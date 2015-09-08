@@ -5,7 +5,7 @@ $(document).ready(function(){
 function showEventModal(){
 	apiGetClubs(displayOrganizers);
 
-	$('.ui.modal')
+	$('#event_modal')
 	  .modal('show')
 	;
 }
@@ -28,16 +28,20 @@ function displayOrganizers(organizers){
 }
 
 function displayEventSaved(data){
-	console.log(data);
+	if(data){
+		$('#completed_modal').modal('show');
+		$('#password_text').html('Superbrukeren for arrangementet kan nå logge seg på med eposten <strong>'+global_admin+'</strong> og passordet <strong>'+data.password+'</strong>');
+	}
 }
 
+var global_admin = '';
 function postEvent(){
 	var eventJSON = {};
 	eventJSON["event_organizer"] = parseInt($('#event_organizer').val());
 	eventJSON["event_type"] = $('#event_type').val();
 	eventJSON["event_description"] = $('#event_description').val();
 	var event_admin = {};
-	event_admin["email"] = $('#event_admin').val();
+	event_admin["email"] = global_admin = $('#event_admin').val();
 	eventJSON["event_admin"] = event_admin;
 	eventJSON["event_email"] = $('#event_email').val();
 	eventJSON["event_start"] = $('#event_start_year').val()+ '-' + $('#event_start_month').val() + '-' + $('#event_start_day').val();

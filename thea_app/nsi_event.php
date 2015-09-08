@@ -20,7 +20,7 @@
 <?php require('footer.php'); ?>
 
 
-<div class="ui modal">
+<div class="ui modal"  id="event_modal">
   <i class="close icon"></i>
   <div class="header">
     Opprett arrangement
@@ -30,7 +30,7 @@
     <div class="ui grid">
       <div class="eight wide column">
 
-        <form class="ui form" id="entry_form">
+        <form class="ui form">
 
           <!-- ***************** Arrangør ******************** -->
           <div class="inline fields">
@@ -69,9 +69,9 @@
             </div>
           </div>
 
-          <!-- ***************** Email ******************** -->
+          <!-- ***************** Epost ******************** -->
           <div class="inline fields">
-            <label class="field four wide">Email</label>
+            <label class="field four wide">Epost</label>
             <div class="field twelve wide">
               <input type="text" name="event_email" id="event_email" placeholder="Mailadresse for arrangementet">
             </div>
@@ -153,3 +153,27 @@
   </div>
 </div>
 
+<div class="ui modal" id="completed_modal">
+  <i class="close icon"></i>
+  <div class="header">
+        Arrangementet har blitt opprettet
+  </div>
+  <div class="content">
+  <div class="ui container">
+    <div class="ui grid">
+      <div class="eight wide column">
+        <p id="password_text"></p>
+      </div> <!-- /column -->
+    </div> <!-- /grid -->
+  </div> <!-- /container -->
+  </div>
+  <div class="actions">
+    <div class="ui deny button">
+      Avbryt
+    </div>
+    <div class="ui positive right labeled icon button">
+      OK
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
+</div>
