@@ -30,6 +30,8 @@ function doGet(urlGET, callback){
 
 // Perform POST-call to API with given URL.
 function doPost(urlPOST, jsonData, callback){
+    console.log('url: '+urlPOST)
+    console.log(jsonData)
     $.ajax({
         type: 'POST',
         contentType: "application/json",
@@ -111,6 +113,10 @@ function apiCancelParticipant(entry_id, callback, comment){
 // ***********************************************************************
 function apiGetSports(callback){
     doGet(baseURL+'sports', callback);
+}
+
+function apiPostSport(jsonData, callback){
+    doPost(baseURL+'sports/', jsonData, callback);
 }
 
 function apiGetExercises(sportID, callback){

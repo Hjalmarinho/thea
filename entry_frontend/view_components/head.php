@@ -22,3 +22,9 @@
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/validation.js"></script>
 <script type="text/javascript" src="js/api_handler.js"></script>
+
+
+
+
+<script src="http://jcrop-cdn.tapmodo.com/v0.9.12/js/jquery.Jcrop.min.js"></script>
+<script src="http://edge1v.tapmodo.com/deepliq/jcrop_demos.js"></script>

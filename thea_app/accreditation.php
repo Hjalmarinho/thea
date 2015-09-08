@@ -4,6 +4,9 @@
 	<!-- Search field -->
 	<div class="row">
 		<div class="ten wide column" >
+
+		    <h1>Akkreditering</h1>
+
 			<!-- Search field -->
 			<div class="ui icon input">
 				<input type="text" id="search_input" placeholder="Søk...">

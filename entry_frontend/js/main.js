@@ -92,12 +92,8 @@ function displayExercises(exercises){
     if(exercises){
         //Display checkboxes for each available exercise if there are many
         $.each(exercises, function(i, exercise){
-            $('#exercises').append(generateCheckbox(exercise.exercise_description, exercise.exercise_id)); 
-            if(exercise.is_teamexercise){
-                //Get teams for this exercise and populate teams dropdown
-                apiGetTeams( exercise.exercise_id, displayTeams );
-                $('#teams_container').show();
-            }
+            var checkbox = generateCheckbox(exercise.exercise_description, exercise.exercise_id, 'exerciseChecked(this)')
+            $('#exercises').append(checkbox); 
         });  
         //If sport has only one exercise, check and hide it
         if(exercises.length == 1){
@@ -105,8 +101,17 @@ function displayExercises(exercises){
                 $(this).attr('checked', true);
                 $(this).parent().css("display", "none");
             });
+            if(exercises[0].is_teamexercise){
+                //Get teams for this exercise and populate teams dropdown
+                apiGetTeams( exercises[0].exercise_id, displayTeams );
+                $('#teams_container').show();
+            }
         }
     }  
+}
+
+function exerciseChecked(checkbox){
+    console.log( $(checkbox).attr("id"));
 }
 
 // Generate checkboxes for exercises received from API
@@ -131,9 +136,24 @@ function displayTeams(teams){
 
 //Create GUI to allow user to add another sport
 function addSport(){
-    var $exercise_box = $("#exercise_box").clone();
-    $exercise_box.attr('id', 'exercise_box2');
-    $("#exercise_box").after($exercise_box);
+    var $sports_box = $("#sports_box").clone();
+
+    var $remove_btn =  '<div class="inline fields">'+
+                            '<label class="field four wide"></label>'+
+                            '<div class="ui button" onclick="removeSport(this)"> Fjern</div>'+
+                        '</div>';
+
+    $sports_box.append($remove_btn);
+    $sports_box.find('.divider').remove();
+    $sports_box.append('<div class="ui divider" /div>');
+    $("#sports_container").append($sports_box);
+    apiGetSports(displaySports);
+
+}
+
+
+function removeSport(removeButton){
+    $( removeButton ).closest('#sports_box').remove();
 }
 
 //When user clicks "Meld på" a confirm-modal is populated with the data that the user has entered
@@ -167,7 +187,9 @@ function createConfirmModal(){
         $('#exercises input:checked').each(function(){
             participant_html += generateLabelPair('', $(this).attr('id') );
         });
-        participant_html += generateLabelPair('Lag', $('#teams  option:selected').text() );
+        if($('#teams_container').is(":visible") ){
+            participant_html += generateLabelPair('Lag', $('#teams  option:selected').text() );
+        }
     }
     else if(ticket_id == TICKET_ID_TEAM){
         participant_html += generateLabelPair('Lagnavn', $('#team_name').val() );
@@ -196,6 +218,11 @@ function redirectToPayment(data){
     window.open(data.payment_url);
 }
 
+
+
+//      PORTRAIT CROPPING
+// ***********************************************************************
+
 //Display selected image in image-modal and set cropping
 function readURL(input) {
     if (input.files && input.files[0]) {
@@ -203,10 +230,10 @@ function readURL(input) {
         reader.onload = function (e) {
             $('.jcrop-holder').remove();
             $('#portrait_crop').replaceWith('<img id="portrait_crop" src="' + e.target.result + '"/>');
-            $('#portrait_crop').height(200);
             $('#portrait_crop').Jcrop({
+                            boxWidth: 150, boxHeight: 200,
                             aspectRatio: 3/4,
-                            setSelect: [0, 200, 150, 0],
+                            setSelect: [0, 0, 150, 200],
                             onChange: updatePreview,
                             onSelect: updatePreview
                         });
@@ -215,6 +242,7 @@ function readURL(input) {
     }
 }
 
+//Update preview of the cropped image
 function updatePreview(coords) {
     if(parseInt(coords.w)) {
         // Show image preview
@@ -226,8 +254,8 @@ function updatePreview(coords) {
     }
 }
 
-//Preview the cropped portrait 
-function submitPortrait(){
+//Confirm the cropped portrait and close modal
+function confirmPortrait(){
     var canvas = $("#portrait_preview")[0];
 
 
@@ -361,10 +389,10 @@ function hasTeamExercise(sport){
 }
 
 // Create and return a checkbox with given value and label
-function generateCheckbox(label, value){
+function generateCheckbox(label, value, onchange){
     return  '<div class="field">'+
                         '<div class="ui checkbox">'+
-                            '<input type="checkbox" value='+value+' id="'+label+'">'+
+                            '<input type="checkbox" value='+value+' id="'+label+'" onchange='+ onchange +'>'+
                             '<label for="'+label+'">'+label+'</label>'+
                         '</div>'+
                     '</div>';

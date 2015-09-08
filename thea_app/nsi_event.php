@@ -2,6 +2,9 @@
 
 <div class="ui grid">
 	<div class="column ten wide">
+
+    <h1>Arrangementer</h1>
+
 		<button class="ui icon button" onclick="showEventModal()">
 			<i class="icon plus"></i>Opprett arrangement 
 		</button>
@@ -12,21 +15,12 @@
 			<option value="">Velg studentidrettsarrangement</option>
 		</select>
 
-		<div class="ui buttons" style="margin-top: 50px;">
-			<button class="ui button active">Akkreditering</button>
-			<button class="ui button">Deltakere</button>
-			<button class="ui button">Overnatting</button>
-			<button class="ui button">Kommentarer</button>
-			<button class="ui button">Bankett</button>
-			<button class="ui button">Deltakermatrisa</button>
-		</div>
-
 	</div>
 </div> <!-- /ui grid -->
 <?php require('footer.php'); ?>
 
 
-<div class="ui modal">
+<div class="ui modal"  id="event_modal">
   <i class="close icon"></i>
   <div class="header">
     Opprett arrangement
@@ -36,7 +30,7 @@
     <div class="ui grid">
       <div class="eight wide column">
 
-        <form class="ui form" id="entry_form">
+        <form class="ui form">
 
           <!-- ***************** Arrangør ******************** -->
           <div class="inline fields">
@@ -54,7 +48,7 @@
             <div class="field twelve wide">
               <select class="ui search dropdown" name="event_type" id="event_type">
                 <option value="">Hva slags arrangement er det?</option>
-                <option value="1">Studentleker</option>
+                <option value="SL">SL</option>
               </select>
             </div>
           </div>
@@ -75,9 +69,9 @@
             </div>
           </div>
 
-          <!-- ***************** Email ******************** -->
+          <!-- ***************** Epost ******************** -->
           <div class="inline fields">
-            <label class="field four wide">Email</label>
+            <label class="field four wide">Epost</label>
             <div class="field twelve wide">
               <input type="text" name="event_email" id="event_email" placeholder="Mailadresse for arrangementet">
             </div>
@@ -152,10 +146,34 @@
     <div class="ui deny button">
       Avbryt
     </div>
-    <div class="ui positive right labeled icon button" onclick="saveEvent()">
+    <div class="ui positive right labeled icon button" onclick="postEvent()">
       Lagre
       <i class="checkmark icon"></i>
     </div>
   </div>
 </div>
 
+<div class="ui modal" id="completed_modal">
+  <i class="close icon"></i>
+  <div class="header">
+        Arrangementet har blitt opprettet
+  </div>
+  <div class="content">
+  <div class="ui container">
+    <div class="ui grid">
+      <div class="eight wide column">
+        <p id="password_text"></p>
+      </div> <!-- /column -->
+    </div> <!-- /grid -->
+  </div> <!-- /container -->
+  </div>
+  <div class="actions">
+    <div class="ui deny button">
+      Avbryt
+    </div>
+    <div class="ui positive right labeled icon button">
+      OK
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
+</div>
