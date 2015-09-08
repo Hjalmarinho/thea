@@ -92,12 +92,8 @@ function displayExercises(exercises){
     if(exercises){
         //Display checkboxes for each available exercise if there are many
         $.each(exercises, function(i, exercise){
-            $('#exercises').append(generateCheckbox(exercise.exercise_description, exercise.exercise_id)); 
-            if(exercise.is_teamexercise){
-                //Get teams for this exercise and populate teams dropdown
-                apiGetTeams( exercise.exercise_id, displayTeams );
-                $('#teams_container').show();
-            }
+            var checkbox = generateCheckbox(exercise.exercise_description, exercise.exercise_id, 'exerciseChecked(this)')
+            $('#exercises').append(checkbox); 
         });  
         //If sport has only one exercise, check and hide it
         if(exercises.length == 1){
@@ -105,8 +101,17 @@ function displayExercises(exercises){
                 $(this).attr('checked', true);
                 $(this).parent().css("display", "none");
             });
+            if(exercises[0].is_teamexercise){
+                //Get teams for this exercise and populate teams dropdown
+                apiGetTeams( exercises[0].exercise_id, displayTeams );
+                $('#teams_container').show();
+            }
         }
     }  
+}
+
+function exerciseChecked(checkbox){
+    console.log( $(checkbox).attr("id"));
 }
 
 // Generate checkboxes for exercises received from API
@@ -167,7 +172,9 @@ function createConfirmModal(){
         $('#exercises input:checked').each(function(){
             participant_html += generateLabelPair('', $(this).attr('id') );
         });
-        participant_html += generateLabelPair('Lag', $('#teams  option:selected').text() );
+        if($('#teams_container').is(":visible") ){
+            participant_html += generateLabelPair('Lag', $('#teams  option:selected').text() );
+        }
     }
     else if(ticket_id == TICKET_ID_TEAM){
         participant_html += generateLabelPair('Lagnavn', $('#team_name').val() );
@@ -361,10 +368,10 @@ function hasTeamExercise(sport){
 }
 
 // Create and return a checkbox with given value and label
-function generateCheckbox(label, value){
+function generateCheckbox(label, value, onchange){
     return  '<div class="field">'+
                         '<div class="ui checkbox">'+
-                            '<input type="checkbox" value='+value+' id="'+label+'">'+
+                            '<input type="checkbox" value='+value+' id="'+label+'" onchange='+ onchange +'>'+
                             '<label for="'+label+'">'+label+'</label>'+
                         '</div>'+
                     '</div>';
