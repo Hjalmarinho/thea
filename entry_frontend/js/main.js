@@ -203,10 +203,10 @@ function readURL(input) {
         reader.onload = function (e) {
             $('.jcrop-holder').remove();
             $('#portrait_crop').replaceWith('<img id="portrait_crop" src="' + e.target.result + '"/>');
-            $('#portrait_crop').height(200);
             $('#portrait_crop').Jcrop({
+                            boxWidth: 150, boxHeight: 200,
                             aspectRatio: 3/4,
-                            setSelect: [0, 200, 150, 0],
+                            setSelect: [0, 0, 150, 200],
                             onChange: updatePreview,
                             onSelect: updatePreview
                         });

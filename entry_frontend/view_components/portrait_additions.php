@@ -37,14 +37,21 @@
     Last opp et portrettbilde
   </div>
   <div class="content">
-    <div class="row"> 
-      <label for="file" class="ui icon button"><i class="file image outline icon"></i>Velg bilde</label>
-      <input type="file" id="file" style="display:none" onchange="readURL(this);" />
+
+    <div class="ui grid">
+      <div class="four wide column">
+        <label for="file" class="ui icon button"><i class="file image outline icon"></i>Velg bilde</label>
+        <input type="file" id="file" style="display:none" onchange="readURL(this);" />
+      </div>
+      <div class="four wide column">
+
+        <img id="portrait_crop" style="image-orientation: from-image;"/>
+      </div>
+      <div class="four wide column">
+        <canvas id="portrait_preview" style="width:150px; height:200px; overflow:hidden;" />
+      </div>
     </div>
-    <div class="row"> 
-      <img id="portrait_crop" />
-      <canvas id="portrait_preview" style="width:150px; height:200px; overflow:hidden;" />
-    </div>
+
   </div>
   <div class="actions">
     <div class="ui button close">Avbryt</div>
