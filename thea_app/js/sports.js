@@ -39,6 +39,7 @@ function saveSport(){
 	sportJSON["sport_location"] = $('#sport_location').val();
 	sportJSON["sport_deadline"] = $('#sport_deadline_year').val()+ '-' + $('#sport_deadline_month').val() + '-' + $('#sport_deadline_day').val();
 	sportJSON["sport_capacity"] = $('#sport_capacity').val();
+	sportJSON["sport_teamexercise"] = $('#sport_teamexercise').val();
 
 	console.log(sportJSON);
 	apiPostSport(sportJSON, displaySportSaved);

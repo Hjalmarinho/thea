@@ -34,9 +34,7 @@
           <div class="inline fields">
             <label class="field four wide">Idrett</label>
             <div class="field twelve wide">
-              <select class="ui search dropdown" name="sport_description" id="sport_description">
-                <option value="">Hvilken idrett?</option>
-              </select>
+              <input type="text" name="sport_description" id="sport_description" placeholder="Hvilken idrett?">
             </div>
           </div>
 
@@ -104,6 +102,18 @@
             <label class="field four wide">Kapasitet</label>
             <div class="field twelve wide">
               <input type="text" name="sport_capacity" id="sport_capacity" placeholder="Hvor mange kan delta på idretten?">
+            </div>
+          </div>
+
+          <!-- ***************** Lagidrett ******************** -->
+          <div class="inline fields">
+            <label class="field four wide">Lagidrett</label>
+            <div class="field twelve wide">
+              <select class="ui search dropdown" name="sport_teamexercise" id="sport_teamexercise">
+                <option value="">Er det en lagidrett?</option>
+                <option value="1">Ja</option>
+                <option value="0">Nei</option>
+              </select>
             </div>
           </div>
 
