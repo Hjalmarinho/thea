@@ -20,7 +20,7 @@ $( document ).ready(function() {
     apiGetSports(displaySports);
     apiGetAdditions(displayAdditions);
 
-    // Get and display exercises when a sport is selected, for the correct sports_container
+    // Get and display exercises when a sport is selected, for the correct sports_box
     $('#sports_container').change(function(event) {
         if(event.target.name == "sports"){
             current_sports_box = event.target.id.substr(event.target.id.length - 1);
@@ -124,10 +124,6 @@ function displayTeams(teams){
    }  
 }
 
-function exerciseChecked(checkbox){
-    console.log( $(checkbox).attr("id"));
-}
-
 // Generate checkboxes for exercises received from API
 function displayAdditions(additions){
     if(additions){
@@ -138,16 +134,16 @@ function displayAdditions(additions){
    }  
 }
 
-
-//Create GUI to allow user to add another sport
+//Create GUI to allow user to sign up for several sports
 function addSport(){
+    //We create and add a new sports_box and set the correct IDs for its input-fields
     current_sports_box= getNextSportsContainerId();
     var $sports_box = $("#sports_box_1").clone();
     $sports_box.attr("id", "sports_box_"+current_sports_box);
     var $remove_btn =  '<div class="inline fields">'+
-    '<label class="field four wide"></label>'+
-    '<div class="ui button" onclick="removeSport(this)"> Fjern</div>'+
-    '</div>';
+                            '<label class="field four wide"></label>'+
+                            '<div class="ui button" onclick="removeSport(this)"> Fjern</div>'+
+                        '</div>';
 
     $sports_box.prepend('<div class="ui divider"> </div>');
     $sports_box.append($remove_btn);
@@ -170,14 +166,7 @@ function addSport(){
 
 }
 
-function getNextSportsContainerId(){
-    var nextSportsContainerId = null;
-    $('#sports_container > div').each(function() {
-      nextSportsContainerId =  $(this).attr("id").substr($(this).attr("id").length - 1);
-  });
-    return parseInt(nextSportsContainerId)+1;
-}
-
+//Remove sport_box from GUI
 function removeSport(removeButton){
     $( removeButton ).closest('[name="sports_box"]').remove();
     current_sports_box = 1;
@@ -290,6 +279,7 @@ function confirmPortrait(){
     $('#image_modal').modal('hide');
     $('#portrait').show();
 }
+
 
 //      POST TO API FUNCTIONS
 // ***********************************************************************
@@ -422,6 +412,15 @@ function hasTeamExercise(sport){
         }
     });
     return hasTeamExercise;
+}
+
+//Get the ID for the sports_container to be added when user wants to sign up for several sports
+function getNextSportsContainerId(){
+    var nextSportsContainerId = null;
+    $('#sports_container > div').each(function() {
+      nextSportsContainerId =  $(this).attr("id").substr($(this).attr("id").length - 1);
+  });
+    return parseInt(nextSportsContainerId)+1;
 }
 
 // Create and return a checkbox with given value and label
