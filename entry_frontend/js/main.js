@@ -31,10 +31,10 @@ $( document ).ready(function() {
 
     //Display confirm-modal if the form is valid
     $('#entry_button').click(function(){
-       // if(  $('#entry_form').form('is valid')  ){
+       if(  $('#entry_form').form('is valid')  ){
         createConfirmModal();
         $('#confirm_modal').modal('show');    
-    // }
+    }
 });
 
     //Display image-modal for portrait-upload
@@ -208,14 +208,14 @@ function createConfirmModal(){
 
     if(ticket_id != TICKET_ID_SUPPORTER){
         participant_html += generateLabelPair('Medlem', $('#is_clubmember  option:selected').text() );
-        participant_html += generateLabelPair('Idrett', $('#sports  option:selected').text() );
+        participant_html += generateLabelPair('Idrett', $('#sports_1  option:selected').text() );
     }
     if(ticket_id == TICKET_ID_PARTICIPANT){
         $('#exercises input:checked').each(function(){
             participant_html += generateLabelPair('', $(this).attr('id') );
         });
-        if($('#teams_container').is(":visible") ){
-            participant_html += generateLabelPair('Lag', $('#teams  option:selected').text() );
+        if($('#teams_container_1').is(":visible") ){
+            participant_html += generateLabelPair('Lag', $('#teams_1  option:selected').text() );
         }
     }
     else if(ticket_id == TICKET_ID_TEAM){

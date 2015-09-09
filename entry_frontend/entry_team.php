@@ -55,7 +55,7 @@ Primary use:  View allowing contact persons to register teams for an event.
           <div class="inline fields" id="sports_div">
             <label class="field four wide">Idrett</label>
             <div class="field twelve wide">
-              <select class="ui search dropdown" name="sports" id="sports">
+              <select class="ui search dropdown" name="sports" id="sports_1">
                 <option value="">Hvilken idrett skal laget delta i?</option>
                 <!-- Sports are populated here from api_handler on page load -->
               </select>
@@ -65,7 +65,7 @@ Primary use:  View allowing contact persons to register teams for an event.
           <div class="inline fields">
             <label class="field four wide"></label>
             <div class="field twelve wide">
-              <div class="grouped fields" id="exercises">
+              <div class="grouped fields" id="exercises_1">
                 <!-- Exercise-checkboxes are populated here from api_handler when a sport is selected -->
               </div>
             </div>
