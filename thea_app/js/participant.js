@@ -47,7 +47,7 @@ function displayClubs(clubs){
 
 function displayParticipant(participant){
 
-	//console.log(participant)
+	console.log(participant)
 	//Update global variables
 	local_status = participant.status
 	local_time_registrated = participant.time_registrated
@@ -109,7 +109,7 @@ function displayParticipant(participant){
 	dropdown.has(id_birthmonth).dropdown('set selected', new Date(participant.person.birthdate).customFormat("#MMM#"));
 	id_birthyear.val(birthdate[0])
 
-	if(local_status == "Cancelled"){
+	if(local_status == "CANCELLED"){
 		id_participantname.append(' <span style="color:#d01919;">(kansellert)</span>')
 	}
 }
@@ -169,6 +169,6 @@ function cancelParticipant(){
 }
 
 function participantIsCanceled(){
-	console.log("som faen")
+	console.log("participant cancelled ")
 }
 

@@ -125,7 +125,7 @@
 
 <div class="row">
 	<div class="fourteen wide column">
-
+<!--
 		<div class="ui segments">
 			<div class="ui segment">
 				<p>Erik Frøseth changed gender from male to female on 13 august 2015, kl. 12.10.43.</p>
@@ -136,7 +136,7 @@
 			</div>
 		</div>
 	</div>
-
+-->
 </div>
 </div>
 
