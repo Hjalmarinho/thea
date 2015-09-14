@@ -123,6 +123,10 @@ function apiGetExercises(sportID, callback){
     doGet(baseURL+'sports/'+sportID+'/exercises', callback);
 }
 
+function apiPostExercise(sportID, jsonData, callback){
+    doPost(baseURL+'sports/'+sportID+'/exercises', jsonData, callback);
+}
+
 function apiGetTeams(exerciseID, callback){
     doGet(baseURL+'exercises/'+exerciseID+'/teams', callback);
 }

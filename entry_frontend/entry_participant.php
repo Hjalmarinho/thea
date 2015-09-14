@@ -20,7 +20,7 @@ Primary use:  View allowing participants to register for an event.
 
   <div class="ui container">
     <div class="ui grid">
-      <div class="six wide column">
+      <div class="six wide computer ten wide tablet fourteen wide mobile column">
 
         <form class="ui form" id="entry_form">
 
@@ -55,11 +55,11 @@ Primary use:  View allowing participants to register for an event.
 
           <!-- This box can be copied in order to allow users to entry for several sports -->
           <div id="sports_container">
-            <div id="sports_box">
+            <div id="sports_box_1" name="sports_box">
               <div class="inline fields">
                 <label class="field four wide">Idrett</label>
                 <div class="field twelve wide">
-                  <select class="ui search dropdown" name="sports" id="sports">
+                  <select class="ui search dropdown" name="sports" id="sports_1">
                     <option value="">Hvilken idrett skal du delta i?</option>
                     <!-- Sports are populated here from api_handler on page load -->
                   </select>
@@ -69,23 +69,22 @@ Primary use:  View allowing participants to register for an event.
               <div class="inline fields">
                 <label class="field four wide"></label>
                 <div class="field twelve wide">
-                  <div class="grouped fields" id="exercises">
+                  <div class="grouped fields" name="exercises" id="exercises_1">
                     <!-- Exercise-checkboxes are populated here from api_handler when a sport is selected -->
 
                   </div>
                 </div>
               </div>
 
-              <div class="inline fields" id="teams_container" style="display:none">
+              <div class="inline fields" name="teams_container" id="teams_container_1" style="display:none">
                 <label class="field four wide">Lag</label>
                 <div class="field twelve wide">
-                  <select class="ui search dropdown" name="teams" id="teams">
+                  <select class="ui search dropdown" name="teams" id="teams_1">
                     <option value="">Hvilket lag skal du delta med?</option>
                     <!-- Teams are populated here from api_handler when a team sport is selected -->
                   </select>
                 </div>
               </div>
-              <div class="ui divider"> </div>
             </div>
           </div>
 

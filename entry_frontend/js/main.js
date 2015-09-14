@@ -20,24 +20,22 @@ $( document ).ready(function() {
     apiGetSports(displaySports);
     apiGetAdditions(displayAdditions);
 
-    // Get and display exercises when a sport is selected
-    $('#sports').on('change', function() {
-        apiGetExercises( $( "#sports" ).val(), displayExercises ); 
-    });
-
-    //Display team_dropdown if a team_exercise is selected
-    $('input:checkbox').change(
-    function(){
-        alert('checked');
+    // Get and display exercises when a sport is selected, for the correct sports_box
+    $('#sports_container').change(function(event) {
+        if(event.target.name == "sports"){
+            current_sports_box = event.target.id.substr(event.target.id.length - 1);
+            var dropdown = $('#sports_'+current_sports_box);
+            apiGetExercises( $( dropdown ).val(), displayExercises ); 
+        }
     });
 
     //Display confirm-modal if the form is valid
     $('#entry_button').click(function(){
-       // if(  $('#entry_form').form('is valid')  ){
-            createConfirmModal();
-            $('#confirm_modal').modal('show');    
-       // }
-    });
+       if(  $('#entry_form').form('is valid')  ){
+        createConfirmModal();
+        $('#confirm_modal').modal('show');    
+    }
+});
 
     //Display image-modal for portrait-upload
     $('#image_button').click(function(){
@@ -55,6 +53,8 @@ const TICKET_ID_PARTICIPANT = 1;
 const TICKET_ID_TEAM = 2;
 const TICKET_ID_SUPPORTER = 3;
 
+//This variable holds track of which sport_box is being handled
+var current_sports_box = 1;
 
 //      UPDATE GUI FUNCTIONS
 // ***********************************************************************
@@ -63,97 +63,113 @@ const TICKET_ID_SUPPORTER = 3;
 function displayClubs(clubs){
     if(clubs){
         $.each(clubs, function(i, club){
-         $('#clubs').append('<option value='+club.club_id+'>'+club.club_name+'</option>');      
-     });
+           $('#clubs').append('<option value='+club.club_id+'>'+club.club_name+'</option>');      
+       });
     }
 }
 
 // Populate dropdown with sports received from API
 function displaySports(sports){
     if(sports){
-     $.each(sports, function(i, sport){
+       $.each(sports, function(i, sport){
         var ticket_id = $('#ticket_id').data('value');
             //Display only sports having a team_exercise if user is adding a team
             if( ticket_id == TICKET_ID_TEAM && hasTeamExercise(sport)){
-                $('#sports').append('<option value='+sport.sport_id+'>'+sport.sport_description+'</option>'); 
+                $('#sports_'+current_sports_box).append('<option value='+sport.sport_id+'>'+sport.sport_description+'</option>'); 
             }
             //Display all sports for a participant
             else if(ticket_id == TICKET_ID_PARTICIPANT){
-                $('#sports').append('<option value='+sport.sport_id+'>'+sport.sport_description+'</option>'); 
+                $('#sports_'+current_sports_box).append('<option value='+sport.sport_id+'>'+sport.sport_description+'</option>'); 
             }
-        });   
- }  
+        });  
+       $('.dropdown').dropdown('refresh'); 
+   }  
 }
 
 // Generate checkboxes for exercises received from API
 function displayExercises(exercises){
-    $('#exercises').empty();
-    $('#teams_container').hide();
+    console.log(exercises);
+    var curr_id = current_sports_box;
+    $('#exercises_'+curr_id).empty();
+    $('#teams_container_'+curr_id).hide();
     if(exercises){
         //Display checkboxes for each available exercise if there are many
         $.each(exercises, function(i, exercise){
             var checkbox = generateCheckbox(exercise.exercise_description, exercise.exercise_id, 'exerciseChecked(this)')
-            $('#exercises').append(checkbox); 
+            $('#exercises_'+curr_id).append(checkbox); 
         });  
         //If sport has only one exercise, check and hide it
         if(exercises.length == 1){
-            $('#exercises input').each(function(){
+            $('#exercises_'+curr_id+' input').each(function(){
                 $(this).attr('checked', true);
                 $(this).parent().css("display", "none");
             });
             if(exercises[0].is_teamexercise){
                 //Get teams for this exercise and populate teams dropdown
                 apiGetTeams( exercises[0].exercise_id, displayTeams );
-                $('#teams_container').show();
+                $('#teams_container_'+curr_id).show();
             }
         }
     }  
 }
 
-function exerciseChecked(checkbox){
-    console.log( $(checkbox).attr("id"));
+// Generate checkboxes for teams received from API
+function displayTeams(teams){
+    var curr_id = current_sports_box;
+    $('#teams_'+curr_id).empty();
+    if(teams){
+       $.each(teams, function(i, team){
+        $('#teams_'+curr_id).append('<option value='+team.team_id+'>'+team.team_name+'</option>'); 
+    });   
+   }  
 }
 
 // Generate checkboxes for exercises received from API
 function displayAdditions(additions){
     if(additions){
-     $.each(additions, function(i, addition){
+       $.each(additions, function(i, addition){
         var addition_label = addition.addition_description+' ('+addition.addition_fee+' ,-)';
         $('#additions').append(generateCheckbox(addition_label, addition.addition_id)); 
     });   
- }  
+   }  
 }
 
-// Generate checkboxes for teams received from API
-function displayTeams(teams){
-    $('#teams').empty();
-    if(teams){
-     $.each(teams, function(i, team){
-        $('#teams').append('<option value='+team.team_id+'>'+team.team_name+'</option>'); 
-    });   
- }  
-}
-
-//Create GUI to allow user to add another sport
+//Create GUI to allow user to sign up for several sports
 function addSport(){
-    var $sports_box = $("#sports_box").clone();
-
+    //We create and add a new sports_box and set the correct IDs for its input-fields
+    current_sports_box= getNextSportsContainerId();
+    var $sports_box = $("#sports_box_1").clone();
+    $sports_box.attr("id", "sports_box_"+current_sports_box);
     var $remove_btn =  '<div class="inline fields">'+
                             '<label class="field four wide"></label>'+
                             '<div class="ui button" onclick="removeSport(this)"> Fjern</div>'+
                         '</div>';
 
+    $sports_box.prepend('<div class="ui divider"> </div>');
     $sports_box.append($remove_btn);
-    $sports_box.find('.divider').remove();
-    $sports_box.append('<div class="ui divider" /div>');
+    $sports_box.append('<div class="ui divider"> </div>');
     $("#sports_container").append($sports_box);
+
+    var $sports = $sports_box.find("[name='sports']");
+    $sports.attr("id", "sports_"+current_sports_box)
+
+    var $exercises = $sports_box.find("[name='exercises']");
+    $exercises.attr("id", "exercises_"+current_sports_box)
+
+    var $teams_container = $sports_box.find("[name='teams_container']");
+    $teams_container.attr("id", "teams_container_"+current_sports_box)
+
+    var $teams = $sports_box.find("[name='teams']");
+    $teams.attr("id", "teams_"+current_sports_box)
+
     apiGetSports(displaySports);
 
 }
 
-
+//Remove sport_box from GUI
 function removeSport(removeButton){
-    $( removeButton ).closest('#sports_box').remove();
+    $( removeButton ).closest('[name="sports_box"]').remove();
+    current_sports_box = 1;
 }
 
 //When user clicks "Meld på" a confirm-modal is populated with the data that the user has entered
@@ -181,14 +197,14 @@ function createConfirmModal(){
 
     if(ticket_id != TICKET_ID_SUPPORTER){
         participant_html += generateLabelPair('Medlem', $('#is_clubmember  option:selected').text() );
-        participant_html += generateLabelPair('Idrett', $('#sports  option:selected').text() );
+        participant_html += generateLabelPair('Idrett', $('#sports_1  option:selected').text() );
     }
     if(ticket_id == TICKET_ID_PARTICIPANT){
         $('#exercises input:checked').each(function(){
             participant_html += generateLabelPair('', $(this).attr('id') );
         });
-        if($('#teams_container').is(":visible") ){
-            participant_html += generateLabelPair('Lag', $('#teams  option:selected').text() );
+        if($('#teams_container_1').is(":visible") ){
+            participant_html += generateLabelPair('Lag', $('#teams_1  option:selected').text() );
         }
     }
     else if(ticket_id == TICKET_ID_TEAM){
@@ -203,7 +219,7 @@ function createConfirmModal(){
     $('#confirm_additions_container').empty();
     var additions_html = '';
 
-    additions_html += '<img src="' + $('#portrait').attr('src') + '" style="width:150px; height:200px;"/>';
+    additions_html += '<img src="' + $('#portrait').attr('src') + '" style="width:75px; height:100px;"/>';
     $('#additions input:checked').each(function(){
         additions_html += generateLabelPair('Tillegg', $(this).attr('id') );
     });
@@ -215,6 +231,7 @@ function createConfirmModal(){
 
 //Redirect user to payment-page
 function redirectToPayment(data){
+    console.log(data);
     window.open(data.payment_url);
 }
 
@@ -231,12 +248,12 @@ function readURL(input) {
             $('.jcrop-holder').remove();
             $('#portrait_crop').replaceWith('<img id="portrait_crop" src="' + e.target.result + '"/>');
             $('#portrait_crop').Jcrop({
-                            boxWidth: 150, boxHeight: 200,
-                            aspectRatio: 3/4,
-                            setSelect: [0, 0, 150, 200],
-                            onChange: updatePreview,
-                            onSelect: updatePreview
-                        });
+                boxWidth: 150, boxHeight: 200,
+                aspectRatio: 3/4,
+                setSelect: [0, 0, 150, 200],
+                onChange: updatePreview,
+                onSelect: updatePreview
+            });
         };
         reader.readAsDataURL(input.files[0]);
     }
@@ -258,24 +275,17 @@ function updatePreview(coords) {
 function confirmPortrait(){
     var canvas = $("#portrait_preview")[0];
 
-
     $('#portrait').attr("src", canvas.toDataURL());
     $('#image_modal').modal('hide');
     $('#portrait').show();
 }
+
 
 //      POST TO API FUNCTIONS
 // ***********************************************************************
 
 //Called when a participant clicks the submit-button 
 function submitParticipantForm(){
-
-    //First upload portrait (we are uploading the base64-string from img-src)
-    var jsonPortrait = {};
-    jsonPortrait["portrait_data"] = $('#portrait').attr('src').split(',')[1];
-    // jsonPortrait["portrait_data"] = "R0lGODlhDwAPAKECAAAAzMzM/////wAAACwAAAAADwAPAAACIISPeQHsrZ5ModrLlN48CXF8m2iQ3YmmKqVlRtW4MLwWACH+H09wdGltaXplZCBieSBVbGVhZCBTbWFydFNhdmVyIQAAOw==";
-    apiPostPortrait ( jsonPortrait, function(){ return true });
-
     //Serialize the form into a json-object in order to post the participant to the API
     var jsonForm = createJSON();
 
@@ -285,6 +295,7 @@ function submitParticipantForm(){
 
 //Called when a user has completed payment 
 function completeEntry(transaction_id){
+    console.log(transaction_id);
     apiPutTransaction(transaction_id, function(){ return true; });
 }
 
@@ -298,7 +309,7 @@ function createJSON(){
 
     var jsonForm = {};
     var entry = {};
-    jsonForm["redirect_url"] = 'entry_frontend/completed.php';
+    jsonForm["redirect_url"] = 'http://thea.no/entry_frontend/completed.php';
     jsonForm["entry"] = entry;
 
     //Personal information
@@ -314,6 +325,9 @@ function createJSON(){
     person["gender"]     = $('#gender').val();
     person["birthdate"]  = $('#birthyear').val()+ '-' + $('#birthmonth').val() + '-' + $('#birthday').val();
     person["allergies"]  = $('#allergies').val();
+    var portrait   = {};
+    portrait["portrait_data"] = $('#portrait').attr('src').split(',')[1];
+    person["portrait"] = portrait;
     entry["person"]   = person;
 
     //Participant information
@@ -323,7 +337,7 @@ function createJSON(){
     var ticket_id = parseInt($('#ticket_id').data('value')); 
     entry["ticket"] = {ticket_id};
 
-    entry["exercises"] = uiGetExercises(ticket_id);
+    entry["sports"] = uiGetSports(ticket_id);
 
     //Additions
     entry["additions"] = [];
@@ -346,34 +360,46 @@ function uiGetAdditions(){
 }
 
 //Iterate the exercise-checkboxes and see which have been checked, or if a team is to be added
-function uiGetExercises(ticket_id){
-    var exercises = [];
+function uiGetSports(ticket_id){
+    var sports = [];
+    //Iterate through sports_boxes and get exercises
+    $('#sports_container > div').each(function() {
+      var sport = {};
+      var curr_id =  $(this).attr("id").substr($(this).attr("id").length - 1);
+      console.log(curr_id);
+      sport["sport_id"] = $('#sports_'+curr_id).val();
 
-    //Find and add checked exercises for a participant
-    if(ticket_id == TICKET_ID_PARTICIPANT){
-        $('#exercises input:checked').each(function(){
-            var exercise_id = parseInt($(this).attr('value'));
-            var team_id = parseInt($("#teams").val());
-            var team = {team_id};
+      var exercises = [];
+        //Find and add checked exercises for a participant
+        if(ticket_id == TICKET_ID_PARTICIPANT){
+            $('#exercises_'+curr_id+' input:checked').each(function(){
+                var exercise_id = parseInt($(this).attr('value'));
+                var team_id = parseInt($('#teams_'+curr_id).val());
+                var team = {team_id};
 
-            exercises.push({exercise_id , team });
-        });
-    }
-    //Add exercise with team info for team
-    else if(ticket_id == TICKET_ID_TEAM){
-        $('#exercises input:checked').each(function(){
-            var exercise_id = parseInt($(this).attr('value'));
-            var is_playing = (($('#is_playing').val()  == 1) ? true : false);
-            var team_name = $("#team_name").val(); 
-            var gender = $("#team_gender").val();
-            var team_number = 0;
+                exercises.push({exercise_id , team });
+            });
+        }
+        //Add exercise with team info for team
+        else if(ticket_id == TICKET_ID_TEAM){
+            $('#exercises input:checked').each(function(){
+                var exercise_id = parseInt($(this).attr('value'));
+                var is_playing = (($('#is_playing').val()  == 1) ? true : false);
+                var team_name = $("#team_name").val(); 
+                var gender = $("#team_gender").val();
+                var team_number = 0;
 
-            var team = {team_name, gender, team_number};
+                var team = {team_name, gender, team_number};
 
-            exercises.push({exercise_id ,  is_playing, team });
-        });
-    } 
-    return exercises;
+                exercises.push({exercise_id ,  is_playing, team });
+            });
+        } 
+        sport["exercises"] = exercises;
+
+        sports.push(sport);
+    });   
+
+return sports;
 }
 
 //Check whether a sport has any team exercises
@@ -388,20 +414,29 @@ function hasTeamExercise(sport){
     return hasTeamExercise;
 }
 
+//Get the ID for the sports_container to be added when user wants to sign up for several sports
+function getNextSportsContainerId(){
+    var nextSportsContainerId = null;
+    $('#sports_container > div').each(function() {
+      nextSportsContainerId =  $(this).attr("id").substr($(this).attr("id").length - 1);
+  });
+    return parseInt(nextSportsContainerId)+1;
+}
+
 // Create and return a checkbox with given value and label
 function generateCheckbox(label, value, onchange){
     return  '<div class="field">'+
-                        '<div class="ui checkbox">'+
-                            '<input type="checkbox" value='+value+' id="'+label+'" onchange='+ onchange +'>'+
-                            '<label for="'+label+'">'+label+'</label>'+
-                        '</div>'+
-                    '</div>';
+    '<div class="ui checkbox">'+
+    '<input type="checkbox" value='+value+' id="'+label+'" onchange='+ onchange +'>'+
+    '<label for="'+label+'">'+label+'</label>'+
+    '</div>'+
+    '</div>';
 }
 
 // Create and return a pair of labels for the confirm modal
 function generateLabelPair(label, value){
   return   '<div class="inline fields">'+
-                        '<label class="field four wide">'+label+'</label>'+
-                        '<p>'+value+'</p>'+
-                    '</div>';
+  '<label class="field four wide">'+label+'</label>'+
+  '<p>'+value+'</p>'+
+  '</div>';
 }

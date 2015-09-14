@@ -102,10 +102,6 @@ function apiGetAdditions(callback){
     doGet(baseURL+'additions/', callback);
 }
 
-function apiPostPortrait(json, callback){
-    doPost(baseURL+'portraits/', json, callback);
-}
-
 // http://docs.thea.apiary.io/#reference/participant/participants/add-a-participant
 function apiPostParticipant(json, callback){
     doPost(baseURL+'participants/', json, callback);
