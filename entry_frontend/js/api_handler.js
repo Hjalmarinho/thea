@@ -111,3 +111,7 @@ function apiPostParticipant(json, callback){
 function apiPutTransaction(transactionID, callback){
     doPut(baseURL+'transactions/'+transactionID+'/process', {}, callback);
 }
+
+function apiPutTerminateEntry(transactionID, callback){
+    doPut(baseURL+'transactions/'+transactionID+'/terminate', {}, callback);
+}

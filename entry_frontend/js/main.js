@@ -232,7 +232,7 @@ function createConfirmModal(){
 //Redirect user to payment-page
 function redirectToPayment(data){
     console.log(data);
-    window.open(data.payment_url);
+    window.location.replace(data.payment_url);
 }
 
 
@@ -294,9 +294,15 @@ function submitParticipantForm(){
 }
 
 //Called when a user has completed payment 
-function completeEntry(transaction_id){
+function completeEntry(transaction_id, callback){
     console.log(transaction_id);
-    apiPutTransaction(transaction_id, function(){ return true; });
+    apiPutTransaction(transaction_id, callback);
+}
+
+
+//Called when a user cancelled the payment
+function terminateEntry(transaction_id) {
+    apiPutTerminateEntry(transaction_id, function(data) { return true; });
 }
 
 
@@ -309,7 +315,8 @@ function createJSON(){
 
     var jsonForm = {};
     var entry = {};
-    jsonForm["redirect_url"] = 'http://thea.no/entry_frontend/completed.php';
+    // jsonForm["redirect_url"] = 'http://thea.no/entry_frontend/completed.php';
+    jsonForm["redirect_url"] = 'http://pamelding.sltromso.no/completed.php';
     jsonForm["entry"] = entry;
 
     //Personal information
@@ -367,14 +374,14 @@ function uiGetSports(ticket_id){
       var sport = {};
       var curr_id =  $(this).attr("id").substr($(this).attr("id").length - 1);
       console.log(curr_id);
-      sport["sport_id"] = $('#sports_'+curr_id).val();
+      sport["sport_id"] = parseInt($('#sports_'+curr_id).val());
 
       var exercises = [];
         //Find and add checked exercises for a participant
         if(ticket_id == TICKET_ID_PARTICIPANT){
             $('#exercises_'+curr_id+' input:checked').each(function(){
                 var exercise_id = parseInt($(this).attr('value'));
-                var team_id = parseInt($('#teams_'+curr_id).val());
+                var team_id = parseInt(parseInt($('#teams_'+curr_id).val()));
                 var team = {team_id};
 
                 exercises.push({exercise_id , team });
@@ -439,4 +446,19 @@ function generateLabelPair(label, value){
   '<label class="field four wide">'+label+'</label>'+
   '<p>'+value+'</p>'+
   '</div>';
+}
+
+// Get an URL parameter
+// GetURLParameter("foo"); will return "asdf" from http://anything.com?foo=asdf
+function GetURLParameter(sParam){
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++){
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam){
+            return sParameterName[1];
+        }
+    }
+
+    return null;
 }
