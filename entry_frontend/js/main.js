@@ -275,7 +275,7 @@ function updatePreview(coords) {
 function confirmPortrait(){
     var canvas = $("#portrait_preview")[0];
 
-    $('#portrait').attr("src", canvas.toDataURL());
+    $('#portrait').attr("src", canvas.toDataURL("image/jpeg"));
     $('#image_modal').modal('hide');
     $('#portrait').show();
 }

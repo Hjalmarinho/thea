@@ -49,7 +49,7 @@
         <img id="portrait_crop" style="image-orientation: from-image"/>
       </div>
       <div class="four wide computer eight wide mobile column">
-        <canvas id="portrait_preview" style="width:150px; height:200px; overflow:hidden;" />
+        <canvas id="portrait_preview" width="150" height="200" style="overflow:hidden;" />
       </div>
     </div>
 
