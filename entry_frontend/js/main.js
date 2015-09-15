@@ -70,7 +70,7 @@ var current_sports_box = 1;
 function displayClubs(clubs){
     if(clubs){
         $.each(clubs, function(i, club){
-           $('#clubs').append('<option value='+club.club_id+'>'+club.club_name+'</option>');      
+           $('#clubs').append('<option value="'+club.club_id+'">' + escapeHtml(club.club_name) + '</option>');
        });
     }
 }
@@ -82,11 +82,11 @@ function displaySports(sports){
         var ticket_id = $('#ticket_id').data('value');
             //Display only sports having a team_exercise if user is adding a team
             if( ticket_id == TICKET_ID_TEAM && hasTeamExercise(sport)){
-                $('#sports_'+current_sports_box).append('<option value='+sport.sport_id+'>'+sport.sport_description+'</option>'); 
+                $('#sports_'+current_sports_box).append('<option value="'+sport.sport_id+'">'+escapeHtml(sport.sport_description)+'</option>'); 
             }
             //Display all sports for a participant
             else if(ticket_id == TICKET_ID_PARTICIPANT){
-                $('#sports_'+current_sports_box).append('<option value='+sport.sport_id+'>'+sport.sport_description+'</option>'); 
+                $('#sports_'+current_sports_box).append('<option value="'+sport.sport_id+'">'+escapeHtml(sport.sport_description)+'</option>'); 
             }
         });  
        $('.dropdown').dropdown('refresh'); 
@@ -125,9 +125,9 @@ function displayTeams(teams){
     $('#teams_'+curr_id).empty();
     if(teams){
        $.each(teams, function(i, team){
-        $('#teams_'+curr_id).append('<option value='+team.team_id+'>'+team.team_name+'</option>'); 
-    });   
-   }  
+        $('#teams_'+curr_id).append('<option value="'+team.team_id+'">'+escapeHtml(team.team_name)+'</option>');
+    });
+   }
 }
 
 // Generate checkboxes for exercises received from API
@@ -443,7 +443,7 @@ function generateCheckbox(label, value, checked, onchange){
 
     return  '<div class="field">'+
     '<div class="ui checkbox">'+
-    '<input type="checkbox" value='+value+' id="'+label+'" onchange="'+ onchange +'" ' + checkedStr +'>' +
+    '<input type="checkbox" value="'+value+'" id="'+label+'" onchange="'+ onchange +'" ' + checkedStr +'>' +
     '<label for="'+label+'">'+label+'</label>'+
     '</div>'+
     '</div>';
@@ -453,7 +453,7 @@ function generateCheckbox(label, value, checked, onchange){
 function generateLabelPair(label, value){
   return   '<div class="inline fields">'+
   '<label class="field four wide">'+label+'</label>'+
-  '<p>'+value+'</p>'+
+  '<p>' + escapeHtml(value) + '</p>'+
   '</div>';
 }
 
@@ -470,4 +470,20 @@ function GetURLParameter(sParam){
     }
 
     return null;
+}
+
+
+var entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;',
+    "/": '&#x2F;'
+  };
+
+function escapeHtml(string) {
+return String(string).replace(/[&<>"'\/]/g, function (s) {
+  return entityMap[s];
+});
 }
