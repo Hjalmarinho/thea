@@ -14,8 +14,7 @@
 $( document ).ready(function() {
 
     // Initialize dropdown
-    $('.ui.dropdown')
-    .dropdown();
+    // $('.ui.dropdown').dropdown();
 
     //API-calls on page load, parameter is the callback-function
     apiGetClubs(displayClubs, showError);
