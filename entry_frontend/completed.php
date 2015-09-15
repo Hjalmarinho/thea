@@ -42,6 +42,8 @@ Primary use:	This page is displayed when an entry has been completed
 				} else {
 					error(transactionId);
 				}
+			}, function(errorMsg) {
+				error(transactionId);
 			});
 		}
 	});

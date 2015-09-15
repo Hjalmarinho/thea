@@ -52,55 +52,58 @@ Primary use:  View allowing contact persons to register teams for an event.
             </div>
           </div>
 
-          <div class="inline fields" id="sports_div">
-            <label class="field four wide">Idrett</label>
-            <div class="field twelve wide">
-              <select class="ui search dropdown" name="sports" id="sports_1">
-                <option value="">Hvilken idrett skal laget delta i?</option>
-                <!-- Sports are populated here from api_handler on page load -->
-              </select>
-            </div>
-          </div>
+          <div id="sports_container">
+            <div id="sports_box_1" name="sports_box">
+              <div class="inline fields" id="sports_div">
+                <label class="field four wide">Idrett</label>
+                <div class="field twelve wide">
+                  <select class="ui search dropdown" name="sports" id="sports_1">
+                    <option value="">Hvilken idrett skal laget delta i?</option>
+                    <!-- Sports are populated here from api_handler on page load -->
+                  </select>
+                </div>
+              </div>
 
-          <div class="inline fields">
-            <label class="field four wide"></label>
-            <div class="field twelve wide">
-              <div class="grouped fields" id="exercises_1">
-                <!-- Exercise-checkboxes are populated here from api_handler when a sport is selected -->
+              <div class="inline fields">
+                <label class="field four wide"></label>
+                <div class="field twelve wide">
+                  <div class="grouped fields" id="exercises_1">
+                    <!-- Exercise-checkboxes are populated here from api_handler when a sport is selected -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="inline fields">
+                <label class="field four wide">Lagnavn</label>
+                <div class="field twelve wide">
+                  <input type="text" name="team_name" id="team_name">
+                </div>
+              </div>
+
+              <div class="inline fields">
+                <label class="field four wide">Klasse</label>
+                <div class="field twelve wide">
+                  <select class="ui dropdown" name="team_gender" id="team_gender">
+                    <option value="">I hvilken klasse spiller laget?</option>
+                    <option value="MALE">Herre</option>
+                    <option value="FEMALE">Dame</option>
+                    <option value="MIX">Mix</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="inline fields">
+                <label class="field four wide">Spillende</label>
+                <div class="field twelve wide">
+                  <select class="ui dropdown" name="is_playing" id="is_playing">
+                    <option value="">Skal du spille på laget?</option>
+                    <option value="1">Ja</option>
+                    <option value="0">Nei</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
-
-          <div class="inline fields">
-            <label class="field four wide">Lagnavn</label>
-            <div class="field twelve wide">
-              <input type="text" name="team_name" id="team_name">
-            </div>
-          </div>
-
-          <div class="inline fields">
-            <label class="field four wide">Klasse</label>
-            <div class="field twelve wide">
-              <select class="ui dropdown" name="team_gender" id="team_gender">
-                <option value="">I hvilken klasse spiller laget?</option>
-                <option value="1">Herre</option>
-                <option value="0">Dame</option>
-                <option value="0">Mix</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="inline fields">
-            <label class="field four wide">Spillende</label>
-            <div class="field twelve wide">
-              <select class="ui dropdown" name="is_playing" id="is_playing">
-                <option value="">Skal du spille på laget?</option>
-                <option value="1">Ja</option>
-                <option value="0">Nei</option>
-              </select>
-            </div>
-          </div>
-
           <!-- Insert view for portrait image and additions-->
           <?php require("view_components/portrait_additions.php"); ?>
 
@@ -119,5 +122,7 @@ Primary use:  View allowing contact persons to register teams for an event.
     <!-- Insert the confirm modal -->
   <?php require("view_components/confirm_modal.php"); ?>
 
+  <!-- Insert error modal -->
+  <?php require("view_components/error_modal.php"); ?>
 </body>
 </html>

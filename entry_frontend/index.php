@@ -32,12 +32,6 @@ Primary use:	Start page for the entry sites. Allows users to
 					<button class="ui button">Meld på lag</button>
 				</a>
 			</div>
-
-			<div class="three wide computer twelve wide mobile column">
-				<a href="entry_supporter.php">
-					<button class="ui button">Meld på supporter</button>
-				</a>
-			</div>
 			<div class="computer only three wide computer column"></div>
 		</div>
 	</div>
