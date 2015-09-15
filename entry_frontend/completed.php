@@ -68,7 +68,7 @@ Primary use:	This page is displayed when an entry has been completed
 			</h1>
 
 			<p>Din påmelding er nå fullført, og du vil om kort tid motta en bekreftelsesmail med kvittering på eposten du oppga under påmeldingen. 
-			Bekreftelsesmailen vil også inneholde brukernavn og passord for innlogging til din deltakerside.</p>
+			Skulle du ha noen andre spørsmål, ber vi deg ta kontakt med arrangøren.</p>
 		</div>
 		<div id="error" hidden>
 			<h1 class="ui center aligned icon red header">
