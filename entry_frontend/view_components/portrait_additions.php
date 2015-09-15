@@ -26,7 +26,7 @@
   <div class="field">
     <div class="ui checkbox">
       <input type="checkbox" name="terms">
-      <label>Jeg har lest og forstått avtalevilkårene</label>
+      <label><a href="avtalevilkaar.pdf" target="_blank">Jeg har lest og forstått avtalevilkårene</a></label>
     </div>
   </div>
 </div>
