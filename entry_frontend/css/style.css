@@ -14,18 +14,15 @@ Primary use:	Style Thea 2.0 pages for making entries
 3. Text
 4. Color
 5. Input
+6. Footer
 -------------------------------------------------------------------*/
 
 
 /*	1. Body															*/
 /*------------------------------------------------------------------*/
-body{
-
-}
 
 .container{
-	margin-top: 50px;
-	margin-bottom: 50px;
+	padding-top: 50px;
 }
 
 /*	2. Layout														*/
@@ -59,4 +56,17 @@ h4{
 /*Hides a radio-button for the jcrop*/
 .jcrop-keymgr{
 	opacity: 0;
+}
+
+/*	5. Footer													    */
+/*------------------------------------------------------------------*/
+.footer{
+	position: absolute;
+	bottom: -50px;
+	height: 200px;
+	background-color: #404040;
+	width: 100%;
+	color: #939393;
+	z-index: 1;
+	padding-top: 40px;
 }
