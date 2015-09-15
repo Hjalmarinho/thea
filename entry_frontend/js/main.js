@@ -16,24 +16,30 @@ $( document ).ready(function() {
     .dropdown();
 
     //API-calls on page load, parameter is the callback-function
-    apiGetClubs(displayClubs);
-    apiGetSports(displaySports);
-    apiGetAdditions(displayAdditions);
+    apiGetClubs(displayClubs, showError);
+    apiGetSports(displaySports, showError);
+    apiGetAdditions(displayAdditions, showError);
 
     // Get and display exercises when a sport is selected, for the correct sports_box
     $('#sports_container').change(function(event) {
         if(event.target.name == "sports"){
             current_sports_box = event.target.id.substr(event.target.id.length - 1);
             var dropdown = $('#sports_'+current_sports_box);
-            apiGetExercises( $( dropdown ).val(), displayExercises ); 
+            apiGetExercises( $( dropdown ).val(), displayExercises, showError); 
         }
     });
 
     //Display confirm-modal if the form is valid
     $('#entry_button').click(function(){
        if(  $('#entry_form').form('is valid')  ){
+        // See if portrait is added
+        if ($('#portrait').attr('src') === undefined) {
+            showError("Du må laste opp et portrettbilde først.");
+            return;
+        }
+
         createConfirmModal();
-        $('#confirm_modal').modal('show');    
+        $('#confirm_modal').modal('show');
     }
 });
 
@@ -88,14 +94,13 @@ function displaySports(sports){
 
 // Generate checkboxes for exercises received from API
 function displayExercises(exercises){
-    console.log(exercises);
     var curr_id = current_sports_box;
     $('#exercises_'+curr_id).empty();
     $('#teams_container_'+curr_id).hide();
     if(exercises){
         //Display checkboxes for each available exercise if there are many
         $.each(exercises, function(i, exercise){
-            var checkbox = generateCheckbox(exercise.exercise_description, exercise.exercise_id, 'exerciseChecked(this)')
+            var checkbox = generateCheckbox(exercise.exercise_description, exercise.exercise_id, false, 'exerciseChecked(this)')
             $('#exercises_'+curr_id).append(checkbox); 
         });  
         //If sport has only one exercise, check and hide it
@@ -106,7 +111,7 @@ function displayExercises(exercises){
             });
             if(exercises[0].is_teamexercise){
                 //Get teams for this exercise and populate teams dropdown
-                apiGetTeams( exercises[0].exercise_id, displayTeams );
+                apiGetTeams( exercises[0].exercise_id, displayTeams , showError);
                 $('#teams_container_'+curr_id).show();
             }
         }
@@ -129,7 +134,7 @@ function displayAdditions(additions){
     if(additions){
        $.each(additions, function(i, addition){
         var addition_label = addition.addition_description+' ('+addition.addition_fee+' ,-)';
-        $('#additions').append(generateCheckbox(addition_label, addition.addition_id)); 
+        $('#additions').append(generateCheckbox(addition_label, addition.addition_id, (addition.addition_fee == 0), ''));
     });   
    }  
 }
@@ -162,7 +167,7 @@ function addSport(){
     var $teams = $sports_box.find("[name='teams']");
     $teams.attr("id", "teams_"+current_sports_box)
 
-    apiGetSports(displaySports);
+    apiGetSports(displaySports, showError);
 
 }
 
@@ -231,8 +236,7 @@ function createConfirmModal(){
 
 //Redirect user to payment-page
 function redirectToPayment(data){
-    console.log(data);
-    window.open(data.payment_url);
+    window.location.replace(data.payment_url);
 }
 
 
@@ -275,7 +279,7 @@ function updatePreview(coords) {
 function confirmPortrait(){
     var canvas = $("#portrait_preview")[0];
 
-    $('#portrait').attr("src", canvas.toDataURL());
+    $('#portrait').attr("src", canvas.toDataURL("image/jpeg"));
     $('#image_modal').modal('hide');
     $('#portrait').show();
 }
@@ -290,26 +294,34 @@ function submitParticipantForm(){
     var jsonForm = createJSON();
 
     //Post the participant using the API
-    apiPostParticipant(jsonForm, redirectToPayment);
+    apiPostParticipant(jsonForm, redirectToPayment, showError);
 }
 
 //Called when a user has completed payment 
-function completeEntry(transaction_id){
-    console.log(transaction_id);
-    apiPutTransaction(transaction_id, function(){ return true; });
+function completeEntry(transaction_id, callback, errorCallback){
+    apiPutTransaction(transaction_id, callback, errorCallback);
 }
 
+
+//Called when a user cancelled the payment
+function terminateEntry(transaction_id) {
+    apiPutTerminateEntry(transaction_id, function(data) { return true; }, function(data) { return true; });
+}
+
+
+function showError(error_msg) {
+    $("#error_message").text(error_msg);
+    $("#error_modal").modal("show");
+}
 
 //      HELP FUNCTIONS
 // ***********************************************************************
 
 //Constructs a JSON-object from the data that has been entered in the GUI
 function createJSON(){
-
-
     var jsonForm = {};
     var entry = {};
-    jsonForm["redirect_url"] = 'http://thea.no/entry_frontend/completed.php';
+    jsonForm["redirect_url"] = 'http://pamelding.sltromso.no/completed.php';
     jsonForm["entry"] = entry;
 
     //Personal information
@@ -366,15 +378,14 @@ function uiGetSports(ticket_id){
     $('#sports_container > div').each(function() {
       var sport = {};
       var curr_id =  $(this).attr("id").substr($(this).attr("id").length - 1);
-      console.log(curr_id);
-      sport["sport_id"] = $('#sports_'+curr_id).val();
+      sport["sport_id"] = parseInt($('#sports_'+curr_id).val());
 
       var exercises = [];
         //Find and add checked exercises for a participant
         if(ticket_id == TICKET_ID_PARTICIPANT){
             $('#exercises_'+curr_id+' input:checked').each(function(){
                 var exercise_id = parseInt($(this).attr('value'));
-                var team_id = parseInt($('#teams_'+curr_id).val());
+                var team_id = parseInt(parseInt($('#teams_'+curr_id).val()));
                 var team = {team_id};
 
                 exercises.push({exercise_id , team });
@@ -382,16 +393,16 @@ function uiGetSports(ticket_id){
         }
         //Add exercise with team info for team
         else if(ticket_id == TICKET_ID_TEAM){
-            $('#exercises input:checked').each(function(){
+            $('#exercises_'+curr_id+' input:checked').each(function(){
                 var exercise_id = parseInt($(this).attr('value'));
-                var is_playing = (($('#is_playing').val()  == 1) ? true : false);
+                var is_player = (($('#is_playing').val() == "1") ? true : false);
                 var team_name = $("#team_name").val(); 
-                var gender = $("#team_gender").val();
+                var team_gender = $("#team_gender").val();
                 var team_number = 0;
 
-                var team = {team_name, gender, team_number};
+                var team = {team_name, team_gender, team_number};
 
-                exercises.push({exercise_id ,  is_playing, team });
+                exercises.push({exercise_id ,  is_player, team });
             });
         } 
         sport["exercises"] = exercises;
@@ -424,10 +435,14 @@ function getNextSportsContainerId(){
 }
 
 // Create and return a checkbox with given value and label
-function generateCheckbox(label, value, onchange){
+function generateCheckbox(label, value, checked, onchange){
+    var checkedStr = '';
+    if (checked === true)
+        checkedStr = ' checked ';
+
     return  '<div class="field">'+
     '<div class="ui checkbox">'+
-    '<input type="checkbox" value='+value+' id="'+label+'" onchange='+ onchange +'>'+
+    '<input type="checkbox" value='+value+' id="'+label+'" onchange="'+ onchange +'" ' + checkedStr +'>' +
     '<label for="'+label+'">'+label+'</label>'+
     '</div>'+
     '</div>';
@@ -439,4 +454,19 @@ function generateLabelPair(label, value){
   '<label class="field four wide">'+label+'</label>'+
   '<p>'+value+'</p>'+
   '</div>';
+}
+
+// Get an URL parameter
+// GetURLParameter("foo"); will return "asdf" from http://anything.com?foo=asdf
+function GetURLParameter(sParam){
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++){
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam){
+            return sParameterName[1];
+        }
+    }
+
+    return null;
 }

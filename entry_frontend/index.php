@@ -19,27 +19,23 @@ Primary use:	Start page for the entry sites. Allows users to
 <body>
 
 	<div class="ui container center">
+		<div class="ui huge header">Påmelding SL Tromsø 2016</div>
 		<div class="ui grid">
-			<div class="computer only three wide column"></div>
-			<div class="three wide computer twelve wide mobile column">
+			<div class="computer only four wide column"></div>
+			<div class="four wide computer twelve wide mobile column">
 				<a href="entry_participant.php">
 					<button class="ui blue button">Meld på deltaker</button>
 				</a>
 			</div>
 
-			<div class="three wide computer twelve wide mobile column">
+			<div class="four wide computer twelve wide mobile column">
 				<a href="entry_team.php">
-					<button class="ui button">Meld på lag</button>
+					<button class="ui blue button">Meld på lag</button>
 				</a>
 			</div>
-
-			<div class="three wide computer twelve wide mobile column">
-				<a href="entry_supporter.php">
-					<button class="ui button">Meld på supporter</button>
-				</a>
-			</div>
-			<div class="computer only three wide computer column"></div>
+			<div class="computer only four wide computer column"></div>
 		</div>
+		<img class="ui centered medium image" src="img/sltromso.png">
 	</div>
 </body>
 </html>

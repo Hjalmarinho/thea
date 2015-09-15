@@ -88,13 +88,6 @@ Primary use:  View allowing participants to register for an event.
             </div>
           </div>
 
-
-
-          <div class="inline fields">
-            <label class="field four wide"></label>
-            <div class="ui button" onclick="addSport()"> Delta i flere idretter</div>
-          </div>
-
           <!-- Insert view for portrait image and additions-->
           <?php require("view_components/portrait_additions.php"); ?>
 
@@ -114,5 +107,7 @@ Primary use:  View allowing participants to register for an event.
   <!-- Insert the confirm modal -->
   <?php require("view_components/confirm_modal.php"); ?>
 
+  <!-- Insert error modal -->
+  <?php require("view_components/error_modal.php"); ?>
 </body>
 </html>
