@@ -30,6 +30,7 @@ var local_time_registrated
 var local_ticket_id
 var local_person_id
 var local_user_id
+var global_participant
 	
 
 
@@ -45,7 +46,20 @@ function displayClubs(clubs){
     }
 }
 
+function displaySports(sports){
+    if(sports){
+    	for (i = 2; i < 3; i++){
+	        $.each(sports, function(i, sport){
+	           $('#exercise' + i).append('<option value='+sport.sport_description+'>'+sport.sport_description+'</option>');      
+			});
+	        
+    	}
+    }
+}
+
 function displayParticipant(participant){
+
+	global_participant = participant
 
 	console.log(participant)
 	//Update global variables
@@ -112,6 +126,34 @@ function displayParticipant(participant){
 	if(local_status == "CANCELLED"){
 		id_participantname.append(' <span style="color:#d01919;">(kansellert)</span>')
 	}
+	/*
+	for (i = 0; i < participant.exercises.length; i++){
+		$('#exercises').append(dropdownlist("Idrett", "sport", "exercise" + i))
+		if(participant.exercises[i].exercise.is_teamexercise){
+		}
+
+	}
+	for (i = 0; i < participant.exercises.length; i++){
+		//dropdown.has($('#exercise' + i)).dropdown('set selected', participant.exercises[i].exercise.sport.sport_description);
+		dropdown.has($('#exercise' + i)).dropdown('set selected', "Svømming");
+		console.log(participant.exercises[i].exercise.sport.sport_description)
+	}
+	*/
+	apiGetSports(displaySports)
+	dropdown.has($('#exercise2')).dropdown('set selected', participant.exercises[2].exercise.sport.sport_description);
+	console.log(participant.exercises[2].exercise.sport.sport_description)
+
+}
+
+function dropdownlist(name, className, id){
+	return('\
+		<div class="inline fields">\
+			<label class="field four wide">' + name + '</label>\
+			<div class="field nine wide">\
+				<select class="ui fluid dropdown selection ' + className + '" id="'+ id +'"><option value="">Velg lag</option></select>\
+			</div>	\
+		</div>\
+	')
 }
 
 function updateParticipant(){

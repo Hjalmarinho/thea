@@ -154,11 +154,20 @@
 				</div>
 			</div>
 
-
 			<div class="inline fields">
 					<label class="field four wide">Medlem av klubb </label>
 				<div class="ui checkbox">
 					<input type="checkbox" tabindex="0" id="clubmemberCheckbox">
+				</div>
+			</div>
+
+			<div id="exercises"></div>
+
+			<div class="inline fields">
+				<label class="field four wide">Idrett</label>
+				<div class="field nine wide">
+					<select class="ui fluid dropdown" id="exercise2">
+					</select>
 				</div>
 			</div>
 

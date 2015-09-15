@@ -7,7 +7,7 @@
     <div class="header">
         <!-- <i class="large sidebar icon" id="menubutton"></i> -->
         <h1>Deltakere</h1>
-        <button href="./participant.php"class="ui floated right button" id="addParticipant">Legg til deltaker</button>
+        <button onclick="window.location.href='./participant.php'" class="ui floated right button" id="addParticipant">Legg til deltaker</button>
       </div>
 
 </div>
