@@ -55,9 +55,9 @@ $( document ).ready(function() {
 });
 
 //Constants
-const TICKET_ID_PARTICIPANT = 1;
-const TICKET_ID_TEAM = 2;
-const TICKET_ID_SUPPORTER = 3;
+var TICKET_ID_PARTICIPANT = 1;
+var TICKET_ID_TEAM = 2;
+var TICKET_ID_SUPPORTER = 3;
 
 //This variable holds track of which sport_box is being handled
 var current_sports_box = 1;
