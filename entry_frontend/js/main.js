@@ -1,3 +1,5 @@
+"use strict";
+
 // **********************************************************************
 //  [Main JavaScript]
 
@@ -344,10 +346,10 @@ function createJSON(){
 
     //Participant information
     var club_id = parseInt($('#clubs').val());
-    entry["club"] = {club_id};
+    entry["club"] = {"club_id": club_id};
 
     var ticket_id = parseInt($('#ticket_id').data('value')); 
-    entry["ticket"] = {ticket_id};
+    entry["ticket"] = {"ticket_id": ticket_id};
 
     entry["sports"] = uiGetSports(ticket_id);
 
@@ -366,7 +368,7 @@ function uiGetAdditions(){
     $('#additions input:checked').each(function(){
         var addition_id = parseInt($(this).attr('value'));
         var num_items = parseInt('1');
-        additions.push({addition_id, num_items});
+        additions.push({"addition_id": addition_id, "num_items": num_items});
     });
     return additions;
 }
@@ -386,9 +388,9 @@ function uiGetSports(ticket_id){
             $('#exercises_'+curr_id+' input:checked').each(function(){
                 var exercise_id = parseInt($(this).attr('value'));
                 var team_id = parseInt(parseInt($('#teams_'+curr_id).val()));
-                var team = {team_id};
+                var team = {"team_id": team_id};
 
-                exercises.push({exercise_id , team });
+                exercises.push({"exercise_id": exercise_id , "team": team });
             });
         }
         //Add exercise with team info for team
@@ -400,9 +402,9 @@ function uiGetSports(ticket_id){
                 var team_gender = $("#team_gender").val();
                 var team_number = 0;
 
-                var team = {team_name, team_gender, team_number};
+                var team = {"team_name": team_name, "team_gender": team_gender, "team_number": team_number};
 
-                exercises.push({exercise_id ,  is_player, team });
+                exercises.push({"exercise_id": exercise_id , "is_player": is_player, "team": team });
             });
         } 
         sport["exercises"] = exercises;
