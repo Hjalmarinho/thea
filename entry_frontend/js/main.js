@@ -295,7 +295,8 @@ function updatePreview(coords) {
         var canvas = $("#portrait_preview")[0];
         var context = canvas.getContext("2d");
         context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(imageObj, coords.x, coords.y, coords.w, coords.h, 0, 0, canvas.width, canvas.height);
+
+        context.drawImage(imageObj, coords.x, coords.y, coords.w - 1, coords.h - 1, 0, 0, canvas.width, canvas.height);
     }
 }
 
