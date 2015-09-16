@@ -69,15 +69,26 @@ var current_sports_box = 1;
 // Populate dropdown with clubs received from API
 function displayClubs(clubs){
     if(clubs){
+	// Sort clubs by their name
+	clubs.sort(function(a, b) { return stringCmp(a, b, "club_name"); });
+	
         $.each(clubs, function(i, club){
            $('#clubs').append('<option value="'+club.club_id+'">' + escapeHtml(club.club_name) + '</option>');
        });
     }
 }
 
+
+function stringCmp(object_a, object_b, property) {
+    return object_a[property].localeCompare(object_b[property]);
+}
+
+
 // Populate dropdown with sports received from API
 function displaySports(sports){
     if(sports){
+	// First, sort sports by their description.
+	sports.sort(function(a, b) { return stringCmp(a, b, "sport_description"); });
        $.each(sports, function(i, sport){
         var ticket_id = $('#ticket_id').data('value');
             //Display only sports having a team_exercise if user is adding a team
@@ -99,6 +110,9 @@ function displayExercises(exercises){
     $('#exercises_'+curr_id).empty();
     $('#teams_container_'+curr_id).hide();
     if(exercises){
+	// Sort exercises by name
+	exercises.sort(function(a, b) { return stringCmp(a, b, "exercise_description"); });
+
         //Display checkboxes for each available exercise if there are many
         $.each(exercises, function(i, exercise){
             var checkbox = generateCheckbox(exercise.exercise_description, exercise.exercise_id, false, 'exerciseChecked(this)')
@@ -124,6 +138,8 @@ function displayTeams(teams){
     var curr_id = current_sports_box;
     $('#teams_'+curr_id).empty();
     if(teams){
+	// Sort teams by name
+	teams.sort(function(a, b) { return stringCmp(a, b, "team_name"); });
        $.each(teams, function(i, team){
         $('#teams_'+curr_id).append('<option value="'+team.team_id+'">'+escapeHtml(team.team_name)+'</option>');
     });
@@ -133,6 +149,8 @@ function displayTeams(teams){
 // Generate checkboxes for exercises received from API
 function displayAdditions(additions){
     if(additions){
+	// Sort additions by name
+	additions.sort(function(a, b) { return stringCmp(a, b, "addition_description"); });
        $.each(additions, function(i, addition){
         var addition_label = addition.addition_description+' ('+addition.addition_fee+' ,-)';
         $('#additions').append(generateCheckbox(addition_label, addition.addition_id, (addition.addition_fee == 0), ''));
