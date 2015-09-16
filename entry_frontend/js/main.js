@@ -302,10 +302,15 @@ function updatePreview(coords) {
 //Confirm the cropped portrait and close modal
 function confirmPortrait(){
     var canvas = $("#portrait_preview")[0];
+    var imageData = canvas.toDataURL("image/jpeg");
 
-    $('#portrait').attr("src", canvas.toDataURL("image/jpeg"));
-    $('#image_modal').modal('hide');
-    $('#portrait').show();
+    if (imageData.length <= 6) {
+	showError("Nettleseren din støtter dessverre ikke behandling av portrettbilder. Vennligst bruk en annen nettleser.");
+    } else {
+	$('#portrait').attr("src", imageData);
+	$('#image_modal').modal('hide');
+	$('#portrait').show();
+    }
 }
 
 
