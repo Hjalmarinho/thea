@@ -28,3 +28,6 @@
 
 <script src="http://jcrop-cdn.tapmodo.com/v0.9.12/js/jquery.Jcrop.min.js"></script>
 <script src="http://edge1v.tapmodo.com/deepliq/jcrop_demos.js"></script>
+
+<!-- Include google analytics -->
+<?php include_once(__DIR__ . "/../analytics.php"); ?>

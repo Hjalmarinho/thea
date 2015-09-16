@@ -17,7 +17,6 @@ Primary use:  View allowing participants to register for an event.
 </head>
 
 <body>
-
   <div class="ui container">
     <div class="ui grid">
       <div class="six wide computer ten wide tablet fourteen wide mobile column">
