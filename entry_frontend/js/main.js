@@ -104,6 +104,11 @@ function displaySports(sports){
    }  
 }
 
+function exerciseChecked(sender) {
+    // TODO: Implement
+}
+
+
 // Generate checkboxes for exercises received from API
 function displayExercises(exercises){
     var curr_id = current_sports_box;
