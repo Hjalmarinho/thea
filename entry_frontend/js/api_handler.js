@@ -12,7 +12,7 @@
 
 // URLs used to call the API
 var eventId = 1;
-var baseURL = 'http://62.122.254.121:8080/thea-backend/v1/';
+var baseURL = 'https://thea.grevlingbo.no:8443/thea-backend/v1/';
 var participantsURL = baseURL + 'participants/'
 
 
