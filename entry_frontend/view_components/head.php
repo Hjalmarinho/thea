@@ -7,7 +7,7 @@
 <title>Påmelding | SL Tromsø 2016</title>
 
 <!-- Include jQuery and jCrop -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/jquery.Jcrop.min.css">
 
