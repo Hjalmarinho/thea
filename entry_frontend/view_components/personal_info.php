@@ -18,7 +18,7 @@
 <div class="inline fields">
   <label class="field four wide">Fødselsdato</label>
   <div class="field three wide">
-    <input type="text" name="birthdate" id="birthday" placeholder="dd" maxlength="2">
+    <input type="number" name="birthdate" id="birthday" placeholder="dd" maxlength="2" min="1" max="31">
   </div>
   
   <div class="field five wide">
@@ -40,7 +40,7 @@
   </div>
 
   <div class="field four wide">
-    <input type="text" name="birthdate" id="birthyear" placeholder="yyyy" maxlength="4">
+    <input type="number" name="birthdate" id="birthyear" placeholder="yyyy" maxlength="4" min="0" max="9999">
   </div>
 </div>
 
@@ -76,7 +76,7 @@
 <div class="inline fields">
   <label class="field four wide">Mobil</label>
   <div class="field twelve wide">
-    <input type="text" name="phone" id="phone">
+    <input type="tel" name="phone" id="phone">
   </div>
 </div>
 
