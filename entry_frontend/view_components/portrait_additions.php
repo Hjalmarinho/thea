@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="four wide computer eight wide mobile column" >
-        <img id="portrait_crop" width="200" />
+        <img id="portrait_crop" width="200" style="image-orientation: from-image" />
 
         <div id="rotatePreviewIcons" style="display:none;" >
             <button class="ui icon button big" onclick="rotatePreview(90);"><i class="retweet icon"></i></button>
