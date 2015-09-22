@@ -53,6 +53,15 @@ $( document ).ready(function() {
     $("#entry_form").submit(function(event){
         event.preventDefault();
     });
+
+    // Initialize the portrait cropper.
+    $("#portrait_crop").cropper({
+      aspectRatio: 3 / 4,
+      preview: ".img-preview",
+      moveable: false,
+      zoomable: false
+    });
+
 });
 
 //Constants
@@ -268,50 +277,31 @@ function redirectToPayment(data){
 //      PORTRAIT CROPPING
 // ***********************************************************************
 
-//Display selected image in image-modal and set cropping
+//Display selected image in image-modal and update the cropper.
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            $('.jcrop-holder').remove();
-            $('#portrait_crop').replaceWith('<img id="portrait_crop" src="' + e.target.result + '"/>');
-            $('#portrait_crop').Jcrop({
-                boxWidth: 150, boxHeight: 200,
-                aspectRatio: 3/4,
-                setSelect: [0, 0, 150, 200],
-                onChange: updatePreview,
-                onSelect: updatePreview
-            });
+            $("#portrait_crop").cropper('replace', e.target.result);
+
+            $("#rotatePreviewIcons").show();
         };
+
         reader.readAsDataURL(input.files[0]);
     }
 }
 
-//Update preview of the cropped image
-function updatePreview(coords) {
-    if(parseInt(coords.w)) {
-        // Show image preview
-        var imageObj = $("#portrait_crop")[0];
-        var canvas = $("#portrait_preview")[0];
-        var context = canvas.getContext("2d");
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        context.drawImage(imageObj, coords.x, coords.y, coords.w - 1, coords.h - 1, 0, 0, canvas.width, canvas.height);
-    }
+// Rotate the image in cropping.
+function rotatePreview(amount) {
+    $("#portrait_crop").cropper('rotate', amount);
 }
 
-//Confirm the cropped portrait and close modal
-function confirmPortrait(){
-    var canvas = $("#portrait_preview")[0];
-    var imageData = canvas.toDataURL("image/jpeg");
-
-    if (imageData.length <= 6) {
-	showError("Nettleseren din støtter dessverre ikke behandling av portrettbilder. Vennligst bruk en annen nettleser.");
-    } else {
-	$('#portrait').attr("src", imageData);
-	$('#image_modal').modal('hide');
-	$('#portrait').show();
-    }
+// Confirm the cropped portrait and close modal.
+function confirmPortrait() {
+    var canvas = $("#portrait_crop").cropper("getCroppedCanvas");
+    $('#portrait').attr("src", canvas.toDataURL("image/jpeg"));
+    $('#image_modal').modal('hide');
+    $('#portrait').show();
 }
 
 

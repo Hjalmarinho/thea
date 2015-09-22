@@ -22,7 +22,6 @@ Primary use:  View allowing participants to register for an event.
       <div class="six wide computer ten wide tablet fourteen wide mobile column">
 
         <form class="ui form" id="entry_form">
-
           <!-- Insert view for entering personal information -->
           <?php require("view_components/personal_info.php"); ?>
 

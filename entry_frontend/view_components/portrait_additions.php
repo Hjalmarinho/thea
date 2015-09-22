@@ -45,11 +45,16 @@
           <input type="file" id="file" style="display:none" onchange="readURL(this);" />
         </div>
       </div>
-      <div class="four wide computer eight wide mobile column">
-        <img id="portrait_crop" style="image-orientation: from-image"/>
+      <div class="four wide computer eight wide mobile column" >
+        <img id="portrait_crop" width="200" />
+
+        <div id="rotatePreviewIcons" style="display:none;" >
+            <button class="ui icon button big" onclick="rotatePreview(90);"><i class="retweet icon"></i></button>
+            <button class="ui icon button big" onclick="rotatePreview(-90);"><i class="flipped retweet icon"></i></button>
+        </div>
       </div>
       <div class="four wide computer eight wide mobile column">
-        <canvas id="portrait_preview" width="150" height="200" style="overflow:hidden;"></canvas>
+        <div id="portraitPreview" class="img-preview preview-lg"></div>
       </div>
     </div>
 

@@ -8,8 +8,10 @@
 
 <!-- Include jQuery and jCrop -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/jquery.Jcrop.min.css">
+<link href="css/cropper.css" rel="stylesheet">
+<script src="js/cropper.js"></script>
+<!--<script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.Jcrop.min.css">-->
 
 <!-- Include semantic UI -->
 <link rel="stylesheet" type="text/css" href="css/semantic.min.css">
@@ -26,8 +28,8 @@
 
 
 
-<script src="http://jcrop-cdn.tapmodo.com/v0.9.12/js/jquery.Jcrop.min.js"></script>
-<script src="http://edge1v.tapmodo.com/deepliq/jcrop_demos.js"></script>
+<!--<script src="http://jcrop-cdn.tapmodo.com/v0.9.12/js/jquery.Jcrop.min.js"></script>
+<script src="http://edge1v.tapmodo.com/deepliq/jcrop_demos.js"></script>-->
 
 <!-- Include google analytics -->
 <?php include_once(__DIR__ . "/../analytics.php"); ?>
