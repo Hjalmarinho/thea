@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!-- ******************************************************************
 [Entry Team]
 
@@ -8,7 +9,6 @@ Author:       Øystein Molnes
 Primary use:  View allowing suppporters to register for an event.
 *********************************************************************** -->
 
-<!DOCTYPE html>
 <html>
 
 <head>

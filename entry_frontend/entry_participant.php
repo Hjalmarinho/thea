@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!-- ******************************************************************
 [Entry Participant]
 
@@ -8,7 +9,6 @@ Author:       Øystein Molnes
 Primary use:  View allowing participants to register for an event.
 *********************************************************************** -->
 
-<!DOCTYPE html>
 <html>
 
 <head>
@@ -53,7 +53,7 @@ Primary use:  View allowing participants to register for an event.
 
           <!-- This box can be copied in order to allow users to entry for several sports -->
           <div id="sports_container">
-            <div id="sports_box_1" name="sports_box">
+            <div id="sports_box_1" data-name="sports_box">
               <div class="inline fields">
                 <label class="field four wide">Idrett</label>
                 <div class="field twelve wide">
@@ -67,14 +67,14 @@ Primary use:  View allowing participants to register for an event.
               <div class="inline fields">
                 <label class="field four wide"></label>
                 <div class="field twelve wide">
-                  <div class="grouped fields" name="exercises" id="exercises_1">
+                  <div class="grouped fields" data-name="exercises" id="exercises_1">
                     <!-- Exercise-checkboxes are populated here from api_handler when a sport is selected -->
 
                   </div>
                 </div>
               </div>
 
-              <div class="inline fields" name="teams_container" id="teams_container_1" style="display:none">
+              <div class="inline fields" data-name="teams_container" id="teams_container_1" style="display:none">
                 <label class="field four wide">Lag</label>
                 <div class="field twelve wide">
                   <select class="ui search dropdown" name="teams" id="teams_1">

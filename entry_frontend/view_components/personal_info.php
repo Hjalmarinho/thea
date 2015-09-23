@@ -18,11 +18,11 @@
 <div class="inline fields">
   <label class="field four wide">Fødselsdato</label>
   <div class="field three wide">
-    <input type="number" name="birthdate" id="birthday" placeholder="dd" maxlength="2" min="1" max="31">
+    <input type="number" name="birthdate" id="birthday" placeholder="dd" min="1" max="31">
   </div>
   
   <div class="field five wide">
-    <select class="ui fluid dropdown" name="birthdate" id="birthmonth">
+    <select class="ui fluid search dropdown" name="birthdate" id="birthmonth">
       <option value="">mm</option>
       <option value="01">januar</option>
       <option value="02">februar</option>
@@ -40,7 +40,7 @@
   </div>
 
   <div class="field four wide">
-    <input type="number" name="birthdate" id="birthyear" placeholder="yyyy" maxlength="4" min="0" max="9999">
+    <input type="number" name="birthdate" id="birthyear" placeholder="yyyy" min="0" max="9999">
   </div>
 </div>
 

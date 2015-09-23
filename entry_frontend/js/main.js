@@ -54,15 +54,6 @@ $( document ).ready(function() {
     $("#entry_form").submit(function(event){
         event.preventDefault();
     });
-
-    // Initialize the portrait cropper.
-    $("#portrait_crop").cropper({
-      aspectRatio: 3 / 4,
-      preview: ".img-preview",
-      moveable: false,
-      zoomable: false
-    });
-
 });
 
 //Constants
@@ -189,13 +180,13 @@ function addSport(){
     $sports_box.append('<div class="ui divider"> </div>');
     $("#sports_container").append($sports_box);
 
-    var $sports = $sports_box.find("[name='sports']");
+    var $sports = $sports_box.find("[data-name='sports']");
     $sports.attr("id", "sports_"+current_sports_box)
 
-    var $exercises = $sports_box.find("[name='exercises']");
+    var $exercises = $sports_box.find("[data-name='exercises']");
     $exercises.attr("id", "exercises_"+current_sports_box)
 
-    var $teams_container = $sports_box.find("[name='teams_container']");
+    var $teams_container = $sports_box.find("[data-name='teams_container']");
     $teams_container.attr("id", "teams_container_"+current_sports_box)
 
     var $teams = $sports_box.find("[name='teams']");
@@ -207,7 +198,7 @@ function addSport(){
 
 //Remove sport_box from GUI
 function removeSport(removeButton){
-    $( removeButton ).closest('[name="sports_box"]').remove();
+    $( removeButton ).closest('[data-name="sports_box"]').remove();
     current_sports_box = 1;
 }
 
@@ -283,9 +274,26 @@ function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            $("#portrait_crop").cropper('replace', e.target.result);
+            if ($("#crop_container").html().trim().length == 0) {
+                // First time cropper is loaded.
 
-            $("#rotatePreviewIcons").show();
+                $("#crop_container").html('<img id="portrait_crop" style="max-width:200px; image-orientation: from-image;" alt="Portrettbilde" src="' + e.target.result + '" />');
+
+                $("#portrait_crop").cropper({
+                  aspectRatio: 3 / 4,
+                  preview: ".img-preview",
+                  moveable: false,
+                  zoomable: false,
+                  responsive: false
+                });
+
+                $("#rotatePreviewIcons").show();
+            } else {
+                $("#portrait_crop").cropper('replace', e.target.result);
+            }
+            
+
+            
         };
 
         reader.readAsDataURL(input.files[0]);
@@ -300,7 +308,7 @@ function rotatePreview(amount) {
 // Confirm the cropped portrait and close modal.
 function confirmPortrait() {
     var canvas = $("#portrait_crop").cropper("getCroppedCanvas");
-    $('#portrait').attr("src", canvas.toDataURL("image/jpeg"));
+    $('#portrait_container').html('<img id="portrait" style="display:none; width:150px; height:200px;" alt="Portrettbilde" src="' + canvas.toDataURL("image/jpeg") + '" />');
     $('#image_modal').modal('hide');
     $('#portrait').show();
 }

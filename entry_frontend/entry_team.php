@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!-- ******************************************************************
 [Entry Team]
 
@@ -8,7 +9,6 @@ Author:       Øystein Molnes
 Primary use:  View allowing contact persons to register teams for an event.
 *********************************************************************** -->
 
-<!DOCTYPE html>
 <html>
 
 <head>
@@ -53,7 +53,7 @@ Primary use:  View allowing contact persons to register teams for an event.
           </div>
 
           <div id="sports_container">
-            <div id="sports_box_1" name="sports_box">
+            <div id="sports_box_1" data-name="sports_box">
               <div class="inline fields" id="sports_div">
                 <label class="field four wide">Idrett</label>
                 <div class="field twelve wide">
