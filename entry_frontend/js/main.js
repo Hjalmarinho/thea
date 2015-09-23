@@ -46,7 +46,8 @@ $( document ).ready(function() {
 
     //Display image-modal for portrait-upload
     $('#image_button').click(function(){
-        $('#image_modal').modal('show');    
+        $('#image_modal').modal('show');
+	$("#portrait_crop").cropper('replace', $("#portrait_crop").attr("src"));
     });
 
     //Prevent entry_form from submitting when clicking "Meld på"
