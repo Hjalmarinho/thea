@@ -1,25 +1,31 @@
+"use strict";
+
+var event_id = sessionStorage.getItem("event_id");
+
 $(document).ready(function(){
-	
 	$('.special.card .image').dimmer({
   		on: 'hover'
 	});
 
 	$('#updateParticipant').click(function(){
-        $('#approve-update').modal('show');    
+        $('#approve-update').modal('show');
      });
 
 	$('#creditParticipant').click(function(){
-        $('#credit-update').modal('show');    
+        $('#credit-update').modal('show');
      });
 
 	$('#cancelParticipant').click(function(){
 		$('#cancel-modal').modal('show');
 	});
 
-	apiGetClubs(displayClubs)
-	apiGetParticipant(local_entry_id, displayParticipant);
-	apiGetPortrait(local_entry_id, displayPortrait)
+	var req1 = apiGetClubs(displayClubs, errorHandler)
+	var req2 = apiGetParticipant(displayParticipant, errorHandler, event_id, local_entry_id);
+	var req3 = apiGetPortrait(displayPortrait, errorHandler, event_id, local_entry_id);
 
+	$.when(req1, req2, req3).always(function() {
+		$("#participantLoader").remove();
+	});
 })
 
 //Global variables, updated in displayParticipant
@@ -31,8 +37,11 @@ var local_ticket_id
 var local_person_id
 var local_user_id
 var global_participant
-	
 
+
+function errorHandler(errorMessage) {
+
+}
 
 function displayPortrait(image){
 	$('#portrait').attr('src', 'data:image/jpeg;base64,' + image.image_data)
@@ -46,15 +55,14 @@ function displayClubs(clubs){
     }
 }
 
-function displaySports(sports){
-    if(sports){
-    	for (i = 2; i < 3; i++){
-	        $.each(sports, function(i, sport){
-	           $('#exercise' + i).append('<option value='+sport.sport_description+'>'+sport.sport_description+'</option>');      
+function displaySports(sports) {
+	if (sports) {
+		for (var i = 2; i < 3; i++) {
+			$.each(sports, function(i, sport) {
+				$('#exercise' + i).append('<option value=' + sport.sport_description + '>' + sport.sport_description + '</option>');
 			});
-	        
-    	}
-    }
+		}
+	}
 }
 
 function displayParticipant(participant){
@@ -139,9 +147,9 @@ function displayParticipant(participant){
 		console.log(participant.exercises[i].exercise.sport.sport_description)
 	}
 	*/
-	apiGetSports(displaySports)
-	dropdown.has($('#exercise2')).dropdown('set selected', participant.exercises[2].exercise.sport.sport_description);
-	console.log(participant.exercises[2].exercise.sport.sport_description)
+	apiGetSports(displaySports, errorHandler, event_id);
+	/*dropdown.has($('#exercise2')).dropdown('set selected', participant.exercises[2].exercise.sport.sport_description);
+	console.log(participant.exercises[2].exercise.sport.sport_description)*/
 
 }
 
@@ -156,7 +164,7 @@ function dropdownlist(name, className, id){
 	')
 }
 
-function updateParticipant(){
+/*function updateParticipant(){
 
 	monthToNumber($('#birthmonth').val())
 	var local_birthdate = $('#birthyear').val() + '-' + monthToNumber($('#birthmonth').val()) + '-' + $('#birthday').val()
@@ -193,9 +201,9 @@ function updateParticipant(){
 
 	apiPutParticipant(local_entry_id, putObject, function(){} , comment)
 	console.log(putObject)
-}
+}*/
 
-function creditParticipant(){
+/*function creditParticipant(){
 	var payment = $('#payment')
 	if(payment.val()){
 		console.log($('#first_name').val() + ' ' + $('#last_name').val() + ' ble kreditert ' + payment.val())
@@ -212,5 +220,5 @@ function cancelParticipant(){
 
 function participantIsCanceled(){
 	console.log("participant cancelled ")
-}
+}*/
 

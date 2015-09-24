@@ -6,30 +6,36 @@
 <!-- Site Properities -->
 <title>Påmelding | SL Tromsø 2016</title>
 
-<!-- Include jQuery and jCrop -->
+<!-- Include jQuery  -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<link href="css/cropper.css" rel="stylesheet">
-<script src="js/cropper.js"></script>
-<!--<script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/jquery.Jcrop.min.css">-->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropper/0.11.1/cropper.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/0.11.1/cropper.min.js"></script>
 
 <!-- Include semantic UI -->
-<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
-<script type="text/javascript" src="js/semantic.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.css" />
 
 <!-- Include custom css -->
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
 <!-- Include custom js -->
+<script>
+  <?php
+    /*
+     * This might look a bit hacky...
+     * But we have to do it this way since the following files are outside of the domain.
+     */
+    require_once(__DIR__ . "/../../shared/js/api_handler.js");
+    require_once(__DIR__ . "/../../shared/js/shared.js");
+
+    // Read the payment URL from settings file.
+    $content = file_get_contents(__DIR__ . "/../../settings.json");
+    $jsonObject = json_decode($content);
+    echo "var redirectURL = '" . $jsonObject->frontend->payment_redirect_url . "';";
+?>
+</script>
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/validation.js"></script>
-<script type="text/javascript" src="js/api_handler.js"></script>
-
-
-
-
-<!--<script src="http://jcrop-cdn.tapmodo.com/v0.9.12/js/jquery.Jcrop.min.js"></script>
-<script src="http://edge1v.tapmodo.com/deepliq/jcrop_demos.js"></script>-->
 
 <!-- Include google analytics -->
 <?php include_once(__DIR__ . "/../analytics.php"); ?>

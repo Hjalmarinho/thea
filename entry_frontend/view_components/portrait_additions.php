@@ -37,7 +37,9 @@
     Last opp et portrettbilde
   </div>
   <div class="content">
-
+    <div id="uploadPortraitLoader" class="ui inverted dimmer">
+      <div class="ui large text loader">Gjør klart bildet...</div>
+    </div>
     <div class="ui grid">
       <div class="row">
         <div class="four wide computer eight wide mobile column">

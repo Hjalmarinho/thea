@@ -39,6 +39,6 @@
   </div>
   <div class="actions">
     <div class="ui button close">Avbryt</div>
-    <div class="ui blue button" onclick="submitParticipantForm()">Til betaling</div>
+    <div id="paymentButton" class="ui blue button" onclick="submitParticipantForm()">Til betaling</div>
   </div>
 </div> 

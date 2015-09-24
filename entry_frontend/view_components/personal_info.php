@@ -1,7 +1,7 @@
  <!-- PERSONLIG INFORMASJON -->
  <h4 class="ui dividing header">Personlig informasjon</h4>
 
- <div class="inline fields">
+<div class="inline fields">
   <label class="field four wide">Fornavn</label>
   <div class="field twelve wide">
     <input type="text" name="first_name" id="first_name">

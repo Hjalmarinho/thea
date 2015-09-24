@@ -3,13 +3,21 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Thea 2.0</title>
-		<?php // Include Jquery; ?>
-		<script src="js/jquery.min.js"></script>
-		<?php // Include Semantic UI ?>
-		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.7/semantic.min.js"></script> -->
-		<script src="js/semantic.min.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.js"></script>
+
+		<script>
+		<?php
+			// Include shared code
+			require_once(__DIR__ . "/../shared/js/shared.js");
+			require_once(__DIR__ . "/../shared/js/api_handler.js");
+		?>
+		</script>
+
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.css" />
+
 		<script src="js/tablesort.js"></script>
-		<link rel="stylesheet" href="css/semantic.min.css"></link>
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<?php // Include React ?>
 		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script> -->
@@ -19,7 +27,7 @@
 		<?php // Include shared javascript ?>
 		<script src="js/shared.js"></script>
 		<?php // Include page specific js ?>
-		<script src="js/api_handler.js"></script>
+		<script src="js/user.js"></script>
 
 		<?php
 		$file = basename($_SERVER["SCRIPT_FILENAME"], ".php");
@@ -54,20 +62,22 @@
 						<div class="field">
 							<div class="ui left icon input">
 								<i class="user icon"></i>
-								<input type="text" name="email" placeholder="E-post">
+								<input type="text" name="email" id="email" placeholder="E-post">
 							</div>
 						</div>
 						<div class="field">
 							<div class="ui left icon input">
 								<i class="lock icon"></i>
-								<input type="password" name="password" placeholder="Passord">
+								<input type="password" name="password" id="password" placeholder="Passord">
 							</div>
 						</div>
-						<div class="ui fluid large blue submit button">Logg inn</div>
+						<div id="loginButton" class="ui fluid large blue button" onclick="doLogin();">Logg inn</div>
 					</div>
-
-					<div class="ui error message"></div>
-
+					<div hidden class="ui negative message" id="errorMessage">
+					  <div class="header">
+					    Upsi!
+					  </div>
+					  <p id="errorMessageContent"></p></div>
 				</form>
 			</div>
 		</div>

@@ -19,6 +19,9 @@ Primary use:  View allowing contact persons to register teams for an event.
 <body>
 
   <div class="ui container">
+    <div id="mainLoader" class="ui active inverted dimmer">
+      <div class="ui large text loader">Gjør klar påmeldingssiden...</div>
+    </div>
     <div class="ui grid">
       <div class="six wide computer ten wide tablet fourteen wide mobile column">
 
@@ -44,7 +47,7 @@ Primary use:  View allowing contact persons to register teams for an event.
           <div class="inline fields">
             <label class="field four wide">Medlem</label>
             <div class="field twelve wide">
-              <select class="ui dropdown" name="is_clubmember">
+              <select class="ui dropdown" name="is_clubmember" id="is_clubmember">
                 <option value="">Er du medlem av klubben?</option>
                 <option value="1">Ja</option>
                 <option value="0">Nei</option>

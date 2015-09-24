@@ -1,32 +1,32 @@
 <?php require 'header.php';?>
 
-	
-	
 <div class="ui items">
-
     <div class="header">
-        <!-- <i class="large sidebar icon" id="menubutton"></i> -->
-        <h1>Deltakere</h1>
-        <button onclick="window.location.href='./participant.php'" class="ui floated right button" id="addParticipant">Legg til deltaker</button>
-      </div>
-
+      <!-- <i class="large sidebar icon" id="menubutton"></i> -->
+      <h1>Deltakere</h1>
+      <p id="summary"></p>
+    </div>
 </div>
 
-<table class="ui sortable celled table">
-  <thead>
-    <tr>
-	    <th class="ascending">Fornavn</th>
-	    <th>Etternavn</th>
-	    <th>Kjønn</th>
-	    <th>Klubb</th>
-	    <th>Telefon</th>
-	    <th>E-post</th>
-	    <th>Påmeldingsdato</th>
-	</tr>
-  </thead>
-  <tbody id="participants">
-  </tbody>
-</table>
-
+<div>
+  <div id="participantsLoader" class="ui active inverted dimmer">
+    <div class="ui large text loader">Henter påmeldinger...</div>
+  </div>
+  <table class="ui selectable stackable sortable celled table">
+    <thead>
+      <tr>
+  	    <th class="ascending">Fornavn</th>
+  	    <th>Etternavn</th>
+  	    <th>Kjønn</th>
+  	    <th>Klubb</th>
+  	    <th>Telefon</th>
+  	    <th>E-post</th>
+  	    <th>Påmeldingsdato</th>
+  	</tr>
+    </thead>
+    <tbody id="participants">
+    </tbody>
+  </table>
+</div>
 
 <?php require 'footer.php';?>
