@@ -12,13 +12,22 @@
 
 // URL used to call the API
 var baseURL = 'http://92.62.34.78:8080/thea-backend/v1/';
+// var baseURL = 'http://localhost:8080/thea-backend/v1/';
 
+function addJWT(xhr) {
+    // Add the jwt header if it exists
+    var jwt = sessionStorage.getItem("jwt");
+    if (jwt !== null) {
+        xhr.setRequestHeader("Authorization", "Bearer " + jwt);
+    }
+}
 
 // Perform GET-call to API with given URL. Run callback-function with the result
 function doGet(urlGET, callback){
     $.ajax({
         type: 'GET',
         url: urlGET,
+        beforeSend : addJWT,
         success: function(result){
             handleResult(result, callback);
         },
@@ -38,6 +47,7 @@ function doPost(urlPOST, jsonData, callback){
         url: urlPOST,
         data: JSON.stringify(jsonData),
         dataType: "json",
+        beforeSend : addJWT,
         success: function(result){
             handleResult(result, callback);
         },
@@ -56,6 +66,7 @@ function doPut(urlPUT, jsonData, callback, headerData){
         data: JSON.stringify(jsonData),
         header: headerData,
         dataType: "json",
+        beforeSend : addJWT,
         success: function(result){
             handleResult(result, callback);
         },
@@ -70,7 +81,7 @@ function handleResult(result, callback){
     if(result.error){
         // TODO: do something with the potential error from server, and return
         console.log(result.error);
-        callback(result.data);
+        // callback(result.data);
     }else{
         callback(result.data);
     }
@@ -78,12 +89,12 @@ function handleResult(result, callback){
 
 //      PARTICIPANTS
 // ***********************************************************************
-function apiGetParticipants(callback){
-    doGet(baseURL + 'participants/', callback)
+function apiGetParticipants(callback, event_id){
+    doGet(baseURL + 'events/' + event_id + '/participants/', callback)
 }
 
-function apiGetParticipant(entry_id, callback){
-    doGet(baseURL + 'participants/' + entry_id, callback)
+function apiGetParticipant(entry_id, event_id, callback){
+    doGet(baseURL + 'events/' + event_id + '/participants/' + entry_id, callback)
 }
 
 function apiPutParticipant(entry_id, jsonData, callback, comment){
@@ -94,8 +105,8 @@ function apiPostParticipant(jsonData, callback){
     doPost(baseURL+'participants/', jsonData, callback);
 }
 
-function apiGetPortrait(entry_id, callback){
-    doGet(baseURL + 'participants/' + entry_id + '/portrait', callback)
+function apiGetPortrait(entry_id, event_id, callback){
+    doGet(baseURL + 'events/' + event_id + '/participants/' + entry_id + '/portrait', callback)
 }
 
 function apiPutAccreditation(entry_id, jsonData, callback){
@@ -111,8 +122,8 @@ function apiCancelParticipant(entry_id, callback, comment){
 }
 //      SPORTS, EXERCISES, CLUBS, TEAMS
 // ***********************************************************************
-function apiGetSports(callback){
-    doGet(baseURL+'sports', callback);
+function apiGetSports(event_id, callback){
+    doGet(baseURL + 'events/' + event_id + '/sports', callback);
 }
 
 function apiPostSport(jsonData, callback){
@@ -159,3 +170,10 @@ function apiGetEvents(callback){
 function apiPostEvent(jsonData, callback){
     doPost(baseURL+'events/', jsonData, callback);
 }
+
+//      EVENTS
+// ***********************************************************************
+function apiLoginUser(jsonData, callback) {
+    doPost(baseURL + 'users/login/', jsonData, callback);
+}
+

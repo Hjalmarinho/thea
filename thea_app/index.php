@@ -20,6 +20,7 @@
 		<script src="js/shared.js"></script>
 		<?php // Include page specific js ?>
 		<script src="js/api_handler.js"></script>
+		<script src="js/user.js"></script>
 
 		<?php
 		$file = basename($_SERVER["SCRIPT_FILENAME"], ".php");
@@ -54,16 +55,16 @@
 						<div class="field">
 							<div class="ui left icon input">
 								<i class="user icon"></i>
-								<input type="text" name="email" placeholder="E-post">
+								<input type="text" name="email" id="email" placeholder="E-post">
 							</div>
 						</div>
 						<div class="field">
 							<div class="ui left icon input">
 								<i class="lock icon"></i>
-								<input type="password" name="password" placeholder="Passord">
+								<input type="password" name="password" id="password" placeholder="Passord">
 							</div>
 						</div>
-						<div class="ui fluid large blue submit button">Logg inn</div>
+						<div class="ui fluid large blue button" onclick="doLogin();">Logg inn</div>
 					</div>
 
 					<div class="ui error message"></div>

@@ -1,5 +1,7 @@
+var event_id = sessionStorage.getItem("event_id");
+
 $(document).ready(function(){
-	apiGetParticipants(displayParticipants);
+	apiGetParticipants(displayParticipants, event_id);
 })
 
 function displayParticipants(participants){

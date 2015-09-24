@@ -1,5 +1,6 @@
+var event_id = sessionStorage.getItem("event_id");
+
 $(document).ready(function(){
-	
 	$('.special.card .image').dimmer({
   		on: 'hover'
 	});
@@ -17,8 +18,8 @@ $(document).ready(function(){
 	});
 
 	apiGetClubs(displayClubs)
-	apiGetParticipant(local_entry_id, displayParticipant);
-	apiGetPortrait(local_entry_id, displayPortrait)
+	apiGetParticipant(local_entry_id, event_id, displayParticipant);
+	apiGetPortrait(local_entry_id, event_id, displayPortrait)
 
 })
 
@@ -139,7 +140,7 @@ function displayParticipant(participant){
 		console.log(participant.exercises[i].exercise.sport.sport_description)
 	}
 	*/
-	apiGetSports(displaySports)
+	apiGetSports(event_id, displaySports)
 	dropdown.has($('#exercise2')).dropdown('set selected', participant.exercises[2].exercise.sport.sport_description);
 	console.log(participant.exercises[2].exercise.sport.sport_description)
 
