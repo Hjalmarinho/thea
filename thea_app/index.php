@@ -64,11 +64,13 @@
 								<input type="password" name="password" id="password" placeholder="Passord">
 							</div>
 						</div>
-						<div class="ui fluid large blue button" onclick="doLogin();">Logg inn</div>
+						<div id="loginButton" class="ui fluid large blue button" onclick="doLogin();">Logg inn</div>
 					</div>
-
-					<div class="ui error message"></div>
-
+					<div hidden class="ui negative message" id="errorMessage">
+					  <div class="header">
+					    Upsi!
+					  </div>
+					  <p id="errorMessageContent"></p></div>
 				</form>
 			</div>
 		</div>

@@ -1,7 +1,7 @@
  <!-- PERSONLIG INFORMASJON -->
  <h4 class="ui dividing header">Personlig informasjon</h4>
 
- <div class="inline fields">
+<div class="inline fields">
   <label class="field four wide">Fornavn</label>
   <div class="field twelve wide">
     <input type="text" name="first_name" id="first_name">
@@ -22,7 +22,7 @@
   </div>
   
   <div class="field five wide">
-    <select class="ui fluid dropdown" name="birthdate" id="birthmonth">
+    <select class="ui dropdown fluid" name="birthdate" id="birthmonth">
       <option value="">mm</option>
       <option value="01">januar</option>
       <option value="02">februar</option>

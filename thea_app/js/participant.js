@@ -1,3 +1,5 @@
+"use strict";
+
 var event_id = sessionStorage.getItem("event_id");
 
 $(document).ready(function(){

@@ -23,22 +23,23 @@ function addJWT(xhr) {
 }
 
 // Perform GET-call to API with given URL. Run callback-function with the result
-function doGet(urlGET, callback){
+function doGet(urlGET, callback, errorCallback){
     $.ajax({
         type: 'GET',
         url: urlGET,
         beforeSend : addJWT,
         success: function(result){
-            handleResult(result, callback);
+            handleResult(result, callback, errorCallback);
         },
         error: function(){
-            console.log('Got an error from server while running GET');
-        } 
+            errorCallback("Ooops, noe uventet skjedde...");
+            // console.log('Got an error from server while running GET');
+        }
     });
 }
 
 // Perform POST-call to API with given URL.
-function doPost(urlPOST, jsonData, callback){
+function doPost(urlPOST, jsonData, callback, errorCallback){
     console.log('url: '+urlPOST)
     console.log(jsonData)
     $.ajax({
@@ -49,16 +50,17 @@ function doPost(urlPOST, jsonData, callback){
         dataType: "json",
         beforeSend : addJWT,
         success: function(result){
-            handleResult(result, callback);
+            handleResult(result, callback, errorCallback);
         },
         error: function(){
-            console.log('Got an error from server while running POST');
-        } 
+            errorCallback("Ooops, noe uventet skjedde...");
+            // console.log('Got an error from server while running POST');
+        }
     });
 }
 
 // Perform PUT-call to API with given URL.
-function doPut(urlPUT, jsonData, callback, headerData){
+function doPut(urlPUT, jsonData, callback, errorCallback, headerData){
     $.ajax({
         type: 'PUT',
         contentType: "application/json",
@@ -68,20 +70,20 @@ function doPut(urlPUT, jsonData, callback, headerData){
         dataType: "json",
         beforeSend : addJWT,
         success: function(result){
-            handleResult(result, callback);
+            handleResult(result, callback, errorCallback);
         },
         error: function(){
-            console.log('Got an error from server while running PUT');
-        } 
-    });    
+            errorCallback("Ooops, noe uventet skjedde...");
+            // console.log('Got an error from server while running PUT');
+        }
+    });
 }
 
 //Handle result from the API
-function handleResult(result, callback){
+function handleResult(result, callback, errorCallback){
     if(result.error){
         // TODO: do something with the potential error from server, and return
-        console.log(result.error);
-        // callback(result.data);
+        errorCallback(result.error);
     }else{
         callback(result.data);
     }
@@ -89,91 +91,33 @@ function handleResult(result, callback){
 
 //      PARTICIPANTS
 // ***********************************************************************
-function apiGetParticipants(callback, event_id){
-    doGet(baseURL + 'events/' + event_id + '/participants/', callback)
+function apiGetParticipants(callback, event_id, errorCallback){
+    doGet(baseURL + 'events/' + event_id + '/participants/', callback, errorCallback)
 }
 
-function apiGetParticipant(entry_id, event_id, callback){
-    doGet(baseURL + 'events/' + event_id + '/participants/' + entry_id, callback)
+function apiGetParticipant(entry_id, event_id, callback, errorCallback){
+    doGet(baseURL + 'events/' + event_id + '/participants/' + entry_id, callback, errorCallback)
 }
 
-function apiPutParticipant(entry_id, jsonData, callback, comment){
-    doPut(baseURL + 'participants/' + entry_id, jsonData, callback, {'comment': comment})
+
+function apiGetPortrait(entry_id, event_id, callback, errorCallback){
+    doGet(baseURL + 'events/' + event_id + '/participants/' + entry_id + '/portrait', callback, errorCallback)
 }
 
-function apiPostParticipant(jsonData, callback){
-    doPost(baseURL+'participants/', jsonData, callback);
-}
-
-function apiGetPortrait(entry_id, event_id, callback){
-    doGet(baseURL + 'events/' + event_id + '/participants/' + entry_id + '/portrait', callback)
-}
-
-function apiPutAccreditation(entry_id, jsonData, callback){
-    doPut(baseURL + 'participants/'+entry_id+'/accreditated', jsonData, callback, {})
-}
-
-function apiPutComment(entry_id, jsonData, callback){
-    doPut(baseURL + 'participants/'+entry_id+'/comment', jsonData, callback)
-}
-
-function apiCancelParticipant(entry_id, callback, comment){
-    doPut(baseURL + 'participants/' + entry_id + "/cancel", "", callback, {'comment': comment})
-}
 //      SPORTS, EXERCISES, CLUBS, TEAMS
 // ***********************************************************************
-function apiGetSports(event_id, callback){
-    doGet(baseURL + 'events/' + event_id + '/sports', callback);
+function apiGetSports(event_id, callback, errorCallback){
+    doGet(baseURL + 'events/' + event_id + '/sports', callback, errorCallback);
 }
 
-function apiPostSport(jsonData, callback){
-    doPost(baseURL+'sports/', jsonData, callback);
-}
-
-function apiGetExercises(sportID, callback){
-    doGet(baseURL+'sports/'+sportID+'/exercises', callback);
-}
-
-function apiPostExercise(sportID, jsonData, callback){
-    doPost(baseURL+'sports/'+sportID+'/exercises', jsonData, callback);
-}
-
-function apiGetTeams(exerciseID, callback){
-    doGet(baseURL+'exercises/'+exerciseID+'/teams', callback);
-}
-
-function apiGetTeam(teamId, callback){
-    doGet(baseURL + 'teams/' + teamId, callback)
-}
-
-function apiGetClubs(callback){
-    doGet(baseURL+'clubs', callback);
-}
-
-function apiGetAllTeams(callback){
-    doGet(baseURL + 'teams', callback)
+function apiGetClubs(callback, errorCallback){
+    doGet(baseURL+'clubs', callback, errorCallback);
 }
 
 
-//      EXTRAS
+//      USER
 // ***********************************************************************
-function apiGetAdditions(callback){
-    doGet(baseURL+'additions/', callback);
-}
-
-//      EVENTS
-// ***********************************************************************
-function apiGetEvents(callback){
-    doGet(baseURL+'events/', callback);
-}
-
-function apiPostEvent(jsonData, callback){
-    doPost(baseURL+'events/', jsonData, callback);
-}
-
-//      EVENTS
-// ***********************************************************************
-function apiLoginUser(jsonData, callback) {
-    doPost(baseURL + 'users/login/', jsonData, callback);
+function apiLoginUser(jsonData, callback, errorCallback) {
+    doPost(baseURL + 'users/login/', jsonData, callback, errorCallback);
 }
 

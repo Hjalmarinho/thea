@@ -45,3 +45,5 @@ local.properties
 .texlipse
 
 .recommenders/
+
+settings.json
