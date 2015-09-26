@@ -18,7 +18,7 @@ var participantsURL = baseURL + 'participants/'
 
 // Perform GET-call to API with given URL. Run callback-function with the result
 function doGet(urlGET, successCallback, errorCallback){
-    $.ajax({
+    return $.ajax({
         type: 'GET',
         url: urlGET,
         success: function(result){
@@ -32,7 +32,7 @@ function doGet(urlGET, successCallback, errorCallback){
 
 // Perform POST-call to API with given URL.
 function doPost(urlPOST, jsonData, successCallback, errorCallback){
-    $.ajax({
+    return $.ajax({
         type: 'POST',
         contentType: "application/json",
         url: urlPOST,
@@ -49,7 +49,7 @@ function doPost(urlPOST, jsonData, successCallback, errorCallback){
 
 // Perform PUT-call to API with given URL.
 function doPut(urlPUT, jsonData, successCallback, errorCallback){
-    $.ajax({
+    return $.ajax({
         type: 'PUT',
         contentType: "application/json",
         url: urlPUT,
@@ -78,39 +78,39 @@ function handleResult(result, successCallback, errorCallback){
 
 // http://docs.thea.apiary.io/#reference/club/clubs/list-all-clubs
 function apiGetClubs(successCallback, errorCallback){
-    doGet(baseURL+'clubs', successCallback, errorCallback);
+    return doGet(baseURL+'clubs', successCallback, errorCallback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sports/list-all-sports
 function apiGetSports(successCallback, errorCallback){
-    doGet(baseURL+ 'events/' + eventId + '/sports', successCallback, errorCallback);
+    return doGet(baseURL+ 'events/' + eventId + '/sports', successCallback, errorCallback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
 function apiGetExercises(sportID, successCallback, errorCallback){
-    doGet(baseURL+ 'events/' + eventId + '/sports/'+sportID+'/exercises', successCallback, errorCallback);
+    return doGet(baseURL+ 'events/' + eventId + '/sports/'+sportID+'/exercises', successCallback, errorCallback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
 function apiGetTeams(exerciseID, successCallback, errorCallback){
-    doGet(baseURL+ 'events/' + eventId + '/exercises/'+exerciseID+'/teams', successCallback, errorCallback);
+    return doGet(baseURL+ 'events/' + eventId + '/exercises/'+exerciseID+'/teams', successCallback, errorCallback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
 function apiGetAdditions(successCallback, errorCallback){
-    doGet(baseURL+ 'events/' + eventId + '/additions/', successCallback, errorCallback);
+    return doGet(baseURL+ 'events/' + eventId + '/additions/', successCallback, errorCallback);
 }
 
 // http://docs.thea.apiary.io/#reference/participant/participants/add-a-participant
 function apiPostParticipant(json, successCallback, errorCallback){
-    doPost(baseURL+ 'events/' + eventId + '/participants/', json, successCallback, errorCallback);
+    return doPost(baseURL+ 'events/' + eventId + '/participants/', json, successCallback, errorCallback);
 }
 
 //http://docs.thea.apiary.io/#reference/transaction/transactionsidprocess/complete-a-participant-registration
 function apiPutTransaction(transactionID, successCallback, errorCallback){
-    doPut(baseURL+ 'events/' + eventId + '/transactions/'+transactionID+'/process', {}, successCallback, errorCallback);
+    return doPut(baseURL+ 'events/' + eventId + '/transactions/'+transactionID+'/process', {}, successCallback, errorCallback);
 }
 
 function apiPutTerminateEntry(transactionID, successCallback, errorCallback){
-    doPut(baseURL+ 'events/' + eventId + '/transactions/'+transactionID+'/terminate', {}, successCallback, errorCallback);
+    return doPut(baseURL+ 'events/' + eventId + '/transactions/'+transactionID+'/terminate', {}, successCallback, errorCallback);
 }

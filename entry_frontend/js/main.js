@@ -17,13 +17,17 @@ $( document ).ready(function() {
     // $('.ui.dropdown').dropdown();
 
     //API-calls on page load, parameter is the callback-function
-    apiGetClubs(displayClubs, showError);
-    apiGetSports(displaySports, showError);
-    apiGetAdditions(displayAdditions, showError);
+    var req1 = apiGetClubs(displayClubs, showError);
+    var req2 = apiGetSports(displaySports, showError);
+    var req3 = apiGetAdditions(displayAdditions, showError);
+
+    $.when(req1, req2, req3).always(function() {
+        $("#mainLoader").remove();
+    });
 
     // Get and display exercises when a sport is selected, for the correct sports_box
     $('#sports_container').change(function(event) {
-        if(event.target.name == "sports"){
+        if(event.target.name == "sports") {
             current_sports_box = event.target.id.substr(event.target.id.length - 1);
             var dropdown = $('#sports_'+current_sports_box);
             apiGetExercises( $( dropdown ).val(), displayExercises, showError); 
@@ -282,8 +286,18 @@ function readURL(input) {
                 onChange: updatePreview,
                 onSelect: updatePreview
             });
+
+            $("#uploadPortraitLoader").removeClass("active");
         };
-        reader.readAsDataURL(input.files[0]);
+
+        var file = input.files[0];
+        var imageType = /image.*/;
+        if (file.type.match(imageType)) {
+            $("#uploadPortraitLoader").addClass("active");
+            reader.readAsDataURL(file);
+        } else {
+            console.log("Unsupported file type.");
+        }
     }
 }
 
@@ -320,11 +334,16 @@ function confirmPortrait(){
 
 //Called when a participant clicks the submit-button 
 function submitParticipantForm(){
+    $("#paymentButton").addClass("loading");
     //Serialize the form into a json-object in order to post the participant to the API
     var jsonForm = createJSON();
 
     //Post the participant using the API
-    apiPostParticipant(jsonForm, redirectToPayment, showError);
+    var request = apiPostParticipant(jsonForm, redirectToPayment, showError);
+
+    $.when(request).always(function() {
+        $("#paymentButton").removeClass("loading");
+    });
 }
 
 //Called when a user has completed payment 
