@@ -3,13 +3,21 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Thea 2.0</title>
-		<?php // Include Jquery; ?>
-		<script src="js/jquery.min.js"></script>
-		<?php // Include Semantic UI ?>
-		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.7/semantic.min.js"></script> -->
-		<script src="js/semantic.min.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.js"></script>
+
+		<script>
+		<?php
+			// Include shared code
+			require_once(__DIR__ . "/../shared/js/shared.js");
+			require_once(__DIR__ . "/../shared/js/api_handler.js");
+		?>
+		</script>
+
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.css" />
+
 		<script src="js/tablesort.js"></script>
-		<link rel="stylesheet" href="css/semantic.min.css"></link>
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<?php // Include React ?>
 		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script> -->
@@ -19,7 +27,6 @@
 		<?php // Include shared javascript ?>
 		<script src="js/shared.js"></script>
 		<?php // Include page specific js ?>
-		<script src="js/api_handler.js"></script>
 		<script src="js/user.js"></script>
 
 		<?php

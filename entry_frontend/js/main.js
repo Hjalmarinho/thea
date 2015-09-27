@@ -10,6 +10,8 @@
 //  Primary use:    Main functions used by the entry GUI
 // ***********************************************************************
 
+var eventId = 1;
+
 //This function is run when the document/page is finsihed loading
 $( document ).ready(function() {
 
@@ -18,8 +20,8 @@ $( document ).ready(function() {
 
     //API-calls on page load, parameter is the callback-function
     var req1 = apiGetClubs(displayClubs, showError);
-    var req2 = apiGetSports(displaySports, showError);
-    var req3 = apiGetAdditions(displayAdditions, showError);
+    var req2 = apiGetSports(displaySports, showError, eventId);
+    var req3 = apiGetAdditions(displayAdditions, showError, eventId);
 
     $.when(req1, req2, req3).always(function() {
         $("#mainLoader").remove();
@@ -29,42 +31,42 @@ $( document ).ready(function() {
     $('#sports_container').change(function(event) {
         if(event.target.name == "sports") {
             current_sports_box = event.target.id.substr(event.target.id.length - 1);
-            var dropdown = $('#sports_'+current_sports_box);
-            apiGetExercises( $( dropdown ).val(), displayExercises, showError); 
+            var dropdown = $('#sports_' + current_sports_box);
+            apiGetExercises(displayExercises, showError, eventId, $( dropdown ).val());
         }
     });
 
     //Display confirm-modal if the form is valid
     $('#entry_button').click(function(){
-       if(  $('#entry_form').form('is valid')  ){
-        // See if portrait is added
-        if ($('#portrait').attr('src') === undefined) {
-            showError("Du må laste opp et portrettbilde først.");
-            return;
-        }
+        if ($('#entry_form').form('is valid')) {
+            // See if portrait is added
+            if ($('#portrait').attr('src') === undefined) {
+                showError("Du må laste opp et portrettbilde først.");
+                return;
+            }
 
-        createConfirmModal();
-        $('#confirm_modal').modal('show');
-    }
-});
+            createConfirmModal();
+            $('#confirm_modal').modal('show');
+        }
+    });
 
     //Display image-modal for portrait-upload
-    $('#image_button').click(function(){
-        $('#image_modal').modal('show');    
+    $('#image_button').click(function() {
+        $('#image_modal').modal('show');
     });
 
     //Prevent entry_form from submitting when clicking "Meld på"
-    $("#entry_form").submit(function(event){
+    $("#entry_form").submit(function(event) {
         event.preventDefault();
     });
 });
 
-//Constants
+// Constants
 var TICKET_ID_PARTICIPANT = 1;
 var TICKET_ID_TEAM = 2;
 var TICKET_ID_SUPPORTER = 3;
 
-//This variable holds track of which sport_box is being handled
+// This variable holds track of which sport_box is being handled
 var current_sports_box = 1;
 
 //      UPDATE GUI FUNCTIONS
@@ -72,9 +74,9 @@ var current_sports_box = 1;
 
 // Populate dropdown with clubs received from API
 function displayClubs(clubs){
-    if(clubs){
+    if (clubs) {
 	// Sort clubs by their name
-	clubs.sort(function(a, b) { return stringCmp(a, b, "club_name"); });
+    sortArrayByString(clubs, "club_name");
 	
         $.each(clubs, function(i, club){
            $('#clubs').append('<option value="'+club.club_id+'">' + escapeHtml(club.club_name) + '</option>');
@@ -83,29 +85,25 @@ function displayClubs(clubs){
 }
 
 
-function stringCmp(object_a, object_b, property) {
-    return object_a[property].localeCompare(object_b[property]);
-}
-
-
 // Populate dropdown with sports received from API
 function displaySports(sports){
-    if(sports){
-	// First, sort sports by their description.
-	sports.sort(function(a, b) { return stringCmp(a, b, "sport_description"); });
+    if (sports) {
+        // First, sort sports by their description.
+        sortArrayByString(sports, "sport_description");
+
        $.each(sports, function(i, sport){
         var ticket_id = $('#ticket_id').data('value');
             //Display only sports having a team_exercise if user is adding a team
-            if( ticket_id == TICKET_ID_TEAM && hasTeamExercise(sport)){
-                $('#sports_'+current_sports_box).append('<option value="'+sport.sport_id+'">'+escapeHtml(sport.sport_description)+'</option>'); 
+            if (ticket_id == TICKET_ID_TEAM && hasTeamExercise(sport)) {
+                $('#sports_' + current_sports_box).append('<option value="' + sport.sport_id + '">' + escapeHtml(sport.sport_description) + '</option>');
             }
             //Display all sports for a participant
-            else if(ticket_id == TICKET_ID_PARTICIPANT){
-                $('#sports_'+current_sports_box).append('<option value="'+sport.sport_id+'">'+escapeHtml(sport.sport_description)+'</option>'); 
+            else if (ticket_id == TICKET_ID_PARTICIPANT) {
+                $('#sports_' + current_sports_box).append('<option value="' + sport.sport_id + '">' + escapeHtml(sport.sport_description) + '</option>');
             }
-        });  
-       $('.dropdown').dropdown('refresh'); 
-   }  
+        });
+       $('.dropdown').dropdown('refresh');
+   }
 }
 
 function exerciseChecked(sender) {
@@ -119,8 +117,8 @@ function displayExercises(exercises){
     $('#exercises_'+curr_id).empty();
     $('#teams_container_'+curr_id).hide();
     if(exercises){
-	// Sort exercises by name
-	exercises.sort(function(a, b) { return stringCmp(a, b, "exercise_description"); });
+        // Sort exercises by name
+        sortArrayByString(exercises, "exercise_description");
 
         //Display checkboxes for each available exercise if there are many
         $.each(exercises, function(i, exercise){
@@ -135,7 +133,7 @@ function displayExercises(exercises){
             });
             if(exercises[0].is_teamexercise){
                 //Get teams for this exercise and populate teams dropdown
-                apiGetTeams( exercises[0].exercise_id, displayTeams , showError);
+                apiGetTeams(displayTeams, showError, eventId, exercises[0].exercise_id);
                 $('#teams_container_'+curr_id).show();
             }
         }
@@ -145,25 +143,26 @@ function displayExercises(exercises){
 // Generate checkboxes for teams received from API
 function displayTeams(teams){
     var curr_id = current_sports_box;
-    $('#teams_'+curr_id).empty();
-    if(teams){
-	// Sort teams by name
-	teams.sort(function(a, b) { return stringCmp(a, b, "team_name"); });
-       $.each(teams, function(i, team){
-        $('#teams_'+curr_id).append('<option value="'+team.team_id+'">'+escapeHtml(team.team_name)+'</option>');
-    });
-   }
+    $('#teams_' + curr_id).empty();
+    if (teams) {
+        // Sort teams by name
+        sortArrayByString(teams, "team_name");
+        $.each(teams, function(i, team){
+            $('#teams_' + curr_id).append('<option value="' + team.team_id + '">' + escapeHtml(team.team_name) + '</option>');
+        });
+    }
 }
 
 // Generate checkboxes for exercises received from API
 function displayAdditions(additions){
-    if(additions){
-	// Sort additions by name
-	additions.sort(function(a, b) { return stringCmp(a, b, "addition_description"); });
-       $.each(additions, function(i, addition){
-        var addition_label = addition.addition_description+' ('+addition.addition_fee+' ,-)';
-        $('#additions').append(generateCheckbox(addition_label, addition.addition_id, (addition.addition_fee == 0), ''));
-    });   
+    if (additions) {
+        // Sort additions by name
+        sortArrayByString(additions, "addition_description");
+
+        $.each(additions, function(i, addition) {
+            var addition_label = addition.addition_description + ' (' + addition.addition_fee + ' ,-)';
+            $('#additions').append(generateCheckbox(addition_label, addition.addition_id, (addition.addition_fee == 0), ''));
+        });
    }  
 }
 
@@ -195,7 +194,7 @@ function addSport(){
     var $teams = $sports_box.find("[name='teams']");
     $teams.attr("id", "teams_"+current_sports_box)
 
-    apiGetSports(displaySports, showError);
+    apiGetSports(displaySports, showError, eventId);
 
 }
 
@@ -339,7 +338,7 @@ function submitParticipantForm(){
     var jsonForm = createJSON();
 
     //Post the participant using the API
-    var request = apiPostParticipant(jsonForm, redirectToPayment, showError);
+    var request = apiPostParticipant(redirectToPayment, showError, jsonForm, eventId);
 
     $.when(request).always(function() {
         $("#paymentButton").removeClass("loading");
@@ -348,13 +347,13 @@ function submitParticipantForm(){
 
 //Called when a user has completed payment 
 function completeEntry(transaction_id, callback, errorCallback){
-    apiPutTransaction(transaction_id, callback, errorCallback);
+    apiPutTransaction(callback, errorCallback, transaction_id, eventId);
 }
 
 
 //Called when a user cancelled the payment
 function terminateEntry(transaction_id) {
-    apiPutTerminateEntry(transaction_id, function(data) { return true; }, function(data) { return true; });
+    apiPutTerminateEntry(function(data) { return true; }, function(data) { return true; }, transaction_id, eventId);
 }
 
 
@@ -503,35 +502,4 @@ function generateLabelPair(label, value){
   '<label class="field four wide">'+label+'</label>'+
   '<p>' + escapeHtml(value) + '</p>'+
   '</div>';
-}
-
-// Get an URL parameter
-// GetURLParameter("foo"); will return "asdf" from http://anything.com?foo=asdf
-function GetURLParameter(sParam){
-    var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i = 0; i < sURLVariables.length; i++){
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam){
-            return sParameterName[1];
-        }
-    }
-
-    return null;
-}
-
-
-var entityMap = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': '&quot;',
-    "'": '&#39;',
-    "/": '&#x2F;'
-  };
-
-function escapeHtml(string) {
-return String(string).replace(/[&<>"'\/]/g, function (s) {
-  return entityMap[s];
-});
 }

@@ -12,7 +12,7 @@
   <div id="participantsLoader" class="ui active inverted dimmer">
     <div class="ui large text loader">Henter påmeldinger...</div>
   </div>
-  <table class="ui sortable celled table">
+  <table class="ui selectable stackable sortable celled table">
     <thead>
       <tr>
   	    <th class="ascending">Fornavn</th>

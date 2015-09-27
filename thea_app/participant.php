@@ -1,7 +1,11 @@
 <?php require('header.php'); ?>
 
-<div class="ui items">
 
+
+<div class="ui items">
+<div id="participantLoader" class="ui active inverted dimmer">
+  <div class="ui large text loader">Henter påmeldingen...</div>
+</div>
 	<div class="header">
 		<!-- <i class="large sidebar icon" id="menubutton"></i> -->
 		<h1 class="ui dividing participantname">Deltaker</h1>

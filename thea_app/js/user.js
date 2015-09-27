@@ -6,7 +6,10 @@ function doLogin() {
   var password = $("#password").val();
   var jsonData = { "email": email, "password": password };
 
-  apiLoginUser(jsonData, handleSuccess, handleError);
+  var request = apiLoginUser(handleSuccess, handleError, jsonData);
+  $.when(request).always(function() {
+    $("#loginButton").removeClass("loading");
+  });
 }
 
 
@@ -23,7 +26,6 @@ function handleSuccess(data) {
 
 
 function handleError(errorMsg) {
-  $("#loginButton").removeClass("loading");
   $("#errorMessageContent").text(errorMsg);
   $("#errorMessage").show();
 }
