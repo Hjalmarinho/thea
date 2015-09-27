@@ -11,9 +11,12 @@
 
 // URLs used to call the API
 var eventId = 1;
-// var baseURL = 'https://thea.grevlingbo.no:8443/thea-backend/v1/';
-// var baseURL = 'http://92.62.34.78:8080/thea-backend/v1/';
-var baseURL = 'http://localhost:8080/thea-backend/v1/';
+<?php
+    // Read the API base url from settings file.
+    $content = file_get_contents(__DIR__ . "/../../settings.json");
+    $jsonObject = json_decode($content);
+    echo "var baseURL = '" . $jsonObject->frontend->api_base_url . "';";
+?>
 
 function addJWT(xhr) {
     // Add the jwt header if it exists

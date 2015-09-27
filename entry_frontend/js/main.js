@@ -10,8 +10,6 @@
 //  Primary use:    Main functions used by the entry GUI
 // ***********************************************************************
 
-var eventId = 1;
-
 //This function is run when the document/page is finsihed loading
 $( document ).ready(function() {
 
