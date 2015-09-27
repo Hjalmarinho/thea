@@ -362,12 +362,11 @@ function showError(error_msg) {
 
 //      HELP FUNCTIONS
 // ***********************************************************************
-
 //Constructs a JSON-object from the data that has been entered in the GUI
 function createJSON(){
     var jsonForm = {};
     var entry = {};
-    jsonForm["redirect_url"] = 'http://pamelding.sltromso.no/completed.php';
+    jsonForm["redirect_url"] = redirectURL;
     jsonForm["entry"] = entry;
 
     //Personal information
