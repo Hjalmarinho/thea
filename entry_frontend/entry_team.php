@@ -47,7 +47,7 @@ Primary use:  View allowing contact persons to register teams for an event.
           <div class="inline fields">
             <label class="field four wide">Medlem</label>
             <div class="field twelve wide">
-              <select class="ui dropdown" name="is_clubmember">
+              <select class="ui dropdown" name="is_clubmember" id="is_clubmember">
                 <option value="">Er du medlem av klubben?</option>
                 <option value="1">Ja</option>
                 <option value="0">Nei</option>
