@@ -380,7 +380,7 @@ function createJSON(){
     person["phone"]      = $('#phone').val();
     person["email"]      = $('#email').val();
     person["gender"]     = $('#gender').val();
-    person["birthdate"]  = $('#birthyear').val()+ '-' + $('#birthmonth').val() + '-' + $('#birthday').val();
+    person["birthdate"]  = $('#birthyear').val()+ '-' + $('#birthmonth').val() + '-' + lpad($('#birthday').val(), 2, '0');
     person["allergies"]  = $('#allergies').val();
     var portrait   = {};
     portrait["portrait_data"] = $('#portrait').attr('src').split(',')[1];

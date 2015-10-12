@@ -101,3 +101,9 @@ var REGISTRATION_CANCELLED = "CANCELLED";
 var REGISTRATION_PREPAYMENT = "PRE-PAYMENT";
 var REGISTRATION_INQUEUE = "IN-QUEUE";
 var REGISTRATION_TERMINATED = "TERMINATED";
+
+
+function lpad(input, width, pad_char) {
+  input = input + '';
+  return input.length >= width ? input : new Array(width - input.length + 1).join(pad_char) + input;
+}
