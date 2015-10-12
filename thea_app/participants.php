@@ -22,6 +22,7 @@
   	    <th>Telefon</th>
   	    <th>E-post</th>
   	    <th>Påmeldingsdato</th>
+        <th>Kvittering</th>
   	</tr>
     </thead>
     <tbody id="participants">

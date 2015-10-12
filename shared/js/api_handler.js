@@ -40,6 +40,23 @@ function doGet(urlGET, successCallback, errorCallback) {
     });
 }
 
+
+// Perform a RAW GET-call to API with given URL. Run callback-function with the result
+function doRawGet(urlGET, successCallback, errorCallback) {
+    return $.ajax({
+        type: 'GET',
+        url: urlGET,
+        beforeSend : addJWT,
+        success: function(result){
+            successCallback(result);
+        },
+        error: function(){
+            errorCallback('Ooops, noe uventet skjedde...');
+        } 
+    });
+}
+
+
 // Perform POST-call to API with given URL.
 function doPost(urlPOST, jsonData, successCallback, errorCallback) {
     return $.ajax({
@@ -139,4 +156,8 @@ function apiGetPortrait(successCallback, errorCallback, eventId, entryId) {
 
 function apiLoginUser(successCallback, errorCallback, jsonData) {
     return doPost(baseURL + 'users/login/', jsonData, successCallback, errorCallback);
+}
+
+function apiGetReceipt(successCallback, errorCallback, eventId, entryId) {
+    return doRawGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/receipt', successCallback, errorCallback)
 }

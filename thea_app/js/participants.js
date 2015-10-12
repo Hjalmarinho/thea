@@ -36,7 +36,7 @@ function displayParticipants(participants){
 
 		var tablerow = '<tr ' + cssClass + '><td>' + first_name + '</td><td>' + last_name + '</td><td>' + 
 		gender + '</td><td>' + club + '</td><td>' + phone + '</td><td><a href="mailto:' + email + '">' + email + '</a></td><td>' + 
-		time_registrated + '</td></tr>'
+		time_registrated + '</td><td onclick="getReceipt(' + entry_id + ');"><i class="download blue icon"></i></td></tr>'
 
 		$(participantsdiv).append(tablerow)
 	});
@@ -49,4 +49,14 @@ function removeLoader() {
 }
 
 function handleError(errorMsg) {
+}
+
+
+function getReceipt(entryId)
+{
+	apiGetReceipt(function (data)
+		{
+			window.open('data:application/pdf;base64,' + data);
+			console.log('yee');
+		}, function (data) { console.log('buhuuu'); }, event_id, entryId);
 }
