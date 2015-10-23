@@ -43,6 +43,10 @@ html, body{
 	text-align: center ;
 }
 
+.download{
+	cursor: pointer;
+}
+
 
 /*	3. Headers														*/
 /*------------------------------------------------------------------*/

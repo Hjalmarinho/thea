@@ -34,7 +34,7 @@ function displayParticipants(participants){
 		var time_registrated = new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#")
 		var entry_id = participant.entry_id
 
-		var tablerow = '<tr ' + cssClass + '><td>' + first_name + '</td><td>' + last_name + '</td><td>' + 
+		var tablerow = '<tr ' + cssClass + '><td><a href="./participant.php?entry_id=' + entry_id +'">' + first_name + '</a></td><td>' + last_name + '</td><td>' + 
 		gender + '</td><td>' + club + '</td><td>' + phone + '</td><td><a href="mailto:' + email + '">' + email + '</a></td><td>' + 
 		time_registrated + '</td><td onclick="getReceipt(' + entry_id + ');"><i class="download blue icon"></i></td></tr>'
 

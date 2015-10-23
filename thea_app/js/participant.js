@@ -20,12 +20,16 @@ $(document).ready(function(){
 	});
 
 	var req1 = apiGetClubs(displayClubs, errorHandler)
-	var req2 = apiGetParticipant(displayParticipant, errorHandler, event_id, local_entry_id);
-	var req3 = apiGetPortrait(displayPortrait, errorHandler, event_id, local_entry_id);
+	var req2 = apiGetSports(displaySports, errorHandler, event_id)
+	var req3 = apiGetParticipant(displayParticipant, errorHandler, event_id, local_entry_id);
+	var req4 = apiGetPortrait(displayPortrait, errorHandler, event_id, local_entry_id);
 
-	$.when(req1, req2, req3).always(function() {
+	$.when(req1, req2, req3, req4).always(function() {
 		$("#participantLoader").remove();
 	});
+
+	
+;
 })
 
 //Global variables, updated in displayParticipant
@@ -57,11 +61,9 @@ function displayClubs(clubs){
 
 function displaySports(sports) {
 	if (sports) {
-		for (var i = 2; i < 3; i++) {
-			$.each(sports, function(i, sport) {
-				$('#exercise' + i).append('<option value=' + sport.sport_description + '>' + sport.sport_description + '</option>');
-			});
-		}
+		$.each(sports, function(i, sport) {
+			$('#exercises').append('<option value='+sport.sport_id+'>' + sport.sport_description + '</option>');
+		});
 	}
 }
 
@@ -95,64 +97,118 @@ function displayParticipant(participant){
 	var id_birthmonth = $('#birthmonth')
 	var id_birthyear = $('#birthyear')
 	var id_time_registrated = $('#time_registrated')
-	var dropdown = $('.ui.dropdown')
-
+	var id_exercise = $('#exercises')
+	var id_payed = $('#payed')
+	var id_payments = $('#payments')
+	var id_refund = $('#refund')
 	var time_registrated = new Date(local_time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#")
 
+	//******** PERSONAL INFORMATION ********
+
+	//First name
 	id_first_name.val(participant.person.first_name)
+
+	//Last name
 	id_last_name.val(participant.person.last_name)
-	id_time_registrated.text('Påmeldt: ' + time_registrated)
 
-	dropdown.has(id_gender).dropdown('set selected', participant.person.gender);
+	//Date of birth
+	var birthdate = participant.person.birthdate.split('-')
+	id_birthday.val(birthdate[2])
+	id_birthmonth.dropdown('set selected', birthdate[1])
+	id_birthyear.val(birthdate[0])
 
-	dropdown.has(id_clubs).dropdown('set selected', participant.club.club_id);
+	//Gender
+	id_gender.dropdown('set selected', participant.person.gender)
 
+	//Student
 	if(participant.is_student){
 		id_student.val(id_student.prop('checked', true))
 	}
+
+	//Email
+	id_email.val(participant.person.email)
+
+	//Phone number
+	id_phone.val(participant.person.phone)
+
+	//Travel information
+	id_travel_information.val(participant.travel_information)
+	
+	//Allergies
+	id_allergies.val(participant.person.allergies)
+	
+	//******** PARTICIPANT INFORMATION ********
+
+	//Club
+	id_clubs.dropdown('set selected', participant.club.club_id)
+
+	//Member of club
 	if(participant.is_clubmember){
 		id_clubmember.val(id_clubmember.prop('checked', true))
 	}
+
+	//Sport
+	id_exercise.dropdown('set selected', participant.exercises[0].exercise_id)
+
+	//Accreditated
 	if(participant.accreditated){
-		id_accreditated.val(id_accreditated.prop('checked', true))
-		
+		id_accreditated.val(id_accreditated.prop('checked', true))	
 	}
+	
+	//Name and time registrated
 	id_participantname.text(participant.person.first_name + ' ' + participant.person.last_name)
-	id_travel_information.val(participant.travel_information)
-	id_allergies.val(participant.person.allergies)
-	id_email.val(participant.person.email)
-	id_phone.val(participant.person.phone)
+	id_time_registrated.text('Påmeldt: ' + time_registrated)
+
+	//Comment
 	if(participant.comment != null){
 		id_comment.text(participant.comment)
 	}
 
-	var birthdate = participant.person.birthdate.split('-')
-	id_birthday.val(birthdate[2])
-	dropdown.has(id_birthmonth).dropdown('set selected', new Date(participant.person.birthdate).customFormat("#MMM#"));
-	id_birthyear.val(birthdate[0])
-
+	//Reciet
+	$('#recietButton').append('\
+		<button class="fluid ui button" id="recieptParticipant" onclick="getReceipt(' + local_entry_id + ');">\
+			Last ned kvittering\
+		</button>\
+	')
+	
+	//Canceled participant
 	if(local_status == "CANCELLED"){
+		console.log('he')
 		id_participantname.append(' <span style="color:#d01919;">(kansellert)</span>')
+		$('#cancelParticipant').text('Meld på igjen')
 	}
-	/*
-	for (i = 0; i < participant.exercises.length; i++){
-		$('#exercises').append(dropdownlist("Idrett", "sport", "exercise" + i))
-		if(participant.exercises[i].exercise.is_teamexercise){
-		}
 
+	//******** PAYMENT INFORMATION ********
+	var total_amount = 0
+	var total_refund = 0
+	if(participant.orders){
+		$.each(participant.orders, function(i, order){
+			//Add order amount to the total amount payed
+			total_amount += order.order_amount
+			total_refund += order.amount_refunded
+
+			id_payments.append('\
+				<div class="inline fields">\
+					<label class="field four wide">Betaling '+ (i+1) +'</label>\
+					<div class="field six wide">\
+						<input type="text" value="' + order.order_amount + '" id="payment">\
+					</div>\
+					<div class="field five wide">\
+						<button class="ui button">Refunder</button>\
+					</div>\
+				</div>\
+			')
+			console.log(order.order_amount)
+		});
+		//Total payment
+		id_payed.text(total_amount + ',-')
+
+		//Total refund
+		id_refund.text(total_refund + ',-')
 	}
-	for (i = 0; i < participant.exercises.length; i++){
-		//dropdown.has($('#exercise' + i)).dropdown('set selected', participant.exercises[i].exercise.sport.sport_description);
-		dropdown.has($('#exercise' + i)).dropdown('set selected', "Svømming");
-		console.log(participant.exercises[i].exercise.sport.sport_description)
-	}
-	*/
-	apiGetSports(displaySports, errorHandler, event_id);
-	/*dropdown.has($('#exercise2')).dropdown('set selected', participant.exercises[2].exercise.sport.sport_description);
-	console.log(participant.exercises[2].exercise.sport.sport_description)*/
+}//End of displayParticipant
 
-}
-
+/*
 function dropdownlist(name, className, id){
 	return('\
 		<div class="inline fields">\
@@ -163,7 +219,7 @@ function dropdownlist(name, className, id){
 		</div>\
 	')
 }
-
+*/
 /*function updateParticipant(){
 
 	monthToNumber($('#birthmonth').val())
@@ -211,13 +267,13 @@ function dropdownlist(name, className, id){
 		console.log("Du har ikke skrevet inn et beløp")
 	}
 }
-
+*/
 function cancelParticipant(){
 	var comment = $('#cancel-comment').val()
 	apiCancelParticipant(local_entry_id, participantIsCanceled, comment)
 	console.log("kansellert")
 }
-
+/*
 function participantIsCanceled(){
 	console.log("participant cancelled ")
 }*/
