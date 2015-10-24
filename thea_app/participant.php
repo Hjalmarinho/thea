@@ -191,7 +191,7 @@
 
 			<div class="inline fields">
 				<label class="field four wide">Blitt refundert </label>
-				<span class="field six wide" id="refund">2,-</span>
+				<span class="field six wide" id="refunded">0,-</span>
 			</div>
 
 		</div><!-- /.form -->
@@ -224,7 +224,7 @@
 					<div class="ui divider"></div>
 					<div id="recietButton"></div>
 					<div class="ui divider"></div>
-					<button class="fluid red ui button disabled" id="cancelParticipant">Kanseller deltaker</button>
+					<button class="fluid red ui button" id="cancelParticipant">Kanseller deltaker</button>
 				</div>
 		</div>
 
