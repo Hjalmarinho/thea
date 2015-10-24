@@ -268,7 +268,6 @@ function appendExercise(exercise_object, exercise_counter)
     $('#exercises select').last().val(exercise_object.team_id).dropdown();
 }
 
-
 // Format a readable exercise text.
 function createExerciseText(exercise_object)
 {
