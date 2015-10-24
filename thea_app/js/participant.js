@@ -27,10 +27,7 @@ $(document).ready(function(){
 	$.when(req1, req2, req3, req4).always(function() {
 		$("#participantLoader").remove();
 	});
-
-	
-;
-})
+});
 
 //Global variables, updated in displayParticipant
 var local_entry_id = GetURLParameter('entry_id');
@@ -54,7 +51,7 @@ function displayPortrait(image){
 function displayClubs(clubs){
     if(clubs){
         $.each(clubs, function(i, club){
-           $('#clubs').append('<option value='+club.club_id+'>'+club.club_name+'</option>');      
+           $('#clubs').append('<option value='+club.club_id+'>' + escapeHtml(club.club_name) + '</option>');      
        });
     }
 }
@@ -62,7 +59,7 @@ function displayClubs(clubs){
 function displaySports(sports) {
 	if (sports) {
 		$.each(sports, function(i, sport) {
-			$('#exercises').append('<option value='+sport.sport_id+'>' + sport.sport_description + '</option>');
+			$('#exercises').append('<option value='+sport.sport_id+'>' + escapeHtml(sport.sport_description) + '</option>');
 		});
 	}
 }
@@ -106,10 +103,10 @@ function displayParticipant(participant){
 	//******** PERSONAL INFORMATION ********
 
 	//First name
-	id_first_name.val(participant.person.first_name)
+	id_first_name.val(escapeHtml(participant.person.first_name))
 
 	//Last name
-	id_last_name.val(participant.person.last_name)
+	id_last_name.val(escapeHtml(participant.person.last_name))
 
 	//Date of birth
 	var birthdate = participant.person.birthdate.split('-')
@@ -121,21 +118,19 @@ function displayParticipant(participant){
 	id_gender.dropdown('set selected', participant.person.gender)
 
 	//Student
-	if(participant.is_student){
-		id_student.val(id_student.prop('checked', true))
-	}
+	id_student.val(id_student.prop('checked', participant.is_student))
 
 	//Email
-	id_email.val(participant.person.email)
+	id_email.val(escapeHtml(participant.person.email))
 
 	//Phone number
-	id_phone.val(participant.person.phone)
+	id_phone.val(escapeHtml(participant.person.phone))
 
 	//Travel information
-	id_travel_information.val(participant.travel_information)
+	id_travel_information.val(escapeHtml(participant.travel_information))
 	
 	//Allergies
-	id_allergies.val(participant.person.allergies)
+	id_allergies.val(escapeHtml(participant.person.allergies))
 	
 	//******** PARTICIPANT INFORMATION ********
 
@@ -143,25 +138,21 @@ function displayParticipant(participant){
 	id_clubs.dropdown('set selected', participant.club.club_id)
 
 	//Member of club
-	if(participant.is_clubmember){
-		id_clubmember.val(id_clubmember.prop('checked', true))
-	}
+	id_clubmember.val(id_clubmember.prop('checked', participant.is_clubmember))
 
 	//Sport
 	id_exercise.dropdown('set selected', participant.exercises[0].exercise_id)
 
 	//Accreditated
-	if(participant.accreditated){
-		id_accreditated.val(id_accreditated.prop('checked', true))	
-	}
-	
+	id_accreditated.val(id_accreditated.prop('checked', participant.accreditated))
+
 	//Name and time registrated
 	id_participantname.text(participant.person.first_name + ' ' + participant.person.last_name)
 	id_time_registrated.text('Påmeldt: ' + time_registrated)
 
 	//Comment
 	if(participant.comment != null){
-		id_comment.text(participant.comment)
+		id_comment.text(escapeHtml(participant.comment))
 	}
 
 	//Reciet
@@ -194,7 +185,7 @@ function displayParticipant(participant){
 						<input type="text" value="' + order.order_amount + '" id="payment">\
 					</div>\
 					<div class="field five wide">\
-						<button class="ui button">Refunder</button>\
+						<button class="ui disabled button">Refunder</button>\
 					</div>\
 				</div>\
 			')
