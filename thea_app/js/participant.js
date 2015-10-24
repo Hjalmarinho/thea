@@ -100,7 +100,7 @@ function displayParticipant(participant){
 	var id_exercise = $('#exercises')
 	var id_payed = $('#payed')
 	var id_payments = $('#payments')
-	var id_refund = $('#refund')
+	var id_refunded = $('#refunded')
 	var time_registrated = new Date(local_time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#")
 
 	//******** PERSONAL INFORMATION ********
@@ -190,8 +190,11 @@ function displayParticipant(participant){
 			id_payments.append('\
 				<div class="inline fields">\
 					<label class="field four wide">Betaling '+ (i+1) +'</label>\
-					<div class="field six wide">\
-						<input type="text" value="' + order.order_amount + '" id="payment">\
+					<div class="field three wide">\
+						<span>' + order.order_amount + ',-</span>\
+					</div>\
+					<div class="field three wide">\
+						<input type="text" value="" id="payment'+ (i+1) +'">\
 					</div>\
 					<div class="field five wide">\
 						<button class="ui button">Refunder</button>\
@@ -204,7 +207,7 @@ function displayParticipant(participant){
 		id_payed.text(total_amount + ',-')
 
 		//Total refund
-		id_refund.text(total_refund + ',-')
+		id_refunded.text(total_refund + ',-')
 	}
 }//End of displayParticipant
 
