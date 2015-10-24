@@ -29,3 +29,12 @@ $(document).ready(function() {
 
   $('.ui.small.modal').modal('show');
 });
+
+function getReceipt(entryId)
+{
+  apiGetReceipt(function (data)
+    {
+      window.open('data:application/pdf;base64,' + data);
+      console.log('yee');
+    }, function (data) { console.log('buhuuu'); }, event_id, entryId);
+}

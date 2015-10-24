@@ -82,18 +82,18 @@
 				<div class="field four wide">
 					<select class="ui fluid dropdown" id="birthmonth">
 						<option value="">mm</option>
-						<option value="Jan">januar</option>
-						<option value="Feb">februar</option>
-						<option value="Mar">mars</option>
-						<option value="Apr">april</option>
-						<option value="Mai">mai</option>
-						<option value="Jun">juni</option>
-						<option value="Jul">juli</option>
-						<option value="Aug">august</option>
-						<option value="Sep">september</option>
-						<option value="Okt">oktober</option>
-						<option value="Nov">november</option>
-						<option value="Des">desember</option>
+						<option value="01">januar</option>
+						<option value="02">februar</option>
+						<option value="03">mars</option>
+						<option value="04">april</option>
+						<option value="05">mai</option>
+						<option value="06">juni</option>
+						<option value="07">juli</option>
+						<option value="08">august</option>
+						<option value="09">september</option>
+						<option value="10">oktober</option>
+						<option value="11">november</option>
+						<option value="12">desember</option>
 					</select>
 				</div>
 
@@ -165,12 +165,10 @@
 				</div>
 			</div>
 
-			<div id="exercises"></div>
-
 			<div class="inline fields">
 				<label class="field four wide">Idrett</label>
 				<div class="field nine wide">
-					<select class="ui fluid dropdown" id="exercise2">
+					<select class="ui fluid dropdown" id="exercises">
 					</select>
 				</div>
 			</div>
@@ -186,22 +184,14 @@
 			
 			<div class="inline fields">
 				<label class="field four wide">Har betalt </label>
-				<span class="field six wide">500,-</span>
+				<span class="field six wide" id="payed">0,-</span>
 			</div>
-
-			<div class="inline fields">
-				<label class="field four wide">Refundering</label>
-				<div class="field six wide">
-					<input type="text" value="" id="payment">
-				</div>
-				<div class="field five wide">
-					<button class="ui button" id="creditParticipant">Refunder</button>
-				</div>
+			<div id="payments">
 			</div>
 
 			<div class="inline fields">
 				<label class="field four wide">Blitt refundert </label>
-				<span class="field six wide">250,-</span>
+				<span class="field six wide" id="refund">2,-</span>
 			</div>
 
 		</div><!-- /.form -->
@@ -230,11 +220,11 @@
 					<textarea rows="4" id="comment" style="max-width:100%;width:100%;">Ingen kommentarer</textarea>
 
 
-					<button class="fluid ui button" id="updateParticipant">Oppdater deltakerinformasjon</button>
+					<button class="fluid ui disabled button" id="updateParticipant">Oppdater deltakerinformasjon</button>
 					<div class="ui divider"></div>
-					<button class="fluid ui button" id="recieptParticipant">Deltakerens kvittering</button>
+					<div id="recietButton"></div>
 					<div class="ui divider"></div>
-					<button class="fluid red ui button" id="cancelParticipant">Kanseller deltaker</button>
+					<button class="fluid red ui button disabled" id="cancelParticipant">Kanseller deltaker</button>
 				</div>
 		</div>
 
