@@ -38,6 +38,9 @@ var local_ticket_id
 var local_person_id
 var local_user_id
 var global_participant
+var id_participantname
+var id_cancel_participant
+
 
 
 function errorHandler(errorMessage) {
@@ -84,7 +87,7 @@ function displayParticipant(participant){
 	var id_student = $('#studentCheckbox')
 	var id_clubmember = $('#clubmemberCheckbox')
 	var id_accreditated = $('#accreditatedCheckbox')
-	var id_participantname = $('.participantname')
+	id_participantname = $('.participantname')
 	var id_travel_information = $('#travel_information')
 	var id_allergies = $('#allergies')
 	var id_email = $('#email')
@@ -98,6 +101,7 @@ function displayParticipant(participant){
 	var id_payed = $('#payed')
 	var id_payments = $('#payments')
 	var id_refunded = $('#refunded')
+	id_cancel_participant = $('#cancelParticipant')
 	var time_registrated = new Date(local_time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#")
 
 	//******** PERSONAL INFORMATION ********
@@ -161,13 +165,6 @@ function displayParticipant(participant){
 			Last ned kvittering\
 		</button>\
 	')
-	
-	//Canceled participant
-	if(local_status == "CANCELLED"){
-		console.log('he')
-		id_participantname.append(' <span style="color:#d01919;">(kansellert)</span>')
-		$('#cancelParticipant').text('Meld på igjen')
-	}
 
 	//******** PAYMENT INFORMATION ********
 	var total_amount = 0
@@ -199,6 +196,11 @@ function displayParticipant(participant){
 
 		//Total refund
 		id_refunded.text(total_refund + ',-')
+	}
+
+	//Canceled participant
+	if(local_status == "CANCELLED"){
+		participantIsCanceled()
 	}
 }//End of displayParticipant
 
@@ -263,12 +265,25 @@ function dropdownlist(name, className, id){
 }
 */
 function cancelParticipant(){
-	var comment = $('#cancel-comment').val()
-	apiCancelParticipant(local_entry_id, participantIsCanceled, comment)
-	console.log("kansellert")
+	if (participant.status != "CANCELLED"){
+		var comment = $('#cancel-comment').val()
+		apiCancelParticipant(local_entry_id, participantIsCanceled, participantNotCanceled, comment)
+	}else{
+		console.log('ukanseller')
+	}
 }
-/*
+
 function participantIsCanceled(){
-	console.log("participant cancelled ")
-}*/
+	console.log('hei')
+	$('.participantname').append(' <span style="color:#d01919;">(kansellert)</span>')
+	id_cancel_participant.text('Meld på igjen')
+	id_cancel_participant.removeClass("red").addClass("green");
+	$('#cancelOrNo').text('melde på igjen ')
+}
+
+function participantNotCanceled(){
+	console.log("Her skjedde det noe feil")
+}
+
+
 

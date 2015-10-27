@@ -162,6 +162,9 @@ function apiGetReceipt(successCallback, errorCallback, eventId, entryId) {
     return doRawGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/receipt', successCallback, errorCallback)
 }
 
+function apiCancelParticipant(entry_id, callback, errorCallback, comment){
+    doPut(baseURL + 'events/' + eventId + '/participants/' + entry_id + "/cancel", "", callback, errorCallback, {'comment': comment})
+}
 function apiPutPassword(successCallback, errorCallback, jsonObject) {
     return doPut(baseURL + 'users/password', jsonObject, successCallback, errorCallback)
 }
