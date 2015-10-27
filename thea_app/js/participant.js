@@ -69,7 +69,6 @@ function displayClubs(clubs)
   }
 }
 
-<<<<<<< 8edb65797e29be723fd5cab4cb1e970040a7b868
 function getSports(sports_array)
 {
   sports = sports_array;
@@ -79,20 +78,6 @@ function getTeams(teams_array)
 {
   teams = teams_array;
 }
-=======
-//Global variables, updated in displayParticipant
-var local_entry_id = GetURLParameter('entry_id');
-var local_status
-var local_birthdate
-var local_time_registrated
-var local_ticket_id
-var local_person_id
-var local_user_id
-var global_participant
-var id_participantname
-var id_cancel_participant
-
->>>>>>> muh
 
 function displayParticipant(participant)
 {
@@ -380,8 +365,6 @@ function showCreditParticipant(sender, transactionId)
   currentCreditTransactionId = transactionId;
   $('#credit-update').modal('show');
 }
-<<<<<<< 8edb65797e29be723fd5cab4cb1e970040a7b868
-
 
 function creditParticipant()
 {
@@ -421,31 +404,6 @@ function creditParticipant()
     });
   }
 }
-=======
-*/
-function cancelParticipant(){
-	if (participant.status != "CANCELLED"){
-		var comment = $('#cancel-comment').val()
-		apiCancelParticipant(local_entry_id, participantIsCanceled, participantNotCanceled, comment)
-	}else{
-		console.log('ukanseller')
-	}
-}
-
-function participantIsCanceled(){
-	console.log('hei')
-	$('.participantname').append(' <span style="color:#d01919;">(kansellert)</span>')
-	id_cancel_participant.text('Meld på igjen')
-	id_cancel_participant.removeClass("red").addClass("green");
-	$('#cancelOrNo').text('melde på igjen ')
-}
-
-function participantNotCanceled(){
-	console.log("Her skjedde det noe feil")
-}
-
-
->>>>>>> muh
 
 var is_canceled = false;
 function cancelParticipant()
