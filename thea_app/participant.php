@@ -43,10 +43,10 @@
 
 <div class="ui modal" id="cancel-modal">
   <div class="header">
-    Er du sikker på at du vil kansellere <span class="participantname"></span>?
+    Er du sikker på at du vil <span id="cancelOrNo">kansellere</span> <span class="participantname"></span>?
   </div>
   <div class="content">
-    Gjør det lettere å huske hvorfor du kansellerte, skriv en kommentar!
+    Gjør det lettere å huske hvorfor du gjør som du gjør, skriv en kommentar!
     <textarea rows="4" id="cancel-comment" style="max-width:100%;width:100%;"></textarea>
   </div>
   <div class="actions">
