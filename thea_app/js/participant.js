@@ -365,6 +365,7 @@ function showCreditParticipant(sender, transactionId)
   currentCreditTransactionId = transactionId;
   $('#credit-update').modal('show');
 }
+<<<<<<< fbbaf37f3f1b6797eb571fdee55a97d8ce371429
 
 
 function creditParticipant()
@@ -405,6 +406,31 @@ function creditParticipant()
     });
   }
 }
+=======
+*/
+function cancelParticipant(){
+	if (participant.status != "CANCELLED"){
+		var comment = $('#cancel-comment').val()
+		apiCancelParticipant(local_entry_id, participantIsCanceled, participantNotCanceled, comment)
+	}else{
+		console.log('ukanseller')
+	}
+}
+
+function participantIsCanceled(){
+	console.log('hei')
+	$('.participantname').append(' <span style="color:#d01919;">(kansellert)</span>')
+	id_cancel_participant.text('Meld på igjen')
+	id_cancel_participant.removeClass("red").addClass("green");
+	$('#cancelOrNo').text('melde på igjen ')
+}
+
+function participantNotCanceled(){
+	console.log("Her skjedde det noe feil")
+}
+
+
+>>>>>>> muh
 
 var is_canceled = false;
 function cancelParticipant()
