@@ -161,3 +161,7 @@ function apiLoginUser(successCallback, errorCallback, jsonData) {
 function apiGetReceipt(successCallback, errorCallback, eventId, entryId) {
     return doRawGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/receipt', successCallback, errorCallback)
 }
+
+function apiPutPassword(successCallback, errorCallback, jsonObject) {
+    return doPut(baseURL + 'users/password', jsonObject, successCallback, errorCallback)
+}

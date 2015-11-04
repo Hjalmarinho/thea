@@ -29,3 +29,37 @@ function handleError(errorMsg) {
   $("#errorMessageContent").text(errorMsg);
   $("#errorMessage").show();
 }
+
+
+function change_password()
+{
+  $("#okMessage").hide();
+  $("#errorMessage").hide();
+  $("#changePassword").addClass("loading");
+
+  var oldPassword = $('#old_password').val();
+  var newPassword = $('#new_password').val();
+  var newPasswordRepeat = $('#new_password_repeat').val();
+
+  var requestObject = {
+    'old_password': oldPassword,
+    'new_password': newPassword,
+    'new_password_repeat': newPasswordRepeat
+  };
+
+  var request = apiPutPassword(changePasswordSuccess, changePasswordError, requestObject);
+  $.when(request).always(function() {
+    $("#changePassword").removeClass("loading");
+  });
+}
+
+function changePasswordError(message)
+{
+  $("#errorMessageContent").text(message);
+  $("#errorMessage").show();
+}
+
+function changePasswordSuccess(data)
+{
+  $("#okMessage").show();
+}
