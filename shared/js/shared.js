@@ -107,3 +107,16 @@ function lpad(input, width, pad_char) {
   input = input + '';
   return input.length >= width ? input : new Array(width - input.length + 1).join(pad_char) + input;
 }
+
+
+function genderToString(gender)
+{
+  if (gender == "Male")
+    return "Herre";
+  else if (gender == "Female")
+    return "Dame";
+  else if (gender == "Mix")
+    return "Mix";
+  else
+    return "Ukjent";
+}

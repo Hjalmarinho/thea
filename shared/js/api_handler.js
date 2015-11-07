@@ -162,9 +162,26 @@ function apiGetReceipt(successCallback, errorCallback, eventId, entryId) {
     return doRawGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/receipt', successCallback, errorCallback)
 }
 
-function apiCancelParticipant(entry_id, callback, errorCallback, comment){
-    doPut(baseURL + 'events/' + eventId + '/participants/' + entry_id + "/cancel", "", callback, errorCallback, {'comment': comment})
+function apiCancelParticipant(entry_id, callback, errorCallback, comment) {
+    return doPut(baseURL + 'events/' + eventId + '/participants/' + entry_id + '/cancel', '', callback, errorCallback, {'comment': comment})
 }
+
+function apiUncancelParticipant(entry_id, callback, errorCallback, comment) {
+    return doPut(baseURL + 'events/' + eventId + '/participants/' + entry_id + '/uncancel', '', callback, errorCallback, {'comment': comment})
+}
+
 function apiPutPassword(successCallback, errorCallback, jsonObject) {
     return doPut(baseURL + 'users/password', jsonObject, successCallback, errorCallback)
+}
+
+function apiGetAllTeams(successCallback, errorCallback, eventId) {
+    return doGet(baseURL + 'events/' + eventId + '/teams', successCallback, errorCallback);
+}
+
+function apiGetTransaction(successCallback, errorCallback, eventId, transactionId) {
+    return doGet(baseURL + 'events/' + eventId + '/transactions/' + transactionId, successCallback, errorCallback);
+}
+
+function apiPostCreditTransaction(successCallback, errorCallback, json, eventId, transactionId) {
+    return doPost(baseURL + 'events/' + eventId + '/transactions/' + transactionId + '/credit', json, successCallback, errorCallback);
 }
