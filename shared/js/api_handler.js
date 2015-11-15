@@ -11,6 +11,7 @@
 
 // URLs used to call the API
 var eventId = 1;
+var router_url = '<?php echo ROOT_URL; ?>/router.php';
 <?php
     // Read the API base url from settings file.
     $content = file_get_contents(__DIR__ . "/../../settings.json");
@@ -29,8 +30,13 @@ function addJWT(xhr) {
 function doGet(urlGET, successCallback, errorCallback) {
     return $.ajax({
         type: 'GET',
-        url: urlGET,
-        beforeSend : addJWT,
+        url: router_url,
+        beforeSend : function (request)
+        {
+            addJWT(request);
+            request.setRequestHeader('redirect-method', 'get');
+            request.setRequestHeader('redirect-source', urlGET);
+        },
         success: function(result){
             handleResult(result, successCallback, errorCallback);
         },
@@ -45,8 +51,13 @@ function doGet(urlGET, successCallback, errorCallback) {
 function doRawGet(urlGET, successCallback, errorCallback) {
     return $.ajax({
         type: 'GET',
-        url: urlGET,
-        beforeSend : addJWT,
+        url: router_url,
+        beforeSend : function (request)
+        {
+            addJWT(request);
+            request.setRequestHeader('redirect-method', 'rawget');
+            request.setRequestHeader('redirect-source', urlGET);
+        },
         success: function(result){
             successCallback(result);
         },
@@ -61,11 +72,15 @@ function doRawGet(urlGET, successCallback, errorCallback) {
 function doPost(urlPOST, jsonData, successCallback, errorCallback) {
     return $.ajax({
         type: 'POST',
-        contentType: 'application/json',
-        url: urlPOST,
+        url: router_url,
         data: JSON.stringify(jsonData),
         dataType: 'json',
-        beforeSend : addJWT,
+        beforeSend : function (request)
+        {
+            addJWT(request);
+            request.setRequestHeader('redirect-method', 'post');
+            request.setRequestHeader('redirect-source', urlPOST);
+        },
         success: function(result){
             handleResult(result, successCallback, errorCallback);
         },
@@ -80,11 +95,16 @@ function doPut(urlPUT, jsonData, successCallback, errorCallback, headerData) {
     return $.ajax({
         type: 'PUT',
         contentType: 'application/json',
-        url: urlPUT,
+        url: router_url,
         data: JSON.stringify(jsonData),
         header: headerData,
         dataType: 'json',
-        beforeSend : addJWT,
+        beforeSend : function (request)
+        {
+            addJWT(request);
+            request.setRequestHeader('redirect-method', 'put');
+            request.setRequestHeader('redirect-source', urlPUT);
+        },
         success: function(result){
             handleResult(result, successCallback, errorCallback);
         },

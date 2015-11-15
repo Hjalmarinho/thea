@@ -7,7 +7,7 @@ Last change:  31/08/2015
 Author:       Øystein Molnes
 Primary use:  View allowing suppporters to register for an event.
 *********************************************************************** -->
-
+<?php require_once(__DIR__ . '/site_info.php'); ?>
 <!DOCTYPE html>
 <html>
 

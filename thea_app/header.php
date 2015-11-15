@@ -10,6 +10,7 @@
 		<script>
 		<?php
 			// Include shared code
+			require_once(__DIR__ . "/site_info.php");
 			require_once(__DIR__ . "/../shared/js/shared.js");
 			require_once(__DIR__ . "/../shared/js/api_handler.js");
 		?>

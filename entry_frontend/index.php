@@ -8,6 +8,7 @@ Author:			Øystein Molnes
 Primary use:	Start page for the entry sites. Allows users to 
 				select ticket type.
 *********************************************************************** -->
+<?php require_once(__DIR__ . '/site_info.php'); ?>
 
 <!DOCTYPE html>
 <html>
