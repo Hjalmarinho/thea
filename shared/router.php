@@ -35,9 +35,11 @@ else if ($method == 'get' || $method == 'rawget')
 }
 else if ($method == 'put')
 {
-  curl_setopt($curl, CURLOPT_PUT, 1);
   $data = file_get_contents('php://input');
-  curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+
+  curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT'); 
+  curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Length: ' . strlen($data))); 
+  curl_setopt($curl, CURLOPT_POSTFIELDS, $data); 
 }
 else
 {
