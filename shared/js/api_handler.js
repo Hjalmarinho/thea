@@ -75,6 +75,7 @@ function doPost(urlPOST, jsonData, successCallback, errorCallback) {
         url: router_url,
         data: JSON.stringify(jsonData),
         dataType: 'json',
+        contentType: 'application/json',
         beforeSend : function (request)
         {
             addJWT(request);
