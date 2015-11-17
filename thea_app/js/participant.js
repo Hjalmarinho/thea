@@ -104,7 +104,7 @@ function displayParticipant(participant)
   var id_payments = $('#payments');
   var id_refunded = $('#refunded');
   id_cancel_participant = $('#cancelParticipant');
-  var time_registrated = new Date(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#");
+  var time_registrated = parseDateString(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#");
 
   //******** PERSONAL INFORMATION ********
 
@@ -182,7 +182,7 @@ function printOrders(orders_array)
   for (var i = 0; i < orders_array.length; ++i)
   {
     var order = orders_array[i];
-    var order_date = new Date(order.time_registered);
+    var order_date = parseDateString(order.time_registered);
     var html = '<div class="card"> \
       <div class="content"> \
         <div class="header">Ordrenr ' + order.order_number + '</div> \

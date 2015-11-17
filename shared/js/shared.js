@@ -1,3 +1,8 @@
+function parseDateString(input)
+{
+  return new Date(input.replace(" ", "T"));
+}
+
 function sortArrayByString(array, propertyName) {
   array.sort(function(a, b) { return stringCmp(a, b, propertyName); });
 }
