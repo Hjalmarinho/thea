@@ -56,6 +56,7 @@ if (array_key_exists('Content-Type', $headers))
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($curl, CURLOPT_URL, $source);
 curl_setopt($curl, CURLOPT_USERAGENT, 'Redirector, sir!');
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
 curl_setopt($curl, CURLOPT_HTTPHEADER, $request_headers);
 curl_setopt($curl, CURLOPT_VERBOSE, 1);
@@ -67,6 +68,7 @@ $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
 
 // Close request to clear up some resources
 curl_close($curl);
+
 
 // Then, after your curl_exec call:
 $header = substr($resp, 0, $header_size);

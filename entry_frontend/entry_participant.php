@@ -89,6 +89,7 @@ Primary use:  View allowing participants to register for an event.
               </div>
             </div>
           </div>
+          <div class="ui blue button" onclick="addSport();">Delta i flere idretter</div>
 
           <!-- Insert view for portrait image and additions-->
           <?php require("view_components/portrait_additions.php"); ?>
