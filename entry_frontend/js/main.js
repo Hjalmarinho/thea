@@ -145,8 +145,18 @@ function displayTeams(teams){
     if (teams) {
         // Sort teams by name
         sortArrayByString(teams, "team_name");
-        $.each(teams, function(i, team){
-            $('#teams_' + curr_id).append('<option value="' + team.team_id + '">' + escapeHtml(team.team_name) + '</option>');
+        $.each(teams, function(i, team)
+        {
+          var team_text = '';
+          if (team.team_gender == 'Mix')
+            team_text = team_text + '(Mix) ';
+          else if (team.team_gender == 'Male')
+            team_text = team_text + '(H) ';
+          else if (team.team_gender == 'Female')
+            team_text = team_text + '(D) ';
+
+          team_text = team_text + team.team_name;
+          $('#teams_' + curr_id).append('<option value="' + team.team_id + '">' + escapeHtml(team_text) + '</option>');
         });
     }
 }
