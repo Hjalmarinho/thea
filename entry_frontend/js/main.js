@@ -261,25 +261,26 @@ function createConfirmModal(){
     var participant_html = '';
     participant_html += generateLabelPair('Klubb', $('#clubs  option:selected').text() );
 
-    if(ticket_id != TICKET_ID_SUPPORTER){
+    if (ticket_id != TICKET_ID_SUPPORTER)
+    {
         participant_html += generateLabelPair('Medlem', $('#is_clubmember  option:selected').text() );
         var counter = 1;
-        $("[id^=exercises] input:checked").each(function() {
-            participant_html += generateLabelPair('Øvelse ' + counter, $(this).attr('id'));
-            counter++;
+        $("[id^=exercises] input:checked").each(function()
+        {
+          participant_html += generateLabelPair('Øvelse ' + counter, $(this).attr('id'));
+          counter++;
+
+          var fullId = $(this).parent().parent().parent().attr("id");
+          var boxId =  fullId.substr(fullId.indexOf("_") + 1);
+          if ($('#teams_container_' + boxId).is(":visible"))
+          {
+            participant_html += generateLabelPair('Lag', $('#teams_' + boxId + '  option:selected').text());
+          }
         });
-        
-        // participant_html += generateLabelPair('Idrett', $('#sports_1  option:selected').text() );
     }
-    if(ticket_id == TICKET_ID_PARTICIPANT){
-        $('#exercises input:checked').each(function(){
-            participant_html += generateLabelPair('', $(this).attr('id') );
-        });
-        if($('#teams_container_1').is(":visible") ){
-            participant_html += generateLabelPair('Lag', $('#teams_1  option:selected').text() );
-        }
-    }
-    else if(ticket_id == TICKET_ID_TEAM){
+
+    if (ticket_id == TICKET_ID_TEAM)
+    {
         participant_html += generateLabelPair('Lagnavn', $('#team_name').val() );
         participant_html += generateLabelPair('Klasse', $('#team_gender  option:selected').text() );
         participant_html += generateLabelPair('Spillende', $('#is_playing  option:selected').text() );
