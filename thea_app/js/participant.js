@@ -137,7 +137,7 @@ function displayParticipant(participant)
 
   // Allergies
   id_allergies.val(escapeHtml(participant.person.allergies));
-
+  
   //******** PARTICIPANT INFORMATION ********
 
   // Club
