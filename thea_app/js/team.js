@@ -2,6 +2,7 @@
 
 var event_id = sessionStorage.getItem("event_id");
 var sport_id;
+var selected_exercise_id
 
 $(document).ready(function(){
 	
@@ -16,13 +17,10 @@ $(document).ready(function(){
 	apiGetClubs(displayClubs, handleError)
 	apiGetSports(displaySports, handleError, event_id)
 	apiGetTeam(displayTeam, handleError, event_id, local_team_id);
-	apiGetExercises(displayExercises, handleError, event_id, sport_id)
-	$('.ui.dropdown').has($('#teamleader')).dropdown('set selected', teamleader_name);
 
 })
 
 var local_team_id = GetURLParameter('team_id')
-var teamleader_name
 
 function displayClubs(clubs){
 	if (clubs){
@@ -49,14 +47,24 @@ function displayTeamLeaderCandidates(member){
 function displayExercises(exercises){
 	if (exercises){
 		$.each(exercises, function(i, exercise){
-			$('#exercises').append('<option value=' + exercise.exercise_id + '>' + escapeHtml(exercise.exercise_description) + '</option>');
+			$('#exercises').append('<option value='+ exercise.exercise_id + '>' + escapeHtml(exercise.exercise_description) + '</option>');
+			if (exercise.exercise_id == selected_exercise_id){
+				setExercise(exercise)
+				
+			}
 		});
 	}
+}
+
+function setExercise(exercise){
+	$('#exercises').dropdown('set selected', exercise.exercise_id)
 }
 
 function displayTeam(team){
 	console.log(team)
 	sport_id = team.exercise.sport.sport_id
+	selected_exercise_id = team.exercise_id
+	apiGetExercises(displayExercises, handleError, event_id, sport_id)
 
 	var id_teamname = $('.teamname')
 	var id_team_name = $('#team_name')
@@ -65,30 +73,47 @@ function displayTeam(team){
 	var id_clubs = $('#clubs')
 	var id_select_gender = $('#selectgender')
 	var id_teamleader = $('#teamleader')
-	var dropdown = $('.ui.dropdown')
+	//var dropdown = $('.ui.dropdown')
 	var id_teammembers = $('#teammembers')
-	teamleader_name = team.contact_person.person.first_name + ' ' + team.contact_person.person.last_name;
-
-	id_teamname.text(team.team_name)
-
-
-	id_team_name.val(team.team_name)
-	dropdown.has(id_select_gender).dropdown('set selected', genderToString(team.team_gender));
-	dropdown.has(id_clubs).dropdown('set selected', team.contact_person.club.club_name);
-	dropdown.has(id_sports).dropdown('set selected', team.exercise.sport.sport_description);
-
-	displayTeamLeaderCandidates(team.contact_person)
+	var num_non_students = 0
+	var num_accreditated = 0
 	
+	id_teamname.text(team.team_name)
+	id_team_name.val(team.team_name)
+	id_select_gender.dropdown('set selected', team.team_gender);
+	id_clubs.dropdown('set selected', team.club_id);
+	id_sports.dropdown('set selected', team.exercise.sport_id);
+
 	if(team.team_members.length > 0){
 
-		for (var i = 0; i < team.team_members.length; i++){
-			var tablerow = '<tr><td><i class="red remove icon"></td><td><a href="./participant.php?entry_id=' + team.team_members[i].entry_id + '">' + team.team_members[i].person.first_name + ' ' + team.team_members[i].person.last_name + '</a></td></tr>' 
+		for (var i = 0; i < team.team_members.length; ++i){
+			var tablerow = '<tr><td><i class="red disabled remove icon"></td><td><a href="./participant.php?entry_id=' + team.team_members[i].entry_id + '">' + team.team_members[i].person.first_name + ' ' + team.team_members[i].person.last_name + '</a></td></tr>' 
 			id_teammembers.append(tablerow)
 			displayTeamLeaderCandidates(team.team_members[i])
+			if(team.team_members[i].is_student == false){
+				num_non_students++
+			}
+			if(team.team_members[i].accreditated == true){
+				num_accreditated++
+			}
 		}
-		id_teammembers.append('<tr><td><i class="green plus icon"></td><td></td></tr>')
+
+		id_teammembers.append('<tr><td><i class="green disabled plus icon"></td><td></td></tr>')
 	}
-	//dropdown.has(id_teamleader).dropdown('set selected', teamleader_name);
+	if(team.contact_person.person.first_name == "Monica" && team.contact_person.person.last_name == "Ibsen"){
+		displayTeamLeaderCandidates(team.contact_person)
+	}
+
+	id_teamleader.dropdown('set selected', team.contact_person_id);
+
+	/* STATS */
+	var num_members = team.team_members.length
+	var team_slots = team.exercise.slots_per_team
+	var non_students = team.exercise.max_non_students_per_team
+
+	$('#team_info').append('Påmeldte: ' + num_members + ' / ' + team_slots + ' <br> \
+						Ikke studenter: ' + num_non_students + ' / ' + non_students + ' <br> \
+						Akkrediterte: ' + num_accreditated + ' / ' + team_slots);
 	
 }
 

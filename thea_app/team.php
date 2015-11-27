@@ -52,6 +52,7 @@
 				<label class="field four wide">Idrett</label>
 				<div class="field nine wide">
 					<select class="ui fluid dropdown" id="sports">
+						<option value="">Velg idrett</option>
 					</select>
 				</div>
 			</div>
@@ -60,6 +61,7 @@
 				<label class="field four wide">Øvelse</label>
 				<div class="field nine wide">
 					<select class="ui fluid dropdown" id="exercises">
+						<option value="">Velg øvelse</option>
 					</select>
 				</div>
 			</div>
@@ -110,13 +112,19 @@
 	<div class="six wide column">
 
 		<div class="ui special card">
-				<div class="extra content">
-					<textarea rows="4" id="comment" style="max-width:100%;width:100%;">Ingen kommentarer</textarea>
-					
-					<button class="fluid ui button" id="updateTeam">Oppdater laget</button>
-					<div class="ui divider"></div>
-					<button class="fluid red ui button" id="cancelTeam">Kanseller laget</button>
-				</div>
+			<div class="content">
+				<a class="header participantname">Laginformasjon</a>
+				<div class="meta">
+				<span class="date" id="team_info"></span>
+			</div>
+        </div>
+		<div class="extra content">
+			<textarea rows="4" id="comment" style="max-width:100%;width:100%;">Ingen kommentarer</textarea>
+			
+			<button class="fluid disabled ui button" id="updateTeam">Oppdater laget</button>
+			<div class="ui divider"></div>
+			<button class="fluid red ui button" id="cancelTeam">Kanseller laget</button>
+		</div>
 		</div>
 
 		<div class="field sixteen wide">				
