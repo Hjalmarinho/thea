@@ -9,7 +9,9 @@
       </div>
 
 </div>
-
+<div id="teamsLoader" class="ui active inverted dimmer">
+    <div class="ui large text loader">Henter lag...</div>
+  </div>
 <table class="ui sortable celled striped table">
   <thead>
     <tr>
