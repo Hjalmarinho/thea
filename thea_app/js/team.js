@@ -48,8 +48,11 @@ function displayTeamLeaderCandidates(member)
 {
   if (member)
   {
-    var memberName = member.person.first_name + ' ' + member.person.last_name;
-    $('#teamleader').append('<option value=' + member.entry_id + '>'+ escapeHtml(memberName) + '</option>');
+    if (member.status == "CONFIRMED")
+    {
+      var memberName = member.person.first_name + ' ' + member.person.last_name;
+      $('#teamleader').append('<option value=' + member.entry_id + '>'+ escapeHtml(memberName) + '</option>');
+    }
   }
 }
 
