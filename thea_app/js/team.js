@@ -75,7 +75,7 @@ function setExercise(exercise)
 
 function displayTeam(team)
 {
-  sport_id = team.exercise.sport.sport_id;
+  sport_id = team.exercise.sport_id;
   selected_exercise_id = team.exercise_id;
   var request = apiGetExercises(displayExercises, handleError, event_id, sport_id);
 
