@@ -23,7 +23,8 @@ $(document).ready(function()
 });
 
 var local_team_id = GetURLParameter('team_id');
-function displayClubs(clubs){
+function displayClubs(clubs)
+{
   if (clubs)
   {
     $.each(clubs, function(i, club)
@@ -108,18 +109,22 @@ function displayTeam(team)
   {
     for (var i = 0; i < team.team_members.length; ++i)
     {
-      var tablerow = '<tr><td><i class="red disabled remove icon"></td><td><a href="./participant.php?entry_id=' + team.team_members[i].entry_id + '">' + team.team_members[i].person.first_name + ' ' + team.team_members[i].person.last_name + '</a></td></tr>';
-      id_teammembers.append(tablerow);
-      displayTeamLeaderCandidates(team.team_members[i]);
-
-      if (team.team_members[i].is_student == false)
+      var teamMember = team.team_members[i];
+      if (teamMember.status == "CONFIRMED")
       {
-        num_non_students++;
-      }
+        var tablerow = '<tr><td><i class="red disabled remove icon"></td><td><a href="./participant.php?entry_id=' + teamMember.entry_id + '">' + teamMember.person.first_name + ' ' + teamMember.person.last_name + '</a></td></tr>';
+        id_teammembers.append(tablerow);
+        displayTeamLeaderCandidates(teamMember);
 
-      if (team.team_members[i].accreditated == true)
-      {
-        num_accreditated++;
+        if (teamMember.is_student == false)
+        {
+          num_non_students++;
+        }
+
+        if (teamMember.accreditated == true)
+        {
+          num_accreditated++;
+        }
       }
     }
 
