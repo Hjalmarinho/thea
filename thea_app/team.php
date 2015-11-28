@@ -1,7 +1,9 @@
 <?php require('header.php'); ?>
 
 <div class="ui items">
-
+<div id="teamLoader" hidden class="ui active inverted dimmer">
+  <div class="ui large text loader">Henter laget...</div>
+</div>
 	<div class="header">
 		<!-- <i class="large sidebar icon" id="menubutton"></i> -->
 		<h1 class="ui dividing teamname">Lag</h1>
