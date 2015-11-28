@@ -98,6 +98,7 @@ function displayTeam(team)
   var id_teammembers = $('#teammembers');
   var num_non_students = 0;
   var num_accreditated = 0;
+  var num_members = 0;
 
   id_teamname.text(team.team_name);
   id_team_name.val(team.team_name);
@@ -115,6 +116,7 @@ function displayTeam(team)
         var tablerow = '<tr><td><i class="red disabled remove icon"></td><td><a href="./participant.php?entry_id=' + teamMember.entry_id + '">' + teamMember.person.first_name + ' ' + teamMember.person.last_name + '</a></td></tr>';
         id_teammembers.append(tablerow);
         displayTeamLeaderCandidates(teamMember);
+        num_members++;
 
         if (teamMember.is_student == false)
         {
@@ -139,7 +141,6 @@ function displayTeam(team)
   id_teamleader.dropdown('set selected', team.contact_person_id);
 
   /* STATS */
-  var num_members = team.team_members.length;
   var team_slots = team.exercise.slots_per_team;
   var non_students = team.exercise.max_non_students_per_team;
 
