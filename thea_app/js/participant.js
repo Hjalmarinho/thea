@@ -137,7 +137,7 @@ function displayParticipant(participant)
 
   // Allergies
   id_allergies.val(escapeHtml(participant.person.allergies));
-
+  
   //******** PARTICIPANT INFORMATION ********
 
   // Club
@@ -268,7 +268,6 @@ function appendExercise(exercise_object, exercise_counter)
     $('#exercises select').last().val(exercise_object.team_id).dropdown();
 }
 
-
 // Format a readable exercise text.
 function createExerciseText(exercise_object)
 {
@@ -366,7 +365,6 @@ function showCreditParticipant(sender, transactionId)
   currentCreditTransactionId = transactionId;
   $('#credit-update').modal('show');
 }
-
 
 function creditParticipant()
 {

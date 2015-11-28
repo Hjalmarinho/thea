@@ -145,6 +145,11 @@ function apiGetTeams(successCallback, errorCallback, eventId, exerciseId) {
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
+function apiGetTeam(successCallback, errorCallback, eventId, teamId) {
+    return doGet(baseURL + 'events/' + eventId + '/teams/' + teamId, successCallback, errorCallback);
+}
+
+// http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
 function apiGetAdditions(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/additions/', successCallback, errorCallback);
 }
