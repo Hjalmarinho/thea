@@ -59,7 +59,14 @@ function escapeHtml(string) {
 
 
 function customGenderFormat(gender) {
-  return (gender == "Male" ? "Mann" : "Dame");
+  if (gender == "Male")
+    return "Mann";
+  else if (gender == "Female")
+    return "Dame";
+  else if (gender == "Mix")
+    return "Mix";
+  else
+    return "Ukjent...";
 }
 
 Date.prototype.customFormat = function(formatString){
