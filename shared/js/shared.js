@@ -7,6 +7,20 @@ function sortArrayByString(array, propertyName) {
   array.sort(function(a, b) { return stringCmp(a, b, propertyName); });
 }
 
+
+function findInArray(array, propertyName, value) {
+  for (var i = 0; i < array.length; ++i)
+  {
+    var obj = array[i];
+
+    if (obj[propertyName] == value)
+      return obj;
+  }
+
+  return null;
+}
+
+
 function stringCmp(object_a, object_b, property) {
     return object_a[property].localeCompare(object_b[property]);
 }
