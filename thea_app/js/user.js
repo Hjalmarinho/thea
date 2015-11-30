@@ -18,7 +18,7 @@ function handleSuccess(data) {
     // Login success. Store the JWT, event_id and redirect user to participants page
     sessionStorage.setItem("jwt", data.jwt);
     sessionStorage.setItem("event_id", 1);
-    window.location.replace("participants.php");
+    window.location.replace("dashboard.php");
   } else {
     handleError("Finner ikke JWT i svaret fra serveren :-(");
   }
