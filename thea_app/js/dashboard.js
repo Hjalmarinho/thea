@@ -121,16 +121,16 @@ function fetchStatistics()
 
         if (node.is_teamexercise)
         {
-          html = html + '<td>' + node.male + ' (' + node.male_teams + ' lag) </td> \
-          <td>' + node.female + ' (' + node.female_teams + ' lag) </td> \
-          <td>' + node.mix_teams + ' lag</td> \
-          <td>' + (node.male + node.female) + ' (' + (node.male_teams + node.female_teams + node.mix_teams) + ' lag) </td>';
+          html = html + '<td data-sort-value="' + node.male + '">' + node.male + ' (' + node.male_teams + ' lag) </td> \
+          <td data-sort-value="' + node.female + '">' + node.female + ' (' + node.female_teams + ' lag) </td> \
+          <td data-sort-value="' + node.mix_teams + '">' + node.mix_teams + ' lag</td> \
+          <td data-sort-value="' + (node.male + node.female) + '">' + (node.male + node.female) + ' (' + (node.male_teams + node.female_teams + node.mix_teams) + ' lag) </td>';
         }
         else
         {
           html = html + '<td>' + node.male + '</td> \
           <td>' + node.female + '</td> \
-          <td> - </td> \
+          <td data-sort-value="0"> - </td> \
           <td>' + (node.male + node.female) + '</td>';
         }
         html = html + '</tr>';
