@@ -19,9 +19,15 @@ function displayTeams(teams){
 		var contact_person_last_name = team.contact_person.person.last_name
 		var team_id = team.team_id
 		var club_id = team.contact_person.club.club_id
-		var tablerow = '<tr><td><a href="./team.php?team_id=' + team_id +'">' + team_name + '</a></td><td>' + team.exercise.sport.sport_description + '</td><td>' + team.exercise.exercise_description + '</td><td>' + 
-					   club_name + '</td><td>' + team_gender + '</td><td><a href="./participant.php?entry_id=' + 
-					   entry_id +'">' + contact_person_first_name + " " + contact_person_last_name + '</a></td></tr>'
+		var tablerow =
+		'<tr> \
+		<td><a href="./team.php?team_id=' + team_id +'">' + team_name + '</a></td> \
+		<td>' + team.exercise.sport.sport_description + '</td> \
+		<td><a href="./exercise.php?exercise_id=' + team.exercise.exercise_id +'">' + team.exercise.exercise_description + '</a></td> \
+		<td>' + club_name + '</td> \
+		<td>' + team_gender + '</td> \
+		<td><a href="./participant.php?entry_id=' + entry_id +'">' + contact_person_first_name + " " + contact_person_last_name + '</a></td> \
+		</tr>'
 		$(teamsdiv).append(tablerow)
 	});
 

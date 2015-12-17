@@ -116,7 +116,7 @@ function fetchStatistics()
       {
         var node = exerciseStats[i];
         var html = '<tr> \
-          <td>' + node.exercise_description + '</td> \
+          <td><a href="exercise.php?exercise_id=' + node.exercise_id + '">' + node.exercise_description + '</a></td> \
           <td>' + node.sport_description + '</td>';
 
         if (node.is_teamexercise)
