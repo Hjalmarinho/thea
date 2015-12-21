@@ -69,7 +69,6 @@ $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
 // Close request to clear up some resources
 curl_close($curl);
 
-
 // Then, after your curl_exec call:
 $header = substr($resp, 0, $header_size);
 $body = substr($resp, $header_size);

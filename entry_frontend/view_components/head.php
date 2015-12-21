@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <!-- Site Properities -->
-<title>Påmelding | SL Tromsø 2016</title>
+<title>Påmelding</title>
 
 <!-- Include jQuery  -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -18,7 +18,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.css" />
 
 <!-- Include custom css -->
-<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css">
 
 <!-- Include custom js -->
 <script>
@@ -36,8 +36,8 @@
     echo "var redirectURL = '" . $jsonObject->frontend->payment_redirect_url . "';";
 ?>
 </script>
-<script type="text/javascript" src="js/main.js"></script>
-<script type="text/javascript" src="js/validation.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/validation.js"></script>
 
 <!-- Include google analytics -->
 <?php include_once(__DIR__ . "/../analytics.php"); ?>

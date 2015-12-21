@@ -80,15 +80,15 @@ Primary use:  Start page for the entry sites. Allows users to
 
       if (ticket_obj.ticket_type == 'PARTICIPANT')
       {
-        $('#tickets').append('<a href="entry_participant.php?event_id=' + event_obj.event_id + '"><button class="ui blue button">Meld på deltager</button></a>');
+        $('#tickets').append('<a href="' + event_obj.event_id + '/deltager"><button class="ui blue button">Meld på deltager</button></a>');
 
         // VERY bad hack...
         if (event_obj.event_id != 2)
-          $('#tickets').append('<a href="entry_team.php?event_id=' + event_obj.event_id + '"><button class="ui blue button">Meld på lag</button></a>');
+          $('#tickets').append('<a href="' + event_obj.event_id + '/lagleder"><button class="ui blue button">Meld på lag</button></a>');
       }
       else if (ticket_obj.ticket_type == 'SPECTATOR')
       {
-        $('#tickets').append('<a href="entry_supporter.php?event_id=' + event_obj.event_id + '"><button class="ui blue button">Tilskuerbillett</button></a>');
+        $('#tickets').append('<a href="' + event_obj.event_id + '/tilskuer"><button class="ui blue button">Tilskuerbillett</button></a>');
       }
     }
   }
