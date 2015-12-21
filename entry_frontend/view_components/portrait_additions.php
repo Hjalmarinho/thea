@@ -7,7 +7,7 @@
   <img id="portrait" style="display:none; width:150px; height:200px; overflow:hidden;"/>
 </div>
 
-<div class="inline fields">
+<div class="inline fields" id="additions-container">
   <label class="field four wide">Tillegg</label>
   <div class="grouped fields" id="additions">
     <!-- Additions-checkboxes are populated here from api_handler on page load -->

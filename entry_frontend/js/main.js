@@ -212,6 +212,8 @@ function displayTeams(teams, sport_box_id)
 // Generate checkboxes for exercises received from API
 function displayAdditions(additions){
     if (additions) {
+        if (additions.length == 0)
+            $('#additions-container').hide();
         // Sort additions by name
         sortArrayByString(additions, "addition_description");
 
