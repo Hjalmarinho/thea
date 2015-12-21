@@ -144,6 +144,10 @@ function apiGetEvent(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId, successCallback, errorCallback);
 }
 
+function apiGetEvents(successCallback, errorCallback) {
+    return doGet(baseURL + 'events', successCallback, errorCallback);
+}
+
 
 function apiGetEventFromAlias(successCallback, errorCallback, alias) {
     return doGet(baseURL + 'events/alias/' + alias, successCallback, errorCallback);
