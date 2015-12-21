@@ -108,6 +108,10 @@ function saveSports(sports_local)
 {
   sports = sports_local;
 
+  if (sports.length == 1 && sports[0].exercises.length == 1)
+  {
+    $('#add-sport-button').hide();
+  }
   displaySports(1);
 }
 
