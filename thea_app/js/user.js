@@ -4,7 +4,7 @@ function doLogin() {
 
   var email = $("#email").val();
   var password = $("#password").val();
-  var jsonData = { "email": email, "password": password };
+  var jsonData = { "email": email, "password": password, "event_id": 1 };
 
   var request = apiLoginUser(handleSuccess, handleError, jsonData);
   $.when(request).always(function() {
