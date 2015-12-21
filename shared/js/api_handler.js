@@ -14,6 +14,11 @@ var eventId = 1;
 var router_url = '<?php echo ROOT_URL; ?>/router.php';
 <?php
     // Read the API base url from settings file.
+    $input_event_id = filter_input(INPUT_GET, 'event_id', FILTER_VALIDATE_INT);
+    if (!is_null($input_event_id) && $input_event_id !== false)
+    {
+      echo 'eventId = ' . $input_event_id . ';';
+    }
     $content = file_get_contents(__DIR__ . "/../../settings.json");
     $jsonObject = json_decode($content);
     echo "var baseURL = '" . $jsonObject->frontend->api_base_url . "';";
@@ -132,6 +137,16 @@ function apiGetClubs(successCallback, errorCallback) {
 // http://docs.thea.apiary.io/#reference/sport/sports/list-all-sports
 function apiGetSports(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/sports', successCallback, errorCallback);
+}
+
+
+function apiGetEvent(successCallback, errorCallback, eventId) {
+    return doGet(baseURL + 'events/' + eventId, successCallback, errorCallback);
+}
+
+
+function apiGetEventFromAlias(successCallback, errorCallback, alias) {
+    return doGet(baseURL + 'events/alias/' + alias, successCallback, errorCallback);
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises

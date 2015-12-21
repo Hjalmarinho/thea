@@ -21,12 +21,12 @@
   </div>
 </div>
 
-<div class="inline fields">
+<div class="inline fields" id="terms">
   <label class="field four wide">Avtalevilkår</label>
   <div class="field">
     <div class="ui checkbox">
       <input type="checkbox" name="terms">
-      <label><a href="avtalevilkaar.pdf" target="_blank">Jeg har lest og forstått avtalevilkårene</a></label>
+      <label><a id="terms_url" href="#" target="_blank">Jeg har lest og forstått avtalevilkårene</a></label>
     </div>
   </div>
 </div>

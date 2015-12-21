@@ -75,7 +75,6 @@ Primary use:	This page is displayed when an entry has been completed
 
 			<p>Din påmelding er nå fullført, og du vil om kort tid motta en bekreftelsesmail med kvittering på eposten du oppga under påmeldingen. 
 			Skulle du ha noen andre spørsmål, ber vi deg ta kontakt med arrangøren.</p>
-			<p>Gå tilbake til <a href="http://sltromso.no">sltromso.no</a></p>
 		</div>
 		<div id="error" hidden>
 			<h1 class="ui center aligned icon red header">

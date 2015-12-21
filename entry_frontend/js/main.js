@@ -11,6 +11,7 @@
 // ***********************************************************************
 
 //This function is run when the document/page is finsihed loading
+var event_obj = null;
 $( document ).ready(function() {
 
     // Initialize dropdown
@@ -20,6 +21,7 @@ $( document ).ready(function() {
     var req1 = apiGetClubs(displayClubs, showError);
     var req2 = apiGetSports(saveSports, showError, eventId);
     var req3 = apiGetAdditions(displayAdditions, showError, eventId);
+    var req4 = apiGetEvent(displayEventInfo, showError, eventId);
 
     $.when(req1, req2, req3).always(function(){
         $("#mainLoader").remove();
@@ -74,6 +76,21 @@ var sports = null;
 
 //      UPDATE GUI FUNCTIONS
 // ***********************************************************************
+
+
+function displayEventInfo(event_obj)
+{
+  if (event_obj.terms_url === null)
+  {
+    $('#terms').hide();
+    $('#terms input').prop('checked', true);
+  }
+  else
+  {
+    $('#terms_url').attr('href', event_obj.terms_url);
+  }
+}
+
 
 // Populate dropdown with clubs received from API
 function displayClubs(clubs){
