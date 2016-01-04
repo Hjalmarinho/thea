@@ -18,7 +18,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.css" />
 
 <!-- Include custom css -->
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="<?php echo ROOT_URL ?>/css/style.css">
 
 <!-- Include custom js -->
 <script>
@@ -36,8 +36,8 @@
     echo "var redirectURL = '" . $jsonObject->frontend->payment_redirect_url . "';";
 ?>
 </script>
-<script type="text/javascript" src="/js/main.js"></script>
-<script type="text/javascript" src="/js/validation.js"></script>
+<script type="text/javascript" src="<?php echo ROOT_URL ?>/js/main.js"></script>
+<script type="text/javascript" src="<?php echo ROOT_URL ?>/js/validation.js"></script>
 
 <!-- Include google analytics -->
 <?php include_once(__DIR__ . "/../analytics.php"); ?>

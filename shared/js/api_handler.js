@@ -224,10 +224,16 @@ function apiPutPassword(successCallback, errorCallback, jsonObject) {
     return doPut(baseURL + 'users/password', jsonObject, successCallback, errorCallback)
 }
 
+// Teams
 function apiGetAllTeams(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/teams', successCallback, errorCallback);
 }
 
+function apiPutTeam(successCallback, errorCallback, eventId, teamId, jsonData, comment) {
+    return doPut(baseURL + 'events/' + eventId + '/teams/' + teamId, jsonData, successCallback, errorCallback, {'comment': comment})
+}
+
+// Transaction
 function apiGetTransaction(successCallback, errorCallback, eventId, transactionId) {
     return doGet(baseURL + 'events/' + eventId + '/transactions/' + transactionId, successCallback, errorCallback);
 }

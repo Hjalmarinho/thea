@@ -428,13 +428,13 @@ function setCanceled()
 {
   if (is_canceled)
   {
-    id_cancel_participant.text('Meld på igjen');
-    id_cancel_participant.removeClass("red").addClass("green");;
+    $('#cancelTeam').text('Meld på igjen');
+    $('#cancelTeam').removeClass("red").addClass("green");;
     $('.participantname').append(' <span style="color:#d01919;">(kansellert)</span>');
   }
   else
   {
-    id_cancel_participant.text('Kanseller deltaker');
-    id_cancel_participant.removeClass("green").addClass("red");;
+    $('#cancelTeam').text('Kanseller laget');
+    $('#cancelTeam').removeClass("green").addClass("red");;
   }
 }

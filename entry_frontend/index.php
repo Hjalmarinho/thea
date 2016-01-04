@@ -8,7 +8,19 @@ Author:       Øystein Molnes
 Primary use:  Start page for the entry sites. Allows users to 
               select ticket type.
 *********************************************************************** -->
-<?php require_once(__DIR__ . '/site_info.php'); ?>
+<?php require_once(__DIR__ . '/site_info.php');
+
+
+$alias = filter_input(INPUT_GET, 'alias');
+$event_id = filter_input(INPUT_GET, 'event_id', FILTER_VALIDATE_INT);
+
+if (!is_null($alias) && file_exists(__DIR__ . '/custom_sites/' . $alias . '.php'))
+{
+  require_once(__DIR__ . '/custom_sites/' . $alias . '.php');
+}
+else
+{
+?>
 
 <!DOCTYPE html>
 <html>
@@ -17,8 +29,7 @@ Primary use:  Start page for the entry sites. Allows users to
   var input_event_id = null;
   var input_alias = null;
   <?php
-  $alias = filter_input(INPUT_GET, 'alias');
-  $event_id = filter_input(INPUT_GET, 'event_id', FILTER_VALIDATE_INT);
+
 
   if (!is_null($event_id) && $event_id !== false)
     echo 'input_event_id = ' . $event_id . ';';
@@ -113,3 +124,5 @@ Primary use:  Start page for the entry sites. Allows users to
   }
 </script>
 </html>
+<?php
+}
