@@ -23,7 +23,7 @@ Primary use:  View allowing participants to register for an event.
     </div>
     <div class="ui grid">
       <div class="six wide computer ten wide tablet fourteen wide mobile column">
-
+        <?php require("view_components/error_msg.php"); ?>
         <form class="ui form" id="entry_form">
 
           <!-- Insert view for entering personal information -->

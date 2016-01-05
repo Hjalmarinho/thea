@@ -4,7 +4,17 @@ function parseDateString(input)
 }
 
 function sortArrayByString(array, propertyName) {
-  array.sort(function(a, b) { return stringCmp(a, b, propertyName); });
+  for (var i = 0; i < array.length; ++i)
+    array[i].__position = i;
+
+  array.sort(function(a, b)
+    {
+      var cmp = stringCmp(a, b, propertyName);
+      if (cmp == 0)
+        return a.__position - b.__position;
+      else
+        return cmp;
+    });
 }
 
 
