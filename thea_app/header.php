@@ -48,8 +48,8 @@
 		<div class="pusher">
 			  	
 		  	<div class="ui grid">
-		  		<div class="computer only three wide column" >
-					<div class="ui vertical inverted menu" >
+		  		<div class="computer only three wide column full height" style="min-height:100vh;" >
+					<div class="ui vertical inverted sticky menu" >
 						<?php require 'include/menu.php';?>
 					</div>
 		  		</div>	  

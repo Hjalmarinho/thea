@@ -4,7 +4,7 @@ $page = basename($_SERVER['PHP_SELF']);
 ?>
 
 <div class="header item">
-    Thea
+    Thea 2.0
 </div>
 <a class="item <?php if ($page == 'dashboard.php') echo 'active'; ?>" href="dashboard.php">Framside</a>
 <a class="item <?php if ($page == 'participants.php') echo 'active'; ?>" href="participants.php">Påmeldinger</a>
