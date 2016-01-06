@@ -94,7 +94,7 @@ else
         $('#tickets').append('<a href="' + event_obj.event_id + '/deltager"><button class="ui blue button">Meld på deltager</button></a>');
 
         // VERY bad hack...
-        if (event_obj.event_id != 2)
+        if (event_obj.event_id != 2 && event_obj.event_id != 3)
           $('#tickets').append('<a href="' + event_obj.event_id + '/lagleder"><button class="ui blue button">Meld på lag</button></a>');
       }
       else if (ticket_obj.ticket_type == 'SPECTATOR')
