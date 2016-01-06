@@ -178,18 +178,15 @@ function apiGetAdditions(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/additions/', successCallback, errorCallback);
 }
 
+
+// -- PARTICIPANTS -- \\
+function apiPutParticipant(successCallback, errorCallback, eventId, entryId, jsonData, comment) {
+    return doPut(baseURL + 'events/' + eventId + '/participants/' + entryId, jsonData, successCallback, errorCallback, {'comment': comment})
+}
+
 // http://docs.thea.apiary.io/#reference/participant/participants/add-a-participant
 function apiPostParticipant(successCallback, errorCallback, json, eventId) {
     return doPost(baseURL + 'events/' + eventId + '/participants/', json, successCallback, errorCallback);
-}
-
-//http://docs.thea.apiary.io/#reference/transaction/transactionsidprocess/complete-a-participant-registration
-function apiPutTransaction(successCallback, errorCallback, transactionId) {
-    return doPut(baseURL + 'events/' + eventId + '/transactions/'+transactionId+'/process', {}, successCallback, errorCallback);
-}
-
-function apiPutTerminateEntry(successCallback, errorCallback, transactionId, eventId) {
-    return doPut(baseURL + 'events/' + eventId + '/transactions/' + transactionId + '/terminate', {}, successCallback, errorCallback);
 }
 
 function apiGetParticipants(successCallback, errorCallback, eventId) {
@@ -204,27 +201,23 @@ function apiGetPortrait(successCallback, errorCallback, eventId, entryId) {
     return doGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/portrait', successCallback, errorCallback)
 }
 
-function apiLoginUser(successCallback, errorCallback, jsonData) {
-    return doPost(baseURL + 'users/login/', jsonData, successCallback, errorCallback);
-}
-
 function apiGetReceipt(successCallback, errorCallback, eventId, entryId) {
     return doRawGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/receipt', successCallback, errorCallback)
 }
 
-function apiCancelParticipant(entry_id, callback, errorCallback, comment) {
-    return doPut(baseURL + 'events/' + eventId + '/participants/' + entry_id + '/cancel', '', callback, errorCallback, {'comment': comment})
+function apiPutTerminateEntry(successCallback, errorCallback, transactionId, eventId) {
+    return doPut(baseURL + 'events/' + eventId + '/transactions/' + transactionId + '/terminate', {}, successCallback, errorCallback);
 }
 
-function apiUncancelParticipant(entry_id, callback, errorCallback, comment) {
-    return doPut(baseURL + 'events/' + eventId + '/participants/' + entry_id + '/uncancel', '', callback, errorCallback, {'comment': comment})
+function apiLoginUser(successCallback, errorCallback, jsonData) {
+    return doPost(baseURL + 'users/login/', jsonData, successCallback, errorCallback);
 }
 
 function apiPutPassword(successCallback, errorCallback, jsonObject) {
     return doPut(baseURL + 'users/password', jsonObject, successCallback, errorCallback)
 }
 
-// Teams
+// -- TEAMS -- \\
 function apiGetAllTeams(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/teams', successCallback, errorCallback);
 }
@@ -233,11 +226,16 @@ function apiPutTeam(successCallback, errorCallback, eventId, teamId, jsonData, c
     return doPut(baseURL + 'events/' + eventId + '/teams/' + teamId, jsonData, successCallback, errorCallback, {'comment': comment})
 }
 
-// Transaction
+// -- TRANSACTIONS -- \\
 function apiGetTransaction(successCallback, errorCallback, eventId, transactionId) {
     return doGet(baseURL + 'events/' + eventId + '/transactions/' + transactionId, successCallback, errorCallback);
 }
 
 function apiPostCreditTransaction(successCallback, errorCallback, json, eventId, transactionId) {
     return doPost(baseURL + 'events/' + eventId + '/transactions/' + transactionId + '/credit', json, successCallback, errorCallback);
+}
+
+//http://docs.thea.apiary.io/#reference/transaction/transactionsidprocess/complete-a-participant-registration
+function apiPutTransaction(successCallback, errorCallback, transactionId) {
+    return doPut(baseURL + 'events/' + eventId + '/transactions/'+transactionId+'/process', {}, successCallback, errorCallback);
 }

@@ -210,6 +210,7 @@ function displayTeams(teams, sport_box_id)
 }
 
 // Generate checkboxes for exercises received from API
+var flippedBanquetId = null;
 function displayAdditions(additions){
     if (additions) {
         if (additions.length == 0)
@@ -219,7 +220,19 @@ function displayAdditions(additions){
 
         $.each(additions, function(i, addition) {
             var addition_label = addition.addition_description + ' (' + addition.addition_fee + ' ,-)';
-            $('#additions').append(generateCheckbox(addition_label, addition.addition_id, (addition.addition_fee == 0), ''));
+
+            // Special handling of bankett...
+            if (addition.addition_description == "Bankett" && addition.addition_fee == 0)
+            {
+                flippedBanquetId = addition.addition_id;
+                addition_label = "Skal IKKE delta på bankett";
+                $('#additions').append(generateCheckbox(addition_label, addition.addition_id, false, ''));
+            }
+            else
+            {
+                $('#additions').append(generateCheckbox(addition_label, addition.addition_id, (addition.addition_fee == 0), ''));
+            }
+            
         });
    }  
 }
@@ -474,11 +487,30 @@ function createJSON(){
 //Iterate the additions-checkboxes and see which have been checked
 function uiGetAdditions(){
     var additions = [];
-    $('#additions input:checked').each(function(){
+    $('#additions input:checked').each(function()
+    {
         var addition_id = parseInt($(this).attr('value'));
-        var num_items = parseInt('1');
-        additions.push({"addition_id": addition_id, "num_items": num_items});
+        if (addition_id != flippedBanquetId)
+        {
+            // Do NOT add flipped banquet ID (makes no sense... I know).
+            var num_items = parseInt('1');
+            additions.push({"addition_id": addition_id, "num_items": num_items});
+        }
     });
+
+    if (flippedBanquetId != null)
+    {
+        $('#additions input:checkbox:not(:checked)').each(function()
+        {
+            var addition_id = parseInt($(this).attr('value'));
+            if (addition_id == flippedBanquetId)
+            {
+                // Add flipped banquet ID (makes no sense... I know).
+                var num_items = parseInt('1');
+                additions.push({"addition_id": addition_id, "num_items": num_items});
+            }
+        });
+    }
     return additions;
 }
 

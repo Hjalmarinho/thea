@@ -30,6 +30,7 @@ function loadTeam()
 
   $.when(getTeamRequest).always(function()
   {
+    changes_to_save = {};
     $("#teamLoader").hide();
   });
 }

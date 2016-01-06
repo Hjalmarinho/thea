@@ -1,6 +1,7 @@
 "use strict";
 
 var event_id = sessionStorage.getItem("event_id");
+var changes_to_save = {};
 
 $(document).ready(function()
 {
@@ -50,7 +51,8 @@ var id_cancel_participant;
 
 function errorHandler(errorMessage)
 {
-
+  $('#error-msg').text(errorMessage);
+  $('#error-modal').modal('show');
 }
 
 function displayPortrait(image)
@@ -173,6 +175,7 @@ function displayParticipant(participant)
   // Canceled participant
   is_canceled = (participant.status == "CANCELLED");
   setCanceled();
+  changes_to_save = {};
 }//End of displayParticipant
 
 
@@ -308,57 +311,6 @@ function createTeamsSelectHTML(exercise_id)
   return html;
 }
 
-/*
-function dropdownlist(name, className, id){
-  return('\
-    <div class="inline fields">\
-      <label class="field four wide">' + name + '</label>\
-      <div class="field nine wide">\
-        <select class="ui fluid dropdown selection ' + className + '" id="'+ id +'"><option value="">Velg lag</option></select>\
-      </div>  \
-    </div>\
-  ')
-}
-*/
-/*function updateParticipant(){
-
-  monthToNumber($('#birthmonth').val())
-  var local_birthdate = $('#birthyear').val() + '-' + monthToNumber($('#birthmonth').val()) + '-' + $('#birthday').val()
-  var comment = $('#update-comment').val()
-  
-  var putObject = {}
-  putObject['accreditated'] = $('#accreditatedCheckbox').is(':checked')
-  putObject['comment'] = $('#comment').val()
-  putObject['entry_id'] = local_entry_id
-  putObject['is_clubmember'] = $('#clubmemberCheckbox').is(':checked')
-  putObject['is_student'] = $('#studentCheckbox').is(':checked')
-  putObject['status'] = local_status
-  putObject['time_registrated'] = local_time_registrated
-  putObject['travel_information'] = $('#travel_information').val()
-
-  putObject['ticket'] = {}
-  putObject.ticket['ticket_id'] = local_ticket_id
-
-  putObject['club'] = {}
-  putObject.club['club_id'] = $('#clubs').val()
-  putObject.club['club_name'] = $('#clubs option[value="' + $('#clubs').val() + '"').text()
-
-  putObject['person'] = {}
-  putObject.person['first_name'] = $('#first_name').val()
-  putObject.person['last_name'] = $('#last_name').val()
-  putObject.person['gender'] = $('#selectgender').val()
-  putObject.person['birthdate'] = local_birthdate
-  putObject.person['email'] = $('#email').val()
-  putObject.person['phone'] = $('#phone').val()
-  putObject.person['allergies'] = $('#allergies').val()
-  putObject.person['person_id'] = local_person_id
-  putObject.person['portrait_id'] = 'null'
-  putObject.person['user_id'] = local_user_id
-
-  apiPutParticipant(local_entry_id, putObject, function(){} , comment)
-  console.log(putObject)
-}*/
-
 var currentCreditTransactionId = null;
 function showCreditParticipant(sender, transactionId)
 {
@@ -410,12 +362,13 @@ function cancelParticipant()
 {
   $('#cancelParticipant').addClass('loading');
 
-  var request = null;
+  var data = null;
   if (is_canceled)
-    request = apiUncancelParticipant(local_entry_id, function(data) {}, function(data) {}, '');
+    data = {'status': REGISTRATION_CONFIRMED};
   else
-    request = apiCancelParticipant(local_entry_id, function(data) {}, function(data) {}, '');
+    data = {'status': REGISTRATION_CANCELLED};
 
+  var request = apiPutParticipant(function(data) {}, function(data) {}, event_id, local_entry_id, data, '');
   $.when(request).done(function()
   {
     $('#cancelParticipant').removeClass('loading');
@@ -428,13 +381,100 @@ function setCanceled()
 {
   if (is_canceled)
   {
-    $('#cancelTeam').text('Meld på igjen');
-    $('#cancelTeam').removeClass("red").addClass("green");;
+    id_cancel_participant.text('Meld på igjen');
+    id_cancel_participant.removeClass("red").addClass("green");;
     $('.participantname').append(' <span style="color:#d01919;">(kansellert)</span>');
   }
   else
   {
-    $('#cancelTeam').text('Kanseller laget');
-    $('#cancelTeam').removeClass("green").addClass("red");;
+    id_cancel_participant.text('Kanseller deltaker');
+    id_cancel_participant.removeClass("green").addClass("red");;
   }
+}
+
+function updateParticipant()
+{
+  $('#updateParticipant').addClass('loading');
+
+  var request = apiPutParticipant(function(data) {}, errorHandler, event_id, local_entry_id, changes_to_save, '');
+  $.when(request).done(function()
+  {
+    $('#updateParticipant').removeClass('loading');
+    loadParticipant();
+  });
+}
+
+
+function addPersonObjectToChangesToSave()
+{
+  if (!('person' in changes_to_save))
+    changes_to_save['person'] = {};
+}
+
+// Change-listeners
+function firstNameChanged(sender)
+{
+  addPersonObjectToChangesToSave();
+  changes_to_save.person['first_name'] = $(sender).val();
+}
+
+function lastNameChanged(sender)
+{
+  addPersonObjectToChangesToSave();
+  changes_to_save.person['last_name'] = $(sender).val();
+}
+
+function birthdateChanged(sender)
+{
+  addPersonObjectToChangesToSave();
+  changes_to_save.person['birthdate'] = $('#birthyear').val() + '-' + $('#birthmonth').val() + '-' + $('#birthday').val()
+}
+
+function genderChanged(sender)
+{
+  addPersonObjectToChangesToSave();
+  changes_to_save.person['gender'] = $(sender).val();
+}
+
+function isStudentChanged(sender)
+{
+  changes_to_save['is_student'] = $(sender).is(':checked');
+}
+
+function emailChanged(sender)
+{
+  addPersonObjectToChangesToSave();
+  changes_to_save.person['email'] = $(sender).val();
+}
+
+function phoneNumberChanged(sender)
+{
+  addPersonObjectToChangesToSave();
+  changes_to_save.person['phone'] = $(sender).val();
+}
+
+function travelInformationChanged(sender)
+{
+  changes_to_save['travel_information'] = $(sender).val();
+}
+
+function allergiesChanged(sender)
+{
+  addPersonObjectToChangesToSave();
+  changes_to_save.person['allergies'] = $(sender).val();
+}
+
+function isAccreditatedChanged(sender)
+{
+  changes_to_save['accreditated'] = $(sender).is(':checked');
+}
+
+function clubChanged(sender)
+{
+  changes_to_save['club_id'] = $(sender).val();
+}
+
+function isClubMemberChanged(sender)
+{
+  changes_to_save['is_clubmember'] = $(sender).is(':checked');
 }
