@@ -152,7 +152,7 @@ function teams(teams)
     {
       var team = teams[i];
 
-      if (team.status == 'Confirmed')
+      if (team.status == REGISTRATION_CONFIRMED)
       {
         numTeams++;
         addTeamToExerciseStats(team);
@@ -223,7 +223,7 @@ function participants(participants)
     {
       var participant = participants[i];
 
-      if (participant.status == 'CONFIRMED')
+      if (participant.status == REGISTRATION_CONFIRMED)
       {
         if (participant.person.gender == "Male")
           numMale++;
