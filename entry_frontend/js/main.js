@@ -258,6 +258,11 @@ function displayAdditionWithChildren(parentAddition, additions)
 {
   var first = true;
   $('#additions').append('<h2 class="ui sub header">' + parentAddition.addition_description + '</h2>');
+
+  // Again, this is a VERY ugly hack.
+  if (eventId == 3)
+    $('#additions').append('<div class="sub header"><i>Jenter anbefales å velge en størrelse lavere enn vanlig</i></div>');
+
   $.each(additions, function(i, children)
   {
     if (children.parent_addition_id == parentAddition.addition_id)
@@ -275,6 +280,7 @@ function displayAdditionWithChildren(parentAddition, additions)
       first = false;
     }
   });
+  $('#additions').append('<br>');
 }
 
 var next_sport_box_id = 2;
