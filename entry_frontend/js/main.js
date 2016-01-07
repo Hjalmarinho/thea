@@ -211,30 +211,70 @@ function displayTeams(teams, sport_box_id)
 
 // Generate checkboxes for exercises received from API
 var flippedBanquetId = null;
-function displayAdditions(additions){
-    if (additions) {
+function displayAdditions(additions)
+{
+    if (additions)
+    {
         if (additions.length == 0)
             $('#additions-container').hide();
         // Sort additions by name
         sortArrayByString(additions, "addition_description");
 
-        $.each(additions, function(i, addition) {
-            var addition_label = addition.addition_description + ' (' + addition.addition_fee + ' ,-)';
+        $.each(additions, function(i, addition)
+        {
+            // Skip additions with parent.
+            if (addition.parent_addition_id != null)
+                return true;
 
-            // Special handling of bankett...
-            if (addition.addition_description == "Bankett" && addition.addition_fee == 0)
+            if (addition.has_children)
             {
-                flippedBanquetId = addition.addition_id;
-                addition_label = "Skal IKKE delta på bankett";
-                $('#additions').append(generateCheckbox(addition_label, addition.addition_id, false, ''));
+                displayAdditionWithChildren(addition, additions);
             }
             else
             {
-                $('#additions').append(generateCheckbox(addition_label, addition.addition_id, (addition.addition_fee == 0), ''));
+                var addition_label = addition.addition_description + ' (' + addition.addition_fee + ' ,-)';
+
+                // Special handling of bankett...
+                if (addition.addition_description == "Bankett" && addition.addition_fee == 0)
+                {
+                    flippedBanquetId = addition.addition_id;
+                    addition_label = "Skal IKKE delta på bankett";
+                    $('#additions').append(generateCheckbox(addition_label, addition.addition_id, false, ''));
+                }
+                else
+                {
+                    $('#additions').append(generateCheckbox(addition_label, addition.addition_id, (addition.addition_fee == 0), ''));
+                }
             }
-            
         });
-   }  
+   }
+
+   // "Activate" any radiobuttons.
+   $('.ui.radio.checkbox').checkbox();
+}
+
+
+function displayAdditionWithChildren(parentAddition, additions)
+{
+  var first = true;
+  $('#additions').append('<h2 class="ui sub header">' + parentAddition.addition_description + '</h2>');
+  $.each(additions, function(i, children)
+  {
+    if (children.parent_addition_id == parentAddition.addition_id)
+    {
+      // Print the addition.
+      $('#additions').append(
+        '<div class="field"> \
+            <div class="ui radio checkbox"> \
+                <input type="radio" id="' + parentAddition.addition_description + ', ' + children.addition_description + '" value="' + children.addition_id + '" name="fruit" tabindex="0" ' + (first ? ' checked ' : '') + ' class="hidden"> \
+                <label>' + children.addition_description + ' ' + ' (' + children.addition_fee + ' ,-)' + '</label> \
+            </div> \
+         </div>'
+        );
+
+      first = false;
+    }
+  });
 }
 
 var next_sport_box_id = 2;
