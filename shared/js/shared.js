@@ -17,6 +17,19 @@ function sortArrayByString(array, propertyName) {
     });
 }
 
+function sortArrayByNumber(array, propertyName) {
+  for (var i = 0; i < array.length; ++i)
+    array[i].__position = i;
+
+  array.sort(function(a, b)
+    {
+      var cmp = a - b;
+      if (cmp == 0)
+        return a.__position - b.__position;
+      else
+        return cmp;
+    });
+}
 
 function findInArray(array, propertyName, value) {
   for (var i = 0; i < array.length; ++i)
