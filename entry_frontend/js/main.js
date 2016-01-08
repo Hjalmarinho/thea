@@ -263,6 +263,7 @@ function displayAdditionWithChildren(parentAddition, additions)
   if (eventId == 3)
     $('#additions').append('<div class="sub header"><i>Jenter anbefales å velge en størrelse lavere enn vanlig</i></div>');
 
+  sortArrayByString(additions, 'addition_id');
   $.each(additions, function(i, children)
   {
     if (children.parent_addition_id == parentAddition.addition_id)
