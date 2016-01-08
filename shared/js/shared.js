@@ -23,7 +23,7 @@ function sortArrayByNumber(array, propertyName) {
 
   array.sort(function(a, b)
     {
-      var cmp = a - b;
+      var cmp = a[propertyName] - b[propertyName];
       if (cmp == 0)
         return a.__position - b.__position;
       else
