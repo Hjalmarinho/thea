@@ -1,28 +1,41 @@
 "use strict";
 
 var event_id = sessionStorage.getItem("event_id");
-var sport_id;
-var selected_exercise_id;
+var team_id = GetURLParameter('team_id');
+var current_team = null;
+var changes_to_save = {};
 
 $(document).ready(function()
 {
-  
   $('#updateTeam').click(function()
   {
     $('#approve-update').modal('show');
   });
 
-  $('#cancelTeam').click(function()
+  var getClubsRequest = apiGetClubs(displayClubs, handleError)
+  var getSportsRequest = apiGetSports(displaySports, handleError, event_id)
+  
+  $('#exercises').dropdown();
+  $.when(getSportsRequest, getClubsRequest).done(function()
   {
-    $('#cancel-modal').modal('show');
+    loadTeam();
   });
-
-  apiGetClubs(displayClubs, handleError)
-  apiGetSports(displaySports, handleError, event_id)
-  apiGetTeam(displayTeam, handleError, event_id, local_team_id);
 });
 
-var local_team_id = GetURLParameter('team_id');
+
+function loadTeam()
+{
+  $("#teamLoader").show();
+  var getTeamRequest = apiGetTeam(displayTeam, handleError, event_id, team_id);
+
+  $.when(getTeamRequest).always(function()
+  {
+    changes_to_save = {};
+    $("#teamLoader").hide();
+  });
+}
+
+
 function displayClubs(clubs)
 {
   if (clubs)
@@ -34,16 +47,29 @@ function displayClubs(clubs)
   }
 }
 
+
 function displaySports(sports)
 {
   if (sports)
   {
     $.each(sports, function(i, sport)
     {
-      $('#sports').append('<option value=' + sport.sport_id + '>' + escapeHtml(sport.sport_description) + '</option>');
+      var has_team_exercise = false;
+      for (var j = 0; j < sport.exercises.length; ++j)
+      {
+        if (sport.exercises[j].is_teamexercise)
+        {
+          has_team_exercise = true;
+          break;
+        }
+      }
+
+      if (has_team_exercise)
+        $('#sports').append('<option value=' + sport.sport_id + '>' + escapeHtml(sport.sport_description) + '</option>');
     });
   }
 }
+
 
 function displayTeamLeaderCandidates(member)
 {
@@ -57,36 +83,85 @@ function displayTeamLeaderCandidates(member)
   }
 }
 
+
 function displayExercises(exercises)
 {
   if (exercises)
   {
+    $('#exercises').empty();
+
+
+    var selected_exercise = null;
     $.each(exercises, function(i, exercise)
     {
-      $('#exercises').append('<option value=' + exercise.exercise_id + '>' + escapeHtml(exercise.exercise_description) + '</option>');
-      if (exercise.exercise_id == selected_exercise_id)
+      if (exercise.is_teamexercise)
       {
-        setExercise(exercise);
+        if (selected_exercise == null)
+          selected_exercise = exercise;
+
+        $('#exercises').append('<option selected value="' + exercise.exercise_id + '"">' + escapeHtml(exercise.exercise_description) + '</option>');
+        if (exercise.exercise_id == current_team.exercise_id)
+          selected_exercise = exercise;
       }
     });
+
+    if (selected_exercise != null)
+    {
+      $('#exercises').dropdown('set selected', selected_exercise.exercise_id);
+      $('#exercises').dropdown('set text', selected_exercise.exercise_description);
+    }
   }
 }
 
-function setExercise(exercise)
+
+function exerciseChanged(sender)
 {
-  $('#exercises').dropdown('set selected', exercise.exercise_id);
+  changes_to_save["exercise_id"] = parseInt($(sender).val());
 }
+
+
+function teamNameChanged(sender)
+{
+  changes_to_save["team_name"] = $(sender).val();
+}
+
+
+function clubChanged(sender)
+{
+  changes_to_save["club_id"] = parseInt($(sender).val());
+}
+
+function genderChanged(sender)
+{
+  changes_to_save["team_gender"] = $(sender).val();
+}
+
+
+function teamLeaderChanged(sender)
+{
+  changes_to_save["contact_person_id"] = parseInt($(sender).val());
+}
+
+
+function sportChanged(sender)
+{
+  // Clear selection first.
+  var sportId = parseInt($(sender).val());
+
+  $('#exercises').parent().addClass('loading');
+  var request = apiGetExercises(displayExercises, handleError, event_id, sportId);
+  $.when(request).done(function()
+  {
+    $('#exercises').parent().removeClass('loading');
+  });
+    changes_to_save["exercise_id"] = parseInt($(sender).val());
+
+}
+
 
 function displayTeam(team)
 {
-  sport_id = team.exercise.sport_id;
-  selected_exercise_id = team.exercise_id;
-  var request = apiGetExercises(displayExercises, handleError, event_id, sport_id);
-
-  $.when(request).done(function()
-  {
-    $("#teamLoader").hide();
-  });
+  current_team = team;
 
   var id_teamname = $('.teamname');
   var id_team_name = $('#team_name');
@@ -105,6 +180,8 @@ function displayTeam(team)
   id_clubs.dropdown('set selected', team.club_id);
   id_sports.dropdown('set selected', team.exercise.sport_id);
 
+  id_teammembers.empty();
+  $('#teamleader').empty();
   if (team.team_members.length > 0)
   {
     for (var i = 0; i < team.team_members.length; ++i)
@@ -143,11 +220,65 @@ function displayTeam(team)
   var team_slots = team.exercise.slots_per_team;
   var non_students = team.exercise.max_non_students_per_team;
 
+  $('#team_info').empty();
   $('#team_info').append('Påmeldte: ' + num_members + ' / ' + team_slots + ' <br> \
             Ikke studenter: ' + num_non_students + ' / ' + non_students + ' <br> \
             Akkrediterte: ' + num_accreditated + ' / ' + team_slots);
+
+  setCanceled();
 }
+
 
 function handleError(errorMsg)
 {
+  $('#error-msg').text(errorMsg);
+  $('#error-modal').modal('show');
+}
+
+
+function cancelTeam()
+{
+  $('#cancelTeam').addClass('loading');
+
+  var data = null;
+  if (current_team.status == REGISTRATION_CANCELLED)
+    data = {'status': REGISTRATION_CONFIRMED};
+  else
+    data = {'status': REGISTRATION_CANCELLED};
+
+  var request = apiPutTeam(function(data) {}, function(data) {}, event_id, team_id, data, '');
+  $.when(request).done(function()
+  {
+    $('#cancelTeam').removeClass('loading');
+    loadTeam();
+  });
+}
+
+
+function updateTeam()
+{
+  $('#updateTeam').addClass('loading');
+
+  var request = apiPutTeam(function(data) {}, handleError, event_id, team_id, changes_to_save, '');
+  $.when(request).done(function()
+  {
+    $('#updateTeam').removeClass('loading');
+    loadTeam();
+  });
+}
+
+
+function setCanceled()
+{
+  if (current_team.status == REGISTRATION_CANCELLED)
+  {
+    $('#cancelTeam').text('Meld på igjen');
+    $('#cancelTeam').removeClass("red").addClass("green");;
+    $('.teamname').append(' <span style="color:#d01919;">(kansellert)</span>');
+  }
+  else
+  {
+    $('#cancelTeam').text('Kanseller laget');
+    $('#cancelTeam').removeClass("green").addClass("red");;
+  }
 }

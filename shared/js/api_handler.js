@@ -14,6 +14,11 @@ var eventId = 1;
 var router_url = '<?php echo ROOT_URL; ?>/router.php';
 <?php
     // Read the API base url from settings file.
+    $input_event_id = filter_input(INPUT_GET, 'event_id', FILTER_VALIDATE_INT);
+    if (!is_null($input_event_id) && $input_event_id !== false)
+    {
+      echo 'eventId = ' . $input_event_id . ';';
+    }
     $content = file_get_contents(__DIR__ . "/../../settings.json");
     $jsonObject = json_decode($content);
     echo "var baseURL = '" . $jsonObject->frontend->api_base_url . "';";
@@ -134,6 +139,20 @@ function apiGetSports(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/sports', successCallback, errorCallback);
 }
 
+
+function apiGetEvent(successCallback, errorCallback, eventId) {
+    return doGet(baseURL + 'events/' + eventId, successCallback, errorCallback);
+}
+
+function apiGetEvents(successCallback, errorCallback) {
+    return doGet(baseURL + 'events', successCallback, errorCallback);
+}
+
+
+function apiGetEventFromAlias(successCallback, errorCallback, alias) {
+    return doGet(baseURL + 'events/alias/' + alias, successCallback, errorCallback);
+}
+
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
 function apiGetExercises(successCallback, errorCallback, eventId, sportId) {
     return doGet(baseURL + 'events/' + eventId + '/sports/' + sportId + '/exercises', successCallback, errorCallback);
@@ -159,18 +178,15 @@ function apiGetAdditions(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/additions/', successCallback, errorCallback);
 }
 
+
+// -- PARTICIPANTS -- \\
+function apiPutParticipant(successCallback, errorCallback, eventId, entryId, jsonData, comment) {
+    return doPut(baseURL + 'events/' + eventId + '/participants/' + entryId, jsonData, successCallback, errorCallback, {'comment': comment})
+}
+
 // http://docs.thea.apiary.io/#reference/participant/participants/add-a-participant
 function apiPostParticipant(successCallback, errorCallback, json, eventId) {
     return doPost(baseURL + 'events/' + eventId + '/participants/', json, successCallback, errorCallback);
-}
-
-//http://docs.thea.apiary.io/#reference/transaction/transactionsidprocess/complete-a-participant-registration
-function apiPutTransaction(successCallback, errorCallback, transactionId) {
-    return doPut(baseURL + 'events/' + eventId + '/transactions/'+transactionId+'/process', {}, successCallback, errorCallback);
-}
-
-function apiPutTerminateEntry(successCallback, errorCallback, transactionId, eventId) {
-    return doPut(baseURL + 'events/' + eventId + '/transactions/' + transactionId + '/terminate', {}, successCallback, errorCallback);
 }
 
 function apiGetParticipants(successCallback, errorCallback, eventId) {
@@ -185,34 +201,41 @@ function apiGetPortrait(successCallback, errorCallback, eventId, entryId) {
     return doGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/portrait', successCallback, errorCallback)
 }
 
-function apiLoginUser(successCallback, errorCallback, jsonData) {
-    return doPost(baseURL + 'users/login/', jsonData, successCallback, errorCallback);
-}
-
 function apiGetReceipt(successCallback, errorCallback, eventId, entryId) {
     return doRawGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/receipt', successCallback, errorCallback)
 }
 
-function apiCancelParticipant(entry_id, callback, errorCallback, comment) {
-    return doPut(baseURL + 'events/' + eventId + '/participants/' + entry_id + '/cancel', '', callback, errorCallback, {'comment': comment})
+function apiPutTerminateEntry(successCallback, errorCallback, transactionId, eventId) {
+    return doPut(baseURL + 'events/' + eventId + '/transactions/' + transactionId + '/terminate', {}, successCallback, errorCallback);
 }
 
-function apiUncancelParticipant(entry_id, callback, errorCallback, comment) {
-    return doPut(baseURL + 'events/' + eventId + '/participants/' + entry_id + '/uncancel', '', callback, errorCallback, {'comment': comment})
+function apiLoginUser(successCallback, errorCallback, jsonData) {
+    return doPost(baseURL + 'users/login/', jsonData, successCallback, errorCallback);
 }
 
 function apiPutPassword(successCallback, errorCallback, jsonObject) {
     return doPut(baseURL + 'users/password', jsonObject, successCallback, errorCallback)
 }
 
+// -- TEAMS -- \\
 function apiGetAllTeams(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/teams', successCallback, errorCallback);
 }
 
+function apiPutTeam(successCallback, errorCallback, eventId, teamId, jsonData, comment) {
+    return doPut(baseURL + 'events/' + eventId + '/teams/' + teamId, jsonData, successCallback, errorCallback, {'comment': comment})
+}
+
+// -- TRANSACTIONS -- \\
 function apiGetTransaction(successCallback, errorCallback, eventId, transactionId) {
     return doGet(baseURL + 'events/' + eventId + '/transactions/' + transactionId, successCallback, errorCallback);
 }
 
 function apiPostCreditTransaction(successCallback, errorCallback, json, eventId, transactionId) {
     return doPost(baseURL + 'events/' + eventId + '/transactions/' + transactionId + '/credit', json, successCallback, errorCallback);
+}
+
+//http://docs.thea.apiary.io/#reference/transaction/transactionsidprocess/complete-a-participant-registration
+function apiPutTransaction(successCallback, errorCallback, transactionId) {
+    return doPut(baseURL + 'events/' + eventId + '/transactions/'+transactionId+'/process', {}, successCallback, errorCallback);
 }

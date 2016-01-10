@@ -17,13 +17,9 @@
   <div class="header">
     Er du sikker at du vil endre <span class="participantname"></span>?
   </div>
-  <div class="content">
-    Gjør det lettere å forstå hva som har skjedd, skriv en kommentar!
-    <textarea rows="4" id="update-comment" style="max-width:100%;width:100%;"></textarea>
-  </div>
   <div class="actions">
     <div class="ui button close">Avbryt</div>
-    <div class="ui button close" onclick="updateParticipant()" >Oppdater</div>
+    <div class="ui button close green" onclick="updateParticipant();" >Oppdater</div>
   </div>
 </div>
 
@@ -38,6 +34,18 @@
   </div>
   <div class="actions">
     <div class="ui green button close">Ok</div>
+  </div>
+</div>
+
+<div class="ui modal" id="error-modal">
+  <div class="header">
+    Upsi
+  </div>
+  <div class="content">
+    <p id="error-msg"></p>
+  </div>
+  <div class="actions">
+    <div class="ui button close" >Ok</div>
   </div>
 </div>
 
@@ -83,25 +91,25 @@
       <div class="inline fields">  
         <label class="field four wide">Fornavn</label>
         <div class="field nine wide">
-          <input type="text" value="" id="first_name">
+          <input type="text" value="" id="first_name" onchange="firstNameChanged(this);">
         </div>
       </div>
       
       <div class="inline fields">
         <label class="field four wide">Etternavn</label>
         <div class="field nine wide">
-          <input type="text" value="" id="last_name">
+          <input type="text" value="" id="last_name" onchange="lastNameChanged(this);">
         </div>
       </div>
 
       <div class="inline fields">
         <label class="field four wide">Fødselsdato</label>
         <div class="field two wide">
-          <input type="text" name="birthdate" id="birthday" placeholder="dd">
+          <input type="text" name="birthdate" id="birthday" placeholder="dd" onchange="birthdateChanged(this);">
         </div>
 
         <div class="field four wide">
-          <select class="ui fluid dropdown" id="birthmonth">
+          <select class="ui fluid dropdown" id="birthmonth" onchange="birthdateChanged(this);">
             <option value="">mm</option>
             <option value="01">januar</option>
             <option value="02">februar</option>
@@ -119,14 +127,14 @@
         </div>
 
         <div class="field three wide">
-          <input type="text" name="birthdate" id="birthyear" placeholder="yyyy">
+          <input type="text" name="birthdate" id="birthyear" placeholder="yyyy" onchange="birthdateChanged(this);">
         </div>
       </div>
 
       <div class="inline fields">
         <label class="field four wide">Kjønn</label>
         <div class="field nine wide">
-          <select class="ui fluid dropdown" id="selectgender">
+          <select class="ui fluid dropdown" id="selectgender" onchange="genderChanged(this);">
             <option value="">Velg kjønn</option>
             <option value="Female" >Dame</option>
             <option value="Male" >Herre</option>
@@ -137,35 +145,35 @@
       <div class="inline fields">
           <label class="field four wide">Student</label>
         <div class="ui fitted checkbox">
-          <input type="checkbox" tabindex="0" id="studentCheckbox">
+          <input type="checkbox" tabindex="0" id="studentCheckbox" onchange="isStudentChanged(this);">
         </div>
       </div>
 
       <div class="inline fields">
         <label class="field four wide">E-post</label>
         <div class="field nine wide">
-          <input type="text" value="" id="email">
+          <input type="text" value="" id="email" onchange="emailChanged(this);">
           </div>
       </div>
 
       <div class="inline fields">
         <label class="field four wide">Telefonnummer</label>
         <div class="field nine wide">
-          <input type="text" value="" id="phone">
+          <input type="text" value="" id="phone" onchange="phoneNumberChanged(this);">
         </div>
       </div>
 
       <div class="inline fields">
         <label class="field four wide">Reiseinformasjon</label>
         <div class="field nine wide">
-           <input type="text" value="" id="travel_information">
+           <input type="text" value="" id="travel_information" onchange="travelInformationChanged(this);">
         </div>
       </div>
 
       <div class="inline fields">
         <label class="field four wide">Allergier</label>
         <div class="field nine wide">
-          <input type="text" value="" id="allergies">
+          <input type="text" value="" id="allergies" onchange="allergiesChanged(this);">
         </div>
       </div>
 
@@ -174,14 +182,14 @@
       <div class="inline fields">
           <label class="field four wide">Akkreditert</label>
         <div class="ui checkbox">
-          <input type="checkbox" tabindex="0" class="hidden" id="accreditatedCheckbox">
+          <input type="checkbox" tabindex="0" class="hidden" id="accreditatedCheckbox" onchange="isAccreditatedChanged(this);">
         </div>
       </div>
 
       <div class="inline fields">
         <label class="field four wide">Klubb</label>
         <div class="field nine wide">
-          <select class="ui fluid dropdown" id="clubs">
+          <select class="ui fluid dropdown" id="clubs" onchange="clubChanged(this);">
           </select>
         </div>
       </div>
@@ -189,7 +197,7 @@
       <div class="inline fields">
           <label class="field four wide">Medlem av klubb </label>
         <div class="ui checkbox">
-          <input type="checkbox" tabindex="0" id="clubmemberCheckbox">
+          <input type="checkbox" tabindex="0" id="clubmemberCheckbox" onchange="isClubMemberChanged(this);">
         </div>
       </div>
 
@@ -224,7 +232,7 @@
           <textarea rows="4" id="comment" style="max-width:100%;width:100%;">Ingen kommentarer</textarea>
 
 
-          <button class="fluid ui disabled button" id="updateParticipant">Oppdater deltakerinformasjon</button>
+          <button class="fluid ui button" id="updateParticipant">Oppdater deltakerinformasjon</button>
           <div class="ui divider"></div>
           <div id="recietButton">
           	<button class="fluid ui button" id="recieptParticipant">

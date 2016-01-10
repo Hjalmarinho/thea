@@ -71,6 +71,10 @@
               <input type="password" name="password" id="password" placeholder="Passord">
             </div>
           </div>
+          <div class="field">
+            <select class="ui search dropdown" id="events">
+            </select>
+          </div>
           <div id="loginButton" class="ui fluid large blue button" onclick="doLogin();">Logg inn</div>
         </div>
         <div hidden class="ui negative message" id="errorMessage">

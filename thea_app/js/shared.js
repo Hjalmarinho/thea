@@ -18,10 +18,13 @@ $(document).ready(function() {
     }
   });
 
+
   $('.ui.checkbox').checkbox();
 
   //Initialize tablesort
-  $('table').tablesort();
+  if (typeof $('table').tablesort === "function") {
+      $('table').tablesort();
+  }
 
   $('.ui.sticky').sticky({
     context: '#context'

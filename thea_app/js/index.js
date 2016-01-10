@@ -39,4 +39,21 @@ $(document).ready(function()
       return false;
     }
   });
+
+  apiGetEvents(getEventsCallback, errorHandler);
 });
+
+function errorHandler(errorMsg)
+{
+
+}
+
+
+function getEventsCallback(events_array)
+{
+  for (var i = 0; i < events_array.length; ++i)
+  {
+    var event_obj = events_array[i];
+    $('#events').append('<option value="' + event_obj.event_id + '">' + event_obj.event_description + '</option>');
+  }
+}

@@ -7,7 +7,7 @@
   <img id="portrait" style="display:none; width:150px; height:200px; overflow:hidden;"/>
 </div>
 
-<div class="inline fields">
+<div class="inline fields" id="additions-container">
   <label class="field four wide">Tillegg</label>
   <div class="grouped fields" id="additions">
     <!-- Additions-checkboxes are populated here from api_handler on page load -->
@@ -21,12 +21,12 @@
   </div>
 </div>
 
-<div class="inline fields">
+<div class="inline fields" id="terms">
   <label class="field four wide">Avtalevilkår</label>
   <div class="field">
     <div class="ui checkbox">
       <input type="checkbox" name="terms">
-      <label><a href="avtalevilkaar.pdf" target="_blank">Jeg har lest og forstått avtalevilkårene</a></label>
+      <label><a id="terms_url" href="#" target="_blank">Jeg har lest og forstått avtalevilkårene</a></label>
     </div>
   </div>
 </div>
