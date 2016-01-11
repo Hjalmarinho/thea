@@ -70,3 +70,21 @@ h4{
 	z-index: 1;
 	padding-top: 40px;
 }
+
+
+/*  7. Image cropping                                               */
+/*------------------------------------------------------------------*/
+.img-preview {
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
+}
+
+.img-preview > img {
+  max-width: 100%;
+}
+
+.preview-lg {
+  width: 200px;
+  height: 175px;
+}

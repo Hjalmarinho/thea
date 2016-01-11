@@ -58,8 +58,10 @@ $( document ).ready(function() {
     });
 
     //Display image-modal for portrait-upload
-    $('#image_button').click(function() {
+    $('#image_button').click(function()
+    {
         $('#image_modal').modal('show');
+        $("#portrait_crop").cropper('replace', $("#portrait_crop").attr("src"));
     });
 
     //Prevent entry_form from submitting when clicking "Meld på"
@@ -228,13 +230,15 @@ function displayAdditions(additions)
 
             if (addition.has_children)
             {
-                displayAdditionWithChildren(addition, additions);
+                // Array.slice() ensures that we pass a copy of the array,
+                // and not 
+                displayAdditionWithChildren(addition, additions.slice());
             }
             else
             {
                 var addition_label = addition.addition_description + ' (' + addition.addition_fee + ' ,-)';
 
-                // Special handling of bankett...
+                // Special handling of 'bankett'. We want to write "skal ikke delta på bankett".
                 if (addition.addition_description == "Bankett" && addition.addition_fee == 0)
                 {
                     flippedBanquetId = addition.addition_id;
@@ -254,12 +258,22 @@ function displayAdditions(additions)
 }
 
 
+/*
+  This function will print out additions as radiobuttons, such as...
+
+              * Small
+  T-skjorte   * Medium
+              * Large
+
+  T-skjorte is the parentAdditions, and Small, Medium and Large exists
+  in the array "additions".
+*/
 function displayAdditionWithChildren(parentAddition, additions)
 {
   var first = true;
   $('#additions').append('<h2 class="ui sub header">' + parentAddition.addition_description + '</h2>');
 
-  // Again, this is a VERY ugly hack.
+  // This is a VERY ugly hack.
   if (eventId == 3)
     $('#additions').append('<div class="sub header"><i>Jenter anbefales å velge en størrelse lavere enn vanlig</i></div>');
 
@@ -395,20 +409,27 @@ function redirectToPayment(data){
 //      PORTRAIT CROPPING
 // ***********************************************************************
 
-//Display selected image in image-modal and set cropping
+//Display selected image in image-modal and update the cropper.
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            $('.jcrop-holder').remove();
-            $('#portrait_crop').replaceWith('<img id="portrait_crop" src="' + e.target.result + '"/>');
-            $('#portrait_crop').Jcrop({
-                boxWidth: 150, boxHeight: 200,
-                aspectRatio: 3/4,
-                setSelect: [0, 0, 150, 200],
-                onChange: updatePreview,
-                onSelect: updatePreview
-            });
+            if ($("#crop_container").html().trim().length == 0) {
+                // First time cropper is loaded.
+                $("#crop_container").html('<img id="portrait_crop" style="max-width:200px; image-orientation: from-image;" alt="Portrettbilde" src="' + e.target.result + '" />');
+
+                $("#portrait_crop").cropper({
+                  aspectRatio: 3 / 4,
+                  preview: ".img-preview",
+                  moveable: false,
+                  zoomable: false,
+                  responsive: false
+                });
+
+                $("#rotatePreviewIcons").show();
+            } else {
+                $("#portrait_crop").cropper('replace', e.target.result);
+            }
 
             $("#uploadPortraitLoader").removeClass("active");
         };
@@ -424,31 +445,17 @@ function readURL(input) {
     }
 }
 
-//Update preview of the cropped image
-function updatePreview(coords) {
-    if(parseInt(coords.w)) {
-        // Show image preview
-        var imageObj = $("#portrait_crop")[0];
-        var canvas = $("#portrait_preview")[0];
-        var context = canvas.getContext("2d");
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        context.drawImage(imageObj, coords.x, coords.y, coords.w - 1, coords.h - 1, 0, 0, canvas.width, canvas.height);
-    }
+// Rotate the image in cropping.
+function rotatePreview(amount) {
+    $("#portrait_crop").cropper('rotate', amount);
 }
 
-//Confirm the cropped portrait and close modal
-function confirmPortrait(){
-    var canvas = $("#portrait_preview")[0];
-    var imageData = canvas.toDataURL("image/jpeg");
-
-    if (imageData.length <= 6) {
-	showError("Nettleseren din støtter dessverre ikke behandling av portrettbilder. Vennligst bruk en annen nettleser.");
-    } else {
-	$('#portrait').attr("src", imageData);
-	$('#image_modal').modal('hide');
-	$('#portrait').show();
-    }
+// Confirm the cropped portrait and close modal.
+function confirmPortrait() {
+    var canvas = $("#portrait_crop").cropper("getCroppedCanvas");
+    $('#portrait_container').html('<img id="portrait" style="display:none; width:150px; height:200px;" alt="Portrettbilde" src="' + canvas.toDataURL("image/jpeg") + '" />');
+    $('#image_modal').modal('hide');
+    $('#portrait').show();
 }
 
 
@@ -545,6 +552,7 @@ function uiGetAdditions(){
         }
     });
 
+    // Check if we have any flipped banquet (...like "skal IKKE delta på bankett").
     if (flippedBanquetId != null)
     {
         $('#additions input:checkbox:not(:checked)').each(function()

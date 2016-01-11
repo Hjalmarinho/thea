@@ -75,3 +75,10 @@ function getReceipt(entryId)
 			console.log('yee');
 		}, function (data) { console.log('buhuuu'); }, event_id, entryId);
 }
+
+function removeLoader() {
+	$("#participantsLoader").remove();
+}
+
+function handleError(errorMsg) {
+}

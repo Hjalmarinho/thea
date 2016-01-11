@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!-- ******************************************************************
 [Index start-page]
 
@@ -22,7 +23,6 @@ else
 {
 ?>
 
-<!DOCTYPE html>
 <html>
 <head>
   <script>
@@ -78,7 +78,7 @@ else
 
     if (event_start == event_end)
     {
-			$('#event_date').text(event_start.customFormat('#DD# #MMM# #YYYY#'));
+      $('#event_date').text(event_start.customFormat('#DD# #MMM# #YYYY#'));
     }
     else
     {

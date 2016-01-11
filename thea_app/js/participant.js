@@ -76,6 +76,7 @@ function getSports(sports_array)
   sports = sports_array;
 }
 
+
 function getTeams(teams_array)
 {
   teams = teams_array;

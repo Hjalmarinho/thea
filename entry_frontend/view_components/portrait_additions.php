@@ -4,7 +4,7 @@
  <div class="inline fields">
   <label class="field four wide">Bilde</label>
   <div class="ui button" id="image_button">Last opp portrettbilde</div>
-  <img id="portrait" style="display:none; width:150px; height:200px; overflow:hidden;"/>
+  <div id="portrait_container"></div>
 </div>
 
 <div class="inline fields" id="additions-container">
@@ -47,17 +47,26 @@
           <input type="file" id="file" style="display:none" onchange="readURL(this);" />
         </div>
       </div>
-      <div class="four wide computer eight wide mobile column">
-        <img id="portrait_crop" style="image-orientation: from-image"/>
+      <div class="row">
+        <div class="four wide computer eight wide mobile column" >
+          <div class="image content" id="crop_container">
+          </div>
+        </div>
+        <div class="four wide computer eight wide mobile column" >
+          <div id="portraitPreview" class="img-preview preview-lg image content"></div>
+        </div>
       </div>
-      <div class="four wide computer eight wide mobile column">
-        <canvas id="portrait_preview" width="150" height="200" style="overflow:hidden;"></canvas>
+      <div class="row">
+          <div id="rotatePreviewIcons" style="display:none;" class="four wide computer eight wide mobile column"  >
+            <button class="ui icon button big" onclick="rotatePreview(90);"><img src="img/rotate_right.png" alt="Roter høyre" style="width:25px;margin:-5px;" /></button>
+            <button class="ui icon button big" onclick="rotatePreview(-90);"><img src="img/rotate_left.png" alt="Roter venstre" style="width:25px;margin:-5px;" /></button>
+          </div>
       </div>
     </div>
 
   </div>
   <div class="actions">
-    <div class="ui button close">Avbryt</div>
+    <div class="ui button cancel">Avbryt</div>
     <div class="ui blue button" onclick="confirmPortrait()">Ferdig</div>
   </div>
 </div>  <!-- /image modal -->

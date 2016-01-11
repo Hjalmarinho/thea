@@ -15,15 +15,15 @@
   <table class="ui selectable stackable sortable celled table">
     <thead>
       <tr>
-  	    <th class="ascending">Fornavn</th>
-  	    <th>Etternavn</th>
-  	    <th>Kjønn</th>
-  	    <th>Klubb</th>
-  	    <th>Telefon</th>
-  	    <th>E-post</th>
-  	    <th>Påmeldingsdato</th>
-            <th class="no-sort">Kvittering</th>
-  	</tr>
+        <th class="ascending">Fornavn</th>
+        <th>Etternavn</th>
+        <th>Kjønn</th>
+        <th>Klubb</th>
+        <th>Telefon</th>
+        <th>E-post</th>
+        <th>Påmeldingsdato</th>
+        <th class="no-sort">Kvittering</th>
+    </tr>
     </thead>
     <tbody id="participants">
     </tbody>
