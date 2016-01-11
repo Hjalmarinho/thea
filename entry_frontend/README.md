@@ -19,7 +19,7 @@ define('ROOT_URL', 'http://127.0.0.1/thea2/entry_frontend');
 </code>
 </pre>
 
-The URL should of course point to the correct URL in your development environment. On the production server for instance, the value is set to 'https://pamelding.sltromso.no'. The trailing slash must NOT be included.
+The URL should of course point to the correct URL in your development environment. On the production server for instance, the value is set to 'https://pamelding.theachnology.com'. The trailing slash must NOT be included.
 
 <h4 name="project-structure">Project Structure</h4>
 
