@@ -332,7 +332,7 @@ function addSport() {
 
 //Remove sport_box from GUI
 function removeSport(removeButton){
-    $(removeButton).closest('[name="sports_box"]').remove();
+    $(removeButton).closest('[data-name="sports_box"]').remove();
 }
 
 //When user clicks "Meld på" a confirm-modal is populated with the data that the user has entered
