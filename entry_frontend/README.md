@@ -10,17 +10,6 @@ This repo includes a GUI/frontend-project allowing participants and teams to mak
 <h4 name="getting-started">Getting Started</h4>
 The frontend-project can be run by downloading the project folder, entry_frontend, and then run the index.php on a local server with help from <a href="http://www.wampserver.com/en/">wamp</a> or <a href="http://www.easyphp.org/easyphp-devserver.php">easyphp</a>.
 
-In order to get this site working, you need one file named "site_info.php". This file is added to .gitignore, so it wont be included in the repository. The contents of the file should be:
-
-<pre>
-<code>
-&lt;?php
-define('ROOT_URL', 'http://127.0.0.1/thea2/entry_frontend');
-</code>
-</pre>
-
-The URL should of course point to the correct URL in your development environment. On the production server for instance, the value is set to 'https://pamelding.theachnology.com'. The trailing slash must NOT be included.
-
 <h4 name="project-structure">Project Structure</h4>
 
 
