@@ -58,8 +58,8 @@
       </div>
       <div class="row">
           <div id="rotatePreviewIcons" style="display:none;" class="four wide computer eight wide mobile column"  >
-            <button class="ui icon button big" onclick="rotatePreview(90);"><img src="img/rotate_right.png" alt="Roter høyre" style="width:25px;margin:-5px;" /></button>
-            <button class="ui icon button big" onclick="rotatePreview(-90);"><img src="img/rotate_left.png" alt="Roter venstre" style="width:25px;margin:-5px;" /></button>
+            <button class="ui icon button big" onclick="rotatePreview(90);"><img src="<?php echo ROOT_URL; ?>/img/rotate_right.png" alt="Roter høyre" style="width:25px;margin:-5px;" /></button>
+            <button class="ui icon button big" onclick="rotatePreview(-90);"><img src="<?php echo ROOT_URL; ?>/img/rotate_left.png" alt="Roter venstre" style="width:25px;margin:-5px;" /></button>
           </div>
       </div>
     </div>
