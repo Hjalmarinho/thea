@@ -52,27 +52,6 @@ function doGet(urlGET, successCallback, errorCallback) {
 }
 
 
-// Perform a RAW GET-call to API with given URL. Run callback-function with the result
-function doRawGet(urlGET, successCallback, errorCallback) {
-    return $.ajax({
-        type: 'GET',
-        url: router_url,
-        beforeSend : function (request)
-        {
-            addJWT(request);
-            request.setRequestHeader('redirect-method', 'rawget');
-            request.setRequestHeader('redirect-source', urlGET);
-        },
-        success: function(result){
-            successCallback(result);
-        },
-        error: function(){
-            errorCallback('Ooops, noe uventet skjedde...');
-        } 
-    });
-}
-
-
 // Perform POST-call to API with given URL.
 function doPost(urlPOST, jsonData, successCallback, errorCallback) {
     return $.ajax({
@@ -202,7 +181,7 @@ function apiGetPortrait(successCallback, errorCallback, eventId, entryId) {
 }
 
 function apiGetReceipt(successCallback, errorCallback, eventId, entryId) {
-    return doRawGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/receipt', successCallback, errorCallback)
+    return doGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/receipt', successCallback, errorCallback)
 }
 
 function apiPutTerminateEntry(successCallback, errorCallback, transactionId, eventId) {
@@ -238,4 +217,12 @@ function apiPostCreditTransaction(successCallback, errorCallback, json, eventId,
 //http://docs.thea.apiary.io/#reference/transaction/transactionsidprocess/complete-a-participant-registration
 function apiPutTransaction(successCallback, errorCallback, transactionId) {
     return doPut(baseURL + 'events/' + eventId + '/transactions/'+transactionId+'/process', {}, successCallback, errorCallback);
+}
+
+function apiGetAccreditationList(successCallback, errorCallback, eventId) {
+    return doGet(baseURL + 'events/' + eventId + '/reports/accreditationlist', successCallback, errorCallback)
+}
+
+function apiGetPortraits(successCallback, errorCallback, eventId) {
+    return doGet(baseURL + 'events/' + eventId + '/reports/portraits', successCallback, errorCallback)
 }

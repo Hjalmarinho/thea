@@ -67,15 +67,6 @@ function handleError(errorMsg) {
 }
 
 
-function getReceipt(entryId)
-{
-	apiGetReceipt(function (data)
-		{
-			window.open('data:application/pdf;base64,' + data);
-			console.log('yee');
-		}, function (data) { console.log('buhuuu'); }, event_id, entryId);
-}
-
 function removeLoader() {
 	$("#participantsLoader").remove();
 }
