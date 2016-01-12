@@ -21,17 +21,6 @@ Read this http://jmfurlott.com/tutorial-setting-up-a-simple-isomorphic-react-app
   <li>Have a great day!</li>
 </ol>
 
-In order to get this site working, you need one file named "site_info.php". This file is added to .gitignore, so it wont be included in the repository. The contents of the file should be:
-
-<pre>
-<code>
-&lt;?php
-define('ROOT_URL', 'http://127.0.0.1/thea2/thea_app');
-</code>
-</pre>
-
-The URL should of course point to the correct URL in your development environment. On the production server for instance, the value is set to 'https://thea.theachnology.com'. The trailing slash must NOT be included.
-
 <h4 name="project-structure">Project Structure</h4>
 
 <pre>
