@@ -1,5 +1,11 @@
 <?php require('header.php'); ?>
 
+<!-- Portrait cropping -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropper/0.11.1/cropper.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/0.11.1/cropper.min.js"></script>
+<script>
+<?php require_once(__DIR__ . '/../shared/js/portrait_cropping.js'); ?>
+</script>
 
 
 <div class="ui items">
@@ -10,8 +16,9 @@
     <!-- <i class="large sidebar icon" id="menubutton"></i> -->
     <h1 class="ui dividing participantname">Deltaker</h1>
   </div>
-
 </div>
+
+<?php require_once(__DIR__ . '/../shared/portrait_modal.php'); ?>
 
 <div class="ui modal" id="approve-update">
   <div class="header">
@@ -216,7 +223,7 @@
           <div class="ui dimmer">
             <div class="content">
               <div class="center">
-                <div class="ui inverted button">Last opp nytt bilde</div>
+                <div class="ui inverted button" id="uploadPortraitButton">Last opp nytt bilde</div>
               </div>
             </div>
           </div>

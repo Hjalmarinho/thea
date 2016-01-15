@@ -21,6 +21,13 @@ $(document).ready(function()
     $('#credit-update').modal('show');
   });
 
+  // Display image-modal for portrait-upload
+  $('#uploadPortraitButton').click(function()
+  {
+    $('#image_modal').modal('show');
+    $("#portrait_crop").cropper('replace', $("#portrait_crop").attr("src"));
+  });
+
   var getSportsRequest = apiGetSports(getSports, errorHandler, event_id);
   var getTeamsRequest =  apiGetAllTeams(getTeams, errorHandler, event_id);
   $.when(getSportsRequest, getTeamsRequest).done(function()
@@ -478,4 +485,20 @@ function clubChanged(sender)
 function isClubMemberChanged(sender)
 {
   changes_to_save['is_clubmember'] = $(sender).is(':checked');
+}
+
+function confirmPortrait()
+{
+  var canvas = $("#portrait_crop").cropper("getCroppedCanvas");
+  var base64 = canvas.toDataURL("image/jpeg");
+
+  // Trim away any 'data:image/jpeg;base64,' at the beginning.
+  base64 = base64.replace('data:image/jpeg;base64,', '');
+  var json_data = {'portrait_data': base64};
+  var request = apiPutPortrait(function(data) { }, errorHandler, event_id, local_entry_id, json_data, '');
+  $.when(request).done(function()
+  {
+    $('#image_modal').modal('hide');
+    loadParticipant();
+  });
 }

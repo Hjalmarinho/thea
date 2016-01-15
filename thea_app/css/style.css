@@ -146,3 +146,21 @@ textarea:focus {
 .success{
 	color: #4D824F;
 }
+
+
+/*    8. Image cropping                                             */
+/*------------------------------------------------------------------*/
+.img-preview {
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
+}
+
+.img-preview > img {
+  max-width: 100%;
+}
+
+.preview-lg {
+  width: 200px;
+  height: 175px;
+}
