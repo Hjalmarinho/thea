@@ -231,3 +231,6 @@ function apiGetPortraits(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/reports/portraits', successCallback, errorCallback)
 }
 
+function apiPutPortrait(successCallback, errorCallback, eventId, entryId, jsonData, comment) {
+    return doPut(baseURL + 'events/' + eventId + '/participants/' + entryId + '/portrait', jsonData, successCallback, errorCallback, {'comment': comment});
+}

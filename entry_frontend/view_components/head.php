@@ -29,6 +29,7 @@
      */
     require_once(__DIR__ . "/../../shared/js/api_handler.js");
     require_once(__DIR__ . "/../../shared/js/shared.js");
+    require_once(__DIR__ . '/../../shared/js/portrait_cropping.js');
 
     // Read the payment URL from settings file.
     $content = file_get_contents(__DIR__ . "/../../settings.json");
