@@ -39,7 +39,15 @@ else if ($method == 'put')
 
   curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT'); 
   curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Length: ' . strlen($data))); 
-  curl_setopt($curl, CURLOPT_POSTFIELDS, $data); 
+  curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+}
+else if ($method == 'delete')
+{
+  $data = file_get_contents('php://input');
+
+  curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+  curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Length: ' . strlen($data))); 
+  curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 }
 else
 {

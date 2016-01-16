@@ -20,6 +20,39 @@
 
 <?php require_once(__DIR__ . '/../shared/portrait_modal.php'); ?>
 
+<!-- New exercise modals -->
+<div class="ui modal" id="select-exercise-modal">
+  <div class="header">
+    Hvilken idrett/øvelse?
+  </div>
+  <div class="content">
+    <select class="ui fluid dropdown" id="select-exercise-dropdown">
+    </select>
+  </div>
+  <div class="actions">
+    <div class="ui button close">Avbryt</div>
+    <div class="ui button green" onclick="nextAfterSelectExercise(this);">Neste</div>
+  </div>
+</div>
+
+<div class="ui modal" id="select-exercise-team-modal">
+  <div class="header">
+    Hvilket lag?
+  </div>
+  <div class="content">
+    <select class="ui fluid dropdown" id="select-exercise-team-dropdown">
+    </select>
+  </div>
+  <div class="actions">
+    <div class="ui button close">Avbryt</div>
+    <div class="ui button green" onclick="doTeamEntry(this);">Neste</div>
+  </div>
+</div>
+
+
+<!-- New exercise modals end -->
+
+
 <div class="ui modal" id="approve-update">
   <div class="header">
     Er du sikker at du vil endre <span class="participantname"></span>?
@@ -218,7 +251,9 @@
       </div>
 
       <div id="exercises">
+
       </div>
+      <button class="green ui button" onclick="beginAddExercise(this);">Meld opp i idrett</button>
 
       <h4 class="ui dividing header">Betaling</h4>
       <div class="ui cards" id="orders"></div>
