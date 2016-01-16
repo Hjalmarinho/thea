@@ -99,6 +99,30 @@ function doPut(urlPUT, jsonData, successCallback, errorCallback, headerData) {
     }); 
 }
 
+// Perform DELETE-call to API with given URL.
+function doDelete(urlDELETE, jsonData, successCallback, errorCallback, headerData) {
+    return $.ajax({
+        type: 'delete',
+        contentType: 'application/json',
+        url: router_url,
+        data: JSON.stringify(jsonData),
+        header: headerData,
+        dataType: 'json',
+        beforeSend : function (request)
+        {
+            addJWT(request);
+            request.setRequestHeader('redirect-method', 'delete');
+            request.setRequestHeader('redirect-source', urlDELETE);
+        },
+        success: function(result){
+            handleResult(result, successCallback, errorCallback);
+        },
+        error: function(){
+            errorCallback('Ooops, noe uventet skjedde...');
+        }
+    });
+}
+
 //Handle result from the API
 function handleResult(result, successCallback, errorCallback) {
     if (result.error) {
@@ -190,6 +214,14 @@ function apiResendReceipt(successCallback, errorCallback, eventId, entryId) {
 
 function apiPutTerminateEntry(successCallback, errorCallback, transactionId, eventId) {
     return doPut(baseURL + 'events/' + eventId + '/transactions/' + transactionId + '/terminate', {}, successCallback, errorCallback);
+}
+
+function apiDeleteEntryExercise(successCallback, errorCallback, eventId, entryId, entryExerciseId) {
+    return doDelete(baseURL + 'events/' + eventId + '/participants/' + entryId + '/exercises/' + entryExerciseId, {}, successCallback, errorCallback);
+}
+
+function apiPostEntryExercise(successCallback, errorCallback, eventId, entryId, jsonData) {
+    return doPost(baseURL + 'events/' + eventId + '/participants/' + entryId + '/exercises', jsonData, successCallback, errorCallback);
 }
 
 function apiLoginUser(successCallback, errorCallback, jsonData) {

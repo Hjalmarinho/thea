@@ -81,6 +81,39 @@ function displayClubs(clubs)
 function getSports(sports_array)
 {
   sports = sports_array;
+
+  // Load all sports into the needed dropdowns
+  $('#select-exercise-dropdown').empty();
+  $('#select-exercise-dropdown').append('<option value="">Velg idrett</option>');
+
+  var firstId = null;
+  sortArrayByString(sports, 'sport_description');
+  $.each(sports, function(i, sport)
+  {
+    if (sport.exercises.length == 1)
+    {
+      var text = sport.exercises[0].exercise_description;
+      var id = sport.exercises[0].exercise_id;
+
+      $('#select-exercise-dropdown').append('<option value="' + id + '">' + text + '</option>');
+      if (firstId == null)
+        firstId = id;
+    }
+    else
+    {
+      $.each(sport.exercises, function(j, exercise)
+      {
+        var text = sport.sport_description + ', ' + exercise.exercise_description;
+        var id = exercise.exercise_id;
+
+        $('#select-exercise-dropdown').append('<option value="' + id + '">' + text + '</option>');
+        if (firstId == null)
+          firstId = id;
+      });
+    }
+  });
+
+  $('#select-exercise-dropdown').dropdown();
 }
 
 
@@ -257,7 +290,7 @@ function appendExercise(exercise_object, exercise_counter)
     <div class="field seven wide"> \
     <input type="text" disabled="" value="' + createExerciseText(exercise_object) + '"> \
     </div> \
-    <div class="field four wide"><button class="ui disabled red button">Fjern</button></div> \
+    <div class="field four wide" onclick="deleteEntryExercise(this, ' + exercise_object.entry_exercise_id + ');"><button class="ui red button">Fjern</button></div> \
   </div>';
 
   if (exercise_object.exercise.is_teamexercise)
@@ -508,10 +541,113 @@ function confirmPortrait()
   // Trim away any 'data:image/jpeg;base64,' at the beginning.
   base64 = base64.replace('data:image/jpeg;base64,', '');
   var json_data = {'portrait_data': base64};
-  var request = apiPutPortrait(function(data) { }, errorHandler, event_id, local_entry_id, json_data, '');
+  var request = apiPutPortrait(function(data) { loadParticipant(); }, errorHandler, event_id, local_entry_id, json_data, '');
   $.when(request).done(function()
   {
     $('#image_modal').modal('hide');
-    loadParticipant();
+  });
+}
+
+function deleteEntryExercise(sender, entryExerciseId)
+{
+  $(sender).addClass('loading');
+  var request = apiDeleteEntryExercise(function(data) { loadParticipant(); }, errorHandler, event_id, local_entry_id, entryExerciseId);
+
+  $.when(request).done(function()
+  {
+    $(sender).removeClass('loading');
+  });
+}
+
+
+function beginAddExercise(sender)
+{
+  selectedExerciseForEntry = null;
+  $('#select-exercise-modal').modal('show');
+}
+
+
+var selectedExerciseForEntry = null;
+function nextAfterSelectExercise(sender)
+{
+  // Find/get selected exercise.
+  var exerciseId = parseInt($('#select-exercise-dropdown').val());
+  if (isNaN(exerciseId))
+  {
+    $('#select-exercise-modal').modal('hide');
+    return;
+  }
+
+  $.each(sports, function(i, sport)
+  {
+    $.each(sport.exercises, function(j, exercise)
+    {
+      if (exercise.exercise_id == exerciseId)
+      {
+        selectedExerciseForEntry = exercise;
+        return false;
+      }
+    });
+
+    if (selectedExerciseForEntry != null)
+      return false;
+  });
+
+  $(sender).addClass('loading');
+  if (selectedExerciseForEntry.is_teamexercise)
+  {
+    // Print teams for this exercise.
+    $('#select-exercise-team-dropdown').empty();
+    $('#select-exercise-team-dropdown').append('<option value="">Velg lag</option>');
+    sortArrayByString(teams, 'team_name');
+    $.each(teams, function(i, team)
+    {
+      if (team.exercise_id == selectedExerciseForEntry.exercise_id)
+      {
+        var text = team.team_name + ' (' + genderToString(team.team_gender) + ')';
+        var id = team.team_id;
+
+        $('#select-exercise-team-dropdown').append('<option value="' + id + '">' + text + '</option>');
+      }
+    });
+    $('#select-exercise-team-dropdown').dropdown();
+    $('#select-exercise-team-modal').modal('show');
+
+    $(sender).removeClass('loading');
+    $('#select-exercise-modal').modal('hide');
+
+    return;
+  }
+  else
+  {
+    var data = {'exercise_id': selectedExerciseForEntry.exercise_id};
+    var request = apiPostEntryExercise(function() { loadParticipant(); }, errorHandler, event_id, local_entry_id, data);
+
+    $.when(request).done(function()
+    {
+      $(sender).removeClass('loading');
+      $('#select-exercise-modal').modal('hide');
+    });
+    return;
+  }
+}
+
+function doTeamEntry(sender)
+{
+  $(sender).addClass('loading');
+  var teamId = parseInt($('#select-exercise-team-dropdown').val());
+  if (isNaN(teamId))
+  {
+    $('#select-exercise-team-modal').modal('hide');
+    return;
+  }
+
+  var data = {'exercise_id': selectedExerciseForEntry.exercise_id, 'team_id': teamId};
+  var request = apiPostEntryExercise(function() { loadParticipant(); }, errorHandler, event_id, local_entry_id, data);
+
+  $.when(request).done(function()
+  {
+    $(sender).removeClass('loading');
+    $('#select-exercise-team-modal').modal('hide');
   });
 }
