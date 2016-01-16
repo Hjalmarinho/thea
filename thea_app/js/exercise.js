@@ -49,7 +49,7 @@ function displayTeams(teams)
   var mix_teams = 0;
   $.each(teams, function (i, team)
   {
-    if (team.exercise_id == exercise_id)
+    if (team.exercise_id == exercise_id && team.status == REGISTRATION_CONFIRMED)
     {
       if (team.team_gender == 'Female')
         female_teams++;
@@ -108,10 +108,10 @@ function displayParticipants(participants)
       else if (participant.person.gender == 'Female')
         female++;
 
-      var first_name = participant.person.first_name
-      var last_name = participant.person.last_name
-      var gender = customGenderFormat(participant.person.gender)
-      var club = participant.club.club_name
+      var first_name = participant.person.first_name;
+      var last_name = participant.person.last_name;
+      var gender = customGenderFormat(participant.person.gender);
+      var club = participant.club.club_name;
 
       var tablerow =
       '<tr> \
@@ -120,7 +120,7 @@ function displayParticipants(participants)
       <td>' + gender + '</td> \
       </tr>';
 
-      $('#participants').append(tablerow)
+      $('#participants').append(tablerow);
     }
   });
 
