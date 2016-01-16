@@ -479,3 +479,16 @@ function isClubMemberChanged(sender)
 {
   changes_to_save['is_clubmember'] = $(sender).is(':checked');
 }
+
+function resendReceipt(sender)
+{
+  $(sender).addClass('loading');
+  var request = apiResendReceipt(function(data) {
+    $('#receipt-sent').modal('show');
+  }, errorHandler, event_id, local_entry_id);
+
+  $.when(request).done(function()
+  {
+    $(sender).removeClass('loading');
+  });
+}

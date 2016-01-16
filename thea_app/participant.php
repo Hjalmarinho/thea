@@ -23,6 +23,15 @@
   </div>
 </div>
 
+<div class="ui modal" id="receipt-sent">
+  <div class="header">
+    En ny påmeldingskvittering er sendt ut til <span class="participantname"></span>.
+  </div>
+  <div class="actions">
+    <div class="ui button close green">Okey!</div>
+  </div>
+</div>
+
 <div class="ui modal" id="payment-log">
   <div class="header">
     Betalingslogg
@@ -235,10 +244,12 @@
           <button class="fluid ui button" id="updateParticipant">Oppdater deltakerinformasjon</button>
           <div class="ui divider"></div>
           <div id="recietButton">
-          	<button class="fluid ui button" id="recieptParticipant">
-			        Last ned kvittering
-			      </button>
+            <button class="fluid ui button" id="recieptParticipant">
+              Last ned kvittering
+            </button>
           </div>
+          <div class="ui divider"></div>
+          <button class="fluid ui button" id="resendReceipt" onclick="resendReceipt(this);">Send påmeldingskvittering på nytt</button>
           <div class="ui divider"></div>
           <button class="fluid red ui button" id="cancelParticipant" onclick="cancelParticipant();">Kanseller deltaker</button>
         </div>

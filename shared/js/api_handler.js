@@ -184,6 +184,10 @@ function apiGetReceipt(successCallback, errorCallback, eventId, entryId) {
     return doGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/receipt', successCallback, errorCallback)
 }
 
+function apiResendReceipt(successCallback, errorCallback, eventId, entryId) {
+    return doPut(baseURL + 'events/' + eventId + '/participants/' + entryId + '/receipt/resend', {}, successCallback, errorCallback)
+}
+
 function apiPutTerminateEntry(successCallback, errorCallback, transactionId, eventId) {
     return doPut(baseURL + 'events/' + eventId + '/transactions/' + transactionId + '/terminate', {}, successCallback, errorCallback);
 }
@@ -226,3 +230,4 @@ function apiGetAccreditationList(successCallback, errorCallback, eventId) {
 function apiGetPortraits(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/reports/portraits', successCallback, errorCallback)
 }
+
