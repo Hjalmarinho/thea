@@ -259,6 +259,10 @@ function apiGetAccreditationList(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/reports/accreditationlist', successCallback, errorCallback)
 }
 
+function apiGetContactList(successCallback, errorCallback, eventId) {
+    return doGet(baseURL + 'events/' + eventId + '/reports/contactlist', successCallback, errorCallback)
+}
+
 function apiGetPortraits(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/reports/portraits', successCallback, errorCallback)
 }

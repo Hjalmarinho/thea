@@ -10,6 +10,14 @@ function getAccreditationList()
   }, function (data) {}, event_id);
 }
 
+function getContactList()
+{
+  apiGetContactList(function (data)
+  {
+    window.open(data.url);
+  }, function (data) {}, event_id);
+}
+
 function getPortraits()
 {
   apiGetPortraits(function (data)

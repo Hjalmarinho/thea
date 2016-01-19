@@ -16,6 +16,13 @@
           <div class="description">En excel-fil med alle deltagere, deres idretter og tilhørende klubb.</div>
         </div>
       </a>
+      <a class="item" onclick="getContactList();">
+        <i class="users icon"></i>
+        <div class="content">
+          <div class="header">Kontaktliste</div>
+          <div class="description">En excel-fil med epost of telefonnummer til alle deltakere.</div>
+        </div>
+      </a>
       <a class="item" onclick="getPortraits();">
         <i class="file image outline icon"></i>
         <div class="content">
