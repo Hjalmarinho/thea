@@ -255,6 +255,10 @@
       </div>
       <button class="green ui button" onclick="beginAddExercise(this);">Meld opp i idrett</button>
 
+      <h4 class="ui dividing header">Tillegg</h4>
+      <div id="additions">
+      </div>
+
       <h4 class="ui dividing header">Betaling</h4>
       <div class="ui cards" id="orders"></div>
     </div><!-- /.form -->

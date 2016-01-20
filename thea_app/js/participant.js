@@ -29,7 +29,8 @@ $(document).ready(function()
   });
 
   var getSportsRequest = apiGetSports(getSports, errorHandler, event_id);
-  var getTeamsRequest =  apiGetAllTeams(getTeams, errorHandler, event_id);
+  var getTeamsRequest = apiGetAllTeams(getTeams, errorHandler, event_id);
+  var getAdditionsRequest = apiGetAdditions(getAdditions, errorHandler, event_id);
   $.when(getSportsRequest, getTeamsRequest).done(function()
   {
     loadParticipant();
@@ -77,6 +78,119 @@ function displayClubs(clubs)
     });
   }
 }
+
+
+function getAdditions(additions)
+{
+  // Sort additions by name
+  sortArrayByString(additions, "addition_description");
+
+  $.each(additions, function(i, addition)
+  {
+    // Skip additions with parent.
+    if (addition.parent_addition_id != null)
+      return true;
+
+    if (addition.has_children)
+    {
+      // Array.slice() ensures that we pass a copy of the array,
+      // and not 
+      var html = '<div class="ui inline fields"> \
+          <label class="field four wide">' + addition.addition_description + '</label>';
+      html = html + displayAdditionWithChildren(addition, additions.slice());
+      html = html + '</div>';
+      $('#additions').append(html);
+    }
+    else
+    {
+      var html =
+        '<div class="ui inline fields"> \
+          <label class="field four wide">' + addition.addition_description + '</label> \
+          <div class="ui checkbox"> \
+            <input type="checkbox" addition-id="' + addition.addition_id + '" onchange="additionChecked(this);" tabindex="0"> \
+          </div> \
+        </div>';
+
+      $('#additions').append(html);
+    }
+  });
+
+  // "Activate" any radiobuttons.
+  $('.ui.radio.checkbox').checkbox();
+  $('.ui.checkbox').checkbox();
+}
+
+/*
+  This function will print out additions as radiobuttons, such as...
+
+              * Small
+  T-skjorte   * Medium
+              * Large
+
+  T-skjorte is the parentAdditions, and Small, Medium and Large exists
+  in the array "additions".
+*/
+function displayAdditionWithChildren(parentAddition, additions)
+{
+  var html = '';
+  sortArrayByNumber(additions, 'addition_id');
+  for (var i = 0; i < additions.length; ++i)
+  {
+    var children = additions[i];
+    if (children.parent_addition_id == parentAddition.addition_id)
+    {
+      // Print the addition.
+      html = html + 
+        '<div class="field"> \
+          <div class="ui radio checkbox"> \
+            <input type="radio" addition-id="' + children.addition_id + '" name="' + parentAddition.addition_id + '" class="hidden" tabindex="0" onchange="additionChecked(this);"> \
+            <label>' + children.addition_description + '</label>\
+          </div> \
+        </div>';
+    }
+  };
+
+  return html;
+}
+
+
+// function displayAdditionWithChildren(parentAddition, additions)
+// {
+//   var first = true;
+//    var html =
+//         '<div class="ui inline fields"> \
+//           <label class="field four wide">' + parentAddition.addition_description + '</label>';
+//   $('#additions').append(html);
+// 
+//   sortArrayByNumber(additions, 'addition_id');
+//   $.each(additions, function(i, children)
+//   {
+//     if (children.parent_addition_id == parentAddition.addition_id)
+//     {
+//       // Print the addition.
+//       var html =
+//         '<div class="ui inline fields"> \
+//           <label class="field four wide">' + addition.addition_description + '</label> \
+//           <div class="ui checkbox"> \
+//             <input type="checkbox" addition-id="' + addition.addition_id + '" onchange="additionChecked(this);" tabindex="0"> \
+//           </div> \
+//         </div>';
+// 
+//       $('#additions').append(
+//         '<div class="field"> \
+//             <div class="ui radio checkbox"> \
+//                 <input type="radio" addition-id="' + children.addition_id + '" name="' + parentAddition.addition_id + '" tabindex="0" class="hidden" onchange="additionChecked(this);"> \
+//                 <label>' + children.addition_description + '</label> \
+//             </div> \
+//          </div>'
+//         );
+// 
+//       first = false;
+//     }
+//   });
+//   $('#additions').append('<br>');
+// }
+
 
 function getSports(sports_array)
 {
@@ -210,6 +324,13 @@ function displayParticipant(participant)
   $('#recieptParticipant').unbind('click');
   $('#recieptParticipant').click(function() { getReceipt(local_entry_id); });
 
+  // Additions
+  $.each(participant.additions, function(i, addition)
+  {
+    var addition_txt_id = '[addition-id=' + addition.addition_id + ']';
+    $(addition_txt_id).attr('checked', '');
+    $(addition_txt_id).attr('entry-addition-id', addition.entry_addition_id);
+  });
 
   // ******** PAYMENT INFORMATION ********
   if (participant.orders)
@@ -658,5 +779,29 @@ function doTeamEntry(sender)
   {
     $(sender).removeClass('loading');
     $('#select-exercise-team-modal').modal('hide');
+  });
+}
+
+function additionChecked(sender)
+{
+  // Find out if the value was checked or not
+  $("#participantLoader").show();
+  var checked = $(sender).is(':checked');
+  var request = null;
+  if (checked)
+  {
+    var additionId = parseInt($(sender).attr('addition-id'));
+    var data = {'addition_id': additionId, 'num_items': 1 };
+    request = apiPostEntryAddition(function(data) { }, errorHandler, event_id, local_entry_id, data);
+  }
+  else
+  {
+    var entryAdditionId = parseInt($(sender).attr('entry-addition-id'));
+    request = apiDeleteEntryAddition(function(data) { }, errorHandler, event_id, local_entry_id, entryAdditionId);
+  }
+
+  $.when(request).always(function()
+  {
+    loadParticipant();
   });
 }

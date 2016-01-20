@@ -211,7 +211,7 @@ function displayTeam(team)
       }
     }
 
-    id_teammembers.append('<tr><td><i class="green disabled plus icon"></td><td></td></tr>');
+    id_teammembers.append('<tr><td><i class="green disabled plus icon"></td><td></td><td colspan="3"></td></tr>');
   }
 
   /* STATS */

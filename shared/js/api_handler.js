@@ -235,6 +235,14 @@ function apiPostEntryExercise(successCallback, errorCallback, eventId, entryId, 
     return doPost(baseURL + 'events/' + eventId + '/participants/' + entryId + '/exercises', jsonData, successCallback, errorCallback);
 }
 
+function apiDeleteEntryAddition(successCallback, errorCallback, eventId, entryId, entryAdditionId) {
+    return doDelete(baseURL + 'events/' + eventId + '/participants/' + entryId + '/additions/' + entryAdditionId, {}, successCallback, errorCallback);
+}
+
+function apiPostEntryAddition(successCallback, errorCallback, eventId, entryId, jsonData) {
+    return doPost(baseURL + 'events/' + eventId + '/participants/' + entryId + '/additions', jsonData, successCallback, errorCallback);
+}
+
 function apiPutEntryExercise(successCallback, errorCallback, eventId, entryId, entryExerciseId, jsonData) {
     return doPut(baseURL + 'events/' + eventId + '/participants/' + entryId + '/exercises/' + entryExerciseId, jsonData, successCallback, errorCallback);
 }
