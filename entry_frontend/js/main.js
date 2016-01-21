@@ -74,6 +74,7 @@ $( document ).ready(function() {
 var TICKET_ID_PARTICIPANT = 1;
 var TICKET_ID_TEAM = 2;
 var TICKET_ID_SUPPORTER = 3;
+var TICKET_ID_EXTRA = 4;
 var sports = null;
 
 //      UPDATE GUI FUNCTIONS
@@ -337,6 +338,7 @@ function removeSport(removeButton){
 
 //When user clicks "Meld på" a confirm-modal is populated with the data that the user has entered
 function createConfirmModal(){
+    var ticket_id = parseInt($('#ticket_id').data('value'));
 
     //Create personal info
     $('#confirm_personal_container').empty();
@@ -346,19 +348,31 @@ function createConfirmModal(){
     var birthdate = $('#birthday').val() + '. ' + $('#birthmonth  option:selected').text() + ' ' + $('#birthyear').val();
     personal_html += generateLabelPair('Fødselsdato', birthdate );
     personal_html += generateLabelPair('Kjønn',   $('#gender  option:selected').text() );
-    personal_html += generateLabelPair('Student', $('#is_student  option:selected').text() );
+
+    if (ticket_id != TICKET_ID_EXTRA)
+      personal_html += generateLabelPair('Student', $('#is_student  option:selected').text() );
     personal_html += generateLabelPair('Epost', $('#email').val() );
     personal_html += generateLabelPair('Mobil', $('#phone').val() );
-    personal_html += generateLabelPair('Reiseinfo', $('#travel_information  option:selected').text() );
+
+    if (ticket_id != TICKET_ID_EXTRA)
+      personal_html += generateLabelPair('Reiseinfo', $('#travel_information  option:selected').text() );
+
+    if (ticket_id == TICKET_ID_EXTRA)
+    {
+      personal_html += generateLabelPair('Funksjon/rolle', $('#role').val() );
+      personal_html += generateLabelPair('Organisasjon', $('#organization').val() );
+    }
+
     $('#confirm_personal_container').append(personal_html);
 
     //Create participant info
     $('#confirm_participant_container').empty();
-    var ticket_id = parseInt($('#ticket_id').data('value'));
     var participant_html = '';
-    participant_html += generateLabelPair('Klubb', $('#clubs  option:selected').text() );
 
-    if (ticket_id != TICKET_ID_SUPPORTER)
+    if (ticket_id != TICKET_ID_EXTRA)
+      participant_html += generateLabelPair('Klubb', $('#clubs  option:selected').text() );
+
+    if (ticket_id != TICKET_ID_SUPPORTER && ticket_id != TICKET_ID_EXTRA)
     {
         participant_html += generateLabelPair('Medlem', $('#is_clubmember  option:selected').text() );
         var counter = 1;
@@ -425,17 +439,35 @@ function confirmPortrait()
 
 //Called when a participant clicks the submit-button 
 function submitParticipantForm(){
+    var ticket_id = parseInt($('#ticket_id').data('value'));
     $("#paymentButton").addClass("loading");
     //Serialize the form into a json-object in order to post the participant to the API
     var jsonForm = createJSON();
 
     //Post the participant using the API
-    var request = apiPostParticipant(redirectToPayment, showError, jsonForm, eventId);
+    var request = null;
+    if (ticket_id == TICKET_ID_EXTRA)
+    {
+      request = apiPostExternalPerson(externalPersonPosted, showError, jsonForm, eventId);
+    }
+    else
+    {
+      request = apiPostParticipant(redirectToPayment, showError, jsonForm, eventId);
+    }
 
     $.when(request).always(function() {
-        $("#paymentButton").removeClass("loading");
+      $("#paymentButton").removeClass("loading");
     });
+
 }
+
+
+function externalPersonPosted(data)
+{
+  $('#confirm_modal').modal('hide');
+  $('#confirm-extra-modal').modal('show');
+}
+
 
 //Called when a user has completed payment 
 function completeEntry(transaction_id, callback, errorCallback){
@@ -458,10 +490,18 @@ function showError(error_msg) {
 // ***********************************************************************
 //Constructs a JSON-object from the data that has been entered in the GUI
 function createJSON(){
+    var ticket_id = parseInt($('#ticket_id').data('value'));
+
     var jsonForm = {};
     var entry = {};
     jsonForm["redirect_url"] = redirectURL;
     jsonForm["entry"] = entry;
+
+    if (ticket_id == TICKET_ID_EXTRA) {
+      jsonForm["key"] = key;
+      entry["role"] = $('#role').val();
+      entry["organization"] = $('#organization').val();
+    }
 
     //Personal information
     entry["is_clubmember"] = (($('#is_clubmember').val()  == 1) ? true : false);

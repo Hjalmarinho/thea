@@ -1,5 +1,10 @@
 <?php require 'header.php';?>
-
+<script>
+var frontend_url = null;
+<?php
+  echo 'frontend_url = "' . FRONTEND_URL . '";';
+?>
+</script>
 <div class="ui items">
     <div class="header">
       <!-- <i class="large sidebar icon" id="menubutton"></i> -->
@@ -55,8 +60,8 @@
     </div> -->
   </div>
 
-  <h4 class=" center aligned " id="last_entry"></h4>
-
+  <h4 class="center aligned" id="last_entry"></h4>
+  <h4 class="center aligned" id="external-entry"></h4>
   <div class="header">
     <!-- <i class="large sidebar icon" id="menubutton"></i> -->
     <h1>Idretter</h1>

@@ -143,7 +143,25 @@ $( document ).ready(function() {
 					prompt : 'Du må godta avtalevilkårene for å melde deg på'
 				}
 				]
-			}
+			},
+			role: {
+				identifier  : 'role',
+				rules: [
+				{
+					type   : 'empty',
+					prompt : 'Skriv inn din tittel/funksjon'
+				}
+				]
+			},
+			organization: {
+				identifier  : 'organization',
+				rules: [
+				{
+					type   : 'empty',
+					prompt : 'Skriv inn hvilken organisasjon du er i fra'
+				}
+				]
+			},
 		}
 	})
 });

@@ -55,6 +55,10 @@
   </div>
 </div>
 
+<?php
+if (!defined('SKIP_TRAVEL_INFORMATION'))
+{
+?>
 <div class="inline fields">
   <label class="field four wide">Student</label>
   <div class="field twelve wide">
@@ -65,6 +69,10 @@
     </select>
   </div>
 </div>
+<?php
+}
+?>
+
 
 <div class="inline fields">
   <label class="field four wide">Epost</label>
@@ -80,6 +88,10 @@
   </div>
 </div>
 
+<?php
+if (!defined('SKIP_TRAVEL_INFORMATION'))
+{
+?>
 <div class="inline fields">
   <label class="field four wide">Reiseinfo</label>
   <div class="field twelve wide">
@@ -192,3 +204,7 @@
     </select>
   </div>
 </div>
+
+<?php
+}
+?>

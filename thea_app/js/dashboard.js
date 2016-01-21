@@ -7,7 +7,18 @@ var last_entry_time = null;
 $(document).ready(function()
 {
   var request = apiGetSports(getSports, handleError, eventId);
+  var eventRequest = apiGetEvent(getEvent, handleError, eventId)
 });
+
+
+function getEvent(data)
+{
+  if (data)
+  {
+    var url = frontend_url + '/entry_extra.php?event_id=' + eventId + '&key=' + data.event_uuid;
+    $('#external-entry').html('Adresse til påmelding for eksterne aktører: <a href="' + url + '">' + url + '</a>');
+  }
+}
 
 
 function lastEntryTimer()
