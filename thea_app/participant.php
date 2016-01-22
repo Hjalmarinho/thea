@@ -280,7 +280,7 @@
           </div>
         </div>
         <div class="extra content">
-          <textarea rows="4" id="comment" style="max-width:100%;width:100%;">Ingen kommentarer</textarea>
+          <textarea rows="4" id="comment" style="max-width:100%;width:100%;" onchange="commentChanged(this);">Ingen kommentarer</textarea>
 
 
           <button class="fluid ui button" id="updateParticipant">Oppdater deltakerinformasjon</button>
