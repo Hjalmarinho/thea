@@ -151,6 +151,9 @@ var REGISTRATION_PREPAYMENT = "PRE-PAYMENT";
 var REGISTRATION_INQUEUE = "IN-QUEUE";
 var REGISTRATION_TERMINATED = "TERMINATED";
 
+var ROLE_PLAYER = 0;
+var ROLE_TEAMLEADER = 1;
+var ROLE_CONTACTPERSON = 2;
 
 function lpad(input, width, pad_char) {
   input = input + '';
@@ -168,4 +171,24 @@ function genderToString(gender)
     return "Mix";
   else
     return "Ukjent";
+}
+
+function bit_test(num, bit)
+{
+  return ((num>>bit) % 2 != 0)
+}
+
+function bit_set(num, bit)
+{
+  return num | 1<<bit;
+}
+
+function bit_clear(num, bit)
+{
+  return num & ~(1<<bit);
+}
+
+function bit_toggle(num, bit)
+{
+  return bit_test(num,bit) ? bit_clear(num,bit) : bit_set(num,bit);
 }

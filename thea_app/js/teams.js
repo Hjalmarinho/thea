@@ -15,14 +15,23 @@ function displayTeams(teams){
     if (team.status == REGISTRATION_CANCELLED)
       cssClass = 'error';
 
+    var contact_person = null;
+    // Get the first contact person
+    $.each(team.team_members, function (i, entryExercise) {
+      if (bit_test(entryExercise.roles, ROLE_CONTACTPERSON))
+      {
+        contact_person = entryExercise.entry;
+        return true;
+      }
+    });
     var team_name = team.team_name
-    var club_name = team.contact_person.club.club_name
+    var club_name = team.club.club_name
     var team_gender = customGenderFormat(team.team_gender)
-    var entry_id = team.contact_person.entry_id
-    var contact_person_first_name = team.contact_person.person.first_name
-    var contact_person_last_name = team.contact_person.person.last_name
+    var entry_id = (contact_person == null ? -1 : contact_person.entry_id);
+    var contact_person_first_name = (contact_person == null ? '' : contact_person.person.first_name);
+    var contact_person_last_name = (contact_person == null ? '' : contact_person.person.last_name);
     var team_id = team.team_id
-    var club_id = team.contact_person.club.club_id
+    var club_id = team.club_id
     var tablerow =
     '<tr class="' + cssClass + '"> \
     <td><a href="./team.php?team_id=' + team_id +'">' + team_name + '</a></td> \

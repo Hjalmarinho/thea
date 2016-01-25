@@ -98,21 +98,20 @@
           </select>
         </div>
       </div>
-
-      <div class="inline fields">
-        <label class="field four wide">Lagleder/Kontaktperson</label>
-        <div class="field nine wide">
-          <select class="ui fluid dropdown" onchange="teamLeaderChanged(this);" id="teamleader">
-            <option value="">Velg lagleder</option>
-          </select>
-        </div>
-      </div>
-
     </div><!-- /.form -->
     <h4 class="ui dividing header">Lagmedlemmer</h4>
   <div class="ui fourteen wide column">
     
     <table class="ui very basic table">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th class="center aligned">Spiller</th>
+          <th class="center aligned">Lagleder</th>
+          <th class="center aligned">Kontaktperson</th>
+        </tr>
+      </thead>
       <tbody id="teammembers">
 
       </tbody>

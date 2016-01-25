@@ -235,6 +235,10 @@ function apiPostEntryExercise(successCallback, errorCallback, eventId, entryId, 
     return doPost(baseURL + 'events/' + eventId + '/participants/' + entryId + '/exercises', jsonData, successCallback, errorCallback);
 }
 
+function apiPutEntryExercise(successCallback, errorCallback, eventId, entryId, entryExerciseId, jsonData) {
+    return doPut(baseURL + 'events/' + eventId + '/participants/' + entryId + '/exercises/' + entryExerciseId, jsonData, successCallback, errorCallback);
+}
+
 function apiLoginUser(successCallback, errorCallback, jsonData) {
     return doPost(baseURL + 'users/login/', jsonData, successCallback, errorCallback);
 }

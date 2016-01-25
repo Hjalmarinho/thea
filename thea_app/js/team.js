@@ -70,20 +70,6 @@ function displaySports(sports)
   }
 }
 
-
-function displayTeamLeaderCandidates(member)
-{
-  if (member)
-  {
-    if (member.status == "CONFIRMED")
-    {
-      var memberName = member.person.first_name + ' ' + member.person.last_name;
-      $('#teamleader').append('<option value=' + member.entry_id + '>'+ escapeHtml(memberName) + '</option>');
-    }
-  }
-}
-
-
 function displayExercises(exercises)
 {
   if (exercises)
@@ -113,18 +99,15 @@ function displayExercises(exercises)
   }
 }
 
-
 function exerciseChanged(sender)
 {
   changes_to_save["exercise_id"] = parseInt($(sender).val());
 }
 
-
 function teamNameChanged(sender)
 {
   changes_to_save["team_name"] = $(sender).val();
 }
-
 
 function clubChanged(sender)
 {
@@ -135,13 +118,6 @@ function genderChanged(sender)
 {
   changes_to_save["team_gender"] = $(sender).val();
 }
-
-
-function teamLeaderChanged(sender)
-{
-  changes_to_save["contact_person_id"] = parseInt($(sender).val());
-}
-
 
 function sportChanged(sender)
 {
@@ -169,7 +145,6 @@ function displayTeam(team)
   var id_sports = $('#sports');
   var id_clubs = $('#clubs');
   var id_select_gender = $('#selectgender');
-  var id_teamleader = $('#teamleader');
   var id_teammembers = $('#teammembers');
   var num_non_students = 0;
   var num_accreditated = 0;
@@ -181,51 +156,97 @@ function displayTeam(team)
   id_sports.dropdown('set selected', team.exercise.sport_id);
 
   id_teammembers.empty();
-  $('#teamleader').empty();
+  //$('#teamleader').empty();
+  var num_members = 0;
   if (team.team_members.length > 0)
   {
     for (var i = 0; i < team.team_members.length; ++i)
     {
-      var teamMember = team.team_members[i];
-      if (teamMember.status == "CONFIRMED")
+      var roles = team.team_members[i].roles;
+      var teamMember = team.team_members[i].entry;
+      if (teamMember.status == 'CONFIRMED')
       {
-        var tablerow = '<tr><td><i class="red disabled remove icon"></td><td><a href="./participant.php?entry_id=' + teamMember.entry_id + '">' + teamMember.person.first_name + ' ' + teamMember.person.last_name + '</a></td></tr>';
+        if (bit_test(roles, ROLE_PLAYER))
+        {
+          num_members++;
+          if (!teamMember.is_student)
+            num_non_students++;
+        }
+
+        var displayName = teamMember.person.first_name + ' ' + teamMember.person.last_name;
+        var tablerow =
+        '<tr entry-exercise-id="' + team.team_members[i].entry_exercise_id + '"> \
+          <td> \
+            <i class="red disabled remove icon"> \
+          </td> \
+          <td> \
+            <a href="./participant.php?entry_id=' + teamMember.entry_id + '">' + displayName + '</a> \
+          </td> \
+          <td class="center aligned"> \
+            <div class="inline field"> \
+              <div class="ui checkbox"> \
+                <input role="' + ROLE_PLAYER + '" onchange="roleChanged(this, ' + team.team_members[i].entry_exercise_id + ', ' + teamMember.entry_id + ');" type="checkbox" ' + (bit_test(roles, ROLE_PLAYER) ? 'checked' : '') + ' tabindex="0" class="hidden"> \
+              </div> \
+            </div> \
+          </td> \
+          <td class="center aligned"> \
+            <div class="inline field"> \
+              <div class="ui checkbox"> \
+                <input role="' + ROLE_TEAMLEADER + '" onchange="roleChanged(this, ' + team.team_members[i].entry_exercise_id + ', ' + teamMember.entry_id + ');" type="checkbox" ' + (bit_test(roles, ROLE_TEAMLEADER) ? 'checked' : '') + ' tabindex="0" class="hidden"> \
+              </div> \
+            </div> \
+          </td> \
+          <td class="center aligned"> \
+            <div class="inline field"> \
+              <div class="ui checkbox"> \
+                <input role="' + ROLE_CONTACTPERSON + '" onchange="roleChanged(this, ' + team.team_members[i].entry_exercise_id + ', ' + teamMember.entry_id + ');" type="checkbox" ' + (bit_test(roles, ROLE_CONTACTPERSON) ? 'checked' : '') + ' tabindex="0" class="hidden"> \
+              </div> \
+            </div> \
+          </td> \
+        </tr>';
         id_teammembers.append(tablerow);
-        displayTeamLeaderCandidates(teamMember);
 
-        if (teamMember.is_student == false)
-        {
-          num_non_students++;
-        }
-
-        if (teamMember.accreditated == true)
-        {
+        if (teamMember.accreditated)
           num_accreditated++;
-        }
       }
     }
 
     id_teammembers.append('<tr><td><i class="green disabled plus icon"></td><td></td></tr>');
   }
-  
-  if (team.contact_person.person.entry_id == 53)
-  {
-    displayTeamLeaderCandidates(team.contact_person)
-  }
-
-  id_teamleader.dropdown('set selected', team.contact_person_id);
 
   /* STATS */
-  var num_members = team.team_members.length;
   var team_slots = team.exercise.slots_per_team;
   var non_students = team.exercise.max_non_students_per_team;
 
   $('#team_info').empty();
-  $('#team_info').append('Påmeldte: ' + num_members + ' / ' + team_slots + ' <br> \
+  $('#team_info').append('Deltagere: ' + num_members + ' / ' + team_slots + ' <br> \
             Ikke studenter: ' + num_non_students + ' / ' + non_students + ' <br> \
             Akkrediterte: ' + num_accreditated + ' / ' + team_slots);
 
   setCanceled();
+  $('.ui.checkbox').checkbox();
+}
+
+
+function roleChanged(sender, entryExerciseId, entryId)
+{
+  $("#teamLoader").show();
+
+  // Collect roles.
+  var role = 0;
+  $.each($('[entry-exercise-id=' + entryExerciseId + '] input'), function(i, input)
+  {
+    var index = $(input).attr('role');
+    if ($(input).is(':checked'))
+      role = bit_set(role, index)
+  });
+
+  var jsonData = {'roles' : role};
+  var request = apiPutEntryExercise(function(data) { }, handleError, event_id, entryId, entryExerciseId, jsonData);
+  $.when(request).always(function()
+  {
+    loadTeam();
+  });
 }
 
 
