@@ -202,7 +202,9 @@ function displayParticipant(participant)
 
   // Comment
   if (participant.comment != null)
-    id_comment.text(escapeHtml(participant.comment))
+    id_comment.val(escapeHtml(participant.comment))
+  else
+    id_comment.val('');
 
   // Receipt
   $('#recieptParticipant').unbind('click');
@@ -498,6 +500,13 @@ function travelInformationChanged(sender)
 {
   changes_to_save['travel_information'] = $(sender).val();
 }
+
+
+function commentChanged(sender)
+{
+  changes_to_save['comment'] = $(sender).val();
+}
+
 
 function allergiesChanged(sender)
 {
