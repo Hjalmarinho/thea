@@ -20,7 +20,14 @@
         <i class="users icon"></i>
         <div class="content">
           <div class="header">Kontaktliste</div>
-          <div class="description">En excel-fil med epost of telefonnummer til alle deltakere.</div>
+          <div class="description">En excel-fil med epost og telefonnummer til alle deltakere.</div>
+        </div>
+      </a>
+      <a class="item" onclick="getExtendedContactList();">
+        <i class="users icon"></i>
+        <div class="content">
+          <div class="header">Utvidet kontaktliste</div>
+          <div class="description">En excel-fil med epost, telefonnummer, idretter og tillegg til alle deltakere.</div>
         </div>
       </a>
       <a class="item" onclick="getPortraits();">

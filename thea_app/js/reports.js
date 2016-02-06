@@ -18,6 +18,14 @@ function getContactList()
   }, function (data) {}, event_id);
 }
 
+function getExtendedContactList()
+{
+  apiGetExtendedContactList(function (data)
+  {
+    window.open(data.url);
+  }, function (data) {}, event_id);
+}
+
 function getPortraits()
 {
   apiGetPortraits(function (data)
