@@ -6,6 +6,10 @@
   </div>
 </div>
 
+<div id="loader" class="ui active inverted dimmer" style="display:none;">
+  <div class="ui large text loader">Genererer rapporten...</div>
+</div>
+
 <div class="ui stackable two column grid">
   <div class="eight wide column">
     <div class="ui list">

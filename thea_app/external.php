@@ -145,7 +145,7 @@
           <div class="ui dimmer">
             <div class="content">
               <div class="center">
-                <div class="ui inverted button disabled" id="uploadPortraitButton">Last opp nytt bilde</div>
+                <div class="ui inverted button" id="uploadPortraitButton">Last opp nytt bilde</div>
               </div>
             </div>
           </div>
@@ -158,9 +158,9 @@
           </div>
         </div>
         <div class="extra content">
-          <button class="fluid ui button disabled" id="updateParticipant">Oppdater personinformasjon</button>
+          <button class="fluid ui button" id="updateParticipant">Oppdater personinformasjon</button>
           <div class="ui divider"></div>
-          <button class="fluid red ui button disabled" id="cancelParticipant" onclick="cancelParticipant();">Kanseller person</button>
+          <button class="fluid red ui button" id="cancelParticipant" onclick="cancelParticipant();">Kanseller person</button>
         </div>
     </div>
 

@@ -123,7 +123,7 @@ function cancelParticipant()
   else
     data = {'status': REGISTRATION_CANCELLED};
 
-  var request = apiPutParticipant(function(data) {}, function(data) {}, event_id, externalPersonId, data, '');
+  var request = apiPutExternalPerson(function(data) {}, function(data) {}, event_id, externalPersonId, data, '');
   $.when(request).done(function()
   {
     $('#cancelParticipant').removeClass('loading');
@@ -151,7 +151,7 @@ function updateParticipant()
 {
   $('#updateParticipant').addClass('loading');
 
-  var request = apiPutParticipant(function(data) {}, errorHandler, event_id, externalPersonId, changes_to_save, '');
+  var request = apiPutExternalPerson(function(data) {}, errorHandler, event_id, externalPersonId, changes_to_save, '');
   $.when(request).done(function()
   {
     $('#updateParticipant').removeClass('loading');
@@ -227,7 +227,7 @@ function confirmPortrait()
   // Trim away any 'data:image/jpeg;base64,' at the beginning.
   base64 = base64.replace('data:image/jpeg;base64,', '');
   var json_data = {'portrait_data': base64};
-  var request = apiPutPortrait(function(data) { loadExternalPerson(); }, errorHandler, event_id, externalPersonId, json_data, '');
+  var request = apiPutExternalPersonPortrait(function(data) { loadExternalPerson(); }, errorHandler, event_id, externalPersonId, json_data, '');
   $.when(request).done(function()
   {
     $('#image_modal').modal('hide');

@@ -4,32 +4,58 @@ var event_id = sessionStorage.getItem('event_id');
 
 function getAccreditationList()
 {
-  apiGetAccreditationList(function (data)
+  showLoader();
+
+  var request = apiGetAccreditationList(function (data)
   {
     window.open(data.url);
   }, function (data) {}, event_id);
+
+  $.when(request).always(function() { hideLoader(); });
 }
 
 function getContactList()
 {
-  apiGetContactList(function (data)
+  showLoader();
+
+  var request = apiGetContactList(function (data)
   {
     window.open(data.url);
   }, function (data) {}, event_id);
+
+  $.when(request).always(function() { hideLoader(); });
 }
 
 function getExtendedContactList()
 {
-  apiGetExtendedContactList(function (data)
+  showLoader();
+
+  var request = apiGetExtendedContactList(function (data)
   {
     window.open(data.url);
   }, function (data) {}, event_id);
+
+  $.when(request).always(function() { hideLoader(); });
 }
 
 function getPortraits()
 {
-  apiGetPortraits(function (data)
+  showLoader();
+
+  var request = apiGetPortraits(function (data)
   {
     window.open(data.url);
   }, function (data) {}, event_id);
+
+  $.when(request).always(function() { hideLoader(); });
+}
+
+function showLoader()
+{
+  $('#loader').show();
+}
+
+function hideLoader()
+{
+  $('#loader').hide();
 }

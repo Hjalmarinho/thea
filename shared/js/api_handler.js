@@ -307,6 +307,14 @@ function apiGetExternalPerson(successCallback, errorCallback, eventId, externalP
   return doGet(baseURL + 'events/' + eventId + '/externalpersons/' + externalPersonId, successCallback, errorCallback);
 }
 
+function apiPutExternalPerson(successCallback, errorCallback, eventId, externalPersonId, jsonData, comment) {
+    return doPut(baseURL + 'events/' + eventId + '/externalpersons/' + externalPersonId, jsonData, successCallback, errorCallback, {'comment': comment})
+}
+
 function apiGetExternalPersonPortrait(successCallback, errorCallback, eventId, externalPersonId) {
   return doGet(baseURL + 'events/' + eventId + '/externalpersons/' + externalPersonId + '/portrait', successCallback, errorCallback);
+}
+
+function apiPutExternalPersonPortrait(successCallback, errorCallback, eventId, externalPersonId, jsonData, comment) {
+  return doPut(baseURL + 'events/' + eventId + '/externalpersons/' + externalPersonId + '/portrait', jsonData, successCallback, errorCallback, {'comment': comment});
 }
