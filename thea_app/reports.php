@@ -34,6 +34,13 @@
           <div class="description">En excel-fil med epost, telefonnummer, idretter og tillegg til alle deltakere.</div>
         </div>
       </a>
+      <a class="item" onclick="getExternalPersons();">
+        <i class="users icon"></i>
+        <div class="content">
+          <div class="header">Eksternt personell</div>
+          <div class="description">En excel-fil med epost og telefonnummer til eksternt personell.</div>
+        </div>
+      </a>
       <a class="item" onclick="getPortraits();">
         <i class="file image outline icon"></i>
         <div class="content">

@@ -286,6 +286,10 @@ function apiGetContactList(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/reports/contactlist', successCallback, errorCallback)
 }
 
+function apiGetExternalPersonsContactList(successCallback, errorCallback, eventId) {
+    return doGet(baseURL + 'events/' + eventId + '/reports/externalpersons', successCallback, errorCallback)
+}
+
 function apiGetExtendedContactList(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/reports/contactlist/extended', successCallback, errorCallback)
 }

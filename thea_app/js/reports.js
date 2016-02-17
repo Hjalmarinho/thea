@@ -38,6 +38,18 @@ function getExtendedContactList()
   $.when(request).always(function() { hideLoader(); });
 }
 
+function getExternalPersons()
+{
+  showLoader();
+
+  var request = apiGetExternalPersonsContactList(function (data)
+  {
+    window.open(data.url);
+  }, function (data) {}, event_id);
+
+  $.when(request).always(function() { hideLoader(); });
+}
+
 function getPortraits()
 {
   showLoader();
