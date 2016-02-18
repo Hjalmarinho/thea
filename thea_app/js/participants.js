@@ -3,7 +3,7 @@
 var event_id = sessionStorage.getItem("event_id");
 
 $(document).ready(function(){
-	var request = apiGetParticipants(displayParticipants, handleError, event_id, false, false, false, true, false);
+	var request = apiGetParticipants(displayParticipants, handleError, event_id, false, false, true, true, false);
 	$.when(request).always(function() { removeLoader(); });
 })
 
@@ -44,13 +44,19 @@ function displayParticipants(participants){
 		var time_registrated = parseDateString(participant.time_registrated);
 		var time_registrated_str = time_registrated.customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#")
 		var entry_id = participant.entry_id
+		var ticket_type = 'Ukjent';
 
-		if (participant.exercises.length == 0){
-			console.log(first_name + ' ' + last_name)
-		}
+		if (participant.ticket.ticket_type == 'PARTICIPANT')
+			ticket_type = 'Deltaker';
+		else if (participant.ticket.ticket_type == 'SPECTATOR')
+			ticket_type = 'Tilskuer';
+
+//		if (participant.exercises.length == 0){
+//			console.log(first_name + ' ' + last_name)
+//		}
 
 		var tablerow = '<tr ' + cssClass + '><td><a href="./participant.php?entry_id=' + entry_id +'">' + first_name + '</a></td><td>' + last_name + '</td><td>' + 
-		gender + '</td><td>' + club + '</td><td>' + phone + '</td><td><a href="mailto:' + email + '">' + email + '</a></td><td data-sort-value="' + time_registrated.getTime() + '">' + 
+		gender + '</td><td>' + club + '</td><td>' + phone + '</td><td><a href="mailto:' + email + '">' + email + '</a></td><td>' + ticket_type + '</td><td data-sort-value="' + time_registrated.getTime() + '">' + 
 		time_registrated_str + '</td><td onclick="getReceipt(' + entry_id + ');"><i class="download blue icon"></i></td></tr>'
 
 		$(participantsdiv).append(tablerow)

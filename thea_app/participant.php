@@ -226,6 +226,13 @@
         </div>
       </div>
 
+      <div class="inline fields">
+        <label class="field four wide">Billettype</label>
+        <div class="field nine wide">
+          <input type="text" value="" id="ticket_type" readonly>
+        </div>
+      </div>
+
       <h4 class="ui dividing header">Deltakerinformasjon</h4>
 
       <div class="inline fields">

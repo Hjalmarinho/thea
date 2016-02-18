@@ -294,7 +294,14 @@ function displayParticipant(participant)
 
   // Allergies
   id_allergies.val(escapeHtml(participant.person.allergies));
-  
+
+  var ticket_type = 'Ukjent';
+
+  if (participant.ticket.ticket_type == 'PARTICIPANT')
+    ticket_type = 'Deltaker';
+  else if (participant.ticket.ticket_type == 'SPECTATOR')
+    ticket_type = 'Tilskuer';
+  $('#ticket_type').val(ticket_type);
   //******** PARTICIPANT INFORMATION ********
 
   // Club

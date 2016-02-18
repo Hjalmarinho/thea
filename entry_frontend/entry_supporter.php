@@ -63,5 +63,7 @@ Primary use:  View allowing suppporters to register for an event.
     <!-- Insert the confirm modal -->
   <?php require("view_components/confirm_modal.php"); ?>
 
+  <!-- Insert error modal -->
+  <?php require("view_components/error_modal.php"); ?>
 </body>
 </html>

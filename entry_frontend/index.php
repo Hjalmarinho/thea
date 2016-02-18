@@ -70,8 +70,8 @@ else
 <script>
   function getEventCallback(event_obj)
   {
-  	var event_start = new Date(event_obj.event_start);
-  	var event_end = new Date(event_obj.event_end);
+    var event_start = new Date(event_obj.event_start);
+    var event_end = new Date(event_obj.event_end);
 
     $('#header').text('Påmelding ' + event_obj.event_description);
     $('#organizer_name').text('Arrangør: ' + event_obj.event_organizer.club_name);
@@ -91,15 +91,21 @@ else
 
       if (ticket_obj.ticket_type == 'PARTICIPANT')
       {
-        $('#tickets').append('<a href="' + event_obj.event_id + '/deltager"><button class="ui blue button">Meld på deltager</button></a>');
+        var ticket_text = "Meld på deltager";
+        if (ticket_obj.display_text != null)
+          ticket_text = ticket_obj.display_text;
+        $('#tickets').append('<a href="' + event_obj.event_id + '/deltager"><button class="ui blue button">' + ticket_text + '</button></a>');
 
-        // VERY bad hack...
-        if (event_obj.event_id != 2 && event_obj.event_id != 3)
+        // VERY bad hack...ev
+        if (event_obj.has_teamexercise)
           $('#tickets').append('<a href="' + event_obj.event_id + '/lagleder"><button class="ui blue button">Meld på lag</button></a>');
       }
       else if (ticket_obj.ticket_type == 'SPECTATOR')
       {
-        $('#tickets').append('<a href="' + event_obj.event_id + '/tilskuer"><button class="ui blue button">Tilskuerbillett</button></a>');
+        var ticket_text = "Meld på deltager";
+        if (ticket_obj.display_text != null)
+          ticket_text = ticket_obj.display_text;
+        $('#tickets').append('<a href="' + event_obj.event_id + '/tilskuer"><button class="ui blue button">' + ticket_text + '</button></a>');
       }
     }
   }

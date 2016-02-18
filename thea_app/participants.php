@@ -21,6 +21,7 @@
         <th>Klubb</th>
         <th>Telefon</th>
         <th>E-post</th>
+        <th>Billettype</th>
         <th>Påmeldingsdato</th>
         <th class="no-sort">Kvittering</th>
     </tr>
