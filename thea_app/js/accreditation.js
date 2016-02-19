@@ -1,5 +1,6 @@
 'use strict';
 var event_id = sessionStorage.getItem('event_id');
+var visibleRows = [];
 
 $(document).ready(function()
 {
@@ -12,17 +13,46 @@ $(document).ready(function()
   var request = apiGetParticipants(displayParticipants, errorHandler, event_id, false, false, false, true, false);
 });
 
+function participantMatch(participant, split)
+{
+    for (var i = 0; i < split.length; ++i)
+    {
+      if (participant.person.first_name.toLowerCase().indexOf(split[i]) == -1 && participant.person.last_name.toLowerCase().indexOf(split[i]) == -1)
+      {
+        return false;
+      }
+    }
+
+  return true;
+}
+
 //Make participants table searchable
 function initiateSearch()
 {
   var $rows = $('#participants_table tbody tr');
   $('#search_input').keyup(function() {
     var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+    var split = val.split(' ');
 
-    $rows.show().filter(function() {
-      var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-      return !~text.indexOf(val);
-    }).hide();
+    // Loop through all participants, and see if their name match the search text.
+    for (var i = 0; i < visibleRows.length; ++i)
+    {
+      var participant = visibleRows[i];
+      var visible;
+      if (val == '')
+        visible = true;
+      else
+        visible = participantMatch(participant, split);
+
+      if (visible != participant.__row_visible)
+      {
+        if (visible)
+          $('#' + participant.entry_id).show();
+        else
+          $('#' + participant.entry_id).hide();
+        participant.__row_visible = visible;
+      }
+    }
   });
 }
 
@@ -37,7 +67,7 @@ function displayParticipants(participants)
   {
     if (participant.status == REGISTRATION_CONFIRMED)
     {
-      var tablerow = $('<tr value="'+ participant.entry_id + '" onclick="participantClicked(' + participant.entry_id + ')">'+ 
+      var tablerow = $('<tr id="'+ participant.entry_id + '" value="'+ participant.entry_id + '" onclick="participantClicked(' + participant.entry_id + ')">'+ 
         '<td>' + participant.person.first_name + '</td>'+
         '<td>' + participant.person.last_name + '</td>'+
         '<td>' + participant.club.club_name + '</td>'+
@@ -46,9 +76,12 @@ function displayParticipants(participants)
       //Display green check-icon if participant has been accreditated
       setBackgroundColor($(tablerow), participant.accreditated);
 
+      participant.__row_visible = true;
+      visibleRows.push(participant);      
       $(participants_table_body).append(tablerow);
     }
   });
+
   initiateSearch();
 };
 
