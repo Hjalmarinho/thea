@@ -31,7 +31,7 @@ function displayExercise(exercise)
     $('#team-info').hide();
     $('#entry-individuals').show();
 
-    request = apiGetParticipants(displayParticipants, handleError, event_id, false, true, false, true, false);
+    request = apiGetParticipants(displayParticipants, handleError, event_id, false, true, false, true, false, -1);
   }
 
   $.when(request).always(function() { $('#exercise-loader').hide(); });

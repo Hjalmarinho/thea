@@ -112,7 +112,7 @@ function getSports(sports)
 
 function fetchStatistics()
 {
-  var participantsRequest = apiGetParticipants(participants, handleError, eventId, false, true, false, false, false);
+  var participantsRequest = apiGetParticipants(participants, handleError, eventId, false, true, false, false, false, -1);
   var teamsRequest = apiGetAllTeams(teams, handleError, eventId);
 
   $.when(teamsRequest, participantsRequest).always(function()

@@ -3,7 +3,7 @@
 var event_id = sessionStorage.getItem("event_id");
 
 $(document).ready(function(){
-	var request = apiGetParticipants(displayParticipants, handleError, event_id, false, false, true, true, false);
+	var request = apiGetParticipants(displayParticipants, handleError, event_id, false, false, true, true, false, -1);
 	$.when(request).always(function() { removeLoader(); });
 })
 

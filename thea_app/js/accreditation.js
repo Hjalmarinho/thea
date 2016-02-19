@@ -1,7 +1,7 @@
 'use strict';
 var event_id = sessionStorage.getItem('event_id');
 var last_history_id = -1;
-var visibleRows = [];
+var visibleRows = {};
 
 $(document).ready(function()
 {
@@ -11,20 +11,19 @@ $(document).ready(function()
     on: 'hover'
   });
 
-  var request = apiGetParticipants(displayParticipants, errorHandler, event_id, false, false, false, true, false);
-
+  var request = apiGetParticipants(displayParticipants, errorHandler, event_id, false, false, false, true, false, last_history_id);
   $.when(request).always(function() { removeParticipantsLoader(); });
 });
 
 function participantMatch(participant, split)
 {
-    for (var i = 0; i < split.length; ++i)
+  for (var i = 0; i < split.length; ++i)
+  {
+    if (participant.person.first_name.toLowerCase().indexOf(split[i]) == -1 && participant.person.last_name.toLowerCase().indexOf(split[i]) == -1)
     {
-      if (participant.person.first_name.toLowerCase().indexOf(split[i]) == -1 && participant.person.last_name.toLowerCase().indexOf(split[i]) == -1)
-      {
-        return false;
-      }
+      return false;
     }
+  }
 
   return true;
 }
@@ -38,9 +37,9 @@ function initiateSearch()
     var split = val.split(' ');
 
     // Loop through all participants, and see if their name match the search text.
-    for (var i = 0; i < visibleRows.length; ++i)
+    for (var entryId in visibleRows)
     {
-      var participant = visibleRows[i];
+      var participant = visibleRows[entryId];
       var visible;
       if (val == '')
         visible = true;
@@ -80,13 +79,36 @@ function displayParticipants(participants)
       setBackgroundColor($(tablerow), participant.accreditated);
 
       participant.__row_visible = true;
-      visibleRows.push(participant);      
+      last_history_id = Math.max(last_history_id, participant.history_id);
+
+      visibleRows[participant.entry_id] = participant;
       $(participants_table_body).append(tablerow);
     }
   });
 
   initiateSearch();
+  setTimeout("getUpdates()", 5000);
 };
+
+
+function updateParticipants(participants)
+{
+  $.each(participants, function (i, participant)
+  {
+    visibleRows[participant.entry_id] = participant;
+    setTableRowAccreditated(participant.entry_id, participant.accreditated);
+  });
+}
+
+
+function getUpdates()
+{
+  var request = apiGetParticipants(updateParticipants, errorHandler, event_id, false, false, false, true, false, last_history_id);
+  console.log("get_updates");
+
+  setTimeout("getUpdates()", 5000);
+}
+
 
 // Display a participant on the card
 function displayParticipant(participant)
@@ -121,7 +143,7 @@ function displayParticipant(participant)
 
 
   // Print additions
-   $('#description').append('<b>Tillegg</b>: ');
+  $('#description').append('<b>Tillegg</b>: ');
 
   var additions = '';
   for (var i = 0; i < participant.additions.length; ++i)
@@ -129,9 +151,9 @@ function displayParticipant(participant)
     var addition = participant.additions[i].addition;
     additions = additions + addition.addition_description + ', ';
   }
-  $('#description').append(additions.substr(0, additions.length - 2));
+  $('#description').append(additions.substr(0, additions.length - 2) + '<br>');
 
-  //TODO: Print out additions
+  $('#description').append('<br><a href="participant.php?entry_id=' + participant.entry_id + '">Gå til full påmelding</a>');
 
   $('#card_img').attr('src', '');
   var request = apiGetPortrait(displayPortrait, errorHandler, event_id, participant.entry_id);
@@ -176,15 +198,16 @@ function displayAccreditated(entry_id, accreditated)
   }
 
   //Display in the table if participant is accreditated or not
-  $('#participants_table tr').each(function()
-  {
-    var tr_value =  $(this).attr("value");
-    if (tr_value == entry_id)
-    {
-      setBackgroundColor($(this), accreditated);
-    }
-  });
+  setTableRowAccreditated(entry_id, accreditated);
 }
+
+
+function setTableRowAccreditated(entry_id, accreditated)
+{
+  var row = $('#' + entry_id);
+  setBackgroundColor($(row), accreditated);
+}
+
 
 function displayCommentSaved(comment)
 {

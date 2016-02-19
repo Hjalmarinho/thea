@@ -196,13 +196,14 @@ function apiPostExternalPerson(successCallback, errorCallback, json, eventId) {
     return doPost(baseURL + 'events/' + eventId + '/externalpersons/', json, successCallback, errorCallback);
 }
 
-function apiGetParticipants(successCallback, errorCallback, eventId, includeOrders, includeExercises, includeTicket, includeClub, includeAdditions) {
+function apiGetParticipants(successCallback, errorCallback, eventId, includeOrders, includeExercises, includeTicket, includeClub, includeAdditions, lastHistoryId) {
     var url = baseURL + 'events/' + eventId + '/participants/';
     url = url + '?orders=' + includeOrders;
     url = url + '&exercises=' + includeExercises;
     url = url + '&ticket=' + includeTicket;
     url = url + '&club=' + includeClub;
     url = url + '&additions=' + includeAdditions;
+    url = url + '&last_history_id=' + lastHistoryId;
 
     return doGet(url, successCallback, errorCallback);
 }
