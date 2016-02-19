@@ -71,11 +71,3 @@ function removeLoader() {
 
 function handleError(errorMsg) {
 }
-
-
-function removeLoader() {
-	$("#participantsLoader").remove();
-}
-
-function handleError(errorMsg) {
-}

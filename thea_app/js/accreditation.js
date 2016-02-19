@@ -1,5 +1,6 @@
 'use strict';
 var event_id = sessionStorage.getItem('event_id');
+var last_history_id = -1;
 
 $(document).ready(function()
 {
@@ -10,6 +11,8 @@ $(document).ready(function()
   });
 
   var request = apiGetParticipants(displayParticipants, errorHandler, event_id, false, false, false, true, false);
+
+  $.when(request).always(function() { removeParticipantsLoader(); });
 });
 
 //Make participants table searchable
@@ -58,10 +61,48 @@ function displayParticipant(participant)
   $('#participant_card').val(participant.entry_id);
   $('#card_name').text(participant.person.first_name+' '+participant.person.last_name);
 
+  $('#description').empty();
+
+  // Print club name
+  $('#description').append('<b>Klubb</b>: ' + participant.club.club_name + ' <br>');
+
+  // Print exercises
+  $('#description').append('<b>Idretter</b>: ');
+
+  var exercises = '';
+  for (var i = 0; i < participant.exercises.length; ++i)
+  {
+    var exercise = participant.exercises[i].exercise;
+
+    if (exercise.is_teamexercise)
+    {
+      var team = participant.exercises[i].team;
+      exercises = exercises + exercise.exercise_description + ' (' + team.team_name + '), ';
+    }
+    else
+    {
+      exercises = exercises + exercise.exercise_description + ', ';
+    }
+  }
+  $('#description').append(exercises.substr(0, exercises.length - 2) + '<br>');
+
+
+  // Print additions
+   $('#description').append('<b>Tillegg</b>: ');
+
+  var additions = '';
+  for (var i = 0; i < participant.additions.length; ++i)
+  {
+    var addition = participant.additions[i].addition;
+    additions = additions + addition.addition_description + ', ';
+  }
+  $('#description').append(additions.substr(0, additions.length - 2));
+
   //TODO: Print out additions
 
   $('#card_img').attr('src', '');
   var request = apiGetPortrait(displayPortrait, errorHandler, event_id, participant.entry_id);
+  $.when(request).always(function() { hideParticipantLoader(); });
 
   $('#card_time_registrated').text('Påmeldt ' + new Date(participant.time_registrated).customFormat("#DD#. #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#"));
   $('#card_comment').val(participant.comment);
@@ -139,6 +180,7 @@ function participantClicked(entry_id)
   if (entry_id)
   {
     //Get participant from API and display it's data in the participant_card
+    showParticipantLoader();
     var request = apiGetParticipant(displayParticipant, errorHandler, event_id, entry_id);
   }
 }
@@ -174,4 +216,19 @@ function saveComment()
   // TODO: FIx callback
   // apiPutComment(entry_id, jsonData, displayCommentSaved);
   var request = apiPutParticipant(displayCommentSaved, function(data) {}, event_id, entry_id, jsonData, '');
+}
+
+function removeParticipantsLoader()
+{
+  $("#participantsLoader").remove();
+}
+
+function hideParticipantLoader()
+{
+  $('#participantLoader').hide();
+}
+
+function showParticipantLoader()
+{
+  $('#participantLoader').show();
 }
