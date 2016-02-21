@@ -295,6 +295,10 @@ function apiGetExtendedContactList(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/reports/contactlist/extended', successCallback, errorCallback)
 }
 
+function apiGetTeamsContactList(successCallback, errorCallback, eventId) {
+    return doGet(baseURL + 'events/' + eventId + '/reports/teamscontactlist', successCallback, errorCallback)
+}
+
 function apiGetPortraits(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/reports/portraits', successCallback, errorCallback)
 }
@@ -304,8 +308,11 @@ function apiPutPortrait(successCallback, errorCallback, eventId, entryId, jsonDa
 }
 
 /* External persons */
-function apiGetExternalPersons(successCallback, errorCallback, eventId) {
-  return doGet(baseURL + 'events/' + eventId + '/externalpersons/', successCallback, errorCallback);
+function apiGetExternalPersons(successCallback, errorCallback, eventId, lastHistoryId) {
+  var url = baseURL + 'events/' + eventId + '/externalpersons/';
+  url = url + '?last_history_id=' + lastHistoryId;
+
+  return doGet(url, successCallback, errorCallback);
 }
 
 function apiGetExternalPerson(successCallback, errorCallback, eventId, externalPersonId) {

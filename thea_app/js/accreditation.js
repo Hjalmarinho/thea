@@ -1,8 +1,9 @@
 'use strict';
 var event_id = sessionStorage.getItem('event_id');
 var last_history_id = -1;
-var visibleRows = {};
-
+var allParticipants = {};
+var allExternalPersons = {};
+var isCurrentExternalPerson = false;
 $(document).ready(function()
 {
   $('.ui.dropdown').dropdown();
@@ -11,8 +12,15 @@ $(document).ready(function()
     on: 'hover'
   });
 
-  var request = apiGetParticipants(displayParticipants, errorHandler, event_id, false, false, false, true, false, last_history_id);
-  $.when(request).always(function() { removeParticipantsLoader(); });
+  var request = apiGetParticipants(displayParticipants, errorHandler, event_id, false, false, false, true, false, -1);
+  var request2 = apiGetExternalPersons(displayExternalPersons, errorHandler, event_id, -1);
+
+  $.when(request, request2).always(function() {
+    initiateSearch();
+    setTimeout("getUpdates()", 5000);
+
+    removeParticipantsLoader();
+  });
 });
 
 function participantMatch(participant, split)
@@ -37,9 +45,9 @@ function initiateSearch()
     var split = val.split(' ');
 
     // Loop through all participants, and see if their name match the search text.
-    for (var entryId in visibleRows)
+    for (var entryId in allParticipants)
     {
-      var participant = visibleRows[entryId];
+      var participant = allParticipants[entryId];
       var visible;
       if (val == '')
         visible = true;
@@ -49,10 +57,29 @@ function initiateSearch()
       if (visible != participant.__row_visible)
       {
         if (visible)
-          $('#' + participant.entry_id).show();
+          $('#participant_' + participant.entry_id).show();
         else
-          $('#' + participant.entry_id).hide();
+          $('#participant_' + participant.entry_id).hide();
         participant.__row_visible = visible;
+      }
+    }
+
+    for (var externalPersonId in allExternalPersons)
+    {
+      var externalPerson = allExternalPersons[externalPersonId];
+      var visible;
+      if (val == '')
+        visible = true;
+      else
+        visible = participantMatch(externalPerson, split);
+
+      if (visible != externalPerson.__row_visible)
+      {
+        if (visible)
+          $('#externalperson_' + externalPerson.external_person_id).show();
+        else
+          $('#externalperson_' + externalPerson.external_person_id).hide();
+        externalPerson.__row_visible = visible;
       }
     }
   });
@@ -69,7 +96,7 @@ function displayParticipants(participants)
   {
     if (participant.status == REGISTRATION_CONFIRMED)
     {
-      var tablerow = $('<tr id="'+ participant.entry_id + '" value="'+ participant.entry_id + '" onclick="participantClicked(' + participant.entry_id + ')">'+ 
+      var tablerow = $('<tr id="participant_'+ participant.entry_id + '" value="'+ participant.entry_id + '" onclick="participantClicked(' + participant.entry_id + ')">'+ 
         '<td>' + participant.person.first_name + '</td>'+
         '<td>' + participant.person.last_name + '</td>'+
         '<td>' + participant.club.club_name + '</td>'+
@@ -81,13 +108,36 @@ function displayParticipants(participants)
       participant.__row_visible = true;
       last_history_id = Math.max(last_history_id, participant.history_id);
 
-      visibleRows[participant.entry_id] = participant;
+      allParticipants[participant.entry_id] = participant;
       $(participants_table_body).append(tablerow);
     }
   });
+};
 
-  initiateSearch();
-  setTimeout("getUpdates()", 5000);
+
+function displayExternalPersons(externalPersons)
+{
+  var participants_table_body = ('#participants_table_body');
+  $.each(externalPersons, function (i, externalPerson)
+  {
+    if (externalPerson.status == REGISTRATION_CONFIRMED)
+    {
+      var tablerow = $('<tr id="externalperson_'+ externalPerson.external_person_id + '" value="'+ externalPerson.external_person_id + '" onclick="externalPersonClicked(' + externalPerson.external_person_id + ')">'+ 
+        '<td>' + externalPerson.person.first_name + '</td>'+
+        '<td>' + externalPerson.person.last_name + '</td>'+
+        '<td>Funksjonær</td>'+
+      '</tr>');
+
+      //Display green check-icon if externalPerson has been accreditated
+      setBackgroundColor($(tablerow), externalPerson.accreditated);
+
+      externalPerson.__row_visible = true;
+      last_history_id = Math.max(last_history_id, externalPerson.history_id);
+
+      allExternalPersons[externalPerson.external_person_id] = externalPerson;
+      $(participants_table_body).append(tablerow);
+    }
+  });
 };
 
 
@@ -95,8 +145,18 @@ function updateParticipants(participants)
 {
   $.each(participants, function (i, participant)
   {
-    visibleRows[participant.entry_id] = participant;
-    setTableRowAccreditated(participant.entry_id, participant.accreditated);
+    allParticipants[participant.entry_id] = participant;
+    setTableRowAccreditated('participant_' + participant.entry_id, participant.accreditated);
+  });
+}
+
+
+function updateExternalPersons(externalPersons)
+{
+  $.each(externalPersons, function (i, externalPerson)
+  {
+    allExternalPersons[externalPerson.external_person_id] = externalPerson;
+    setTableRowAccreditated('externalperson_' + externalPerson.external_person_id, externalPerson.accreditated);
   });
 }
 
@@ -104,9 +164,11 @@ function updateParticipants(participants)
 function getUpdates()
 {
   var request = apiGetParticipants(updateParticipants, errorHandler, event_id, false, false, false, true, false, last_history_id);
-  console.log("get_updates");
+  var request2 = apiGetExternalPersons(updateExternalPersons, errorHandler, event_id, last_history_id);
 
-  setTimeout("getUpdates()", 5000);
+  $.when(request, request2).always(function() {
+    setTimeout("getUpdates()", 5000);
+  });
 }
 
 
@@ -163,10 +225,36 @@ function displayParticipant(participant)
   $('#card_comment').val(participant.comment);
   
   //Display green check-icon if participant has been accreditated
-  displayAccreditated(participant.entry_id, participant.accreditated);
+  displayAccreditated('participant_' + participant.entry_id, participant.accreditated);
 
   $('#participant_card').show();
 };
+
+
+function displayExternalPerson(externalPerson)
+{
+  $('#participant_card').val(externalPerson.external_person_id);
+  $('#card_name').text(externalPerson.person.first_name+' '+externalPerson.person.last_name);
+
+  $('#description').empty();
+
+  // Print club name
+  $('#description').append('<b>Organisasjon</b>: ' + externalPerson.organization + ' <br>');
+
+  $('#description').append('<b>Rolle</b>: ' + externalPerson.description + ' <br>');
+
+  $('#description').append('<br><a href="external.php?external_person_id=' + externalPerson.external_person_id + '">Gå til full påmelding</a>');
+
+  $('#card_img').attr('src', '');
+  var request = apiGetExternalPersonPortrait(displayPortrait, errorHandler, event_id, externalPerson.external_person_id)
+  $.when(request).always(function() { hideParticipantLoader(); });
+
+  //Display green check-icon if externalPerson has been accreditated
+  displayAccreditated('externalperson_' + externalPerson.external_person_id, externalPerson.accreditated);
+
+  $('#participant_card').show();
+};
+
 
 function displayPortrait(image)
 {
@@ -176,11 +264,16 @@ function displayPortrait(image)
 //Callback function when a participant has been accreditated
 function participantAccreditated(entry_id, accreditated)
 {
-  displayAccreditated(entry_id, accreditated);
+  displayAccreditated('participant_' + entry_id, accreditated);
+}
+
+function externalPersonAccreditated(externalPersonId, accreditated)
+{
+  displayAccreditated('externalperson_' + externalPersonId, accreditated);
 }
 
 //Display green check-icon and accreditation-button dependent on whether the participant has been accreditated
-function displayAccreditated(entry_id, accreditated)
+function displayAccreditated(rowId, accreditated)
 {
   if (accreditated)
   {
@@ -198,13 +291,13 @@ function displayAccreditated(entry_id, accreditated)
   }
 
   //Display in the table if participant is accreditated or not
-  setTableRowAccreditated(entry_id, accreditated);
+  setTableRowAccreditated(rowId, accreditated);
 }
 
 
-function setTableRowAccreditated(entry_id, accreditated)
+function setTableRowAccreditated(rowId, accreditated)
 {
-  var row = $('#' + entry_id);
+  var row = $('#' + rowId);
   setBackgroundColor($(row), accreditated);
 }
 
@@ -233,12 +326,25 @@ function setBackgroundColor(div, accreditated)
 //Called when a participant in the table is clicked
 function participantClicked(entry_id)
 {
+  isCurrentExternalPerson = false;
   if (entry_id)
   {
+    $('#comment_div').show();
+    $('#button_comment').show();
+
     //Get participant from API and display it's data in the participant_card
     showParticipantLoader();
     var request = apiGetParticipant(displayParticipant, errorHandler, event_id, entry_id);
   }
+}
+
+function externalPersonClicked(external_person_id)
+{
+  isCurrentExternalPerson = true;
+  $('#comment_div').hide();
+  $('#button_comment').hide();
+  showParticipantLoader();
+  var request = apiGetExternalPerson(displayExternalPerson, errorHandler, event_id, external_person_id);
 }
 
 function errorHandler(message)
@@ -250,16 +356,27 @@ function errorHandler(message)
 //Accreditate participant by getting the entry_id from the value-attribute of the participant_card
 function accreditateParticipant(accreditated)
 {
-  var entry_id = $( '#participant_card' ).val();
-  var jsonData = {'accreditated': accreditated};
+  if (isCurrentExternalPerson)
+  {
+    var external_person_id = $( '#participant_card' ).val();
+    var jsonData = {'accreditated': accreditated};
 
-  var request = apiPutParticipant(function(data)
-    {
-      participantAccreditated(entry_id, accreditated);
-    }, function(data) {}, event_id, entry_id, jsonData, '');
+    var request = apiPutExternalPerson(function(data)
+      {
+        externalPersonAccreditated(external_person_id, accreditated);
+      }, function(data) {}, event_id, external_person_id, jsonData, '');
+  }
+  else
+  {
+    var entry_id = $( '#participant_card' ).val();
+    var jsonData = {'accreditated': accreditated};
 
-  // TODO: FIx callback
-  // apiPutAccreditation(entry_id, jsonData, participantAccreditated);
+    var request = apiPutParticipant(function(data)
+      {
+        participantAccreditated(entry_id, accreditated);
+      }, function(data) {}, event_id, entry_id, jsonData, '');
+  }
+
 }
 
 //Called when user clicks the "Lagre kommentar"-button

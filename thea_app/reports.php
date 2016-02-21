@@ -41,6 +41,13 @@
           <div class="description">En excel-fil med epost og telefonnummer til eksternt personell.</div>
         </div>
       </a>
+      <a class="item" onclick="getTeamsContactList();">
+        <i class="users icon"></i>
+        <div class="content">
+          <div class="header">Kontaktliste lag</div>
+          <div class="description">En excel-fil med epost og telefonnummer til kontakperson for lag-idretter.</div>
+        </div>
+      </a>
       <a class="item" onclick="getPortraits();">
         <i class="file image outline icon"></i>
         <div class="content">

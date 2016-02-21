@@ -66,7 +66,7 @@
             <br>
             <p id="card_accreditated_mark" style="display:none" class="success"><i class="checkmark icon"></i>Akkreditert</p>
           </div>
-          <div class="extra content">
+          <div class="extra content" id="comment_div">
             <textarea rows="4" id="card_comment" placeholder="Ingen kommentarer..."></textarea>
             <!-- Displayed when the comment is saved -->
             <div class="ui icon success  message" id="comment_message" style="display:none">

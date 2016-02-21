@@ -62,6 +62,18 @@ function getPortraits()
   $.when(request).always(function() { hideLoader(); });
 }
 
+function getTeamsContactList()
+{
+  showLoader();
+
+  var request = apiGetTeamsContactList(function (data)
+  {
+    window.open(data.url);
+  }, function (data) {}, event_id);
+
+  $.when(request).always(function() { hideLoader(); });
+}
+
 function showLoader()
 {
   $('#loader').show();
@@ -71,3 +83,4 @@ function hideLoader()
 {
   $('#loader').hide();
 }
+

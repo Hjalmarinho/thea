@@ -3,7 +3,7 @@
 var event_id = sessionStorage.getItem('event_id');
 
 $(document).ready(function(){
-  var request = apiGetExternalPersons(displayExternalPersons, handleError, event_id);
+  var request = apiGetExternalPersons(displayExternalPersons, handleError, event_id, -1);
   $.when(request).always(function() { removeLoader(); });
 })
 
