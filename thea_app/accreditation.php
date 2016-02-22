@@ -21,7 +21,7 @@
     </div>
 
     <div class="ten wide column" >
-
+      <p id="num_accreditated"></p>
       <!-- Participants table -->
       <table id="participants_table" class="ui sortable celled striped table" style="cursor: pointer" onclick="initiateSearch()">
         <thead>

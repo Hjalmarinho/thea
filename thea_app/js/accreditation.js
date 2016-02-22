@@ -4,6 +4,7 @@ var last_history_id = -1;
 var allParticipants = {};
 var allExternalPersons = {};
 var isCurrentExternalPerson = false;
+
 $(document).ready(function()
 {
   $('.ui.dropdown').dropdown();
@@ -22,6 +23,34 @@ $(document).ready(function()
     removeParticipantsLoader();
   });
 });
+
+function printNumAccreditated(modifier)
+{
+  var total = 0;
+  var accreditated = 0;
+
+  for (var entryId in allParticipants)
+  {
+    var participant = allParticipants[entryId];
+    total++;
+
+    if (participant.accreditated)
+      accreditated++;
+  }
+
+
+  for (var externalPersonId in allExternalPersons)
+  {
+    var externalPerson = allExternalPersons[externalPersonId];
+    total++;
+
+    if (externalPerson.accreditated)
+      accreditated++;
+  }
+
+  accreditated += modifier;
+  $('#num_accreditated').text(accreditated + ' av ' + total + ' er akkreditert.');
+}
 
 function participantMatch(participant, split)
 {
@@ -83,6 +112,8 @@ function initiateSearch()
       }
     }
   });
+
+  printNumAccreditated(0);
 }
 
 //      UPDATE GUI FUNCTIONS
@@ -167,6 +198,7 @@ function getUpdates()
   var request2 = apiGetExternalPersons(updateExternalPersons, errorHandler, event_id, last_history_id);
 
   $.when(request, request2).always(function() {
+    printNumAccreditated(0);    
     setTimeout("getUpdates()", 5000);
   });
 }
@@ -265,11 +297,13 @@ function displayPortrait(image)
 function participantAccreditated(entry_id, accreditated)
 {
   displayAccreditated('participant_' + entry_id, accreditated);
+  printNumAccreditated((accreditated ? 1 : -1));
 }
 
 function externalPersonAccreditated(externalPersonId, accreditated)
 {
   displayAccreditated('externalperson_' + externalPersonId, accreditated);
+  printNumAccreditated((accreditated ? 1 : -1));
 }
 
 //Display green check-icon and accreditation-button dependent on whether the participant has been accreditated
