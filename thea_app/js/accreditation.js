@@ -178,6 +178,7 @@ function updateParticipants(participants)
   {
     allParticipants[participant.entry_id] = participant;
     setTableRowAccreditated('participant_' + participant.entry_id, participant.accreditated);
+    last_history_id = Math.max(last_history_id, participant.history_id);
   });
 }
 
@@ -188,6 +189,7 @@ function updateExternalPersons(externalPersons)
   {
     allExternalPersons[externalPerson.external_person_id] = externalPerson;
     setTableRowAccreditated('externalperson_' + externalPerson.external_person_id, externalPerson.accreditated);
+    last_history_id = Math.max(last_history_id, externalPerson.history_id);
   });
 }
 
