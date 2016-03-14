@@ -13,61 +13,49 @@
 //This function is run when the document/page is finsihed loading
 var event_obj = null;
 $( document ).ready(function() {
+  // Initialize dropdown
+  // $('.ui.dropdown').dropdown();
 
-    // Initialize dropdown
-    // $('.ui.dropdown').dropdown();
+  //API-calls on page load, parameter is the callback-function
+  var req1 = apiGetClubs(displayClubs, showError);
+  var req2 = apiGetSports(saveSports, showError, eventId);
+  var req3 = apiGetAdditions(displayAdditions, showError, eventId);
+  var req4 = apiGetEvent(displayEventInfo, showError, eventId);
 
-    //API-calls on page load, parameter is the callback-function
-    var req1 = apiGetClubs(displayClubs, showError);
-    var req2 = apiGetSports(saveSports, showError, eventId);
-    var req3 = apiGetAdditions(displayAdditions, showError, eventId);
-    var req4 = apiGetEvent(displayEventInfo, showError, eventId);
+  $.when(req1, req2, req3).always(function()
+  {
+    $("#mainLoader").remove();
+  });
 
-    $.when(req1, req2, req3).always(function(){
-        $("#mainLoader").remove();
-    });
-
-    // Get and display exercises when a sport is selected, for the correct sports_box
-    $('#sports_container').change(function(event) {
-        if (event.target.name == "sports") {
-            var sport_box_id = event.target.id.substr(event.target.id.indexOf("_") + 1);
-            var dropdown = $('#sports_' + sport_box_id);
-            apiGetExercises(
-                function(exercises)
-                {
-                    displayExercises(exercises, sport_box_id);
-                },
-                showError,
-                eventId,
-                $(dropdown).val());
-        }
-    });
-
-    //Display confirm-modal if the form is valid
-    $('#entry_button').click(function(){
-        if ($('#entry_form').form('is valid')) {
-            // See if portrait is added
-            if ($('#portrait').attr('src') === undefined) {
-                showError("Du må laste opp et portrettbilde først.");
-                return;
-            }
-
-            createConfirmModal();
-            $('#confirm_modal').modal('show');
-        }
-    });
-
-    //Display image-modal for portrait-upload
-    $('#image_button').click(function()
+  // Display confirm-modal if the form is valid
+  $('#entry_button').click(function()
+  {
+    if ($('#entry_form').form('is valid'))
     {
-        $('#image_modal').modal('show');
-        $("#portrait_crop").cropper('replace', $("#portrait_crop").attr("src"));
-    });
+      // See if portrait is added
+      if ($('#portrait').attr('src') === undefined)
+      {
+        showError("Du må laste opp et portrettbilde først.");
+        return;
+      }
 
-    //Prevent entry_form from submitting when clicking "Meld på"
-    $("#entry_form").submit(function(event) {
-        event.preventDefault();
-    });
+      createConfirmModal();
+      $('#confirm_modal').modal('show');
+    }
+  });
+
+  // Display image-modal for portrait-upload
+  $('#image_button').click(function()
+  {
+    $('#image_modal').modal('show');
+    $("#portrait_crop").cropper('replace', $("#portrait_crop").attr("src"));
+  });
+
+  // Prevent entry_form from submitting when clicking "Meld på"
+  $("#entry_form").submit(function(event)
+  {
+      event.preventDefault();
+  });
 });
 
 // Constants
@@ -143,6 +131,16 @@ function displaySports(sport_box_id)
     });
 
     $('.dropdown').dropdown('refresh');
+
+    // Get and display exercises when a sport is selected, for the correct sports_box
+    $('#sports_' + sport_box_id).change(function(event)
+    {
+      var sport_box_id = event.target.id.substr(event.target.id.indexOf("_") + 1);
+      var dropdown = $('#sports_' + sport_box_id);
+      apiGetExercises(function(exercises) { displayExercises(exercises, sport_box_id); },
+                      showError, eventId, $(dropdown).val());
+    });
+
   }
 }
 
@@ -152,41 +150,61 @@ function exerciseChecked(sender) {
 
 
 // Generate checkboxes for exercises received from API
-function displayExercises(exercises, sport_box_id) {
-    var curr_id = sport_box_id;
-    $('#exercises_'+curr_id).empty();
-    $('#teams_container_'+curr_id).hide();
-    if(exercises){
-        // Sort exercises by name
-        sortArrayByString(exercises, "exercise_description");
+function displayExercises(exercises, sport_box_id)
+{
+  var curr_id = sport_box_id;
+  $('#exercises_' + curr_id).empty();
+  $('#teams_container_' + curr_id).hide();
+  if (exercises)
+  {
+    // Sort exercises by name
+    sortArrayByString(exercises, 'exercise_description');
 
-        //Display checkboxes for each available exercise if there are many
-        $.each(exercises, function(i, exercise){
-            var checkbox = generateCheckbox(exercise.exercise_description, exercise.exercise_id, false, 'exerciseChecked(this)')
-            $('#exercises_'+curr_id).append(checkbox); 
-        });  
-        //If sport has only one exercise, check and hide it
-        if(exercises.length == 1){
-            $('#exercises_'+curr_id+' input').each(function(){
-                $(this).attr('checked', true);
-                $(this).parent().css("display", "none");
-            });
-            if(exercises[0].is_teamexercise)
-            {
-                //Get teams for this exercise and populate teams dropdown
-                apiGetTeams(
-                function(teams)
-                {
-                  displayTeams(teams, curr_id);
-                },
-                showError,
-                eventId,
-                exercises[0].exercise_id);
-                $('#teams_container_'+curr_id).show();
-            }
-        }
-    }  
+    //Display checkboxes for each available exercise if there are many
+    $.each(exercises, function(i, exercise)
+    {
+      var checkbox = generateCheckbox(exercise.exercise_description, exercise.exercise_id,
+                                      false, 'exerciseChecked(this)');
+      $('#exercises_' + curr_id).append(checkbox); 
+
+      // Print any extra fields (such as EmiTag-number for orienteering,
+      // estimated time for swimming etc...)
+      printExerciseExtraFields(exercise.exercise_extra_fields, '#exercises_' + curr_id);
+    });
+
+    // If sport has only one exercise, check and hide it
+    if (exercises.length == 1)
+    {
+      $('#exercises_' + curr_id + ' input:checkbox').each(function()
+      {
+        $(this).attr('checked', true);
+        $(this).parent().css('display', 'none');
+      });
+
+      if (exercises[0].is_teamexercise)
+      {
+        // Get teams for this exercise and populate teams dropdown
+        apiGetTeams(function(teams) { displayTeams(teams, curr_id); },
+                    showError, eventId, exercises[0].exercise_id);
+        $('#teams_container_' + curr_id).show();
+      }
+    }
+  }
 }
+
+
+function printExerciseExtraFields(exerciseExtraFields, htmlContainerId)
+{
+  $.each(exerciseExtraFields, function(i, exerciseExtraField)
+  {
+    var html = '<div class="ui field"> \
+        <input type="text" data-exercise-extra-field-id="' + exerciseExtraField.exercise_extra_field_id + '" placeholder="' + exerciseExtraField.exercise_extra_field_description + '"> \
+    </div>';
+
+    $(htmlContainerId).append(html);
+  });
+}
+
 
 // Generate checkboxes for teams received from API
 function displayTeams(teams, sport_box_id)
@@ -319,10 +337,10 @@ function addSport() {
     var $sports = $sports_box.find("[name='sports']");
     $sports.attr("id", "sports_" + next_sport_box_id)
 
-    var $exercises = $sports_box.find("[name='exercises']");
+    var $exercises = $sports_box.find("[data-name='exercises']");
     $exercises.attr("id", "exercises_" + next_sport_box_id)
 
-    var $teams_container = $sports_box.find("[name='teams_container']");
+    var $teams_container = $sports_box.find("[data-name='teams_container']");
     $teams_container.attr("id", "teams_container_" + next_sport_box_id)
 
     var $teams = $sports_box.find("[name='teams']");
@@ -588,7 +606,17 @@ function uiGetSports(ticket_id){
                 var team_id = parseInt(parseInt($('#teams_'+curr_id).val()));
                 var team = {"team_id": team_id};
 
-                exercises.push({"exercise_id": exercise_id , "team": team });
+                var exercise = {"exercise_id": exercise_id , "team": team, "exercise_extra_fields": [] };
+                // Add extra fields
+                $($(this).parent().parent().parent().find('input:text')).each(function()
+                {
+                  var exerciseExtraFieldId = parseInt($(this).attr('data-exercise-extra-field-id'));
+                  var value = $(this).val();
+
+                  exercise.exercise_extra_fields.push({"exercise_extra_field_id": exerciseExtraFieldId, "value": value});
+                });
+
+                exercises.push(exercise);
             });
         }
         //Add exercise with team info for team
