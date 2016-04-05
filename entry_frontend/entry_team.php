@@ -87,7 +87,7 @@ Primary use:  View allowing contact persons to register teams for an event.
                 <label class="field four wide">Klasse</label>
                 <div class="field twelve wide">
                   <select class="ui dropdown" name="team_gender" id="team_gender">
-                    <option value="">I hvilken klasse spiller laget?</option>
+                    <option value="">I hvilken klasse deltar laget?</option>
                     <option value="MALE">Herre</option>
                     <option value="FEMALE">Dame</option>
                     <option value="MIX">Mix</option>

@@ -76,16 +76,6 @@ Primary use:  View allowing participants to register for an event.
                   </div>
                 </div>
               </div>
-
-              <div class="inline fields" data-name="teams_container" id="teams_container_1" style="display:none">
-                <label class="field four wide">Lag</label>
-                <div class="field twelve wide">
-                  <select class="ui search dropdown" name="teams" id="teams_1">
-                    <option value="">Hvilket lag skal du delta med?</option>
-                    <!-- Teams are populated here from api_handler when a team sport is selected -->
-                  </select>
-                </div>
-              </div>
             </div>
           </div>
           <div id="add-sport-button" class="ui blue button" onclick="addSport();">Delta i flere idretter</div>
