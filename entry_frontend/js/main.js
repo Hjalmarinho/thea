@@ -605,14 +605,14 @@ function externalPersonPosted(data)
 
 
 //Called when a user has completed payment 
-function completeEntry(transaction_id, callback, errorCallback){
-    apiPutTransaction(callback, errorCallback, transaction_id, eventId);
+function completeEntry(orderNumber, callback, errorCallback){
+    apiPutTransaction(callback, errorCallback, orderNumber, eventId);
 }
 
 
 //Called when a user cancelled the payment
-function terminateEntry(transaction_id) {
-    apiPutTerminateEntry(function(data) { return true; }, function(data) { return true; }, transaction_id, eventId);
+function terminateEntry(orderNumber) {
+    apiPutTerminateEntry(function(data) { return true; }, function(data) { return true; }, orderNumber, eventId);
 }
 
 

@@ -14,6 +14,8 @@ Primary use:  View allowing suppporters to register for an event.
 <head>
   <!-- Insert view for the head -->
   <?php require("view_components/head.php"); ?>
+  <script type="text/javascript" src="<?php echo ROOT_URL ?>/js/main.js"></script>
+  <script type="text/javascript" src="<?php echo ROOT_URL ?>/js/validation.js"></script>
 </head>
 
 <body>

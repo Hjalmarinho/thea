@@ -192,6 +192,10 @@ function apiPostParticipant(successCallback, errorCallback, json, eventId) {
     return doPost(baseURL + 'events/' + eventId + '/participants/', json, successCallback, errorCallback);
 }
 
+function apiPostParticipantAdditions(successCallback, errorCallback, json, eventId) {
+    return doPost(baseURL + 'events/' + eventId + '/participants/additions', json, successCallback, errorCallback);
+}
+
 function apiPostExternalPerson(successCallback, errorCallback, json, eventId) {
     return doPost(baseURL + 'events/' + eventId + '/externalpersons/', json, successCallback, errorCallback);
 }
@@ -224,8 +228,8 @@ function apiResendReceipt(successCallback, errorCallback, eventId, entryId) {
     return doPut(baseURL + 'events/' + eventId + '/participants/' + entryId + '/receipt/resend', {}, successCallback, errorCallback)
 }
 
-function apiPutTerminateEntry(successCallback, errorCallback, transactionId, eventId) {
-    return doPut(baseURL + 'events/' + eventId + '/transactions/' + transactionId + '/terminate', {}, successCallback, errorCallback);
+function apiPutTerminateEntry(successCallback, errorCallback, orderNumber, eventId) {
+    return doPut(baseURL + 'events/' + eventId + '/transactions/' + orderNumber + '/terminate', {}, successCallback, errorCallback);
 }
 
 function apiDeleteEntryExercise(successCallback, errorCallback, eventId, entryId, entryExerciseId) {
@@ -275,8 +279,8 @@ function apiPostCreditTransaction(successCallback, errorCallback, json, eventId,
 }
 
 //http://docs.thea.apiary.io/#reference/transaction/transactionsidprocess/complete-a-participant-registration
-function apiPutTransaction(successCallback, errorCallback, transactionId) {
-    return doPut(baseURL + 'events/' + eventId + '/transactions/'+transactionId+'/process', {}, successCallback, errorCallback);
+function apiPutTransaction(successCallback, errorCallback, orderNumber) {
+    return doPut(baseURL + 'events/' + eventId + '/transactions/'+orderNumber+'/process', {}, successCallback, errorCallback);
 }
 
 function apiGetAccreditationList(successCallback, errorCallback, eventId) {

@@ -39,6 +39,7 @@ else
   </script>
   <!-- Insert view for the head -->
   <?php require("view_components/head.php"); ?>
+  <script type="text/javascript" src="<?php echo ROOT_URL ?>/js/validation.js"></script>
 </head>
 
 <body>
@@ -108,6 +109,8 @@ else
         $('#tickets').append('<a href="' + event_obj.event_id + '/tilskuer"><button class="ui blue button">' + ticket_text + '</button></a>');
       }
     }
+
+    $('#tickets').append('<a href="' + event_obj.event_id + '/tillegg"><button class="ui blue button">Etterbestilling av tillegg</button></a>');
   }
 
   function errorHandler(errorMsg)

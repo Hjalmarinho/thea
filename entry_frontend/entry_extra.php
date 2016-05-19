@@ -24,6 +24,9 @@ require_once(__DIR__ . '/site_info.php');
   <!-- Insert view for the head -->
   <?php require("view_components/head.php"); ?>
 
+  <script type="text/javascript" src="<?php echo ROOT_URL ?>/js/main.js"></script>
+  <script type="text/javascript" src="<?php echo ROOT_URL ?>/js/validation.js"></script>
+
   <script>
     var key = null;
     <?php

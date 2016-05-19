@@ -37,8 +37,6 @@
     echo "var redirectURL = '" . $jsonObject->frontend->payment_redirect_url . "';";
 ?>
 </script>
-<script type="text/javascript" src="<?php echo ROOT_URL ?>/js/main.js"></script>
-<script type="text/javascript" src="<?php echo ROOT_URL ?>/js/validation.js"></script>
 
 <!-- Include google analytics -->
 <?php include_once(__DIR__ . "/../analytics.php"); ?>
