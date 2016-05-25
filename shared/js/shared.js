@@ -31,6 +31,20 @@ function sortArrayByNumber(array, propertyName) {
     });
 }
 
+function sortArrayByNumberDesc(array, propertyName) {
+  for (var i = 0; i < array.length; ++i)
+    array[i].__position = i;
+
+  array.sort(function(a, b)
+    {
+      var cmp = b[propertyName] - a[propertyName];
+      if (cmp == 0)
+        return b.__position - a.__position;
+      else
+        return cmp;
+    });
+}
+
 function findInArray(array, propertyName, value) {
   for (var i = 0; i < array.length; ++i)
   {

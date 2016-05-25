@@ -8,6 +8,8 @@ $(document).ready(function(){
 })
 
 function displayParticipants(participants){
+	sortArrayByNumberDesc(participants, 'entry_id');
+
 	var participantsdiv = $('#participants');
 	var numCancelled = 0;
 	var numConfirmed = 0;
