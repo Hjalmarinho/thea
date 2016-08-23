@@ -148,7 +148,7 @@ Primary use:  Allow participants to buy additions after they have
 
     entry['person'] = person;
     jsonObject['entry'] = entry;
-    jsonObject['redirect_url'] = 'http://127.0.0.1/thea2/entry_frontend/completed.php';
+    jsonObject['redirect_url'] = redirectURL;
 
     var request = apiPostParticipantAdditions(redirectToPayment, showError, jsonObject, eventId);
     $.when(request).always(function()
