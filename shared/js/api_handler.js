@@ -1,7 +1,7 @@
 // **********************************************************************
 //  [Api Handler]
 
-//  Project:        Thea 
+//  Project:        Thea
 //  Version:        2.0
 //  Last change:    11/08/2015
 //  Author:         Øystein Molnes
@@ -47,7 +47,7 @@ function doGet(urlGET, successCallback, errorCallback) {
         },
         error: function(){
             errorCallback('Ooops, noe uventet skjedde...');
-        } 
+        }
     });
 }
 
@@ -71,7 +71,7 @@ function doPost(urlPOST, jsonData, successCallback, errorCallback) {
         },
         error: function(){
             errorCallback('Ooops, noe uventet skjedde...');
-        } 
+        }
     });
 }
 
@@ -95,8 +95,8 @@ function doPut(urlPUT, jsonData, successCallback, errorCallback, headerData) {
         },
         error: function(){
             errorCallback('Ooops, noe uventet skjedde...');
-        } 
-    }); 
+        }
+    });
 }
 
 // Perform DELETE-call to API with given URL.
@@ -187,6 +187,10 @@ function apiPutParticipant(successCallback, errorCallback, eventId, entryId, jso
     return doPut(baseURL + 'events/' + eventId + '/participants/' + entryId, jsonData, successCallback, errorCallback, {'comment': comment})
 }
 
+function apiPostNewParticipant(successCallback, errorCallback, json, eventId) {
+    return doPost(baseURL + 'events/' + eventId + '/participants/blank', json, successCallback, errorCallback);
+}
+
 // http://docs.thea.apiary.io/#reference/participant/participants/add-a-participant
 function apiPostParticipant(successCallback, errorCallback, json, eventId) {
     return doPost(baseURL + 'events/' + eventId + '/participants/', json, successCallback, errorCallback);
@@ -267,6 +271,10 @@ function apiGetAllTeams(successCallback, errorCallback, eventId) {
 
 function apiPutTeam(successCallback, errorCallback, eventId, teamId, jsonData, comment) {
     return doPut(baseURL + 'events/' + eventId + '/teams/' + teamId, jsonData, successCallback, errorCallback, {'comment': comment})
+}
+
+function apiPostNewTeam(successCallback, errorCallback, json, eventId) {
+    return doPost(baseURL + 'events/' + eventId + '/teams/blank', json, successCallback, errorCallback);
 }
 
 // -- TRANSACTIONS -- \\

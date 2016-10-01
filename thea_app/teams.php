@@ -5,7 +5,7 @@
     <div class="header">
         <!-- <i class="large sidebar icon" id="menubutton"></i> -->
         <h1>Lag</h1>
-        <button onclick="window.location.href='./team.php'" class="ui floated disabled right button" id="addTeam">Legg til lag</button>
+        <button onclick="addNewTeam()" class="ui floated right button" id="addTeam">Legg til lag</button>
       </div>
 
 </div>

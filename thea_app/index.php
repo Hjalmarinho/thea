@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.js"></script>
 
     <script>
-    
+
     <?php
       // Include shared code
       require_once(__DIR__ . "/site_info.php");
@@ -35,7 +35,7 @@
     $file = basename($_SERVER["SCRIPT_FILENAME"], ".php");
     echo "<script src='js/" . $file . ".js'></script>";
     ?>
-    
+
      <style type="text/css">
         body {
           background-color: #f4f4f4;

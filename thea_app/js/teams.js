@@ -34,7 +34,7 @@ function displayTeams(teams){
     var club_id = team.club_id
     var tablerow =
     '<tr class="' + cssClass + '"> \
-    <td><a href="./team.php?team_id=' + team_id +'">' + team_name + '</a></td> \
+    <td onclick="window.location.href =\'./team.php?team_id=' + team_id + '\';" style="cursor:pointer;">' + team_name + '</td> \
     <td>' + team.exercise.sport.sport_description + '</td> \
     <td><a href="./exercise.php?exercise_id=' + team.exercise.exercise_id +'">' + team.exercise.exercise_description + '</a></td> \
     <td>' + club_name + '</td> \
@@ -50,4 +50,8 @@ function handleError(errorMsg) {
 
 function removeLoader() {
   $("#teamsLoader").remove();
+}
+
+function addNewTeam(){
+	var request = apiPostNewTeam(function(data) {location.href = './team.php?first=true&team_id=' + data.team_id;}, handleError, "", event_id);
 }

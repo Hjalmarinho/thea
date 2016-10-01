@@ -54,7 +54,7 @@
   <div class="eight wide column">
     <div class="ui form" id="entry-form">
 
-      <div class="inline fields">  
+      <div class="inline fields">
         <label class="field four wide">Navn</label>
         <div class="field nine wide">
           <input type="text" value="" onchange="teamNameChanged(this);" id="team_name">
@@ -101,7 +101,7 @@
     </div><!-- /.form -->
     <h4 class="ui dividing header">Lagmedlemmer</h4>
   <div class="ui fourteen wide column">
-    
+
     <table class="ui very basic table">
       <thead>
         <tr>
@@ -132,7 +132,7 @@
         </div>
     <div class="extra content">
       <textarea rows="4" id="comment" style="max-width:100%;width:100%;">Ingen kommentarer</textarea>
-      
+
       <button class="fluid ui button" id="updateTeam">Oppdater laget</button>
       <div class="ui divider"></div>
       <button class="fluid red ui button" id="cancelTeam" onclick="cancelTeam();">Kanseller laget</button>

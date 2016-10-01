@@ -1,7 +1,7 @@
 /*------------------------------------------------------------------
 [Master Stylesheet]
 
-Project:		Thea 
+Project:		Thea
 Version:		2.0
 Last change:	11/08/2015
 Author:			Øystein Molnes
@@ -34,7 +34,7 @@ Primary use:	Style Thea 2.0 pages for making entries
 /*	3. Text															*/
 /*------------------------------------------------------------------*/
 h4{
-	color: #2185D0 !important; 
+	color: #2185D0 !important;
 }
 
 /*	4. Color													    */
@@ -58,7 +58,7 @@ h4{
 	opacity: 0;
 }
 
-/*	5. Footer													    */
+/*	6. Footer													    */
 /*------------------------------------------------------------------*/
 .footer{
 	position: absolute;

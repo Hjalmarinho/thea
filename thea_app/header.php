@@ -29,9 +29,9 @@
 		<?php // Include shared javascript ?>
 		<script src="js/shared.js"></script>
 		<?php
-			// Include page specific js 
+			// Include page specific js
 			$file = basename($_SERVER["SCRIPT_FILENAME"], ".php");
-			echo "<script src='js/" . $file . ".js'></script>";	    
+			echo "<script src='js/" . $file . ".js'></script>";
 		?>
 
 
@@ -46,12 +46,12 @@
 			<span class="text">Menu</span>
 		</div>-->
 		<div class="pusher">
-			  	
+
 		  	<div class="ui grid">
 		  		<div class="computer only three wide column" >
 					<div class="ui vertical inverted menu" >
 						<?php require 'include/menu.php';?>
 					</div>
-		  		</div>	  
+		  		</div>
 
 					<div class="ui thirteen wide column margin-top-30 fade-in" id="context">
