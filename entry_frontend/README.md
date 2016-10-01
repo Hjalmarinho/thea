@@ -16,22 +16,23 @@ The frontend-project can be run by downloading the project folder, entry_fronten
 <pre>
 <code>
 .
-├── css					  # Styling folder
-	+ semantic.min			# Styling file for Semantic UI
+├── css					    # Styling folder
 	+ style.css				# Custom styling file
-├── js					  # JavaScript folder
-	+ api_handler.js		# Handles communication with the API
+├── custom_	sites			# Custom entry front page for the specific event
++ sltromso2016.php 			# Custom entry front page for sltromso2016, inserted by index.php
+├── files				  	#
+├── img				  		# 
+├── js		   			    # JavaScript folder
 	+ main.js				# Main functions used by the entry-GUI. Calls api_handler and updates the GUI.
-	+ semantic.min.js		# JavaScript file for Semantic UI
 	+ validation.js			# Validation-rules for the entry-form
-├── view_components		  # GUI components to be included in several files
-	+ head.php				# The head-component
-	+ personal_info.php		# Personal info-GUI of the form
-	+ portrait_additions.php# Portrait and additions-GUI of the form
+├── view_components		  	# GUI components to be included in several files
+
 + entry_participant.php		# GUI-scheme for making a participant entry
 + entry_team.php			# GUI-scheme for making a team entry
 + index.php					# The starting point for the entry_frontend application
++ router.php 				# Routing to the shared-folder 
 + README.md					# Readme-file
+ 
 
 </code>
 </pre>
