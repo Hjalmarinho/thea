@@ -535,7 +535,7 @@ function createConfirmModal(){
             var exerciseId =  fullId.substr(fullId.indexOf("_") + 1);
             if ($('#teams_container_' + exerciseId).is(":visible"))
             {
-              participant_html += generateLabelPair('Lag', $('#teams_container_' + exerciseId + ' select').text());
+              participant_html += generateLabelPair('Lag', $('#teams_container_' + exerciseId + ' select').dropdown('get text')[0]);
             }
           });
         }
