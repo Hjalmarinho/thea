@@ -4,6 +4,7 @@
     <div class="header">
       <!-- <i class="large sidebar icon" id="menubutton"></i> -->
       <h1>Deltakere</h1>
+      <button onclick="addNewParticipant()" class="ui floated right button" id="addTeam">Legg til deltaker</button>
       <p id="summary"></p>
     </div>
 </div>

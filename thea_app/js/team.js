@@ -14,12 +14,18 @@ $(document).ready(function()
 
   var getClubsRequest = apiGetClubs(displayClubs, handleError)
   var getSportsRequest = apiGetSports(displaySports, handleError, event_id)
-  
+
   $('#exercises').dropdown();
   $.when(getSportsRequest, getClubsRequest).done(function()
   {
     loadTeam();
   });
+
+  if(GetURLParameter("first") == "true"){
+    document.getElementById('updateTeam').innerHTML = "Lagre lag";
+    document.getElementById("updateTeam").className += " green";
+  }
+
 });
 
 

@@ -35,6 +35,12 @@ $(document).ready(function()
   {
     loadParticipant();
   });
+
+  if(GetURLParameter("first") == "true"){
+    document.getElementById('updateParticipant').innerHTML = "Lagre deltaker";
+    document.getElementById("updateParticipant").className += " green";
+  }
+
 });
 
 function loadParticipant()
@@ -94,7 +100,7 @@ function getAdditions(additions)
     if (addition.has_children)
     {
       // Array.slice() ensures that we pass a copy of the array,
-      // and not 
+      // and not
       var html = '<div class="ui inline fields"> \
           <label class="field four wide">' + addition.addition_description + '</label>';
       html = html + displayAdditionWithChildren(addition, additions.slice());
@@ -140,7 +146,7 @@ function displayAdditionWithChildren(parentAddition, additions)
     if (children.parent_addition_id == parentAddition.addition_id)
     {
       // Print the addition.
-      html = html + 
+      html = html +
         '<div class="field"> \
           <div class="ui radio checkbox"> \
             <input type="radio" addition-id="' + children.addition_id + '" name="' + parentAddition.addition_id + '" class="hidden" tabindex="0" onchange="additionChecked(this);"> \
@@ -161,7 +167,7 @@ function displayAdditionWithChildren(parentAddition, additions)
 //         '<div class="ui inline fields"> \
 //           <label class="field four wide">' + parentAddition.addition_description + '</label>';
 //   $('#additions').append(html);
-// 
+//
 //   sortArrayByNumber(additions, 'addition_id');
 //   $.each(additions, function(i, children)
 //   {
@@ -175,7 +181,7 @@ function displayAdditionWithChildren(parentAddition, additions)
 //             <input type="checkbox" addition-id="' + addition.addition_id + '" onchange="additionChecked(this);" tabindex="0"> \
 //           </div> \
 //         </div>';
-// 
+//
 //       $('#additions').append(
 //         '<div class="field"> \
 //             <div class="ui radio checkbox"> \
@@ -184,7 +190,7 @@ function displayAdditionWithChildren(parentAddition, additions)
 //             </div> \
 //          </div>'
 //         );
-// 
+//
 //       first = false;
 //     }
 //   });
@@ -238,6 +244,7 @@ function getTeams(teams_array)
 
 function displayParticipant(participant)
 {
+  console.log(participant)
   // Caching div id's
   var id_first_name = $('#first_name');
   var id_last_name = $('#last_name');
@@ -290,10 +297,14 @@ function displayParticipant(participant)
   id_phone.val(escapeHtml(participant.person.phone));
 
   // Travel information
+  if(participant.travel_information){
   id_travel_information.val(escapeHtml(participant.travel_information));
-
+  }
+  
   // Allergies
-  id_allergies.val(escapeHtml(participant.person.allergies));
+  if(participant.person.allergies){
+    id_allergies.val(escapeHtml(participant.person.allergies));
+  }
 
   var ticket_type = 'Ukjent';
 

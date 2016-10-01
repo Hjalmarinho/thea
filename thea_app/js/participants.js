@@ -21,7 +21,7 @@ function displayParticipants(participants){
 				numConfirmed++;
 				break;
 			case REGISTRATION_CANCELLED:
-				cssClass = ' class="error" ';
+				cssClass = "error";
 				numCancelled++;
 				break;
 			default:
@@ -57,9 +57,11 @@ function displayParticipants(participants){
 //			console.log(first_name + ' ' + last_name)
 //		}
 
-		var tablerow = '<tr ' + cssClass + '><td><a href="./participant.php?entry_id=' + entry_id +'">' + first_name + '</a></td><td>' + last_name + '</td><td>' + 
-		gender + '</td><td>' + club + '</td><td>' + phone + '</td><td><a href="mailto:' + email + '">' + email + '</a></td><td>' + ticket_type + '</td><td data-sort-value="' + time_registrated.getTime() + '">' + 
+		var tablerow = '<tr class="' + cssClass + '"><td onclick="window.location.href =\'./participant.php?entry_id=' + entry_id + '\';" style="cursor:pointer;">' + first_name + '</td><td>' + last_name + '</td><td>' +
+		gender + '</td><td>' + club + '</td><td>' + phone + '</td><td><a href="mailto:' + email + '">' + email + '</a></td><td>' + ticket_type + '</td><td data-sort-value="' + time_registrated.getTime() + '">' +
 		time_registrated_str + '</td><td onclick="getReceipt(' + entry_id + ');"><i class="download blue icon"></i></td></tr>'
+
+
 
 		$(participantsdiv).append(tablerow)
 	});
@@ -72,4 +74,9 @@ function removeLoader() {
 }
 
 function handleError(errorMsg) {
+	console.log(errorMsg);
+}
+
+function addNewParticipant(){
+	var request = apiPostNewParticipant(function(data) {location.href = './participant.php?first=true&entry_id=' + data.entry_id;}, handleError, "", event_id);
 }
