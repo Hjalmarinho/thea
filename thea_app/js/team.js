@@ -135,9 +135,8 @@ function sportChanged(sender)
   $.when(request).done(function()
   {
     $('#exercises').parent().removeClass('loading');
+    changes_to_save["exercise_id"] = parseInt($('#exercises').val());
   });
-    changes_to_save["exercise_id"] = parseInt($(sender).val());
-
 }
 
 
