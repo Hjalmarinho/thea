@@ -1,5 +1,7 @@
 <?php
 
+require(__DIR__ . '/force_refresh.php');
+
 function starts_with($haystack, $needle)
 {
   // search backwards starting from haystack length characters from the end
@@ -37,8 +39,8 @@ else if ($method == 'put')
 {
   $data = file_get_contents('php://input');
 
-  curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT'); 
-  curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Length: ' . strlen($data))); 
+  curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
+  curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Length: ' . strlen($data)));
   curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 }
 else if ($method == 'delete')
@@ -46,7 +48,7 @@ else if ($method == 'delete')
   $data = file_get_contents('php://input');
 
   curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
-  curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Length: ' . strlen($data))); 
+  curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Length: ' . strlen($data)));
   curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 }
 else
