@@ -38,7 +38,7 @@ function getStatistics(data)
     var str = '<tr>';
 
     str = str + '<td>';
-    str = str + stats.exercise_description;
+    str = str + '<a href="./exercise.php?exercise_id=' + stats.exercise_id + '">' + stats.exercise_description + '</a>';
     str = str + '</td>';
 
     str = str + '<td>';

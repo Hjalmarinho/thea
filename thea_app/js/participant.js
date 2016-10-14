@@ -29,7 +29,7 @@ $(document).ready(function()
   });
 
   var getSportsRequest = apiGetSports(getSports, errorHandler, event_id);
-  var getTeamsRequest = apiGetAllTeams(getTeams, errorHandler, event_id);
+  var getTeamsRequest = apiGetAllTeams(getTeams, errorHandler, event_id, false, true);
   var getAdditionsRequest = apiGetAdditions(getAdditions, errorHandler, event_id);
   $.when(getSportsRequest, getTeamsRequest).done(function()
   {

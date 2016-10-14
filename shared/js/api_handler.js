@@ -220,6 +220,11 @@ function apiGetParticipants(successCallback, errorCallback, eventId, includeOrde
     return doGet(url, successCallback, errorCallback);
 }
 
+function apiGetParticipantsSimplified(successCallback, errorCallback, eventId) {
+    var url = baseURL + 'events/' + eventId + '/participants/simplified';
+    return doGet(url, successCallback, errorCallback);
+}
+
 function apiGetParticipant(successCallback, errorCallback, eventId, entryId) {
     return doGet(baseURL + 'events/' + eventId + '/participants/' + entryId, successCallback, errorCallback)
 }
@@ -269,8 +274,12 @@ function apiPutPassword(successCallback, errorCallback, jsonObject) {
 }
 
 // -- TEAMS -- \\
-function apiGetAllTeams(successCallback, errorCallback, eventId) {
-    return doGet(baseURL + 'events/' + eventId + '/teams', successCallback, errorCallback);
+function apiGetAllTeams(successCallback, errorCallback, eventId, includeTeamMembes, includeExercises) {
+    var url = baseURL + 'events/' + eventId + '/teams';
+    url = url + '?team_members=' + includeTeamMembes;
+    url = url + '&exercises=' + includeExercises;
+
+    return doGet(url, successCallback, errorCallback);
 }
 
 function apiPutTeam(successCallback, errorCallback, eventId, teamId, jsonData, comment) {
