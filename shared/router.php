@@ -76,6 +76,15 @@ curl_setopt($curl, CURLOPT_HEADER, 1);
 $resp = curl_exec($curl);
 $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
 
+
+if ($resp === false)
+{
+  echo curl_error($curl);
+  // Close request to clear up some resources
+  curl_close($curl);
+  die;
+}
+
 // Close request to clear up some resources
 curl_close($curl);
 

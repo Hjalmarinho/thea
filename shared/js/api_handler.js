@@ -182,6 +182,10 @@ function apiGetAdditions(successCallback, errorCallback, eventId) {
 }
 
 
+function apiGetEventSummary(successCallback, errorCallback, eventId) {
+    return doGet(baseURL + 'events/' + eventId + '/summary', successCallback, errorCallback)
+}
+
 // -- PARTICIPANTS -- \\
 function apiPutParticipant(successCallback, errorCallback, eventId, entryId, jsonData, comment) {
     return doPut(baseURL + 'events/' + eventId + '/participants/' + entryId, jsonData, successCallback, errorCallback, {'comment': comment})

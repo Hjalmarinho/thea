@@ -1,15 +1,93 @@
 'use strict';
 
 var eventId = sessionStorage.getItem('event_id');
-var exerciseStats = [];
 var last_entry_time = null;
 
 $(document).ready(function()
 {
-  var request = apiGetSports(getSports, handleError, eventId);
+  var summaryRequest = apiGetEventSummary(getStatistics, handleError, eventId)
   var eventRequest = apiGetEvent(getEvent, handleError, eventId)
+
+  $.when(summaryRequest, eventRequest).always(function() {
+    removeLoader();
+  });
 });
 
+function getStatistics(data)
+{
+  var total_individuals = data.num_male_individuals + data.num_female_individuals;
+  var total_teams = data.num_male_teams + data.num_female_teams + data.num_mix_teams;
+
+  $('#numEntries').html('<i class="user icon"></i>' + total_individuals);
+  $('#numFemale').html('<i class="woman icon"></i>' + data.num_female_individuals);
+  $('#numMale').html('<i class="man icon"></i>' + data.num_male_individuals);
+  $('#numTeams').html('<i class="users icon"></i>' + total_teams);
+
+  last_entry_time = parseDateString(data.last_entry);
+  lastEntryTimer();
+
+  for (var i = 0; i < data.exercise_summaries.length; ++i)
+  {
+    var stats = data.exercise_summaries[i];
+
+    var total_individuals = stats.total_male_individuals + stats.total_female_individuals;
+    var total_teams = 0;
+    if (stats.is_teamexercise)
+      total_teams = stats.total_male_teams + stats.total_female_teams + stats.total_mix_teams;
+
+    var str = '<tr>';
+
+    str = str + '<td>';
+    str = str + stats.exercise_description;
+    str = str + '</td>';
+
+    str = str + '<td>';
+    str = str + stats.sport_description;
+    str = str + '</td>';
+
+    str = str + '<td>';
+    if (stats.is_teamexercise)
+    {
+      str = str + stats.total_male_individuals + ' (' + stats.total_male_teams + ' lag)';
+    }
+    else
+    {
+      str = str + stats.total_male_individuals;
+    }
+    str = str + '</td>';
+
+    str = str + '<td>';
+    if (stats.is_teamexercise)
+    {
+      str = str + stats.total_female_individuals + ' (' + stats.total_female_teams + ' lag)';
+    }
+    else
+    {
+      str = str + stats.total_female_individuals;
+    }
+    str = str + '</td>';
+
+    str = str + '<td>';
+    str = str + (stats.is_teamexercise ? '-' : stats.total_mix_teams);
+    str = str + '</td>';
+
+    str = str + '<td>';
+    if (stats.is_teamexercise)
+    {
+      str = str + total_individuals + ' (' + total_teams + ' lag)';
+    }
+    else
+    {
+      str = str + total_individuals;
+    }
+    str = str + '</td>';
+
+    str = str + '</tr>';
+
+
+    $('#exercisesBody').append(str);
+  }
+}
 
 function getEvent(data)
 {
@@ -89,178 +167,6 @@ function lastEntryTimer()
   }
 
   setTimeout('lastEntryTimer()', 1000);
-}
-
-
-function getSports(sports)
-{
-  for (var i = 0; i < sports.length; ++i)
-  {
-    var sport = sports[i];
-
-    for (var j = 0; j < sport.exercises.length; j++)
-    {
-      var exercise = sport.exercises[j];
-      var node = createExerciseStatsNode(sport, exercise);
-
-      exerciseStats.push(node);
-    }
-  }
-  fetchStatistics();
-}
-
-
-function fetchStatistics()
-{
-  var participantsRequest = apiGetParticipants(participants, handleError, eventId, false, true, false, false, false, -1);
-  var teamsRequest = apiGetAllTeams(teams, handleError, eventId);
-
-  $.when(teamsRequest, participantsRequest).always(function()
-    {
-      removeLoader();
-
-      sortArrayByString(exerciseStats, 'exercise_description');
-      sortArrayByString(exerciseStats, 'sport_description');
-
-      $('#exercisesBody').empty();
-      for (var i = 0; i < exerciseStats.length; ++i)
-      {
-        var node = exerciseStats[i];
-        var html = '<tr> \
-          <td><a href="exercise.php?exercise_id=' + node.exercise_id + '">' + node.exercise_description + '</a></td> \
-          <td>' + node.sport_description + '</td>';
-
-        if (node.is_teamexercise)
-        {
-          html = html + '<td data-sort-value="' + node.male + '">' + node.male + ' (' + node.male_teams + ' lag) </td> \
-          <td data-sort-value="' + node.female + '">' + node.female + ' (' + node.female_teams + ' lag) </td> \
-          <td data-sort-value="' + node.mix_teams + '">' + node.mix_teams + ' lag</td> \
-          <td data-sort-value="' + (node.male + node.female) + '">' + (node.male + node.female) + ' (' + (node.male_teams + node.female_teams + node.mix_teams) + ' lag) </td>';
-        }
-        else
-        {
-          html = html + '<td>' + node.male + '</td> \
-          <td>' + node.female + '</td> \
-          <td data-sort-value="0"> - </td> \
-          <td>' + (node.male + node.female) + '</td>';
-        }
-        html = html + '</tr>';
-
-        $('#exercisesBody').append(html);
-      }
-    }
-  );
-}
-
-
-function teams(teams)
-{
-  if (teams)
-  {
-    var numTeams = 0;
-
-    for (var i = 0; i < teams.length; ++i)
-    {
-      var team = teams[i];
-
-      if (team.status == REGISTRATION_CONFIRMED)
-      {
-        numTeams++;
-        addTeamToExerciseStats(team);
-      }
-    }
-
-    $('#numTeams').html('<i class="users icon"></i>' + numTeams);
-  }
-}
-
-
-function addParticipantToExerciseStats(participant)
-{
-  for (var i = 0; i < participant.exercises.length; ++i)
-  {
-    var entryExercise = participant.exercises[i];
-
-    var node = findInArray(exerciseStats, 'exercise_id', entryExercise.exercise_id);
-    if (participant.person.gender == "Male")
-      node.male++;
-    else if (participant.person.gender == "Female")
-      node.female++;
-  }
-}
-
-
-function createExerciseStatsNode(sport, exercise)
-{
-  var node = {
-    'exercise_id': exercise.exercise_id,
-    'sport_description': sport.sport_description,
-    'exercise_description': exercise.exercise_description,
-    'is_teamexercise': exercise.is_teamexercise,
-    'male': 0,
-    'female': 0,
-    'male_teams': 0,
-    'female_teams': 0,
-    'mix_teams': 0
-  };
-
-  return node;
-}
-
-
-function addTeamToExerciseStats(team)
-{
-  var exercise = team.exercise;
-
-  var node = findInArray(exerciseStats, 'exercise_id', exercise.exercise_id);
-  if (team.team_gender == "Male")
-    node.male_teams++;
-  else if (team.team_gender == "Female")
-    node.female_teams++;
-  else if (team.team_gender == "Mix")
-    node.mix_teams++;
-}
-
-
-function participants(participants)
-{
-  if (participants)
-  {
-    var numAccreditated = 0;
-    var numFemale = 0;
-    var numMale = 0;
-
-    for (var i = 0; i < participants.length; ++i)
-    {
-      var participant = participants[i];
-
-      if (participant.status == REGISTRATION_CONFIRMED)
-      {
-        if (participant.person.gender == "Male")
-          numMale++;
-        else if (participant.person.gender == "Female")
-          numFemale++;
-
-        if (participant.accreditated)
-        {
-          numAccreditated++;
-        }
-
-        addParticipantToExerciseStats(participant);
-
-        var entryTime =  parseDateString(participant.time_registrated)
-        if (last_entry_time == null || entryTime > last_entry_time)
-          last_entry_time = entryTime;
-      }
-    }
-
-    $('#numEntries').html('<i class="user icon"></i>' + (numMale + numFemale));
-    $('#numFemale').html('<i class="woman icon"></i>' + numFemale);
-    $('#numMale').html('<i class="man icon"></i>' + numMale);
-    $('#numAccreditated').text(numAccreditated);
-
-    lastEntryTimer();
-  }
 }
 
 
