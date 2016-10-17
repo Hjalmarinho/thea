@@ -282,6 +282,11 @@ function apiGetAllTeams(successCallback, errorCallback, eventId, includeTeamMemb
     return doGet(url, successCallback, errorCallback);
 }
 
+function apiGetAllTeamsSimplified(successCallback, errorCallback, eventId) {
+    var url = baseURL + 'events/' + eventId + '/teams/simplified';
+    return doGet(url, successCallback, errorCallback);
+}
+
 function apiPutTeam(successCallback, errorCallback, eventId, teamId, jsonData, comment) {
     return doPut(baseURL + 'events/' + eventId + '/teams/' + teamId, jsonData, successCallback, errorCallback, {'comment': comment})
 }
