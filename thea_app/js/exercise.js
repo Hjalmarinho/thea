@@ -24,7 +24,7 @@ function displayExercise(exercise)
     $('#max-non-students-per-team').val(exercise.max_non_students_per_team);
     $('#allow-mix-teams').prop('checked', exercise.allow_mix_teams);
 
-    request = apiGetAllTeams(displayTeams, handleError, event_id, true, true);
+    request = apiGetAllTeams(displayTeams, handleError, event_id, true, false);
   }
   else
   {

@@ -125,6 +125,12 @@ function doDelete(urlDELETE, jsonData, successCallback, errorCallback, headerDat
 
 //Handle result from the API
 function handleResult(result, successCallback, errorCallback) {
+    var startDate = Date.parse(result.request_start + '00');
+    var endDate = Date.parse(result.request_end + '00');
+    console.log('Elapsed: ' + (endDate - startDate) + ' ms');
+
+    console.log(result.request_start);
+    console.log(result.request_end);
     if (result.error) {
         errorCallback(result.error);
     } else {
@@ -227,6 +233,22 @@ function apiGetParticipantsSimplified(successCallback, errorCallback, eventId) {
 
 function apiGetParticipant(successCallback, errorCallback, eventId, entryId) {
     return doGet(baseURL + 'events/' + eventId + '/participants/' + entryId, successCallback, errorCallback)
+}
+
+function apiGetParticipantPerson(successCallback, errorCallback, eventId, entryId) {
+    return doGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/person', successCallback, errorCallback)
+}
+
+function apiGetParticipantTicket(successCallback, errorCallback, eventId, entryId) {
+    return doGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/ticket', successCallback, errorCallback)
+}
+
+function apiGetParticipantAdditions(successCallback, errorCallback, eventId, entryId) {
+    return doGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/additions', successCallback, errorCallback)
+}
+
+function apiGetParticipantExercises(successCallback, errorCallback, eventId, entryId) {
+    return doGet(baseURL + 'events/' + eventId + '/participants/' + entryId + '/exercises', successCallback, errorCallback)
 }
 
 function apiGetPortrait(successCallback, errorCallback, eventId, entryId) {

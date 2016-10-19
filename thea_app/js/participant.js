@@ -29,7 +29,7 @@ $(document).ready(function()
   });
 
   var getSportsRequest = apiGetSports(getSports, errorHandler, event_id);
-  var getTeamsRequest = apiGetAllTeams(getTeams, errorHandler, event_id, false, true);
+  var getTeamsRequest = apiGetAllTeamsSimplified(getTeams, errorHandler, event_id);
   var getAdditionsRequest = apiGetAdditions(getAdditions, errorHandler, event_id);
   $.when(getSportsRequest, getTeamsRequest).done(function()
   {
@@ -47,21 +47,25 @@ function loadParticipant()
 {
   $("#participantLoader").show();
   var req1 = apiGetClubs(displayClubs, errorHandler);
-  var req2 = apiGetParticipant(displayParticipant, errorHandler, event_id, local_entry_id);
+  var req2 = apiGetParticipant(displayEntry, errorHandler, event_id, local_entry_id);
   var req3 = apiGetPortrait(displayPortrait, errorHandler, event_id, local_entry_id);
+  var req4 = apiGetParticipantPerson(displayPerson, errorHandler, event_id, local_entry_id);
+  var req5 = apiGetParticipantTicket(displayTicket, errorHandler, event_id, local_entry_id);
+  var req6 = apiGetParticipantAdditions(displayEntryAdditions, errorHandler, event_id, local_entry_id);
+  var req7 = apiGetParticipantExercises(displayEntryExercises, errorHandler, event_id, local_entry_id);
 
-  $.when(req1, req2, req3).always(function()
+  $.when(req1, req2, req3, req4, req5, req6, req7).always(function()
   {
+    changes_to_save = {};
     $("#participantLoader").hide();
   });
 }
 
 
-// Global variables, updated in displayParticipant
+// Global variables, updated in displayEntry
 var sports = null;
 var teams = null;
 var local_entry_id = GetURLParameter('entry_id');
-var id_cancel_participant;
 
 function errorHandler(errorMessage)
 {
@@ -242,19 +246,67 @@ function getTeams(teams_array)
   teams = teams_array;
 }
 
-function displayParticipant(participant)
+function displayTicket(ticket)
 {
-  console.log(participant)
+  var ticket_type = 'Ukjent';
+
+  if (ticket.ticket_type == 'PARTICIPANT')
+    ticket_type = 'Deltaker';
+  else if (ticket.ticket_type == 'SPECTATOR')
+    ticket_type = 'Tilskuer';
+
+  $('#ticket_type').val(ticket_type);
+}
+
+function displayEntryAdditions(entryAdditions)
+{
+  // Additions
+  $.each(entryAdditions, function(i, entryAddition)
+  {
+    var addition_txt_id = '[addition-id=' + entryAddition.addition_id + ']';
+    $(addition_txt_id).attr('checked', '');
+    $(addition_txt_id).attr('entry-addition-id', entryAddition.entry_addition_id);
+  });
+}
+
+function displayEntryExercises(entryExercises)
+{
+  $('#exercises').empty();
+
+  for (var s = 0; s < entryExercises.length; ++s)
+  {
+    var exercise_object = null;
+    for (var i = 0; i < sports.length; ++i)
+    {
+      for (var j = 0; j < sports[i].exercises.length; ++j)
+      {
+        if (sports[i].exercises[j].exercise_id == entryExercises[s].exercise_id)
+        {
+          exercise_object = sports[i].exercises[j];
+          break;
+        }
+      }
+
+      if (exercise_object != null)
+        break;
+    }
+
+    appendExercise(exercise_object, s + 1);
+  }
+}
+
+function displayEntry(entry)
+{
   // Caching div id's
-  var id_first_name = $('#first_name');
+ /* var id_first_name = $('#first_name');
   var id_last_name = $('#last_name');
   var id_gender = $('#selectgender');
   var id_clubs = $('#clubs');
-  var id_student = $('#studentCheckbox');
+  var id_student = ;
   var id_clubmember = $('#clubmemberCheckbox');
   var id_accreditated = $('#accreditatedCheckbox');
   var id_participantname = $('.participantname');
-  var id_travel_information = $('#travel_information');
+  var id_travel_information = ;
   var id_allergies = $('#allergies');
   var id_email = $('#email');
   var id_phone = $('#phone');
@@ -268,97 +320,86 @@ function displayParticipant(participant)
   var id_payments = $('#payments');
   var id_refunded = $('#refunded');
   id_cancel_participant = $('#cancelParticipant');
-  var time_registrated = parseDateString(participant.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#");
+  var time_registrated = parseDateString(entry.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#");*/
 
   //******** PERSONAL INFORMATION ********
+  var time_registrated = parseDateString(entry.time_registrated).customFormat("#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#");
 
-  // First name
-  id_first_name.val(escapeHtml(participant.person.first_name));
-
-  // Last name
-  id_last_name.val(escapeHtml(participant.person.last_name));
-
-  // Date of birth
-  var birthdate = participant.person.birthdate.split('-');
-  id_birthday.val(birthdate[2]);
-  id_birthmonth.dropdown('set selected', birthdate[1]);
-  id_birthyear.val(birthdate[0]);
-
-  // Gender
-  id_gender.dropdown('set selected', participant.person.gender);
 
   // Student
-  id_student.val(id_student.prop('checked', participant.is_student));
-
-  // Email
-  id_email.val(escapeHtml(participant.person.email));
-
-  // Phone number
-  id_phone.val(escapeHtml(participant.person.phone));
+  $('#studentCheckbox').val($('#studentCheckbox').prop('checked', entry.is_student));
 
   // Travel information
-  if(participant.travel_information){
-  id_travel_information.val(escapeHtml(participant.travel_information));
-  }
-  
-  // Allergies
-  if(participant.person.allergies){
-    id_allergies.val(escapeHtml(participant.person.allergies));
+  if (entry.travel_information) {
+    $('#travel_information').val(escapeHtml(entry.travel_information));
   }
 
-  var ticket_type = 'Ukjent';
 
-  if (participant.ticket.ticket_type == 'PARTICIPANT')
-    ticket_type = 'Deltaker';
-  else if (participant.ticket.ticket_type == 'SPECTATOR')
-    ticket_type = 'Tilskuer';
-  $('#ticket_type').val(ticket_type);
   //******** PARTICIPANT INFORMATION ********
 
   // Club
-  id_clubs.dropdown('set selected', participant.club.club_id);
+  $('#clubs').dropdown('set selected', entry.club_id);
 
   // Member of club
-  id_clubmember.val(id_clubmember.prop('checked', participant.is_clubmember));
-
-  // Sport
-  // id_exercise.dropdown('set selected', participant.exercises[0].exercise_id);
-  appendExercises(participant.exercises);
+  $('#clubmemberCheckbox').val($('#clubmemberCheckbox').prop('checked', entry.is_clubmember));
 
   // Accreditated
-  id_accreditated.val(id_accreditated.prop('checked', participant.accreditated));
+  $('#accreditatedCheckbox').prop('checked', entry.accreditated);
 
   // Name and time registrated
-  id_participantname.text(participant.person.first_name + ' ' + participant.person.last_name);
-  id_time_registrated.text('Påmeldt: ' + time_registrated);
+  $('#time_registrated').text('Påmeldt: ' + time_registrated);
 
   // Comment
-  if (participant.comment != null)
-    id_comment.val(escapeHtml(participant.comment))
+  if (entry.comment != null)
+    $('#comment').val(escapeHtml(entry.comment))
   else
-    id_comment.val('');
+    $('#comment').val('');
 
   // Receipt
   $('#recieptParticipant').unbind('click');
   $('#recieptParticipant').click(function() { getReceipt(local_entry_id); });
 
-  // Additions
-  $.each(participant.additions, function(i, addition)
-  {
-    var addition_txt_id = '[addition-id=' + addition.addition_id + ']';
-    $(addition_txt_id).attr('checked', '');
-    $(addition_txt_id).attr('entry-addition-id', addition.entry_addition_id);
-  });
-
   // ******** PAYMENT INFORMATION ********
-  if (participant.orders)
-    printOrders(participant.orders);
+  /*if (entry.orders)
+    printOrders(entry.orders);*/
 
-  // Canceled participant
-  is_canceled = (participant.status == "CANCELLED");
+  // Canceled entry
+  is_canceled = (entry.status == "CANCELLED");
   setCanceled();
-  changes_to_save = {};
-}//End of displayParticipant
+}//End of displayEntry
+
+
+function displayPerson(person)
+{
+  // First name
+  $('#first_name').val(escapeHtml(person.first_name));
+
+  // Last name
+  $('#last_name').val(escapeHtml(person.last_name));
+
+  // Date of birth
+  var birthdate = person.birthdate.split('-');
+  $('#birthday').val(birthdate[2]);
+  $('#birthmonth').dropdown('set selected', birthdate[1]);
+  $('#birthyear').val(birthdate[0]);
+
+  // Gender
+  $('#selectgender').dropdown('set selected', person.gender);
+
+  // Email
+  $('#email').val(escapeHtml(person.email));
+
+  // Phone number
+  $('#phone').val(escapeHtml(person.phone));
+
+  // Allergies
+  if (person.allergies) {
+    $('#allergies').val(escapeHtml(person.allergies));
+  }
+
+  // Name and time registrated
+  $('.participantname').text(person.first_name + ' ' + person.last_name);
+}
 
 
 function printOrders(orders_array)
@@ -411,18 +452,6 @@ function showPaymentLog(sender, transactionId)
 }
 
 
-function appendExercises(exercises_array)
-{
-  $('#exercises').empty();
-
-  for (var i = 0; i < exercises_array.length; ++i)
-  {
-    var exercise = exercises_array[i];
-    appendExercise(exercise, i + 1);
-  }
-}
-
-
 function appendExercise(exercise_object, exercise_counter)
 {
   var html = '<div id="entry_exercise_' + exercise_object.entry_exercise_id + '">';
@@ -434,7 +463,7 @@ function appendExercise(exercise_object, exercise_counter)
     <div class="field four wide" onclick="deleteEntryExercise(this, ' + exercise_object.entry_exercise_id + ');"><button class="ui red button">Fjern</button></div> \
   </div>';
 
-  if (exercise_object.exercise.is_teamexercise)
+  if (exercise_object.is_teamexercise)
   {
     // Print all teams for this exercise.
     html = html + '<div class="inline fields"> \
@@ -449,27 +478,34 @@ function appendExercise(exercise_object, exercise_counter)
 
   $('#exercises').append(html);
 
-  if (exercise_object.exercise.is_teamexercise)
+  if (exercise_object.is_teamexercise)
     $('#exercises select').last().val(exercise_object.team_id).dropdown();
 }
 
 // Format a readable exercise text.
 function createExerciseText(exercise_object)
 {
-  var multiple_exercises = false;
+  // Get the sport object that belongs to this exercise
+  var sport_object = null;
   for (var i = 0; i < sports.length; ++i)
   {
-    if (sports[i].sport_id == exercise_object.exercise.sport_id)
+    for (var j = 0; j < sports[i].exercises.length; ++j)
     {
-      multiple_exercises = (sports[i].exercises.length > 1);
-      break;
+      if (sports[i].exercises[j].exercise_id == exercise_object.exercise_id)
+      {
+        sport_object = sports[i];
+        break;
+      }
     }
+
+    if (sport_object != null)
+      break;
   }
 
-  if (multiple_exercises)
-    return exercise_object.exercise.sport.sport_description + ' - ' + exercise_object.exercise.exercise_description;
+  if (sport_object.exercises.length > 1)
+    return sport_object.sport_description + ' - ' + exercise_object.exercise.exercise_description;
   else
-    return exercise_object.exercise.sport.sport_description;
+    return sport_object.sport_description;
 }
 
 
@@ -563,14 +599,14 @@ function setCanceled()
 {
   if (is_canceled)
   {
-    id_cancel_participant.text('Meld på igjen');
-    id_cancel_participant.removeClass("red").addClass("green");;
+    $('#cancelParticipant').text('Meld på igjen');
+    $('#cancelParticipant').removeClass("red").addClass("green");;
     $('.participantname').append(' <span style="color:#d01919;">(kansellert)</span>');
   }
   else
   {
-    id_cancel_participant.text('Kanseller deltaker');
-    id_cancel_participant.removeClass("green").addClass("red");;
+    $('#cancelParticipant').text('Kanseller deltaker');
+    $('#cancelParticipant').removeClass("green").addClass("red");;
   }
 }
 
