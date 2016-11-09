@@ -22,6 +22,8 @@ var router_url = '<?php echo ROOT_URL; ?>/router.php';
     $content = file_get_contents(__DIR__ . "/../../settings.json");
     $jsonObject = json_decode($content);
     echo "var baseURL = '" . $jsonObject->frontend->api_base_url . "';";
+    echo "var baseURLv2 = '" . str_replace("v1", "v2", $jsonObject->frontend->api_base_url) . "';";
+
 ?>
 
 function addJWT(xhr) {
@@ -183,7 +185,7 @@ function apiGetAdditions(successCallback, errorCallback, eventId) {
 
 
 function apiGetEventSummary(successCallback, errorCallback, eventId) {
-    return doGet(baseURL + 'events/' + eventId + '/summary', successCallback, errorCallback)
+    return doGet(baseURLv2 + 'events/' + eventId + '/summary', successCallback, errorCallback)
 }
 
 // -- PARTICIPANTS -- \\
@@ -221,7 +223,7 @@ function apiGetParticipants(successCallback, errorCallback, eventId, includeOrde
 }
 
 function apiGetParticipantsSimplified(successCallback, errorCallback, eventId) {
-    var url = baseURL + 'events/' + eventId + '/participants/simplified';
+    var url = baseURLv2 + 'events/' + eventId + '/participants/simplified';
     return doGet(url, successCallback, errorCallback);
 }
 
@@ -283,7 +285,7 @@ function apiGetAllTeams(successCallback, errorCallback, eventId, includeTeamMemb
 }
 
 function apiGetAllTeamsSimplified(successCallback, errorCallback, eventId) {
-    var url = baseURL + 'events/' + eventId + '/teams/simplified';
+    var url = baseURLv2 + 'events/' + eventId + '/teams/simplified';
     return doGet(url, successCallback, errorCallback);
 }
 
