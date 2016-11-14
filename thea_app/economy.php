@@ -16,7 +16,7 @@
     <thead>
       <tr>
         <th class="ascending right aligned">Ordrenr.</th>
-        <th>Transaksjonsnr.</th>
+        <th>Transaksjons-ID</th>
         <th>Fornavn</th>
         <th>Etternavn</th>
         <th class="right aligned">Sum</th>
@@ -32,6 +32,9 @@
 </div>
 
 <div class="ui modal" id="payment-log">
+  <div id="payment-loader" class="ui active inverted dimmer">
+    <div class="ui large text loader">Henter...</div>
+  </div>
   <div class="header">
     Betalingslogg
   </div>

@@ -25,19 +25,19 @@ function displayTransactions(transactions) {
     var tablerow;
 
     if (transaction.order_status == "COMPLETED")
-      tablerow = '<tr>';
+      tablerow = '<tr class="positive">';
     else
-      tablerow = '<tr class="disabled">';
+      tablerow = '<tr>';
 
     tablerow = tablerow + '<td class="right aligned">';
     tablerow = tablerow + transaction.order_number;
     tablerow = tablerow + '</td>';
 
-    tablerow = tablerow + '<td onclick="showPaymentLog(this, \'' + transaction.transaction_id + '\');" style="cursor:pointer;">';
+    tablerow = tablerow + '<td onclick="showPaymentLog(this, \'' + transaction.transaction_id + '\');" style="cursor:pointer;color:#5b9aff;">';
     tablerow = tablerow + transaction.transaction_id;
     tablerow = tablerow + '</td>';
 
-    tablerow = tablerow + '<td onclick="window.location.href =\'./participant.php?entry_id=' + transaction.entry_id + '\';" style="cursor:pointer;">';
+    tablerow = tablerow + '<td onclick="window.location.href =\'./participant.php?entry_id=' + transaction.entry_id + '\';" style="cursor:pointer;color:#5b9aff;">';
     tablerow = tablerow + transaction.first_name;
     tablerow = tablerow + '</td>';
 
@@ -90,7 +90,7 @@ function displayTransactions(transactions) {
 }
 
 function removeLoader() {
-  $('#transactionsLoader').remove();
+  $('#transactionsLoader').removeClass('active');
 }
 
 function handleError(errorMsg) {
@@ -99,13 +99,21 @@ function handleError(errorMsg) {
 
 function showPaymentLog(sender, transactionId)
 {
+  $('#payment-log-content').text('');
+  $('#payment-loader').addClass('active');
+  $('#payment-log').modal('show');
+
   var request = apiGetTransaction(
     function(data)
     {
       $('#payment-log-content').text(data.rawData);
-      $('#payment-log').modal('show');
     },
-    function(data) { },
+    function(data) { $('#payment-log-content').text(data); },
     event_id,
     transactionId);
+
+  $.when(request).always(function()
+  {
+    $('#payment-loader').removeClass('active');
+  });
 }
