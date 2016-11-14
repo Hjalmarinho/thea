@@ -10,8 +10,17 @@ $(document).ready(function()
 
   $.when(summaryRequest, eventRequest).always(function() {
     removeLoader();
+    lastEntryTimer();
+    setTimeout(getSummaryTimer, 5000);
   });
 });
+
+function getSummaryTimer()
+{
+  apiGetEventSummary(getStatistics, handleError, eventId);
+  setTimeout(getSummaryTimer, 5000);
+}
+
 
 function getStatistics(data)
 {
@@ -23,8 +32,12 @@ function getStatistics(data)
   $('#numMale').html('<i class="man icon"></i>' + data.num_male_individuals);
   $('#numTeams').html('<i class="users icon"></i>' + total_teams);
 
-  last_entry_time = parseDateString(data.last_entry);
-  lastEntryTimer();
+  if (data.last_entry != null)
+    last_entry_time = parseDateString(data.last_entry);
+  else
+    last_entry_time = null;
+
+  $('#exercisesBody').empty();
 
   for (var i = 0; i < data.exercise_summaries.length; ++i)
   {
@@ -103,7 +116,7 @@ function lastEntryTimer()
 {
   if (last_entry_time == null)
   {
-    $('#last_entry').html('');
+    $('#last_entry').html('Ingen påmeldinger enda');
   }
   else
   {
