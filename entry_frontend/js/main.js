@@ -564,9 +564,11 @@ function createConfirmModal(){
 
 }
 
-//Redirect user to payment-page
-function redirectToPayment(data){
-    window.location.replace(data.payment_url);
+// Redirect user to payment-page
+function redirectToPayment(data)
+{
+  return;
+  window.location.replace(data.payment_url);
 }
 
 

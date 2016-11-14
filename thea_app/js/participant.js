@@ -207,7 +207,7 @@ function getSports(sports_array)
   sports = sports_array;
 
   // Load all sports into the needed dropdowns
-  $('#select-exercise-dropdown').empty();
+  /*$('#select-exercise-dropdown').empty();
   $('#select-exercise-dropdown').append('<option value="">Velg idrett</option>');
 
   var firstId = null;
@@ -237,7 +237,7 @@ function getSports(sports_array)
     }
   });
 
-  $('#select-exercise-dropdown').dropdown();
+  $('#select-exercise-dropdown').dropdown();*/
 }
 
 

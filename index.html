@@ -1,0 +1,13 @@
+<html>
+<script>
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    console.log(this.responseText);
+  }
+};
+var obj = {};
+xhttp.open("post", "https://backend-test.theachnology.com/thea-backend/v1/events/9/participants/", true);
+xhttp.send(obj);
+</script>
+</html>
