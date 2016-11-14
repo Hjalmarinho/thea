@@ -227,6 +227,11 @@ function apiGetParticipantsSimplified(successCallback, errorCallback, eventId) {
     return doGet(url, successCallback, errorCallback);
 }
 
+function apiGetTransactionsSummary(successCallback, errorCallback, eventId) {
+    var url = baseURLv2 + 'events/' + eventId + '/transactions/summary';
+    return doGet(url, successCallback, errorCallback);
+}
+
 function apiGetParticipant(successCallback, errorCallback, eventId, entryId) {
     return doGet(baseURL + 'events/' + eventId + '/participants/' + entryId, successCallback, errorCallback)
 }
