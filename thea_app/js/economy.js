@@ -115,5 +115,6 @@ function showPaymentLog(sender, transactionId)
   $.when(request).always(function()
   {
     $('#payment-loader').removeClass('active');
+    $('#payment-log').modal('refresh');
   });
 }
