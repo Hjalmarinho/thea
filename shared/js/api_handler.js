@@ -10,8 +10,7 @@
 
 
 // URLs used to call the API
-var eventId = 1;
-var router_url = '<?php echo ROOT_URL; ?>/router.php';
+var eventId = -1;
 <?php
     // Read the API base url from settings file.
     $input_event_id = filter_input(INPUT_GET, 'event_id', FILTER_VALIDATE_INT);
@@ -37,12 +36,10 @@ function addJWT(xhr) {
 function doGet(urlGET, successCallback, errorCallback) {
     return $.ajax({
         type: 'GET',
-        url: router_url,
+        url: urlGET,
         beforeSend : function (request)
         {
             addJWT(request);
-            request.setRequestHeader('redirect-method', 'get');
-            request.setRequestHeader('redirect-source', urlGET);
         },
         success: function(result){
             handleResult(result, successCallback, errorCallback);
@@ -58,15 +55,13 @@ function doGet(urlGET, successCallback, errorCallback) {
 function doPost(urlPOST, jsonData, successCallback, errorCallback) {
     return $.ajax({
         type: 'POST',
-        url: router_url,
+        url: urlPOST,
         data: JSON.stringify(jsonData),
         dataType: 'json',
         contentType: 'application/json',
         beforeSend : function (request)
         {
             addJWT(request);
-            request.setRequestHeader('redirect-method', 'post');
-            request.setRequestHeader('redirect-source', urlPOST);
         },
         success: function(result){
             handleResult(result, successCallback, errorCallback);
@@ -82,15 +77,13 @@ function doPut(urlPUT, jsonData, successCallback, errorCallback, headerData) {
     return $.ajax({
         type: 'PUT',
         contentType: 'application/json',
-        url: router_url,
+        url: urlPUT,
         data: JSON.stringify(jsonData),
         header: headerData,
         dataType: 'json',
         beforeSend : function (request)
         {
             addJWT(request);
-            request.setRequestHeader('redirect-method', 'put');
-            request.setRequestHeader('redirect-source', urlPUT);
         },
         success: function(result){
             handleResult(result, successCallback, errorCallback);
@@ -106,15 +99,13 @@ function doDelete(urlDELETE, jsonData, successCallback, errorCallback, headerDat
     return $.ajax({
         type: 'delete',
         contentType: 'application/json',
-        url: router_url,
+        url: urlDELETE,
         data: JSON.stringify(jsonData),
         header: headerData,
         dataType: 'json',
         beforeSend : function (request)
         {
             addJWT(request);
-            request.setRequestHeader('redirect-method', 'delete');
-            request.setRequestHeader('redirect-source', urlDELETE);
         },
         success: function(result){
             handleResult(result, successCallback, errorCallback);
