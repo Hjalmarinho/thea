@@ -22,6 +22,7 @@ Primary use:  This page is displayed when an entry has been completed
   var RESPONSE_CODE = "responseCode";
   var TRANSACTION_ID = "transactionId";
   var ORDER_NUMBER = "orderNumber";
+  var EVENT_ID = "eventId";
 
   function error(orderNumber, errorMsg)
   {
@@ -45,6 +46,7 @@ Primary use:  This page is displayed when an entry has been completed
     var responseCode = GetURLParameter(RESPONSE_CODE);
     var transactionId = GetURLParameter(TRANSACTION_ID);
     var orderNumber = GetURLParameter(ORDER_NUMBER);
+    var eventId = GetURLParameter(EVENT_ID);
 
     if (orderNumber == null)
     {
@@ -54,9 +56,13 @@ Primary use:  This page is displayed when an entry has been completed
     {
       error(orderNumber, "Betalingen ble avbrutt av kjøperen.");
     }
+    else if (eventId == null)
+    {
+      error(orderNumber, "Mangler GET-parameter '" + EVENT_ID + "'.");
+    }
     else
     {
-      completeEntry(orderNumber, function(data)
+      completeEntry(orderNumber, eventId, function(data)
       {
         if (error !== null)
         {

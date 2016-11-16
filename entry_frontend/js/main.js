@@ -621,7 +621,7 @@ function externalPersonPosted(data)
 
 
 //Called when a user has completed payment 
-function completeEntry(orderNumber, callback, errorCallback){
+function completeEntry(orderNumber, eventId, callback, errorCallback){
     apiPutTransaction(callback, errorCallback, orderNumber, eventId);
 }
 
