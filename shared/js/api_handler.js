@@ -303,8 +303,8 @@ function apiPostCreditTransaction(successCallback, errorCallback, json, eventId,
 }
 
 //http://docs.thea.apiary.io/#reference/transaction/transactionsidprocess/complete-a-participant-registration
-function apiPutTransaction(successCallback, errorCallback, orderNumber) {
-    return doPut(baseURL + 'events/' + eventId + '/transactions/'+orderNumber+'/process', {}, successCallback, errorCallback);
+function apiPutTransaction(successCallback, errorCallback, orderNumber, eventId) {
+    return doPut(baseURL + 'events/' + eventId + '/transactions/' + orderNumber + '/process', {}, successCallback, errorCallback);
 }
 
 function apiGetAccreditationList(successCallback, errorCallback, eventId) {
