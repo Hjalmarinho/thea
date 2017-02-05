@@ -81,7 +81,7 @@ function getStatistics(data)
     str = str + '</td>';
 
     str = str + '<td>';
-    str = str + (stats.is_teamexercise ? '-' : stats.total_mix_teams);
+    str = str + (stats.is_teamexercise ? stats.total_mix_teams + ' lag' : '-');
     str = str + '</td>';
 
     str = str + '<td>';
