@@ -579,7 +579,7 @@ function redirectToPayment(data){
 function confirmPortrait()
 {
   var canvas = $("#portrait_crop").cropper("getCroppedCanvas");
-  $('#portrait_container').html('<img id="portrait" style="display:none; width:150px; height:200px;" alt="Portrettbilde" src="' + canvas.toDataURL("image/jpeg") + '" />');
+  $('#portrait_container').html('<img id="portrait" style="display:none; width:150px; height:200px;" alt="Portrettbilde" src="' + canvas.toDataURL() + '" />');
   $('#image_modal').modal('hide');
   $('#portrait').show();
 }
@@ -668,7 +668,7 @@ function createJSON(){
     person["birthdate"]  = $('#birthyear').val()+ '-' + $('#birthmonth').val() + '-' + lpad($('#birthday').val(), 2, '0');
     person["allergies"]  = $('#allergies').val();
     var portrait   = {};
-    portrait["portrait_data"] = $('#portrait').attr('src').split(',')[1];
+    portrait["portrait_data"] = $('#portrait').attr('src');
     person["portrait"] = portrait;
     entry["person"]   = person;
 

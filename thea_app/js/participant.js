@@ -71,7 +71,7 @@ function errorHandler(errorMessage)
 
 function displayPortrait(image)
 {
-  $('#portrait').attr('src', 'data:image/jpeg;base64,' + image.image_data);
+  $('#portrait').attr('src', 'data:' + image.mime_type + ';base64,' + image.image_data);
 }
 
 function displayClubs(clubs)
@@ -684,10 +684,8 @@ function resendReceipt(sender)
 function confirmPortrait()
 {
   var canvas = $("#portrait_crop").cropper("getCroppedCanvas");
-  var base64 = canvas.toDataURL("image/jpeg");
+  var base64 = canvas.toDataURL();
 
-  // Trim away any 'data:image/jpeg;base64,' at the beginning.
-  base64 = base64.replace('data:image/jpeg;base64,', '');
   var json_data = {'portrait_data': base64};
   var request = apiPutPortrait(function(data) { loadParticipant(); }, errorHandler, event_id, local_entry_id, json_data, '');
   $.when(request).done(function()

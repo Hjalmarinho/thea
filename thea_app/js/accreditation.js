@@ -292,7 +292,7 @@ function displayExternalPerson(externalPerson)
 
 function displayPortrait(image)
 {
-  $('#card_portrait').attr('src', 'data:image/jpeg;base64,' + image.image_data)
+  $('#card_portrait').attr('src', 'data:' + image.mime_type + ';base64,' + image.image_data)
 }
 
 //Callback function when a participant has been accreditated
