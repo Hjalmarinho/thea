@@ -51,6 +51,7 @@ function errorHandler(errorMsg)
 
 function getEventsCallback(events_array)
 {
+  sortArrayByNumberDesc(events_array, 'event_id');
   for (var i = 0; i < events_array.length; ++i)
   {
     var event_obj = events_array[i];
