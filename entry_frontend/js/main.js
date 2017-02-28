@@ -745,10 +745,10 @@ function uiGetSports(ticket_id)
         {
           // The exercise is checked.
           var exercise = {'exercise_id': exerciseId , 'exercise_extra_fields': [] };
-          $(this).find('[id^=extra_field_exercise_]').each(function()
+          $(this).find('[id^=extra_field_exercise_] input').each(function()
           {
             // Any extra fields
-            var exerciseExtraFieldId = parseInt($(this).find('input').attr('data-exercise-extra-field-id'));
+            var exerciseExtraFieldId = parseInt($(this).attr('data-exercise-extra-field-id'));
             var value = $(this).val();
             exercise.exercise_extra_fields.push({'exercise_extra_field_id': exerciseExtraFieldId, 'value': value});
           });
