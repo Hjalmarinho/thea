@@ -28,24 +28,16 @@ $(document).ready(function()
     'language':
     {
       'search': 'Søk',
-      'lengthMenu': 'Vis _MENU_ deltagere',
-      'paginate':
-      {
-        'first': 'Første',
-        'last': 'Siste',
-        'next': 'Neste',
-        'previous': 'Forrige'
-      }
+      'lengthMenu': 'Vis _MENU_ deltagere'
     },
     'createdRow': function ( row, data, index )
     {
-      if ( data.accreditated )
+      if (data.accreditated)
       {
         $(row).addClass('positive');
       }
     },
     'lengthMenu': [ [10, 25, 50, -1], [10, 25, 50, 'Alle'] ]
-
   });
 
   var request = apiGetParticipants(displayParticipants, errorHandler, event_id, false, false, false, true, false, -1);
@@ -54,8 +46,9 @@ $(document).ready(function()
   $.when(request).always(function() {
     table.draw();
     printNumAccreditated();
-    $('#participants_table tbody').on( 'click', 'tr', function () {
-      if ( $(this).hasClass('active') )
+    $('#participants_table tbody').on( 'click', 'tr', function ()
+    {
+      if ($(this).hasClass('active'))
       {
         $(this).removeClass('active');
       }
@@ -64,10 +57,11 @@ $(document).ready(function()
         table.$('tr.active').removeClass('active');
         $(this).addClass('active');
       }
+
       row_clicked(this);
     });
-    setTimeout("getUpdates()", 5000);
 
+    setTimeout("getUpdates()", 5000);
     removeParticipantsLoader();
   });
 });
@@ -89,27 +83,25 @@ function printNumAccreditated()
 }
 
 
-//      UPDATE GUI FUNCTIONS
-// ***********************************************************************
-
-//Populate table-body with all participants
 function displayParticipants(participants)
 {
   var rows = [];
   for (var i = 0; i < participants.length; ++i)
   {
-    if (participants[i].status != REGISTRATION_CONFIRMED)
+    var participant = participants[i];
+    if (participant.status != REGISTRATION_CONFIRMED)
       continue;
+
     var obj = {
-      'first_name': participants[i].person.first_name,
-      'last_name': participants[i].person.last_name,
-      'club_name': participants[i].club.club_name,
-      'id': '1-' + participants[i].entry_id,
-      'accreditated': participants[i].accreditated
+      'first_name': participant.person.first_name,
+      'last_name': participant.person.last_name,
+      'club_name': participant.club.club_name,
+      'id': '1-' + participant.entry_id,
+      'accreditated': participant.accreditated
     }
 
     rows.push(obj);
-    last_history_id = Math.max(last_history_id, participants[i].history_id);
+    last_history_id = Math.max(last_history_id, participant.history_id);
   }
 
   table.rows.add(rows);
@@ -121,18 +113,19 @@ function displayExternalPersons(externalPersons)
   var rows = [];
   for (var i = 0; i < externalPersons.length; ++i)
   {
-    if (externalPersons[i].status != REGISTRATION_CONFIRMED)
+    var external_person = externalPersons[i];
+    if (external_person.status != REGISTRATION_CONFIRMED)
       continue;
     var obj = {
-      'first_name': externalPersons[i].person.first_name,
-      'last_name': externalPersons[i].person.last_name,
-      'club_name': externalPersons[i].organization,
-      'id': '2-' + externalPersons[i].external_person_id,
-      'accreditated': externalPersons[i].accreditated
+      'first_name': external_person.person.first_name,
+      'last_name': external_person.person.last_name,
+      'club_name': external_person.organization,
+      'id': '2-' + external_person.external_person_id,
+      'accreditated': external_person.accreditated
     }
 
     rows.push(obj);
-    last_history_id = Math.max(last_history_id, externalPersons[i].history_id);
+    last_history_id = Math.max(last_history_id, external_person.history_id);
   }
 
   table.rows.add(rows);
@@ -328,14 +321,12 @@ function displayCommentSaved(comment)
 
 function setBackgroundColor(div, accreditated)
 {
-  if(accreditated)
+  if (accreditated)
     div.css("background-color", "rgba(34, 190, 52, .2)");
   else
     div.css("background-color", "rgba(257, 257, 257, 1)");
 }
 
-//      POST/PUT/GET TO API FUNCTIONS
-// ***********************************************************************
 
 function row_clicked(sender)
 {
