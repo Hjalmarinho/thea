@@ -2,9 +2,30 @@
 
 var eventId = sessionStorage.getItem('event_id');
 var last_entry_time = null;
-
+var table = null;
 $(document).ready(function()
 {
+  table = $('table').DataTable({
+    'pagingType': 'numbers',
+    'info': false,
+    'paging': false,
+    'language':
+    {
+      'search': 'Søk',
+      'zeroRecords': 'Ingen treff'
+    },
+    'columns':
+    [
+      { 'data': 'exercise_description', 'render': exercise_column_render },
+      { 'data': 'sport_description' },
+      { 'data': null, 'render': male_column_render },
+      { 'data': null, 'render': female_column_render },
+      { 'data': null, 'render': mix_column_render },
+      { 'data': null, 'render': total_column_render }
+    ],
+    'order': [[1, 'asc'], [0, 'asc']]
+  });
+
   var summaryRequest = apiGetEventSummary(getStatistics, handleError, eventId)
   var eventRequest = apiGetEvent(getEvent, handleError, eventId)
 
@@ -14,6 +35,51 @@ $(document).ready(function()
     setTimeout(getSummaryTimer, 5000);
   });
 });
+
+function exercise_column_render( data, type, full, meta )
+{
+  if (type === 'display')
+    return '<a href="./exercise.php?exercise_id=' + full.exercise_id + '">' + full.exercise_description + '</a>';
+
+  return data;
+}
+
+
+
+function male_column_render( data, type, full, meta )
+{
+  if (data.is_teamexercise)
+    return data.total_male_individuals + ' (' + data.total_male_teams + ' lag)';
+  else
+    return data.total_male_individuals;
+}
+
+
+function female_column_render( data, type, full, meta )
+{
+  if (data.is_teamexercise)
+    return data.total_female_individuals + ' (' + data.total_female_teams + ' lag)';
+  else
+    return data.total_female_individuals;
+}
+
+function mix_column_render( data, type, full, meta )
+{
+  return (data.is_teamexercise ? data.total_mix_teams + ' lag' : '-');
+
+}
+
+function total_column_render( data, type, full, meta )
+{
+  var total_individuals = data.total_male_individuals + data.total_female_individuals;
+  var total_teams = data.total_male_teams + data.total_female_teams + data.total_mix_teams;
+
+  if (data.is_teamexercise)
+    return total_individuals + ' (' + total_teams + ' lag)';
+  else
+    return total_individuals;
+}
+
 
 function getSummaryTimer()
 {
@@ -37,69 +103,8 @@ function getStatistics(data)
   else
     last_entry_time = null;
 
-  $('#exercisesBody').empty();
-
-  for (var i = 0; i < data.exercise_summaries.length; ++i)
-  {
-    var stats = data.exercise_summaries[i];
-
-    var total_individuals = stats.total_male_individuals + stats.total_female_individuals;
-    var total_teams = 0;
-    if (stats.is_teamexercise)
-      total_teams = stats.total_male_teams + stats.total_female_teams + stats.total_mix_teams;
-
-    var str = '<tr>';
-
-    str = str + '<td>';
-    str = str + '<a href="./exercise.php?exercise_id=' + stats.exercise_id + '">' + stats.exercise_description + '</a>';
-    str = str + '</td>';
-
-    str = str + '<td>';
-    str = str + stats.sport_description;
-    str = str + '</td>';
-
-    str = str + '<td>';
-    if (stats.is_teamexercise)
-    {
-      str = str + stats.total_male_individuals + ' (' + stats.total_male_teams + ' lag)';
-    }
-    else
-    {
-      str = str + stats.total_male_individuals;
-    }
-    str = str + '</td>';
-
-    str = str + '<td>';
-    if (stats.is_teamexercise)
-    {
-      str = str + stats.total_female_individuals + ' (' + stats.total_female_teams + ' lag)';
-    }
-    else
-    {
-      str = str + stats.total_female_individuals;
-    }
-    str = str + '</td>';
-
-    str = str + '<td>';
-    str = str + (stats.is_teamexercise ? stats.total_mix_teams + ' lag' : '-');
-    str = str + '</td>';
-
-    str = str + '<td>';
-    if (stats.is_teamexercise)
-    {
-      str = str + total_individuals + ' (' + total_teams + ' lag)';
-    }
-    else
-    {
-      str = str + total_individuals;
-    }
-    str = str + '</td>';
-
-    str = str + '</tr>';
-
-
-    $('#exercisesBody').append(str);
-  }
+  table.rows().remove();
+  table.rows.add(data.exercise_summaries).draw();
 }
 
 function getEvent(data)
