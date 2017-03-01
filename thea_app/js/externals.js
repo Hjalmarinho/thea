@@ -2,48 +2,61 @@
 
 var event_id = sessionStorage.getItem('event_id');
 
-$(document).ready(function(){
+$(document).ready(function()
+{
   var request = apiGetExternalPersons(displayExternalPersons, handleError, event_id, -1);
   $.when(request).always(function() { removeLoader(); });
 })
 
-function displayExternalPersons(externalPersons){
-  $.each(externalPersons, function (i, externalPerson) {
-    var cssClass = '';
-    switch (externalPerson.status) {
-      case REGISTRATION_CONFIRMED:
-        break;
-      case REGISTRATION_CANCELLED:
-        cssClass = ' class="error" ';
-        break;
-      default:
-        return true;
+function displayExternalPersons(externalPersons)
+{
+  $('table').DataTable({
+    'pagingType': 'numbers',
+    'info': false,
+    'language':
+    {
+      'search': 'Søk',
+      'zeroRecords': 'Ingen treff',
+      'lengthMenu': 'Vis _MENU_ personer'
+    },
+    'columns':
+    [
+      {
+        'data': 'person.first_name',
+        'createdCell': function (td, cellData, rowData, row, col)
+        {
+          $(td).attr('onclick', 'window.location.href="./external.php?external_person_id=' + rowData.external_person_id + '";');
+          $(td).css('cursor', 'pointer');
+          $(td).css('color', '#5b9aff');
+        }
+      },
+      { 'data': 'person.last_name' },
+      { 'data': 'person.phone' },
+      { 'data': 'person.email' },
+      { 'data': 'organization' },
+      { 'data': 'description' },
+      { 'data': 'external_person_id', 'visible': false },
+    ],
+    'order': [[6, 'desc']],
+    'createdRow': function ( row, data, index )
+    {
+      switch (data.status)
+      {
+        case REGISTRATION_CANCELLED:
+          $(row).addClass('error');
+          break;
+      }
     }
-
-    var first_name = externalPerson.person.first_name;
-    var last_name = externalPerson.person.last_name;
-    var phone = externalPerson.person.phone;
-    var email = externalPerson.person.email;
-    var organization = externalPerson.organization;
-    var role = externalPerson.description;
-    var external_person_id = externalPerson.external_person_id;
-
-    var tablerow = '<tr ' + cssClass + '> \
-      <td><a href="./external.php?external_person_id=' + external_person_id +'">' + first_name + '</a></td> \
-      <td>' + last_name + '</td> \
-      <td>' + phone + '</td> \
-      <td><a href="mailto:' + email + '">' + email + '</a></td> \
-      <td>' + organization + '</td> \
-      <td>' + role + '</td> \
-    </tr>';
-
-    $('#externalPersons').append(tablerow);
-  });
+  }).rows.add(externalPersons).draw();
 }
 
-function removeLoader() {
+
+function removeLoader()
+{
   $("#participantsLoader").remove();
 }
 
-function handleError(errorMsg) {
+
+function handleError(errorMsg)
+{
 }
