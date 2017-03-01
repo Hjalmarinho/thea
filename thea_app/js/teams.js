@@ -7,7 +7,71 @@ $(document).ready(function() {
   $.when(request).always(function() { removeLoader(); });
 })
 
-function displayTeams(teams) {
+function gender_column_render( data, type, full, meta )
+{
+  return customGenderFormat(data);
+}
+
+
+function time_registered_column_render( data, type, full, meta )
+{
+  var date = parseDateString(data);
+  if (type === 'sort')
+    return date.getTime();
+  else
+    return date.customFormat('#DD# #MMM# #YYYY#, kl. #hhh#.#mm#.#ss#');
+}
+
+function displayTeams(teams)
+{
+  $('table').DataTable({
+    'pagingType': 'numbers',
+    'info': false,
+    'language':
+    {
+      'search': 'Søk',
+      'zeroRecords': 'Ingen treff',
+      'lengthMenu': 'Vis _MENU_ lag'
+    },
+    'columns':
+    [
+      {
+        'data': 'team_name',
+        'createdCell': function (td, cellData, rowData, row, col)
+        {
+          $(td).attr('onclick', 'window.location.href="./team.php?team_id=' + rowData.team_id + '";');
+          $(td).css('cursor', 'pointer');
+          $(td).css('color', '#5b9aff');
+        }
+      },
+      { 'data': 'sport_description' },
+      {
+        'data': 'exercise_description',
+        'createdCell': function (td, cellData, rowData, row, col)
+        {
+          $(td).attr('onclick', 'window.location.href="./exercise.php?exercise_id=' + rowData.exercise_id + '";');
+          $(td).css('cursor', 'pointer');
+          $(td).css('color', '#5b9aff');
+        }
+      },
+      { 'data': 'club_name' },
+      { 'data': 'team_gender', 'render': gender_column_render },
+      { 'data': 'time_registrated', 'render': time_registered_column_render },
+      { 'data': 'team_id', 'visible': false },
+    ],
+    'order': [[6, 'desc']],
+    'createdRow': function ( row, data, index )
+    {
+      switch (data.status)
+      {
+        case REGISTRATION_CANCELLED:
+          $(row).addClass('error');
+          break;
+      }
+    }
+  }).rows.add(teams).draw();
+
+return;
   sortArrayByNumberDesc(teams, 'team_id');
 
   for (var i = 0; i < teams.length; ++i)
