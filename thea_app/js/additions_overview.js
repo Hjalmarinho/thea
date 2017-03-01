@@ -75,7 +75,15 @@ function displayAdditions(participants)
       },
       'lengthMenu': [ [10, 25, 50, -1], [10, 25, 50, 'Alle'] ],
       'columns': [
-        { 'data': 'first_name' },
+        {
+          'data': 'first_name',
+          'createdCell': function (td, cellData, rowData, row, col)
+          {
+            $(td).attr('onclick', 'window.location.href="./participant.php?entry_id=' + rowData.entry_id + '";');
+            $(td).css('cursor', 'pointer');
+            $(td).css('color', '#5b9aff');
+          }
+        },
         { 'data': 'last_name' },
         { 'data': 'num_items' }
       ]
