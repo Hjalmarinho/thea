@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <title>Thea 2.0</title>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
 
     <script>
 
@@ -16,40 +16,32 @@
       require_once(__DIR__ . "/../shared/js/api_handler.js");
     ?>
     </script>
-
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.css" />
-
-    <script src="js/tablesort.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <?php // Include React ?>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script> -->
-    <script src="js/react.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script> -->
-    <script src="js/JSXTransformer.js"></script>
-    <?php // Include shared javascript ?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
     <script src="js/shared.js"></script>
-    <?php // Include page specific js ?>
     <script src="js/user.js"></script>
+    <script src="js/index.js"></script>
+    <style type="text/css">
+      body
+      {
+        background-color: #f4f4f4;
+      }
 
-    <?php
-    $file = basename($_SERVER["SCRIPT_FILENAME"], ".php");
-    echo "<script src='js/" . $file . ".js'></script>";
-    ?>
+      body > .grid
+      {
+        height: 100%;
+      }
 
-     <style type="text/css">
-        body {
-          background-color: #f4f4f4;
-        }
-        body > .grid {
-          height: 100%;
-        }
-        .image {
-          margin-top: -100px;
-        }
-        .column {
-          max-width: 450px;
-        }
-      </style>
+      .image
+      {
+        margin-top: -100px;
+      }
+
+      .column
+      {
+        max-width: 450px;
+      }
+    </style>
 
   </head>
   <body>
@@ -62,7 +54,7 @@
           <div class="field">
             <div class="ui left icon input">
               <i class="user icon"></i>
-              <input type="text" name="email" id="email" placeholder="E-post">
+              <input type="email" name="email" id="email" placeholder="E-post">
             </div>
           </div>
           <div class="field">
