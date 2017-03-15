@@ -33,7 +33,7 @@ Primary use:  View allowing participants to register for an event.
           <!-- DELTAKERINFORMASJON -->
           <h4 class="ui dividing header">Deltakerinformasjon</h4>
 
-          <div id="ticket_id" data-value="1"></div>
+          <div id="ticket_type" data-value="1"></div>
 
           <div class="inline fields">
             <label class="field four wide">Klubb</label>

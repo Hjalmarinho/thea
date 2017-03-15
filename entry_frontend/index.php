@@ -63,6 +63,14 @@ else
       </div>
       <div class="ui row" id="tickets">
       </div>
+      <div class="ui row">
+        <div class="ui info floating message" id="info-box" hidden>
+          <div class="header">
+            Informasjon
+          </div>
+          <div id="info-text" style="text-align:left;"></div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="footer">
@@ -76,6 +84,11 @@ else
 
     $('#header').text('Påmelding ' + event_obj.event_description);
     $('#organizer_name').text('Arrangør: ' + event_obj.event_organizer.club_name);
+    if (event_obj.frontpage_info_text !== null)
+    {
+      $('#info-box').show();
+      $('#info-text').html(event_obj.frontpage_info_text);
+    }
 
     if (event_start == event_end)
     {
@@ -83,7 +96,7 @@ else
     }
     else
     {
-    	$('#event_date').text(event_start.customFormat('#DD#.') + ' - ' + event_end.customFormat('#DD#. #MMMM# #YYYY#'));
+      $('#event_date').text(event_start.customFormat('#DD#.') + ' - ' + event_end.customFormat('#DD#. #MMMM# #YYYY#'));
     }
     $('#organizer_name').text();
     for (var i = 0; i < event_obj.tickets.length; ++i)
@@ -95,18 +108,18 @@ else
         var ticket_text = "Meld på deltager";
         if (ticket_obj.display_text != null)
           ticket_text = ticket_obj.display_text;
-        $('#tickets').append('<a href="' + event_obj.event_id + '/deltager"><button class="ui blue button">' + ticket_text + '</button></a>');
+        $('#tickets').append('<a href="' + event_obj.event_id + '/deltager?ticket_id=' + ticket_obj.ticket_id + '"><button class="ui blue button">' + ticket_text + '</button></a>');
 
         // VERY bad hack...ev
         if (event_obj.has_teamexercise)
-          $('#tickets').append('<a href="' + event_obj.event_id + '/lagleder"><button class="ui blue button">Meld på lag</button></a>');
+          $('#tickets').append('<a href="' + event_obj.event_id + '/lagleder?ticket_id=' + ticket_obj.ticket_id + '"><button class="ui blue button">Meld på lag</button></a>');
       }
       else if (ticket_obj.ticket_type == 'SPECTATOR')
       {
         var ticket_text = "Meld på deltager";
         if (ticket_obj.display_text != null)
           ticket_text = ticket_obj.display_text;
-        $('#tickets').append('<a href="' + event_obj.event_id + '/tilskuer"><button class="ui blue button">' + ticket_text + '</button></a>');
+        $('#tickets').append('<a href="' + event_obj.event_id + '/tilskuer?ticket_id=' + ticket_obj.ticket_id + '"><button class="ui blue button">' + ticket_text + '</button></a>');
       }
     }
 

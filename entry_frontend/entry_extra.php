@@ -58,7 +58,7 @@ require_once(__DIR__ . '/site_info.php');
       <div class="six wide computer ten wide tablet fourteen wide mobile column">
         <?php require("view_components/error_msg.php"); ?>
         <form class="ui form" id="entry_form">
-          <div id="ticket_id" data-value="4"></div>
+          <div id="ticket_type" data-value="4"></div>
 
           <!-- Insert view for entering personal information -->
           <?php require("view_components/personal_info.php"); ?>

@@ -34,7 +34,7 @@ Primary use:  View allowing contact persons to register teams for an event.
 
           <!-- LAG- OG DELTAKERINFORMASJON -->
           <h4 class="ui dividing header">Lag- og deltakerinformasjon</h4>
-          <div id="ticket_id" data-value="2"></div>
+          <div id="ticket_type" data-value="2"></div>
 
           <div class="inline fields">
             <label class="field four wide">Klubb</label>

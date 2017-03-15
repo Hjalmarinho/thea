@@ -32,7 +32,7 @@ Primary use:  View allowing suppporters to register for an event.
           <!-- Insert view for entering personal information -->
           <?php require("view_components/personal_info.php"); ?>
 
-          <div id="ticket_id" data-value="3"></div>
+          <div id="ticket_type" data-value="3"></div>
 
           <!-- DELTAKERINFORMASJON -->
           <h4 class="ui dividing header">Deltakerinformasjon</h4>
