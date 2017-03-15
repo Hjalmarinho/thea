@@ -108,15 +108,26 @@ else
         var ticket_text = "Meld på deltager";
         if (ticket_obj.display_text != null)
           ticket_text = ticket_obj.display_text;
-        $('#tickets').append('<a href="' + event_obj.event_id + '/deltager?ticket_id=' + ticket_obj.ticket_id + '"><button class="ui blue button">' + ticket_text + '</button></a>');
 
-        // VERY bad hack...ev
         if (event_obj.has_teamexercise)
-          $('#tickets').append('<a href="' + event_obj.event_id + '/lagleder?ticket_id=' + ticket_obj.ticket_id + '"><button class="ui blue button">Meld på lag</button></a>');
+        {
+          var html = '<div class="ui blue dropdown button">' + ticket_text + ' \
+                        <i class="dropdown icon"></i> \
+                        <div class="menu"> \
+                          <div class="item" onclick="window.location.replace(\'' + event_obj.event_id + '/lagleder?ticket_id=' + ticket_obj.ticket_id + '\')">Meld på lag</div> \
+                          <div class="item" onclick="window.location.replace(\'' + event_obj.event_id + '/deltager?ticket_id=' + ticket_obj.ticket_id + '\')">Meld på deltager</div> \
+                        </div> \
+                      </div>';
+          $('#tickets').append(html);
+        }
+        else
+        {
+          $('#tickets').append('<a href="' + event_obj.event_id + '/deltager?ticket_id=' + ticket_obj.ticket_id + '"><button class="ui blue button">' + ticket_text + '</button></a>');
+        }
       }
       else if (ticket_obj.ticket_type == 'SPECTATOR')
       {
-        var ticket_text = "Meld på deltager";
+        var ticket_text = "Meld på tilskuer";
         if (ticket_obj.display_text != null)
           ticket_text = ticket_obj.display_text;
         $('#tickets').append('<a href="' + event_obj.event_id + '/tilskuer?ticket_id=' + ticket_obj.ticket_id + '"><button class="ui blue button">' + ticket_text + '</button></a>');
@@ -124,6 +135,7 @@ else
     }
 
     $('#tickets').append('<a href="' + event_obj.event_id + '/tillegg"><button class="ui blue button">Etterbestilling av tillegg</button></a>');
+    $('.dropdown').dropdown();
   }
 
   function errorHandler(errorMsg)
