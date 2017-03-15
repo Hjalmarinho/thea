@@ -60,7 +60,7 @@
               </select>
             </div>
             <div class="actions">
-              <div class="ui button cancel close">Avbryt</div>
+              <div class="ui button cancel">Avbryt</div>
               <div class="ui button green" onclick="nextAfterSelectExercise(this);">Neste</div>
             </div>
           </div>
@@ -74,7 +74,7 @@
               </select>
             </div>
             <div class="actions">
-              <div class="ui button cancel close">Avbryt</div>
+              <div class="ui button cancel">Avbryt</div>
               <div class="ui button green" onclick="doTeamEntry(this);">Neste</div>
             </div>
           </div>
@@ -85,8 +85,8 @@
               Er du sikker at du vil endre <span class="participantname"></span>?
             </div>
             <div class="actions">
-              <div class="ui button cancel close">Avbryt</div>
-              <div class="ui button close green" onclick="updateParticipant();" >Oppdater</div>
+              <div class="ui button cancel">Avbryt</div>
+              <div class="ui button ok green" onclick="updateParticipant();" >Oppdater</div>
             </div>
           </div>
 
@@ -95,7 +95,7 @@
               En ny påmeldingskvittering er sendt ut til <span class="participantname"></span>.
             </div>
             <div class="actions">
-              <div class="ui ok button close green">Okey!</div>
+              <div class="ui ok button green">Okey!</div>
             </div>
           </div>
 
@@ -109,7 +109,7 @@
               </pre>
             </div>
             <div class="actions">
-              <div class="ui green ok button close">Ok</div>
+              <div class="ui green ok button">Ok</div>
             </div>
           </div>
 
@@ -121,7 +121,7 @@
               <p id="error-msg"></p>
             </div>
             <div class="actions">
-              <div class="ui ok button close" >Ok</div>
+              <div class="ui ok button" >Ok</div>
             </div>
           </div>
 
@@ -147,7 +147,7 @@
               </div>
             </div>
             <div class="actions">
-              <div class="ui button cancel red close">Avbryt</div>
+              <div class="ui button cancel red">Avbryt</div>
               <div class="ui button ok green" id="credit-button" onclick="creditParticipant();">Refunder</div>
             </div>
           </div>
