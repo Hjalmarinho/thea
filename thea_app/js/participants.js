@@ -24,20 +24,6 @@ function time_registered_column_render( data, type, full, meta )
 }
 
 
-function ticket_type_column_render(data, type, full, meta)
-{
-  switch (data)
-  {
-    case 'PARTICIPANT':
-      return 'Deltaker';
-    case 'SPECTATOR':
-      return 'Tilskuer';
-    default:
-      return 'Ukjent';
-  }
-}
-
-
 function receipt_column_render( data, type, full, meta )
 {
   return '<i class="download blue icon"></i>';
@@ -71,7 +57,7 @@ function displayParticipants(participants)
       { 'data': 'club_name' },
       { 'data': 'phone' },
       { 'data': 'email' },
-      { 'data': 'ticket_type', 'render': ticket_type_column_render },
+      { 'data': 'ticket_description' },
       { 'data': 'time_registrated', 'render': time_registered_column_render },
       {
         'data': null,
