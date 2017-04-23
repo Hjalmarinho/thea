@@ -92,9 +92,21 @@ Primary use:  Allow participants to buy additions after they have
         first = false;
       }
     });
+
     $('#additions').append('<br>');
+
+    // VERY bad hack
+    if (eventId == 11)
+    {
+      $('#additions').append('<a href="#" onclick="showTShirtImage();">Bilde av t-skjorte</a>');
+      $('#additions').append('<br>');
+    }
   }
 
+  function showTShirtImage()
+  {
+    $('#image_modal').modal('show');
+  }
 
   function generateCheckbox(label, value, checked, onchange)
   {
@@ -220,5 +232,17 @@ Primary use:  Allow participants to buy additions after they have
 
   <!-- Insert error modal -->
   <?php require("view_components/error_modal.php"); ?>
+
+  <div class="ui modal" id="image_modal">
+    <div class="header">
+      Bilde av t-skjorte 
+    </div>
+    <div class="content">
+      <img class="ui big image" src="https://pamelding.theachnology.com/img/tshirt.png" alt="T-skjorte">
+    </div>
+    <div class="actions">
+      <div class="ui button close">Ok</div>
+    </div>
+  </div>
 </body>
 </html>
