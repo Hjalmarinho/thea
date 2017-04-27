@@ -164,7 +164,7 @@ function displayParticipants(participants)
         'data': 'first_name',
         'createdCell': function (td, cellData, rowData, row, col)
         {
-          $(td).attr('onclick', 'window.location.href="./participant.php?team_id=' + rowData.entry_id + '";');
+          $(td).attr('onclick', 'window.location.href="./participant.php?entry_id=' + rowData.entry_id + '";');
           $(td).css('cursor', 'pointer');
           $(td).css('color', '#5b9aff');
         }
