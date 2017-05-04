@@ -368,13 +368,23 @@ function printOrders(orders_array)
   {
     var order = orders_array[i];
     var order_date = parseDateString(order.time_registered);
-    var html = '<div class="card"> \
+
+    var card_color = 'red';
+    var order_status = 'Påbegynt, men ikke fullført';
+    if (order.order_status == 'Completed')
+    {
+      card_color = 'green';
+      order_status = 'Fullført';
+    }
+
+    var html = '<div class="' + card_color + ' card"> \
       <div class="content"> \
         <div class="header">Ordrenr ' + order.order_number + '</div> \
         <div class="meta">' + order_date.customFormat("#DD# #MMM# #YYYY# #hhh#.#mm#.#ss#") + '</div> \
         <div class="description"> \
           Ordresum: ' + order.order_amount + ',- <br> \
-          Refundert: ' + order.amount_refunded + ',- \
+          Refundert: ' + order.amount_refunded + ',- <br> \
+          Status: ' + order_status + ' \
         </div> \
       </div> \
       <div class="extra content"> \
