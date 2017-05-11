@@ -325,15 +325,15 @@ function generateExerciseCheckbox(exercise)
 
 function printExerciseExtraFields(exerciseExtraFields, htmlContainerId, exercise)
 {
+  var html = '<div id="extra_field_exercise_' + exercise.exercise_id + '" class="ui field"  style="display:none;">';
   $.each(exerciseExtraFields, function(i, exerciseExtraField)
   {
-    var html = '<p>' + exerciseExtraField.exercise_extra_field_description + '</p>';
-    html = html + '<div id="extra_field_exercise_' + exercise.exercise_id + '" class="ui field"  style="display:none;"> \
-        <input type="text" data-exercise-extra-field-id="' + exerciseExtraField.exercise_extra_field_id + '"> \
-    </div>';
-
-    $(htmlContainerId).append(html);
+    html = '<p>' + exerciseExtraField.exercise_extra_field_description + '</p>';
+    html = html + '<input type="text" data-exercise-extra-field-id="' + exerciseExtraField.exercise_extra_field_id + '">';
   });
+
+  html = html + '</div>';
+  $(htmlContainerId).append(html);
 }
 
 
