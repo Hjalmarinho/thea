@@ -328,8 +328,8 @@ function printExerciseExtraFields(exerciseExtraFields, htmlContainerId, exercise
   var html = '<div id="extra_field_exercise_' + exercise.exercise_id + '" class="ui field"  style="display:none;">';
   $.each(exerciseExtraFields, function(i, exerciseExtraField)
   {
-    html = html + '<p>' + exerciseExtraField.exercise_extra_field_description + '</p>';
-    html = html + '<input type="text" data-exercise-extra-field-id="' + exerciseExtraField.exercise_extra_field_id + '">';
+    html = html + '<i>' + exerciseExtraField.exercise_extra_field_description + '</i>';
+    html = html + '<input type="text" data-exercise-extra-field-id="' + exerciseExtraField.exercise_extra_field_id + '" style="width:100%;">';
   });
 
   html = html + '</div>';
