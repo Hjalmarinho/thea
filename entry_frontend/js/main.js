@@ -327,8 +327,9 @@ function printExerciseExtraFields(exerciseExtraFields, htmlContainerId, exercise
 {
   $.each(exerciseExtraFields, function(i, exerciseExtraField)
   {
-    var html = '<div id="extra_field_exercise_' + exercise.exercise_id + '" class="ui field"  style="display:none;"> \
-        <input type="text" data-exercise-extra-field-id="' + exerciseExtraField.exercise_extra_field_id + '" placeholder="' + exerciseExtraField.exercise_extra_field_description + '"> \
+    var html = '<p>' + exerciseExtraField.exercise_extra_field_description + '</p>';
+    html = html + '<div id="extra_field_exercise_' + exercise.exercise_id + '" class="ui field"  style="display:none;"> \
+        <input type="text" data-exercise-extra-field-id="' + exerciseExtraField.exercise_extra_field_id + '"> \
     </div>';
 
     $(htmlContainerId).append(html);
