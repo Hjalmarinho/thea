@@ -8,6 +8,9 @@
       <div class="ui large text loader">Gjør klart bildet...</div>
     </div>
     <div class="ui grid">
+      <div class="ui warning message">
+        Merk at bildet må være et tydelig portrettbilde av deg selv. Et ugyldig bilde vil kunne koste deg 50 kroner ekstra i administrasjonsavgift
+      </div>
       <div class="row">
         <div class="four wide computer eight wide mobile column">
           <label for="file" class="ui icon button"><i class="file image outline icon"></i>Velg bilde</label>
