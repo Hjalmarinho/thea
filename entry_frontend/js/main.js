@@ -597,9 +597,9 @@ function submitParticipantForm(){
     var jsonForm = createJSON();
 
     // Check that there is a team selected in all sport exercises.
-    for (var i = 0; i < foo.entry.sports.length; ++i)
+    for (var i = 0; i < jsonForm.entry.sports.length; ++i)
     {
-      var sport = foo.entry.sports[i];
+      var sport = jsonForm.entry.sports[i];
       for (var j = 0; j < sport.exercises.length; ++j)
       {
         var exercise = sport.exercises[j];
