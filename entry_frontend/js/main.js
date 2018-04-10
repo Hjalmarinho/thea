@@ -596,6 +596,21 @@ function submitParticipantForm(){
     //Serialize the form into a json-object in order to post the participant to the API
     var jsonForm = createJSON();
 
+    // Check that there is a team selected in all sport exercises.
+    for (var i = 0; i < foo.entry.sports.length; ++i)
+    {
+      var sport = foo.entry.sports[i];
+      for (var j = 0; j < sport.exercises.length; ++j)
+      {
+        var exercise = sport.exercises[j];
+        if (('team' in exercise) && exercise.team.team_id === null)
+        {
+          showError('Du må velge hvilket lag du ønsker å delta på. Vil du registrere et nytt lag, må du gå ett steg tilbake og velge "Meld på lag".');
+          return;
+        }
+      }
+    }
+
     //Post the participant using the API
     var request = null;
     if (ticket_type == TICKET_TYPE_EXTRA)
