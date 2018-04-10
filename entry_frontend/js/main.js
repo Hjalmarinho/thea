@@ -875,8 +875,8 @@ function generateCheckbox(label, value, checked, onchange){
 
     return  '<div class="field">'+
     '<div class="ui checkbox">'+
-    '<input type="checkbox" value="'+value+'" onchange="'+ onchange +'" ' + checkedStr +'>' +
-    '<label for="'+label+'">'+label+'</label>'+
+    '<input type="checkbox" value="'+value+'" id="addition_id_' + value + '" onchange="'+ onchange +'" ' + checkedStr +'>' +
+    '<label for="addition_id_' + value + '">'+label+'</label>'+
     '</div>'+
     '</div>';
 }
