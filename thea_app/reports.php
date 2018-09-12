@@ -94,5 +94,28 @@
         </div>
       </div>
     </div>
+
+    <div class="ui modal" id="email-modal">
+      <div class="header">
+        Epost
+      </div>
+      <div class="content">
+        <p>Skriv inn din epost-adresse her, så sender jeg deg en epost når nedlastingen er klar!</p>
+        <p>Merk at hvis det er veldig mange påmeldte, så kan dette ta en del tid (mange minutter).</p>
+        <form class="ui form">
+          <div class="inline fields">
+            <label class="field four wide">E-post</label>
+            <div class="field twelve wide">
+              <input type="email" name="email" id="email">
+            </div>
+          </div>
+        </form>
+        <p id="error-msg"></p>
+      </div>
+      <div class="actions">
+        <div class="ui ok green button" onclick="doGetPortraits();">Ok</div>
+        <div class="ui cancel button" >Avbryt</div>
+      </div>
+    </div>
   </body>
 </html>

@@ -52,14 +52,7 @@ function getExternalPersons()
 
 function getPortraits()
 {
-  showLoader();
-
-  var request = apiGetPortraits(function (data)
-  {
-    window.open(data.url);
-  }, function (data) {}, event_id);
-
-  $.when(request).always(function() { hideLoader(); });
+  $('#email-modal').modal('show');
 }
 
 function getTeamsContactList()
@@ -84,3 +77,17 @@ function hideLoader()
   $('#loader').hide();
 }
 
+function doGetPortraits() {
+  showLoader();
+  var email = $('#email').val();
+  var request = apiPostPortraits(
+    function (data) {},
+    function (data) {},
+    event_id,
+    {'email': email});
+
+  $.when(request).always(function() {
+    hideLoader();
+    $('#email-modal').modal('hide');
+  });
+}

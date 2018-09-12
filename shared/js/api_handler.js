@@ -341,8 +341,8 @@ function apiGetTeamsContactList(successCallback, errorCallback, eventId) {
     return doGet(baseURL + 'events/' + eventId + '/reports/teamscontactlist', successCallback, errorCallback)
 }
 
-function apiGetPortraits(successCallback, errorCallback, eventId) {
-    return doGet(baseURL + 'events/' + eventId + '/reports/portraits', successCallback, errorCallback)
+function apiPostPortraits(successCallback, errorCallback, eventId, json) {
+    return doPost(baseURL + 'events/' + eventId + '/reports/portraits', json, successCallback, errorCallback)
 }
 
 function apiPutPortrait(successCallback, errorCallback, eventId, entryId, jsonData, comment) {
