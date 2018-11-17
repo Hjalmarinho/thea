@@ -29,7 +29,7 @@
     </div>
     <div class="pusher">
       <div class="ui grid">
-        <div class="computer only three wide column" >
+        <div class="three wide column" >
           <div class="ui vertical inverted menu" >
             <?php require 'include/menu.php';?>
           </div>
@@ -48,14 +48,14 @@
             <div class="eight wide column">
               <div class="ui form" id="entry-form">
 
-                <div class="inline fields"> 
+                <div class="inline fields">
                   <label class="field four wide">Beskrivelse</label>
                   <div class="field nine wide">
                     <input type="text" value="" id="exercise-description">
                   </div>
                 </div>
 
-                <div class="inline fields"> 
+                <div class="inline fields">
                   <label class="field four wide">Maks antall herrer</label>
                   <div class="field nine wide">
                     <input type="text" placeholder="Ingen grense" value="" id="max-male" onchange="max_male_changed(this);">
@@ -65,7 +65,7 @@
                   </div>
                 </div>
 
-                <div class="inline fields"> 
+                <div class="inline fields">
                   <label class="field four wide">Maks antall damer</label>
                   <div class="field nine wide">
                     <input type="text" placeholder="Ingen grense" value="" id="max-female" onchange="max_female_changed(this);">
@@ -75,7 +75,7 @@
                   </div>
                 </div>
 
-                <div class="inline fields"> 
+                <div class="inline fields">
                   <label class="field four wide">Maks antall totalt</label>
                   <div class="field nine wide">
                     <input type="text" placeholder="Ingen grense" value="" id="max-total" onchange="max_total_changed(this);">
@@ -86,21 +86,21 @@
                 </div>
 
                 <div id="team-info" hidden>
-                  <div class="inline fields"> 
+                  <div class="inline fields">
                     <label class="field four wide">Deltagere per lag</label>
                     <div class="field nine wide">
                       <input type="text" value="" id="slots-per-team">
                     </div>
                   </div>
 
-                  <div class="inline fields"> 
+                  <div class="inline fields">
                     <label class="field four wide">Maks ikke-studenter per lag</label>
                     <div class="field nine wide">
                       <input type="text" placeholder="Ingen grense" value="" id="max-non-students-per-team">
                     </div>
                   </div>
 
-                  <div class="inline fields"> 
+                  <div class="inline fields">
                     <label class="field four wide">Tillat mikslag</label>
                     <div class="ui fitted checkbox">
                       <input type="checkbox" tabindex="0" id="allow-mix-teams">

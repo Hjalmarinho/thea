@@ -26,13 +26,12 @@
     <script src="js/accreditation.js"></script>
   </head>
   <body>
-    <div class="ui sidebar inverted vertical menu">
-        <?php require 'include/menu.php';?>
+  <div class="ui sidebar menu">
+      <?php require 'include/menu.php';?>
     </div>
-
     <div class="pusher">
       <div class="ui grid">
-        <div class="computer only three wide column" >
+        <div class="three wide column" >
           <div class="ui vertical inverted menu" >
             <?php require 'include/menu.php';?>
           </div>
