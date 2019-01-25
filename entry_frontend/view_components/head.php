@@ -17,6 +17,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.css" />
 
+<!-- Include moment.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/locale/nb.js"></script>
+
 <!-- Include custom css -->
 <link rel="stylesheet" type="text/css" href="<?php echo ROOT_URL ?>/css/style.css">
 

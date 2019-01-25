@@ -58,11 +58,11 @@ Primary use:  View allowing contact persons to register teams for an event.
           </div>
 
           <div id="sports_container">
-            <div id="sports_box_1" data-name="sports_box">
+            <div id="sports_box_0" data-name="sports_box">
               <div class="inline fields" id="sports_div">
                 <label class="field four wide">Idrett</label>
                 <div class="field twelve wide">
-                  <select class="ui search dropdown" name="sports" id="sports_1">
+                  <select class="ui search dropdown" name="sports" id="sports_0">
                     <option value="">Hvilken idrett skal laget delta i?</option>
                     <!-- Sports are populated here from api_handler on page load -->
                   </select>
@@ -72,7 +72,7 @@ Primary use:  View allowing contact persons to register teams for an event.
               <div class="inline fields">
                 <label class="field four wide"></label>
                 <div class="field twelve wide">
-                  <div class="grouped fields" id="exercises_1">
+                  <div class="grouped fields" id="exercises_0">
                     <!-- Exercise-checkboxes are populated here from api_handler when a sport is selected -->
                   </div>
                 </div>
@@ -108,7 +108,31 @@ Primary use:  View allowing contact persons to register teams for an event.
                 </div>
               </div>
             </div>
+          
+            <h4 class="ui header">Andre idretter</h4>
+            <div id="sports_box_1" data-name="sports_box" hidden>
+              <div class="inline fields">
+                <label class="field four wide">Idrett</label>
+                <div class="field twelve wide">
+                  <select class="ui search dropdown" name="sports" id="sports_1">
+                    <option value="">Hvilken idrett skal du delta i?</option>
+                    <!-- Sports are populated here from api_handler on page load -->
+                  </select>
+                </div>
+              </div>
+
+              <div class="inline fields">
+                <label class="field four wide"></label>
+                <div class="field twelve wide">
+                  <div class="grouped fields" data-name="exercises" id="exercises_1">
+                    <!-- Exercise-checkboxes are populated here from api_handler when a sport is selected -->
+
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+          <div id="add-sport-button" class="ui blue button" onclick="addSport();">Delta i flere idretter</div>
           <!-- Insert view for portrait image and additions-->
           <?php require("view_components/portrait_additions.php"); ?>
 
