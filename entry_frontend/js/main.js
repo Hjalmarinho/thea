@@ -820,6 +820,13 @@ function uiGetSports(ticket_type)
     var sportBoxId = $(this).attr('id').substr($(this).attr('id').indexOf('_') + 5);
     var sport = {};
     var sportId =  parseInt($('#sports_' + sportBoxId).find(':selected').attr('data-sport-id'));
+    if (!Number.isInteger(sportId)) {
+      // This will catch cases where a user has clicked "add new sport" without actually
+      // selecting any sport in the dropdown box. "return true" is the same as "continue" in any
+      // normal loop.
+      return true;
+    }
+
     sport['sport_id'] = sportId;
     var exercises = [];
 
