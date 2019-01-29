@@ -609,9 +609,9 @@ function createConfirmModal(){
         if (('team' in exercise)) {
           var team = exercise.team;
           participant_html += generateLabelPair('- Lagnavn', team.team_name);
-          participant_html += generateLabelPair('- Spillende', formatBool(exercise.is_player));
-
+          
           if (('team_gender' in team)) {
+            participant_html += generateLabelPair('- Spillende', formatBool(exercise.is_player));
             participant_html += generateLabelPair('- Klasse', formatTeamGender(team.team_gender));
           }
         }
