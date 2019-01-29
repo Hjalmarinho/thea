@@ -522,7 +522,7 @@ function formatTeamGender(input) {
 }
 
 function formatBool(input) {
-  if (input) {
+  if (input === true) {
     return "Ja";
   }
 
