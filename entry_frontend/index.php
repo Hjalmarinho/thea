@@ -115,14 +115,14 @@ else
                         <i class="dropdown icon"></i> \
                         <div class="menu"> \
                           <div class="item" onclick="window.location.replace(\'/entry_team.php?event_id=' + event_obj.event_id + '&ticket_id=' + ticket_obj.ticket_id + '\')">Meld på lag</div> \
-                          <div class="item" onclick="window.location.replace(\'/entry_participant?event_id=' + event_obj.event_id + '&ticket_id=' + ticket_obj.ticket_id + '\')">Meld på deltager</div> \
+                          <div class="item" onclick="window.location.replace(\'/entry_participant.php?event_id=' + event_obj.event_id + '&ticket_id=' + ticket_obj.ticket_id + '\')">Meld på deltager</div> \
                         </div> \
                       </div>';
           $('#tickets').append(html);
         }
         else
         {
-          $('#tickets').append('<a href="/entry_participant?event_id=' + event_obj.event_id + '&ticket_id=' + ticket_obj.ticket_id + '"><button class="ui blue button">' + ticket_text + '</button></a>');
+          $('#tickets').append('<a href="/entry_participant.php?event_id=' + event_obj.event_id + '&ticket_id=' + ticket_obj.ticket_id + '"><button class="ui blue button">' + ticket_text + '</button></a>');
         }
       }
       else if (ticket_obj.ticket_type == 'SPECTATOR')
