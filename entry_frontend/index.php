@@ -114,15 +114,15 @@ else
           var html = '<div class="ui blue dropdown button">' + ticket_text + ' \
                         <i class="dropdown icon"></i> \
                         <div class="menu"> \
-                          <div class="item" onclick="window.location.replace(\'' + event_obj.event_id + '/lagleder?ticket_id=' + ticket_obj.ticket_id + '\')">Meld på lag</div> \
-                          <div class="item" onclick="window.location.replace(\'' + event_obj.event_id + '/deltager?ticket_id=' + ticket_obj.ticket_id + '\')">Meld på deltager</div> \
+                          <div class="item" onclick="window.location.replace(\'/entry_team.php?event_id=' + event_obj.event_id + '&ticket_id=' + ticket_obj.ticket_id + '\')">Meld på lag</div> \
+                          <div class="item" onclick="window.location.replace(\'/entry_participant?event_id=' + event_obj.event_id + '&ticket_id=' + ticket_obj.ticket_id + '\')">Meld på deltager</div> \
                         </div> \
                       </div>';
           $('#tickets').append(html);
         }
         else
         {
-          $('#tickets').append('<a href="' + event_obj.event_id + '/deltager?ticket_id=' + ticket_obj.ticket_id + '"><button class="ui blue button">' + ticket_text + '</button></a>');
+          $('#tickets').append('<a href="/entry_participant?event_id=' + event_obj.event_id + '&ticket_id=' + ticket_obj.ticket_id + '"><button class="ui blue button">' + ticket_text + '</button></a>');
         }
       }
       else if (ticket_obj.ticket_type == 'SPECTATOR')
@@ -134,7 +134,7 @@ else
       }
     }
 
-    $('#tickets').append('<a href="' + event_obj.event_id + '/tillegg"><button class="ui blue button">Etterbestilling av tillegg</button></a>');
+    $('#tickets').append('<a href="/after_ordering.php?event_id=' + event_obj.event_id + '"><button class="ui blue button">Etterbestilling av tillegg</button></a>');
     $('.dropdown').dropdown();
   }
 
