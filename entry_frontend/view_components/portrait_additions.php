@@ -28,6 +28,16 @@ if (!defined('SKIP_ADDITIONS'))
   </div>
 </div>
 
+<div class="inline fields" id="policy">
+  <label class="field four wide">Personvernspolicy</label>
+  <div class="field">
+    <div class="ui checkbox">
+      <input type="checkbox" name="policy">
+      <label>Jeg samtykker til at Thea behandler personlige data på vegne av NSI i henhold til avtalevilkårene og NSIs gjeldenede peronvernspolicy</label>
+    </div>
+  </div>
+</div>
+
 <?php
 if (!defined('SKIP_TERMS'))
 {
