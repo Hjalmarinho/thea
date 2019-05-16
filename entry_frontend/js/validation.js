@@ -144,6 +144,15 @@ $( document ).ready(function() {
 				}
 				]
 			},
+			policy: {
+				identifier  : 'policy',
+				rules: [
+				{
+					type   : 'checked',
+					prompt : 'Du må samtykke i behandling av personlig data'
+				}
+				]
+			},
 			role: {
 				identifier  : 'role',
 				rules: [
