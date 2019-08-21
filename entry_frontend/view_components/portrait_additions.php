@@ -1,5 +1,8 @@
  <!-- BILDE OG TILLEGG -->
  <h4 class="ui dividing header">Bilde og tillegg</h4>
+ <div class="ui message warning visible">
+  Manglende bilde eller dårlig kvalitet på bildet kan medføre 50 kroner i gebyr ved akkreditering.
+ </div>
 
  <div class="inline fields">
   <label class="field four wide">Bilde</label>
