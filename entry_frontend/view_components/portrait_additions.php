@@ -24,6 +24,10 @@ if (!defined('SKIP_ADDITIONS'))
 }
 ?>
 
+<div class="ui message info hidden" id="sltromso2020-extra-sport">
+  Send mail til NSI@studentidrett.no med info om navn og idrett du skal delta i, så melder vi deg opp!
+</div>
+
 <div class="inline fields">
   <label class="field four wide">Allergier</label>
   <div class="field twelve wide">

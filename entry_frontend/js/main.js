@@ -417,7 +417,13 @@ function displayAdditions(additions)
                 }
                 else
                 {
-                    $('#additions').append(generateCheckbox(addition_label, addition.addition_id, (addition.addition_fee == 0), ''));
+                  var onchange = '';
+                  // Addition id 85 is the "huk av for deltakelse i ekstra idrett" addition.
+                  if (addition.addition_id == 85) {
+                    onchange = "$('#addition_id_" + addition.addition_id + "').is(':checked') ? $('#sltromso2020-extra-sport').removeClass('hidden') : $('#sltromso2020-extra-sport').addClass('hidden');";
+                  }
+
+                  $('#additions').append(generateCheckbox(addition_label, addition.addition_id, false, onchange));
                 }
             }
         });
