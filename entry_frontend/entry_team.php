@@ -108,8 +108,7 @@ Primary use:  View allowing contact persons to register teams for an event.
                 </div>
               </div>
             </div>
-          
-            <h4 class="ui header">Andre idretter</h4>
+
             <div id="sports_box_1" data-name="sports_box" hidden>
               <div class="inline fields">
                 <label class="field four wide">Idrett</label>
