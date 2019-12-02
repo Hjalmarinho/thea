@@ -63,7 +63,6 @@ var TICKET_TYPE_PARTICIPANT = 1;
 var TICKET_TYPE_TEAM = 2;
 var TICKET_TYPE_SUPPORTER = 3;
 var TICKET_TYPE_EXTRA = 4;
-var sports = null;
 var allSports = null;
 
 //      UPDATE GUI FUNCTIONS
@@ -96,158 +95,149 @@ function displayClubs(clubs){
     }
 }
 
+/*
+ * Take in a list of sport objects, and return a new list of sport objects
+ * that only contains the exercises that matches the two predicates. If a sport
+ * does not have any exercises that matches the predicates, the sport is not
+ * returned.
+ *
+ * The sport objects are copied, but the exercise objects are referenced.
+ */
+function filterSports(allSports, includeIndividualExercises, includeTeamExercises)
+{
+  var filteredSports = [];
+  for (var i = 0; i < allSports.length; ++i) {
+    var sport = allSports[i];
+    var newSport = {
+      'sport_id': sport.sport_id,
+      'sport_description': sport.sport_description,
+      'exercises': []
+    };
+
+    for (var j = 0; j < sport.exercises.length; ++j) {
+      var exercise = sport.exercises[j];
+      if (exercise.is_teamexercise === true && includeTeamExercises) {
+        newSport.exercises.push(exercise);
+      }
+
+      if (exercise.is_teamexercise === false && includeIndividualExercises) {
+        newSport.exercises.push(exercise);
+      }
+    }
+
+    if (newSport.exercises.length > 0) {
+      if (newSport.exercises.length == 1) {
+        newSport.sport_description = newSport.sport_description + ' - ' + newSport.exercises[0].exercise_description;
+      }
+      filteredSports.push(newSport);
+    }
+  }
+
+  return filteredSports;
+}
+
+/*
+ * Make a list of sports with only one exercise, where only team exercises are
+ * returned. Each sport is copied, but exercises are referenced.
+ */
+function flattenTeamSports()
+{
+  var flattenedSports = [];
+  var filteredSports = filterSports(allSports, false, true);
+  for (var i = 0; i < filteredSports.length; ++i) {
+    var sport = filteredSports[i];
+    for (var j = 0; j < sport.exercises.length; ++j) {
+      var exercise = sport.exercises[j];
+      var newSport = {
+        'sport_id': sport.sport_id,
+        'sport_description': exercise.exercise_description,
+        'exercises': [exercise]
+      };
+      flattenedSports.push(newSport);
+    }
+  }
+
+  return flattenedSports;
+}
+
 function saveSports(sports_local)
 {
-  sports = sports_local;
   allSports = [];
   for (var i = 0; i < sports_local.length; ++i) {
-    // sports_local[i].sub_id = Math.random();
     allSports.push(sports_local[i]);
   }
 
   var ticket_type = $('#ticket_type').data('value');
   if (ticket_type == TICKET_TYPE_TEAM)
   {
-    var removeIndexes = [];
+    var teamSports = flattenTeamSports();
+    displaySports(0, teamSports);
 
-    for (var i = 0; i < sports.length; ++i)
+    var individualSports = filterSports(allSports, true, false);
+    if (individualSports.length == 0)
     {
-      if (!hasTeamExercise(sports[i]))
-        removeIndexes.push(i);
+      $('#add-sport-button').hide();
     }
-
-    for (var i = removeIndexes.length - 1; i >= 0; --i)
-      sports.splice(removeIndexes[i], 1);
-
-    var sports_temp = []
-    for (var i = 0; i < sports.length; ++i)
+    else
     {
-      var newSport = jQuery.extend(true, {}, sports[i]);
-
-      var totalTeamExercises = 0;
-      for (var j = 0; j < sports[i].exercises.length; ++j)
-      {
-        if (sports[i].exercises[j].is_teamexercise)
-          totalTeamExercises++;
-      }
-      newSport.total_teamexercises = totalTeamExercises;
-      sports_temp.push(newSport);
-    }
-    sports = [];
-
-    for (var i = 0; i < sports_temp.length; ++i)
-    {
-      for (var j = 0; j < sports_temp[i].exercises.length; ++j)
-      {
-        if (sports_temp[i].exercises[j].is_teamexercise)
-        {
-          var sportDescription = sports_temp[i].sport_description;
-          if (sports_temp[i].total_teamexercises > 1)
-            sportDescription = sportDescription + ' - ' + sports_temp[i].exercises[j].exercise_description;
-
-          var newSport = {'sub_id': Math.random(), 'sport_id': sports_temp[i].sport_id, 'sport_description': sportDescription, 'exercises': [] };
-          newSport.exercises.push(jQuery.extend(true, {}, sports_temp[i].exercises[j]));
-
-          sports.push(newSport);
-        }
-      }
-    }
-  }
-
-  if (sports.length == 1 && sports[0].exercises.length == 1)
-  {
-    $('#add-sport-button').hide();
-  }
-  displaySports(0);
-  displaySports(1);
-}
-
-function isExtraSportInTeamEntry(ticket_type, sport_box_id) {
-  return ticket_type == TICKET_TYPE_TEAM && sport_box_id >= 1;
-}
-
-
-// Populate dropdown with sports received from API
-function displaySports(sport_box_id)
-{
-  var sportsArray = sports;
-  var ticket_type = $('#ticket_type').data('value');
-  if (isExtraSportInTeamEntry(ticket_type, sport_box_id)) {
-    sportsArray = allSports;
-  }
-
-  if (sportsArray)
-  {
-    // First, sort sports by their description.
-    sortArrayByString(sportsArray, "sport_description");
-
-    $.each(sportsArray, function(i, sport)
-    {
-      var ticket_type = $('#ticket_type').data('value');
-      // Display only sports having a team_exercise if user is adding a team
-      if (sport_box_id < 1 && hasTeamExercise(sport))
-      {
-        $('#sports_' + sport_box_id).append('<option data-exercise-id="' + sport.exercises[0].exercise_id + '" data-sport-id="' + sport.sport_id + '" data-sub-id="' + sport.sub_id + '">' + escapeHtml(sport.sport_description) + '</option>');
-      }
-      // Display all sports for a participant
-      else
-      {
-        $('#sports_' + sport_box_id).append('<option data-sport-id="' + sport.sport_id + '">' + escapeHtml(sport.sport_description) + '</option>');
-      }
-    });
-
-    $('.dropdown').dropdown('refresh');
-
-    // Get and display exercises when a sport is selected, for the correct sports_box
-    $('#sports_' + sport_box_id).change(function(event)
-    {
-      var sport_box_id = parseInt(event.target.id.substr(event.target.id.indexOf("_") + 1));
-      var dropdown = $('#sports_' + sport_box_id);
-      var subId = null;
-      var sportId = null;
-
-      var ticket_type = $('#ticket_type').data('value');
-      if (sport_box_id < 1)
-      {
-        subId = parseFloat($(this).find('option:selected').attr('data-sub-id'));
-        sportId = parseFloat($(this).find('option:selected').attr('data-sport-id'));
-      }
-      else
-      {
-        sportId = parseFloat($(this).find('option:selected').attr('data-sport-id'));
-      }
-
-      var sportObject = getSportObject(sportId, subId);
-      displayExercises(sportObject.exercises, sport_box_id);
-    });
-  }
-}
-
-
-/*
-  The subId-parameter is for new team entries. Erik should fill out more
-  info here...
-*/
-function getSportObject(sportId, subId)
-{
-  if (subId == null)
-  {
-    for (var i = 0; i < allSports.length; ++i)
-    {
-      if (allSports[i].sport_id == sportId)
-        return allSports[i];
+      displaySports(1, individualSports);
     }
   }
   else
   {
-    for (var i = 0; i < sports.length; ++i)
+    if (allSports.length == 1 && allSports[0].exercises.length == 1)
     {
-      if (sports[i].sport_id == sportId && sports[i].sub_id == subId)
-        return sports[i];
+      $('#add-sport-button').hide();
+    }
+
+    displaySports(1, allSports);
+  }
+}
+
+// Populate dropdown with sports received from API
+function displaySports(sportBoxId, sportsToDisplay)
+{
+  // First, sort sports by their description.
+  sortArrayByString(sportsToDisplay, "sport_description");
+
+  $.each(sportsToDisplay, function(i, sport)
+  {
+    $('#sports_' + sportBoxId).append('<option data-sport-id="' + sport.sport_id + '">' + escapeHtml(sport.sport_description) + '</option>');
+  });
+
+  $('.dropdown').dropdown('refresh');
+
+  // Get and display exercises when a sport is selected, for the correct sports_box
+  $('#sports_' + sportBoxId).change(function(event)
+  {
+    var sportBoxId = parseInt(event.target.id.substr(event.target.id.indexOf("_") + 1));
+    var sportId = parseFloat($(this).find('option:selected').attr('data-sport-id'));
+    if (sportBoxId == 0)
+    {
+      // sportBoxId == 0 indicates that this is the sport box for new
+      // team entry.
+      var sports = filterSports(flattenTeamSports(), false, true);
+      var exercises = getExercisesForSport(sports, sportId);
+      displayExercises(exercises, sportBoxId);
+    }
+    else
+    {
+      var sports = filterSports(allSports, true, true);
+      var exercises = getExercisesForSport(sports, sportId);
+      displayExercises(exercises, sportBoxId);
+    }
+  });
+}
+
+function getExercisesForSport(sportsToSearchIn, sportId)
+{
+  for (var i = 0; i < sportsToSearchIn.length; ++i) {
+    if (sportsToSearchIn[i].sport_id == sportId) {
+      return sportsToSearchIn[i].exercises;
     }
   }
 
-  return null;
+  return [];
 }
 
 
@@ -318,7 +308,6 @@ function displayExercises(exercises, sport_box_id)
 
 function generateExerciseCheckbox(exercise, sport_box_id)
 {
-  var ticket_type = parseInt($('#ticket_type').data('value'));
   var html = '<div id="exercise_' + exercise.exercise_id + '" data-is-teamexercise="' + exercise.is_teamexercise + '">';
   var checkbox = generateCheckbox(exercise.exercise_description, exercise.exercise_id,
                                   false, 'exerciseChecked(this)');
@@ -491,7 +480,15 @@ function addSport() {
     var $exercises = $sports_box.find("[data-name='exercises']");
     $exercises.attr("id", "exercises_" + next_sport_box_id)
 
-    displaySports(next_sport_box_id);
+    var ticket_type = $('#ticket_type').data('value');
+    if (ticket_type == TICKET_TYPE_TEAM)
+    {
+      displaySports(next_sport_box_id, filterSports(allSports, true, false));
+    }
+    else
+    {
+      displaySports(next_sport_box_id, allSports);
+    }
 }
 
 //Remove sport_box from GUI
@@ -530,8 +527,12 @@ function formatBool(input) {
 }
 
 function formatSport(sport_id) {
-  var sportObject = getSportObject(sport_id, null);
-  return sportObject.sport_description;
+  for (var i = 0; i < allSports.length; ++i) {
+    if (allSports[i].sport_id == sport_id) {
+      return allSports[i].sport_description;
+    }
+  }
+  return null;
 }
 
 function formatExercise(exercise_id) {
@@ -832,7 +833,7 @@ function uiGetSports(ticket_type)
 
     if (sportBoxId == 0)
     {
-      var exerciseId = parseInt($('#sports_' + sportBoxId).find(':selected').attr('data-exercise-id'));
+      var exerciseId = parseInt($('#sports_box_' + sportBoxId).find(':checkbox,checked').attr('value'));
       var is_player = (($('#is_playing').val() == '1') ? true : false);
       var team_name = $('#team_name').val();
       var team_gender = $('#team_gender').val();
