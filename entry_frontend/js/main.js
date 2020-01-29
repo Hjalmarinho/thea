@@ -211,7 +211,7 @@ function displaySports(sportBoxId, sportsToDisplay)
       // id).
       exerciseIdAttr = 'data-exercise-id="' + sport.exercises[0].exercise_id + '"';
     }
-    $('#sports_' + sportBoxId).append('<option data-sport-id="' + sport.sport_id + ' ' + exerciseIdAttr + '">' + escapeHtml(sport.sport_description) + '</option>');
+    $('#sports_' + sportBoxId).append('<option data-sport-id="' + sport.sport_id + '" ' + exerciseIdAttr + '>' + escapeHtml(sport.sport_description) + '</option>');
   });
 
   $('.dropdown').dropdown('refresh');
