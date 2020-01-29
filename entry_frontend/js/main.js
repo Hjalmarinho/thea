@@ -202,7 +202,16 @@ function displaySports(sportBoxId, sportsToDisplay)
 
   $.each(sportsToDisplay, function(i, sport)
   {
-    $('#sports_' + sportBoxId).append('<option data-sport-id="' + sport.sport_id + '">' + escapeHtml(sport.sport_description) + '</option>');
+    var exerciseIdAttr = '';
+    if (sportBoxId == 0) {
+      // sportBoxId == 0 indicates that this is the sport box for
+      // new team entry. Include the exercise id in the menu item
+      // (each exercise is printed out as one menu item, meaning
+      // that we may end up with multiple items with the same sport
+      // id).
+      exerciseIdAttr = 'data-exercise-id="' + sport.exercises[0].exercise_id + '"';
+    }
+    $('#sports_' + sportBoxId).append('<option data-sport-id="' + sport.sport_id + ' ' + exerciseIdAttr + '">' + escapeHtml(sport.sport_description) + '</option>');
   });
 
   $('.dropdown').dropdown('refresh');
@@ -216,9 +225,17 @@ function displaySports(sportBoxId, sportsToDisplay)
     {
       // sportBoxId == 0 indicates that this is the sport box for new
       // team entry.
-      var sports = filterSports(flattenTeamSports(), false, true);
+      var exerciseId = parseInt($(this).find('option:selected').attr('data-exercise-id'));
+      var sports = filterSports(allSports, false, true);
       var exercises = getExercisesForSport(sports, sportId);
-      displayExercises(exercises, sportBoxId);
+      var singleExercise = [];
+      for (var i = 0; i < exercises.length; ++i) {
+        if (exercises[i].exercise_id == exerciseId) {
+          singleExercise.push(exercises[i]);
+          break;
+        }
+      }
+      displayExercises(singleExercise, sportBoxId);
     }
     else
     {
