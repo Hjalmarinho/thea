@@ -1,4 +1,4 @@
-<Limit GET POST PUT DELETE>
+<Limit GET POST PUT DELETE OPTIONS>
   Allow from all
 </Limit>
 
