@@ -126,9 +126,6 @@ function filterSports(allSports, includeIndividualExercises, includeTeamExercise
     }
 
     if (newSport.exercises.length > 0) {
-      if (newSport.exercises.length == 1) {
-        newSport.sport_description = newSport.sport_description + ' - ' + newSport.exercises[0].exercise_description;
-      }
       filteredSports.push(newSport);
     }
   }
