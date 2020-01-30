@@ -148,13 +148,9 @@ function flattenTeamSports()
     var sport = filteredSports[i];
     for (var j = 0; j < sport.exercises.length; ++j) {
       var exercise = sport.exercises[j];
-      var sportDescription = exercise.exercise_description;
-      if (sport.exercises.length > 1) {
-        sportDescription = sport.sport_description + ' - ' + exercise.exercise_description;
-      }
       var newSport = {
         'sport_id': sport.sport_id,
-        'sport_description': sportDescription,
+        'sport_description': sport.sport_description,
         'exercises': [exercise]
       };
       flattenedSports.push(newSport);
@@ -207,6 +203,7 @@ function displaySports(sportBoxId, sportsToDisplay)
   $.each(sportsToDisplay, function(i, sport)
   {
     var exerciseIdAttr = '';
+    var sportDescription = sport.sport_description;
     if (sportBoxId == 0) {
       // sportBoxId == 0 indicates that this is the sport box for
       // new team entry. Include the exercise id in the menu item
@@ -214,8 +211,11 @@ function displaySports(sportBoxId, sportsToDisplay)
       // that we may end up with multiple items with the same sport
       // id).
       exerciseIdAttr = 'data-exercise-id="' + sport.exercises[0].exercise_id + '"';
+
+      sportDescription = sport.sport_description + ' - ' + sport.exercises[0].exercise_description;
     }
-    $('#sports_' + sportBoxId).append('<option data-sport-id="' + sport.sport_id + '" ' + exerciseIdAttr + '>' + escapeHtml(sport.sport_description) + '</option>');
+    $('#sports_' + sportBoxId).append(
+      '<option data-sport-id="' + sport.sport_id + '" ' + exerciseIdAttr + '>' + escapeHtml(sport.sport_description) + '</option>');
   });
 
   $('.dropdown').dropdown('refresh');
