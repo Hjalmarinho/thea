@@ -148,9 +148,13 @@ function flattenTeamSports()
     var sport = filteredSports[i];
     for (var j = 0; j < sport.exercises.length; ++j) {
       var exercise = sport.exercises[j];
+      var sportDescription = exercise.exercise_description;
+      if (sport.exercises.length > 1) {
+        sportDescription = sport.sport_description + ' - ' + exercise.exercise_description;
+      }
       var newSport = {
         'sport_id': sport.sport_id,
-        'sport_description': sport.sport_description + ' - ' + exercise.exercise_description,
+        'sport_description': sportDescription,
         'exercises': [exercise]
       };
       flattenedSports.push(newSport);
