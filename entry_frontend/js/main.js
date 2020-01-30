@@ -150,7 +150,7 @@ function flattenTeamSports()
       var exercise = sport.exercises[j];
       var newSport = {
         'sport_id': sport.sport_id,
-        'sport_description': exercise.exercise_description,
+        'sport_description': sport.sport_description + ' - ' + exercise.exercise_description,
         'exercises': [exercise]
       };
       flattenedSports.push(newSport);
