@@ -80,6 +80,24 @@ function displayEventInfo(event_obj)
   {
     $('#terms_url').attr('href', event_obj.terms_url);
   }
+  
+  if ( event_obj.event_questions.length == 0) {
+    $('#event_questions_header').hide();
+  }
+
+  // Print out any event questions
+  for (let i = 0; i < event_obj.event_questions.length; ++i) {
+    var eventQuestion = event_obj.event_questions[i];
+    var html =
+    '<div class="field"> \
+      <label class="field sixteen wide">' + escapeHtml(eventQuestion.event_question) + '</label>  \
+       <div class="field sixteen wide"> \
+         <input type="text" name="event_question" data-event-question-id="' + eventQuestion.event_question_id + '"> \
+       </div> \
+    </div>';
+
+    $('#event_questions_content').append(html);
+  }
 }
 
 
@@ -753,8 +771,10 @@ function createJSON(){
 
     var jsonForm = {};
     var entry = {};
+    var eventQuestions = [];
     jsonForm["redirect_url"] = redirectURL;
     jsonForm["entry"] = entry;
+    jsonForm["event_questions"] = eventQuestions;
 
     if (ticket_type == TICKET_TYPE_EXTRA) {
       jsonForm["key"] = key;
@@ -794,6 +814,19 @@ function createJSON(){
 
     //Add all checked additions
     entry["additions"] = uiGetAdditions();
+
+    // Event questions
+    var eventQuestionElements = $('input[name="event_question"]')
+    for (let i = 0; i < eventQuestionElements.length; ++i) {
+      var inputElement = eventQuestionElements[i];
+      let eventQuestionId = inputElement.dataset.eventQuestionId;
+      let userAnswer = inputElement.value;
+      
+      eventQuestions.push({
+        "event_question_id": parseInt(eventQuestionId),
+        "answer": userAnswer
+      });
+    }
 
     return jsonForm;
 }

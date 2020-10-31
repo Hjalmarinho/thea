@@ -1,3 +1,9 @@
+  <!-- BILDE OG TILLEGG -->
+    <h4 class="ui dividing header" id="event_questions_header">Arrangementsspørsmål</h4>
+    <div id="event_questions_content"></div>
+
+
+
  <!-- BILDE OG TILLEGG -->
  <h4 class="ui dividing header">Bilde og tillegg</h4>
 
@@ -27,6 +33,7 @@ if (!defined('SKIP_ADDITIONS'))
     <input type="text" name="allergies" id="allergies">
   </div>
 </div>
+
 
 <div class="inline fields" id="policy">
   <label class="field four wide">Personvernspolicy</label>
