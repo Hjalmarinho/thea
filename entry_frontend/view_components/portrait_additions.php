@@ -6,6 +6,9 @@
 
  <!-- BILDE OG TILLEGG -->
  <h4 class="ui dividing header">Bilde og tillegg</h4>
+ <div class="ui message warning visible">
+  Manglende bilde eller dårlig kvalitet på bildet kan medføre 50 kroner i gebyr ved akkreditering.
+ </div>
 
  <div class="inline fields">
   <label class="field four wide">Bilde</label>
@@ -26,6 +29,10 @@ if (!defined('SKIP_ADDITIONS'))
 <?php
 }
 ?>
+
+<div class="ui message info hidden" id="sltromso2020-extra-sport">
+  Send mail til <a href="mailto:magnus@studentidrett.no">magnus@studentidrett.no</a> med info om navn og idrett du skal delta i, så melder vi deg opp!
+</div>
 
 <div class="inline fields">
   <label class="field four wide">Allergier</label>
