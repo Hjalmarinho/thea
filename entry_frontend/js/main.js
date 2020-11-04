@@ -88,9 +88,13 @@ function displayEventInfo(event_obj)
   // Print out any event questions
   for (let i = 0; i < event_obj.event_questions.length; ++i) {
     var eventQuestion = event_obj.event_questions[i];
+    var extraInfo = '';
+    if (eventQuestion.ignore_for_team_entries) {
+      extraInfo = '<br><i>(Kan ignoreres for lagpåmelding)</i>';
+    }
     var html =
     '<div class="field"> \
-      <label class="field sixteen wide">' + escapeHtml(eventQuestion.event_question) + '</label>  \
+      <label class="field sixteen wide">' + escapeHtml(eventQuestion.event_question) + extraInfo + '</label>  \
        <div class="field sixteen wide"> \
          <input type="text" name="event_question" data-event-question-id="' + eventQuestion.event_question_id + '"> \
        </div> \
@@ -276,7 +280,6 @@ function getExercisesForSport(sportsToSearchIn, sportId)
   return [];
 }
 
-
 function exerciseChecked(sender) {
     // TODO: Implement
   var isChecked = $(sender).is(':checked');
@@ -288,8 +291,9 @@ function exerciseChecked(sender) {
   else
     $('#extra_field_exercise_' + exerciseId).hide();
 
-  if (!isTeamExercise)
+  if (!isTeamExercise) {
     return;
+  }
 
   if (isChecked)
   {
