@@ -73,8 +73,6 @@ else
       </div>
     </div>
   </div>
-  <div class="footer">
-  </div>
 </body>
 <script>
   function getEventCallback(event_obj)
