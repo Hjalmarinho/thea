@@ -1,5 +1,9 @@
  <!-- PERSONLIG INFORMASJON -->
- <h4 class="ui dividing header">Personlig informasjon</h4>
+<?php
+$event_id = filter_input(INPUT_GET, "event_id", FILTER_VALIDATE_INT);
+?>
+
+<h4 class="ui dividing header">Personlig informasjon</h4>
 
 <div class="inline fields">
   <label class="field four wide">Fornavn</label>
@@ -43,12 +47,12 @@
   </div>
 </div>
 
-<div class="inline fields">
+<div class="inline fields" <?php if ($event_id == 47) { echo "style='display:none;'"; } ?> >
   <label class="field four wide">Kjønn</label>
   <div class="field twelve wide">
     <select class="ui dropdown" name="gender" id="gender">
       <option value="">Hva er ditt kjønn?</option>
-      <option value="MALE">Mann</option>
+      <option value="MALE" <?php if ($event_id == 47) { echo "selected"; } ?>>Mann</option>
       <option value="FEMALE">Kvinne</option>
     </select>
   </div>

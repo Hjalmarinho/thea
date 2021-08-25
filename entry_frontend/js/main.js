@@ -615,7 +615,10 @@ function createConfirmModal(){
   personal_html += generateLabelPair('Fornavn', entryData.entry.person.first_name);
   personal_html += generateLabelPair('Etternavn', entryData.entry.person.last_name);
   personal_html += generateLabelPair('Fødselsdato', moment(entryData.entry.person.birthdate).format("Do MMMM YYYY"));
-  personal_html += generateLabelPair('Kjønn', formatGender(entryData.entry.person.gender));
+  
+  if (eventId != 47) {
+    personal_html += generateLabelPair('Kjønn', formatGender(entryData.entry.person.gender));
+  }
 
   if (ticket_type != TICKET_TYPE_EXTRA)
     personal_html += generateLabelPair('Student', formatBool(entryData.entry.is_student));
