@@ -41,29 +41,29 @@ $event_id = filter_input(INPUT_GET, "event_id", FILTER_VALIDATE_INT);
           <h4 class="ui dividing header">Lag- og deltakerinformasjon</h4>
           <div id="ticket_type" data-value="2"></div>
 
+          <div class="inline fields">
+            <label class="field four wide">Klubb</label>
+            <div class="field twelve wide">
+              <select class="ui search dropdown" name="club" id="clubs">
+                <option value="">Hvilken klubb tilhører laget?</option>
+                <!-- Clubs are populated here from api_handler on page load -->
+              </select>
+            </div>
+          </div>
+
+          <div class="inline fields">
+            <label class="field four wide">Medlem</label>
+            <div class="field twelve wide">
+              <select class="ui dropdown" name="is_clubmember" id="is_clubmember">
+                <option value="">Er du medlem av klubben?</option>
+                <option value="1">Ja</option>
+                <option value="0">Nei</option>
+              </select>
+            </div>
+          </div>
+
           <div id="sports_container">
-            <div class="inline fields">
-              <label class="field four wide">Klubb</label>
-              <div class="field twelve wide">
-                <select class="ui search dropdown" name="club" id="clubs">
-                  <option value="">Hvilken klubb tilhører laget?</option>
-                  <!-- Clubs are populated here from api_handler on page load -->
-                </select>
-              </div>
-            </div>
-
-            <div class="inline fields">
-              <label class="field four wide">Medlem</label>
-              <div class="field twelve wide">
-                <select class="ui dropdown" name="is_clubmember" id="is_clubmember">
-                  <option value="">Er du medlem av klubben?</option>
-                  <option value="1">Ja</option>
-                  <option value="0">Nei</option>
-                </select>
-              </div>
-            </div>
-            <div id="sports_box_0" data-name="sports_box" data-teamsport="1">
-
+            <div id="sports_box_0" data-name="sports_box">
               <div class="inline fields" id="sports_div">
                 <label class="field four wide">Idrett</label>
                 <div class="field twelve wide">
@@ -86,14 +86,14 @@ $event_id = filter_input(INPUT_GET, "event_id", FILTER_VALIDATE_INT);
               <div class="inline fields">
                 <label class="field four wide">Lagnavn</label>
                 <div class="field twelve wide">
-                  <input type="text" name="team_name" id="team_name_0">
+                  <input type="text" name="team_name" id="team_name">
                 </div>
               </div>
 
               <div class="inline fields" <?php if ($event_id == 47) { echo "style='display:none;'"; } ?>>
                 <label class="field four wide">Klasse</label>
                 <div class="field twelve wide">
-                  <select class="ui dropdown" name="team_gender" id="team_gender_0">
+                  <select class="ui dropdown" name="team_gender" id="team_gender">
                     <option value="">I hvilken klasse deltar laget?</option>
                     <option value="MALE">Herre</option>
                     <option value="FEMALE">Dame</option>
@@ -105,7 +105,7 @@ $event_id = filter_input(INPUT_GET, "event_id", FILTER_VALIDATE_INT);
               <div class="inline fields">
                 <label class="field four wide">Spillende</label>
                 <div class="field twelve wide">
-                  <select class="ui dropdown" name="is_playing" id="is_playing_0">
+                  <select class="ui dropdown" name="is_playing" id="is_playing">
                     <option value="">Skal du spille på laget?</option>
                     <option value="1">Ja</option>
                     <option value="0">Nei</option>
@@ -114,7 +114,7 @@ $event_id = filter_input(INPUT_GET, "event_id", FILTER_VALIDATE_INT);
               </div>
             </div>
 
-            <div id="sports_box_1" data-name="sports_box" hidden data-teamsport="0">
+            <div id="sports_box_1" data-name="sports_box" hidden>
               <div class="inline fields">
                 <label class="field four wide">Idrett</label>
                 <div class="field twelve wide">
@@ -136,7 +136,6 @@ $event_id = filter_input(INPUT_GET, "event_id", FILTER_VALIDATE_INT);
               </div>
             </div>
           </div>
-          <div id="add-extra-team-button" class="ui blue button" onclick="addNewTeam();">Meld på flere lag</div>
           <div id="add-sport-button" class="ui blue button" onclick="addSport();">Delta i flere idretter</div>
           <!-- Insert view for portrait image and additions-->
           <?php require("view_components/portrait_additions.php"); ?>

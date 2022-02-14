@@ -81,7 +81,14 @@ else
     var event_end = new Date(event_obj.event_end);
 
     $('#header').text('Påmelding ' + event_obj.event_description);
+
+    if (event_obj.event_id == 45) {
+    $('#organizer_name').text('Arrangør: BI Athletics og Norges Idrettshøgskoles Idrettslag');
+
+    } else {
     $('#organizer_name').text('Arrangør: ' + event_obj.event_organizer.club_name);
+
+    }
     if (event_obj.frontpage_info_text !== null)
     {
       $('#info-box').show();
@@ -112,8 +119,8 @@ else
           var html = '<div class="ui blue dropdown button">' + ticket_text + ' \
                         <i class="dropdown icon"></i> \
                         <div class="menu"> \
-                          <div class="item" onclick="window.location.replace(\'/entry_team.php?event_id=' + event_obj.event_id + '&ticket_id=' + ticket_obj.ticket_id + '\')">Meld på lag</div> \
-                          <div class="item" onclick="window.location.replace(\'/entry_participant.php?event_id=' + event_obj.event_id + '&ticket_id=' + ticket_obj.ticket_id + '\')">Meld på deltager</div> \
+                          <div class="item" onclick="window.location.href = \'/entry_team.php?event_id=' + event_obj.event_id + '&ticket_id=' + ticket_obj.ticket_id + '\'">Meld på lag</div> \
+                          <div class="item" onclick="window.location.href = \'/entry_participant.php?event_id=' + event_obj.event_id + '&ticket_id=' + ticket_obj.ticket_id + '\'">Meld på deltager</div> \
                         </div> \
                       </div>';
           $('#tickets').append(html);

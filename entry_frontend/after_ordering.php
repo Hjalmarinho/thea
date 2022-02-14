@@ -48,7 +48,7 @@ Primary use:  Allow participants to buy additions after they have
     $.each(additions, function(i, addition)
     {
       // Skip additions with parent.
-      if (addition.parent_addition_id != null)
+      if (addition.parent_addition_id != null || addition.addition_id == 111 || addition.addition_id == 110)
         return true;
 
       if (addition.has_children)

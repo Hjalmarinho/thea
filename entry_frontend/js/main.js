@@ -12,6 +12,7 @@
 
 //This function is run when the document/page is finsihed loading
 var event_obj = null;
+var allClubs = null;
 $( document ).ready(function() {
   // Initialize dropdown
   // $('.ui.dropdown').dropdown();
@@ -106,15 +107,23 @@ function displayEventInfo(event_obj)
 
 
 // Populate dropdown with clubs received from API
-function displayClubs(clubs){
-    if (clubs) {
+function displayClubs(clubs) {
+  if (clubs) {
     // Sort clubs by their name
     sortArrayByString(clubs, "club_name");
+    allClubs = clubs;
+  }
 
-        $.each(clubs, function(i, club){
-           $('#clubs').append('<option value="'+club.club_id+'">' + escapeHtml(club.club_name) + '</option>');
-       });
+  PrintClubs("clubs");
+}
+
+function PrintClubs(container_id) {
+  $.each(allClubs, function(i, club){
+    if (club.club_id == 92) {
+      return true;
     }
+     $('#' + container_id).append('<option value="'+club.club_id+'">' + escapeHtml(club.club_name) + '</option>');
+ });
 }
 
 /*
@@ -190,7 +199,7 @@ function saveSports(sports_local)
   if (ticket_type == TICKET_TYPE_TEAM)
   {
     var teamSports = flattenTeamSports();
-    displaySports(0, teamSports);
+    displaySports(0, teamSports, true);
 
     var individualSports = filterSports(allSports, true, false);
     if (individualSports.length == 0)
@@ -199,7 +208,7 @@ function saveSports(sports_local)
     }
     else
     {
-      displaySports(1, individualSports);
+      displaySports(1, individualSports, false);
     }
   }
   else
@@ -214,7 +223,7 @@ function saveSports(sports_local)
 }
 
 // Populate dropdown with sports received from API
-function displaySports(sportBoxId, sportsToDisplay)
+function displaySports(sportBoxId, sportsToDisplay, isTeamEntry)
 {
   // First, sort sports by their description.
   sortArrayByString(sportsToDisplay, "sport_description");
@@ -223,7 +232,7 @@ function displaySports(sportBoxId, sportsToDisplay)
   {
     var exerciseIdAttr = '';
     var sportDescription = sport.sport_description;
-    if (sportBoxId == 0) {
+    if (isTeamEntry) {
       // sportBoxId == 0 indicates that this is the sport box for
       // new team entry. Include the exercise id in the menu item
       // (each exercise is printed out as one menu item, meaning
@@ -244,7 +253,7 @@ function displaySports(sportBoxId, sportsToDisplay)
   {
     var sportBoxId = parseInt(event.target.id.substr(event.target.id.indexOf("_") + 1));
     var sportId = parseFloat($(this).find('option:selected').attr('data-sport-id'));
-    if (sportBoxId == 0)
+    if (isTeamEntry)
     {
       // sportBoxId == 0 indicates that this is the sport box for new
       // team entry.
@@ -424,7 +433,7 @@ function displayAdditions(additions)
         $.each(additions, function(i, addition)
         {
             // Skip additions with parent.
-            if (addition.parent_addition_id != null)
+            if (addition.parent_addition_id != null || addition.addition_id == 111 || addition.addition_id == 110)
                 return true;
 
             if (addition.has_children)
@@ -436,6 +445,9 @@ function displayAdditions(additions)
             else
             {
                 var addition_label = addition.addition_description + ' (' + addition.addition_fee + ' ,-)';
+                if (addition.addition_fee == 0) {
+                  addition_label = addition.addition_description;
+                }
 
                 // Special handling of 'bankett'. We want to write "skal ikke delta på bankett".
                 if (addition.addition_description == "Bankett" && addition.addition_fee == 0)
@@ -529,11 +541,11 @@ function addSport() {
     var ticket_type = $('#ticket_type').data('value');
     if (ticket_type == TICKET_TYPE_TEAM)
     {
-      displaySports(next_sport_box_id, filterSports(allSports, true, false));
+      displaySports(next_sport_box_id, filterSports(allSports, true, false), next_sport_box_id == 0);
     }
     else
     {
-      displaySports(next_sport_box_id, allSports);
+      displaySports(next_sport_box_id, allSports, next_sport_box_id == 0);
     }
 }
 
@@ -541,6 +553,50 @@ function addSport() {
 function removeSport(removeButton){
     $(removeButton).closest('[data-name="sports_box"]').remove();
 }
+
+function addNewTeam() {
+  next_sport_box_id++;
+  var sports_box = $("#sports_box_0").clone();
+  sports_box.attr("id", "sports_box_" + next_sport_box_id);
+
+  var remove_btn =  '<div class="inline fields">'+
+    '<label class="field four wide"></label>'+
+    '<div class="ui button" onclick="removeSport(this)"> Fjern</div>'+
+  '</div>';
+
+  sports_box.prepend('<div class="ui divider"> </div>');
+  sports_box.append(remove_btn);
+
+  $("#sports_container").append(sports_box);
+
+  var sports = sports_box.find("[name='sports']");
+  sports.attr("id", "sports_" + next_sport_box_id)
+
+  var exercises = sports_box.find("[name='exercises']");
+  exercises.attr("id", "exercises_" + next_sport_box_id)
+
+  var team_name = sports_box.find("[name='team_name']");
+  team_name.attr("id", "team_name_" + next_sport_box_id)
+
+  var team_gender = sports_box.find("[name='team_gender']");
+  team_gender.attr("id", "team_gender_" + next_sport_box_id)
+  team_gender.dropdown('set selected', 'MALE');
+
+  var is_playing = sports_box.find("[name='is_playing']");
+  is_playing.attr("id", "is_playing_" + next_sport_box_id)
+  is_playing.dropdown('set selected', '0');
+
+  var ticket_type = $('#ticket_type').data('value');
+  if (ticket_type == TICKET_TYPE_TEAM)
+  {
+    displaySports(next_sport_box_id, filterSports(allSports, true, false), true);
+  }
+  else
+  {
+    displaySports(next_sport_box_id, allSports, true);
+  }
+}
+
 
 function formatGender(input) {
   if (input == "MALE") {
@@ -895,12 +951,12 @@ function uiGetSports(ticket_type)
     sport['sport_id'] = sportId;
     var exercises = [];
 
-    if (sportBoxId == 0)
+    if (this.dataset.teamsport == "1")
     {
-      var exerciseId = parseInt($('#sports_box_' + sportBoxId).find(':checkbox,checked').attr('value'));
-      var is_player = (($('#is_playing').val() == '1') ? true : false);
-      var team_name = $('#team_name').val();
-      var team_gender = $('#team_gender').val();
+      var exerciseId = parseInt($('#sports_' + sportBoxId).find(':selected').attr('data-exercise-id'));
+      var is_player = (($('#is_playing_' + sportBoxId).val() == '1') ? true : false);
+      var team_name = $('#team_name_' + sportBoxId).val();
+      var team_gender = $('#team_gender_' + sportBoxId).val();
       var team_number = 0;
       var team = {'team_name': team_name, 'team_gender': team_gender, 'team_number': team_number};
       exercises.push({'exercise_id': exerciseId , 'is_player': is_player, 'team': team });
