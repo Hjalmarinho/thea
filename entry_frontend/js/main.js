@@ -572,6 +572,9 @@ function addNewTeam() {
   var sports = sports_box.find("[name='sports']");
   sports.attr("id", "sports_" + next_sport_box_id)
 
+  var original_dropdown_index = document.getElementById("sports_0").selectedIndex;
+  document.getElementById("sports_" + next_sport_box_id).selectedIndex = original_dropdown_index;
+
   var exercises = sports_box.find("[name='exercises']");
   exercises.attr("id", "exercises_" + next_sport_box_id)
 
