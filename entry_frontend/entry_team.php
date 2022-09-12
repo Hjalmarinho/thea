@@ -158,5 +158,16 @@ $event_id = filter_input(INPUT_GET, "event_id", FILTER_VALIDATE_INT);
 
   <!-- Insert error modal -->
   <?php require("view_components/error_modal.php"); ?>
+
+  <div class="ui modal" id="addition_extra_info_modal">
+    <div class="header">
+      Ekstra informasjon 
+    </div>
+    <div class="content" id ="addition_extra_info_modal_content">
+    </div>
+    <div class="actions">
+      <div class="ui button close">Ok</div>
+    </div>
+  </div>
 </body>
 </html>

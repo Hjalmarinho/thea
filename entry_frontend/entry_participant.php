@@ -103,5 +103,16 @@ Primary use:  View allowing participants to register for an event.
 
   <!-- Insert error modal -->
   <?php require("view_components/error_modal.php"); ?>
+
+  <div class="ui modal" id="addition_extra_info_modal">
+    <div class="header">
+      Ekstra informasjon 
+    </div>
+    <div class="content" id ="addition_extra_info_modal_content">
+    </div>
+    <div class="actions">
+      <div class="ui button close">Ok</div>
+    </div>
+  </div>
 </body>
 </html>
