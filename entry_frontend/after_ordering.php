@@ -244,5 +244,16 @@ Primary use:  Allow participants to buy additions after they have
       <div class="ui button close">Ok</div>
     </div>
   </div>
+
+  <div class="ui modal" id="addition_extra_info_modal">
+    <div class="header">
+      Ekstra informasjon 
+    </div>
+    <div class="content" id ="addition_extra_info_modal_content">
+    </div>
+    <div class="actions">
+      <div class="ui button close">Ok</div>
+    </div>
+  </div>
 </body>
 </html>

@@ -817,6 +817,11 @@ function externalPersonPosted(data)
   $('#confirm-extra-modal').modal('show');
 }
 
+function ShowAdditionExtraInfo(info_text) {
+  $('#addition_extra_info_modal_content').html(info_text);
+  $('#addition_extra_info_modal').modal('show');
+}
+
 
 //Called when a user has completed payment
 function completeEntry(orderNumber, eventId, callback, errorCallback){
