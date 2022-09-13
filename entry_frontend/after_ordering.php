@@ -61,6 +61,10 @@ Primary use:  Allow participants to buy additions after they have
       {
         var addition_label = addition.addition_description + ' (' + addition.addition_fee + ' ,-)';
         $('#additions').append(generateCheckbox(addition_label, addition.addition_id, false, ''));
+        
+        if (addition.extra_information !== null) {
+          $('#additions').append(CreateElementForAdditionExtraInformation(addition));
+        }
       }
     });
 
@@ -68,11 +72,31 @@ Primary use:  Allow participants to buy additions after they have
     $('.ui.radio.checkbox').checkbox();
   }
 
+  function CreateElementForAdditionExtraInformation(addition) {
+    var aElement = document.createElement('a');
+    aElement.onclick = function() {
+      ShowAdditionExtraInfo(addition.extra_information);
+    };
+    aElement.text = 'Mer informasjon her';
+
+    var iElement = document.createElement('i');
+    iElement.classList.add('info')
+    iElement.classList.add('circle');
+    iElement.classList.add('icon');
+
+    aElement.appendChild(iElement);
+    return aElement;
+  }
+
 
   function displayAdditionWithChildren(parentAddition, additions)
   {
     var first = true;
     $('#additions').append('<h2 class="ui sub header">' + parentAddition.addition_description + '</h2>');
+
+    if (parentAddition.extra_information !== null) {
+      $('#additions').append(CreateElementForAdditionExtraInformation(parentAddition));
+    }
 
     sortArrayByNumber(additions, 'addition_id');
     $.each(additions, function(i, children)
