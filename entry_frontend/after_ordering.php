@@ -198,6 +198,12 @@ Primary use:  Allow participants to buy additions after they have
   {
     window.location.replace(data.payment_url);
   }
+
+  
+  function ShowAdditionExtraInfo(info_text) {
+    $('#addition_extra_info_modal_content').html(info_text);
+    $('#addition_extra_info_modal').modal('show');
+  }
   </script>
 </head>
 
