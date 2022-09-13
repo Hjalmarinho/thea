@@ -466,21 +466,8 @@ function displayAdditions(additions)
 
                   $('#additions').append(generateCheckbox(addition_label, addition.addition_id, false, onchange));
 
-if (addition.extra_information !== null) {
-                    var aElement = document.createElement('a');
-                    aElement.onclick = function() {
-                      ShowAdditionExtraInfo(addition.extra_information);
-                    };
-		    aElement.text = 'Mer informasjon her';
-
-                    var iElement = document.createElement('i');
-                    iElement.classList.add('info')
-iElement.classList.add('circle');
-iElement.classList.add('icon');
-
-                    aElement.appendChild(iElement);
-
-                    $('#additions').append(aElement);
+                  if (addition.extra_information !== null) {
+                    $('#additions').append(CreateElementForAdditionExtraInformation(addition));
                   }
 
                 }
@@ -492,6 +479,21 @@ iElement.classList.add('icon');
    $('.ui.radio.checkbox').checkbox();
 }
 
+function CreateElementForAdditionExtraInformation(addition) {
+  var aElement = document.createElement('a');
+  aElement.onclick = function() {
+    ShowAdditionExtraInfo(addition.extra_information);
+  };
+  aElement.text = 'Mer informasjon her';
+
+  var iElement = document.createElement('i');
+  iElement.classList.add('info')
+  iElement.classList.add('circle');
+  iElement.classList.add('icon');
+
+  aElement.appendChild(iElement);
+  return aElement;
+}
 
 /*
   This function will print out additions as radiobuttons, such as...
@@ -507,6 +509,11 @@ function displayAdditionWithChildren(parentAddition, additions)
 {
   var first = true;
   $('#additions').append('<h2 class="ui sub header">' + parentAddition.addition_description + '</h2>');
+
+  
+  if (parentAddition.extra_information !== null) {
+    $('#additions').append(CreateElementForAdditionExtraInformation(parentAddition));
+  }
 
   // This is a VERY ugly hack.
   if (eventId == 3)
