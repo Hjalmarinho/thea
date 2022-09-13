@@ -465,6 +465,24 @@ function displayAdditions(additions)
                   }
 
                   $('#additions').append(generateCheckbox(addition_label, addition.addition_id, false, onchange));
+
+if (addition.extra_information !== null) {
+                    var aElement = document.createElement('a');
+                    aElement.onclick = function() {
+                      ShowAdditionExtraInfo(addition.extra_information);
+                    };
+		    aElement.text = 'Mer informasjon her';
+
+                    var iElement = document.createElement('i');
+                    iElement.classList.add('info')
+iElement.classList.add('circle');
+iElement.classList.add('icon');
+
+                    aElement.appendChild(iElement);
+
+                    $('#additions').append(aElement);
+                  }
+
                 }
             }
         });
