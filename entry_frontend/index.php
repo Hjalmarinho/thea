@@ -82,13 +82,24 @@ else
 
     $('#header').text('Påmelding ' + event_obj.event_description);
 
-    if (event_obj.event_id == 45) {
-    $('#organizer_name').text('Arrangør: BI Athletics og Norges Idrettshøgskoles Idrettslag');
-
-    } else {
-    $('#organizer_name').text('Arrangør: ' + event_obj.event_organizer.club_name);
-
+    var organizer;
+    switch (event_obj.event_id) {
+    case 45:
+	    organizer = 'Arrangør: BI Athletics og Norges Idrettshøgskoles Idrettslag';
+	    break;
+    case 66:
+	    organizer = 'Arrangør: NTNUI og BSI';
+	    break;
+    default:
+	    organizer = 'Arrangør: ' + event_obj.event_organizer.club_name;
+	    break;
     }
+//    if (event_obj.event_id == 45) {
+//	    $('#organizer_name').text('Arrangør: BI Athletics og Norges Idrettshøgskoles Idrettslag');
+//    } else {
+    $('#organizer_name').text(organizer);
+
+//    }
     if (event_obj.frontpage_info_text !== null)
     {
       $('#info-box').show();

@@ -94,9 +94,11 @@ $event_id = filter_input(INPUT_GET, "event_id", FILTER_VALIDATE_INT);
                 <label class="field four wide">Klasse</label>
                 <div class="field twelve wide">
                   <select class="ui dropdown" name="team_gender" id="team_gender_0">
-                    <option value="">I hvilken klasse deltar laget?</option>
-                    <option value="MALE">Herre</option>
-                    <option value="FEMALE">Dame</option>
+		    <option value="">I hvilken klasse deltar laget?</option>
+		    <?php if ($event_id != 66) {
+			echo "<option value=\"MALE\">Herre</option>
+                              <option value=\"FEMALE\">Dame</option>";
+	            }?>
                     <option value="MIX" <?php if ($event_id == 47) { echo "selected"; } ?>>Mix</option>
                   </select>
                 </div>
