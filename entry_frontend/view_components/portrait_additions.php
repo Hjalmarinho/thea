@@ -35,7 +35,13 @@ if (!defined('SKIP_ADDITIONS'))
 </div>
 
 <div class="inline fields">
-  <label class="field four wide">Allergier</label>
+<label class="field four wide"><?php
+if (basename(debug_backtrace()[0]["file"]) == "entry_extra.php" && $_GET["event_id"] == 61) {
+	echo "Tillegsinfo (t-skjortestørrelse, allergier)";
+} else {
+	echo "Allergier";
+}
+?></label>
   <div class="field twelve wide">
     <input type="text" name="allergies" id="allergies">
   </div>
