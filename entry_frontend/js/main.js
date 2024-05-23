@@ -351,6 +351,12 @@ function displayExercises(exercises, sport_box_id)
     }
 
     $('.dropdown').dropdown('refresh');
+
+    $('#exercises_' + curr_id).change(function(event)
+    {
+      var exercisesBoxId = parseInt(event.target.id.substr(event.target.id.indexOf("_") + 1));
+      
+    });
   }
 }
 
