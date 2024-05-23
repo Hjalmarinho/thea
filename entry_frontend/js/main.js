@@ -983,7 +983,7 @@ function createJSON(){
     entry["additions"] = uiGetAdditions();
 
     if (eventId == 67 && numPlayingSports > 1) {
-      additions.push({"addition_id": 276, "num_items": numPlayingSports - 1});
+      entry["additions"].push({"addition_id": 276, "num_items": numPlayingSports - 1});
     }
 
     // Event questions
