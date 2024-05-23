@@ -268,7 +268,7 @@ function displaySports(sportBoxId, sportsToDisplay, isTeamEntry)
         }
       }
 
-      if (singleExercise.length == 0) {
+      if (singleExercise.length == 1) {
         // Should always be one, but let's play safe.
         var dropdownOptions =  { 'values': [] };
         if (singleExercise.allow_female_teams) {
