@@ -267,6 +267,37 @@ function displaySports(sportBoxId, sportsToDisplay, isTeamEntry)
           break;
         }
       }
+
+      if (singleExercise.length == 0) {
+        // Should always be one, but let's play safe.
+        var dropdownOptions =  { 'values': [] };
+        if (singleExercise.allow_female_teams) {
+          dropdownOptions.values.push({
+            'value': 'FEMALE',
+            'text': 'FEMALE',
+            'name': 'Dame'
+          });
+        }
+
+        if (singleExercise.allow_male_teams) {
+          dropdownOptions.values.push({
+            'value': 'MALE',
+            'text': 'MALE',
+            'name': 'Herre'
+          });
+        }
+
+        if (singleExercise.allow_mix_teams) {
+          dropdownOptions.values.push({
+            'value': 'MIX',
+            'text': 'MIX',
+            'name': 'Mix'
+          });
+        }
+        
+        $('#team_gender_' + sportBoxId).dropdown('setup menu', dropdownOptions);
+      }
+
       displayExercises(singleExercise, sportBoxId);
     }
     else
@@ -351,12 +382,6 @@ function displayExercises(exercises, sport_box_id)
     }
 
     $('.dropdown').dropdown('refresh');
-
-    $('#exercises_' + curr_id).change(function(event)
-    {
-      var exercisesBoxId = parseInt(event.target.id.substr(event.target.id.indexOf("_") + 1));
-      
-    });
   }
 }
 
