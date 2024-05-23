@@ -271,7 +271,7 @@ function displaySports(sportBoxId, sportsToDisplay, isTeamEntry)
       if (singleExercise.length == 1) {
         // Should always be one, but let's play safe.
         var dropdownOptions =  { 'values': [] };
-        if (singleExercise.allow_female_teams) {
+        if (singleExercise[0].allow_female_teams) {
           dropdownOptions.values.push({
             'value': 'FEMALE',
             'text': 'FEMALE',
@@ -279,7 +279,7 @@ function displaySports(sportBoxId, sportsToDisplay, isTeamEntry)
           });
         }
 
-        if (singleExercise.allow_male_teams) {
+        if (singleExercise[0].allow_male_teams) {
           dropdownOptions.values.push({
             'value': 'MALE',
             'text': 'MALE',
@@ -287,7 +287,7 @@ function displaySports(sportBoxId, sportsToDisplay, isTeamEntry)
           });
         }
 
-        if (singleExercise.allow_mix_teams) {
+        if (singleExercise[0].allow_mix_teams) {
           dropdownOptions.values.push({
             'value': 'MIX',
             'text': 'MIX',
