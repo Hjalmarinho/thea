@@ -11,7 +11,7 @@
 // ***********************************************************************
 
 var disableAdditionsOnCheck = {
-  274: [273, 275, 276]
+  274: [273, 275]
 };
 
 //This function is run when the document/page is finsihed loading
