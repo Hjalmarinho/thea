@@ -267,6 +267,38 @@ function displaySports(sportBoxId, sportsToDisplay, isTeamEntry)
           break;
         }
       }
+
+      if (singleExercise.length == 1) {
+        // Should always be one, but let's play safe.
+        var dropdownOptions =  { 'values': [] };
+        if (singleExercise[0].allow_female_teams) {
+          dropdownOptions.values.push({
+            'value': 'FEMALE',
+            'text': 'FEMALE',
+            'name': 'Dame'
+          });
+        }
+
+        if (singleExercise[0].allow_male_teams) {
+          dropdownOptions.values.push({
+            'value': 'MALE',
+            'text': 'MALE',
+            'name': 'Herre'
+          });
+        }
+
+        if (singleExercise[0].allow_mix_teams) {
+          dropdownOptions.values.push({
+            'value': 'MIX',
+            'text': 'MIX',
+            'name': 'Mix'
+          });
+        }
+        
+        $('#team_gender_' + sportBoxId).dropdown('setup menu', dropdownOptions);
+        $('#team_gender_' + sportBoxId).dropdown('set selected', dropdownOptions.values[0].value);
+      }
+
       displayExercises(singleExercise, sportBoxId);
     }
     else
