@@ -502,7 +502,7 @@ function displayAdditions(additions)
 
                   const aid = addition.addition_id;
                   if (aid in disableAdditionsOnCheck) {
-                    onchange = "let checked = $('#addition_id_" + aid + "').is(':checked'); for (const id of disableAdditionsOnCheck[" + aid + "]) { $('#addition_id_" + aid + "').prop('checked', true); $('#addition_id_" + aid + "').attr('disabled', true); }";
+                    onchange = "let checked = $('#addition_id_" + aid + "').is(':checked'); for (const id of disableAdditionsOnCheck[" + aid + "]) { $('#addition_id_' + id).prop('checked', true); $('#addition_id_' + id).attr('disabled', true); }";
                   }
 
                   $('#additions').append(generateCheckbox(addition_label, addition.addition_id, false, onchange));
