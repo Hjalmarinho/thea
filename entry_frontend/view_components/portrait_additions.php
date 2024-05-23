@@ -34,6 +34,7 @@ if (!defined('SKIP_ADDITIONS'))
   Send mail til <a href="mailto:magnus@studentidrett.no">magnus@studentidrett.no</a> med info om navn og idrett du skal delta i, så melder vi deg opp!
 </div>
 
+<?php if ($_GET["event_id"] != 67) { ?>
 <div class="inline fields">
 <label class="field four wide"><?php
 if (basename(debug_backtrace()[0]["file"]) == "entry_extra.php" && $_GET["event_id"] == 61) {
@@ -46,7 +47,7 @@ if (basename(debug_backtrace()[0]["file"]) == "entry_extra.php" && $_GET["event_
     <input type="text" name="allergies" id="allergies">
   </div>
 </div>
-
+<?php } ?>
 
 <div class="inline fields" id="policy">
   <label class="field four wide">Personvernspolicy</label>
