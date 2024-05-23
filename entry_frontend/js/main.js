@@ -10,6 +10,10 @@
 //  Primary use:    Main functions used by the entry GUI
 // ***********************************************************************
 
+var disableAdditionsOnCheck = {
+  247: [273, 275, 276]
+};
+
 //This function is run when the document/page is finsihed loading
 var event_obj = null;
 var allClubs = null;
@@ -496,6 +500,11 @@ function displayAdditions(additions)
                     onchange = "$('#addition_id_" + addition.addition_id + "').is(':checked') ? $('#sltromso2020-extra-sport').removeClass('hidden') : $('#sltromso2020-extra-sport').addClass('hidden');";
                   }
 
+                  const aid = addition.addition_id;
+                  if (aid in disableAdditionsOnCheck) {
+                    onchange = "let checked = $('#addition_id_" + aid + "').is(':checked'); for (const id of disableAdditionsOnCheck[" + aid + "]) { $('#addition_id_" + aid + "').prop('checked', true); $('#addition_id_" + aid + "').attr('disabled', true); }";
+                  }
+
                   $('#additions').append(generateCheckbox(addition_label, addition.addition_id, false, onchange));
 
                   if (addition.extra_information !== null) {
@@ -511,7 +520,7 @@ function displayAdditions(additions)
    $('.ui.radio.checkbox').checkbox();
 
    allAdditions.push({
-    "addition_id": 276,
+    "addition_id": 277,
     "event_id": 67,
     "addition_description": "Ekstra idrett",
     "addition_fee": 50.00,
@@ -988,7 +997,7 @@ function createJSON(){
     entry["additions"] = uiGetAdditions();
 
     if (eventId == 67 && numPlayingSports > 1) {
-      entry["additions"].push({"addition_id": 276, "num_items": numPlayingSports - 1});
+      entry["additions"].push({"addition_id": 277, "num_items": numPlayingSports - 1});
     }
 
     // Event questions
