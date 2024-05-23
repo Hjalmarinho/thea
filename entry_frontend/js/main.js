@@ -296,6 +296,7 @@ function displaySports(sportBoxId, sportsToDisplay, isTeamEntry)
         }
         
         $('#team_gender_' + sportBoxId).dropdown('setup menu', dropdownOptions);
+        $('#team_gender_' + sportBoxId).dropdown('set selected', dropdownOptions.values[0].value);
       }
 
       displayExercises(singleExercise, sportBoxId);
