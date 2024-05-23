@@ -509,6 +509,17 @@ function displayAdditions(additions)
 
    // "Activate" any radiobuttons.
    $('.ui.radio.checkbox').checkbox();
+
+   allAdditions.push({
+    "addition_id": 276,
+    "event_id": 67,
+    "addition_description": "Ekstra idrett",
+    "addition_fee": 50.00,
+    "parent_addition_id": null,
+    "has_children": false,
+    "mva": 25.00,
+    "extra_information": null
+   })
 }
 
 function CreateElementForAdditionExtraInformation(addition) {
@@ -759,6 +770,7 @@ function createConfirmModal(){
   if (ticket_type != TICKET_TYPE_EXTRA)
     participant_html += generateLabelPair('Klubb', $('#clubs  option:selected').text() );
 
+  var numPlayingExercises = 0;
   if (ticket_type != TICKET_TYPE_SUPPORTER && ticket_type != TICKET_TYPE_EXTRA)
   {
     participant_html += generateLabelPair('Medlem', formatBool(entryData.entry.is_clubmember));
@@ -771,7 +783,7 @@ function createConfirmModal(){
         var exercise = sport.exercises[j];
 
         participant_html += generateLabelPair('Øvelse ' + counter, formatSport(sport.sport_id) + ' - ' + formatExercise(exercise.exercise_id));
-
+        numPlayingExercises++;
         if (('team' in exercise)) {
           var team = exercise.team;
           participant_html += generateLabelPair('- Lagnavn', team.team_name);
@@ -779,6 +791,10 @@ function createConfirmModal(){
           if (('team_gender' in team)) {
             participant_html += generateLabelPair('- Spillende', formatBool(exercise.is_player));
             participant_html += generateLabelPair('- Klasse', formatTeamGender(team.team_gender));
+
+            if (!exercise.is_player) {
+              numPlayingExercises--;
+            }
           }
         }
         counter++;
@@ -943,11 +959,32 @@ function createJSON(){
 
     entry["sports"] = uiGetSports(ticket_type);
 
+    var numPlayingSports = 0;
+    for (const sport of entry["sports"]) {
+      // Do we have at least one exercise with "is_playing"?
+      for (const exercise of sport.exercises) {
+        if (('is_player' in exercise) && exercise.is_player) {
+          numPlayingSports++;
+          break;
+        }
+
+        if (!('is_player' in exercise)) {
+          numPlayingSports++;
+          break;
+        }
+      }
+    }
+
+
     //Additions
     entry["additions"] = [];
 
     //Add all checked additions
     entry["additions"] = uiGetAdditions();
+
+    if (eventId == 67 && numPlayingSports > 1) {
+      additions.push({"addition_id": 276, "num_items": numPlayingSports - 1});
+    }
 
     // Event questions
     var eventQuestionElements = $('input[name="event_question"]')

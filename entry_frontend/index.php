@@ -90,6 +90,9 @@ else
     case 66:
 	    organizer = 'Arrangør: NTNUI og BSI';
 	    break;
+    case 67:
+      organizer = 'Arrangør: Bergen Challenge';
+	    break;
     default:
 	    organizer = 'Arrangør: ' + event_obj.event_organizer.club_name;
 	    break;
