@@ -813,7 +813,12 @@ function createConfirmModal(){
 
   for (var i = 0; i < entryData.entry.additions.length; ++i) {
     var addition = entryData.entry.additions[i];
-    additions_html += generateLabelPair('Tillegg', formatAddition(addition.addition_id));    
+
+    let text = formatAddition(addition.addition_id);
+    if (addition.num_items > 1) {
+      text += " x" + addition.num_items;
+    }
+    additions_html += generateLabelPair('Tillegg', text);
   }
 
   additions_html += generateLabelPair('Allergier', entryData.entry.person.allergies);
