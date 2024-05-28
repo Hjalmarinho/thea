@@ -1,6 +1,9 @@
-  <!-- BILDE OG TILLEGG -->
-    <h4 class="ui dividing header" id="event_questions_header">Arrangementsspørsmål</h4>
-    <div id="event_questions_content"></div>
+  
+  <h4 class="ui dividing header" id="special_events_header">Kulturarrangement</h4>
+  <div id="special_events_content"></div>
+
+  <h4 class="ui dividing header" id="event_questions_header">Arrangementsspørsmål</h4>
+  <div id="event_questions_content"></div>
 
 
 

@@ -27,7 +27,12 @@ $( document ).ready(function() {
   var req3 = apiGetAdditions(displayAdditions, showError, eventId);
   var req4 = apiGetEvent(displayEventInfo, showError, eventId);
 
-  $.when(req1, req2, req3).always(function()
+  if (eventId != 67) {
+    $("#special_events_header").hide();
+    $("#special_events_contents").hide();
+  }
+
+  $.when(req1, req2, req3, req4).always(function()
   {
     $("#mainLoader").remove();
   });
