@@ -1,6 +1,6 @@
   
   <h4 class="ui dividing header" id="special_events_header">Kulturarrangement</h4>
-  <div id="special_events_content"></div>
+  <div id="special_events_content" data-name="additions-container"></div>
 
   <h4 class="ui dividing header" id="event_questions_header">Arrangementsspørsmål</h4>
   <div id="event_questions_content"></div>
@@ -23,7 +23,7 @@
 if (!defined('SKIP_ADDITIONS'))
 {
 ?>
-<div class="inline fields" id="additions-container">
+<div class="inline fields" id="additions-container" data-name="additions-container">
   <label class="field four wide">Tillegg</label>
   <div class="grouped fields" id="additions">
     <!-- Additions-checkboxes are populated here from api_handler on page load -->

@@ -27,7 +27,14 @@ $( document ).ready(function() {
   var req3 = apiGetAdditions(displayAdditions, showError, eventId);
   var req4 = apiGetEvent(displayEventInfo, showError, eventId);
 
-  if (eventId != 67) {
+  var has_special_event = false;
+  for (const addition of allAdditions) {
+    if (addition.print_as_special_event) {
+      has_special_event = true;
+      break;
+    }
+  }
+  if (!has_special_event) {
     $("#special_events_header").hide();
     $("#special_events_contents").hide();
   }
@@ -458,6 +465,18 @@ function displayTeams(teams, exerciseId)
   }
 }
 
+var additionIdsAsSpecialEvent = {
+
+}
+function AppendAdditionToCorrectGroup(special_event, contents) {
+  var id = '#additions';
+  if (special_event) {
+    id = '#special_events_content';
+  }
+
+  $(id).append(contents);
+}
+
 // Generate checkboxes for exercises received from API
 var flippedBanquetId = null;
 var allAdditions = null;
@@ -466,8 +485,10 @@ function displayAdditions(additions)
   allAdditions = additions;
     if (additions)
     {
-        if (additions.length == 0)
-            $('#additions-container').hide();
+        if (additions.length == 0) {
+          $('#additions-container').hide();
+        }
+
         // Sort additions by name
         sortArrayByString(additions, "addition_description");
 
@@ -495,7 +516,9 @@ function displayAdditions(additions)
                 {
                     flippedBanquetId = addition.addition_id;
                     addition_label = "Skal IKKE delta på bankett";
-                    $('#additions').append(generateCheckbox(addition_label, addition.addition_id, false, ''));
+                    AppendAdditionToCorrectGroup(
+                      addition.print_as_special_event,
+                      generateCheckbox(addition_label, addition.addition_id, false, ''));
                 }
                 else
                 {
@@ -510,10 +533,14 @@ function displayAdditions(additions)
                     onchange = "let checked = $('#addition_id_" + aid + "').is(':checked'); for (const id of disableAdditionsOnCheck[" + aid + "]) { $('#addition_id_' + id).prop('checked', checked); $('#addition_id_' + id).attr('disabled', checked); }";
                   }
 
-                  $('#additions').append(generateCheckbox(addition_label, addition.addition_id, false, onchange));
+                  AppendAdditionToCorrectGroup(
+                    addition.print_as_special_event,
+                    generateCheckbox(addition_label, addition.addition_id, false, onchange));
 
                   if (addition.extra_information !== null) {
-                    $('#additions').append(CreateElementForAdditionExtraInformation(addition));
+                    AppendAdditionToCorrectGroup(
+                      addition.print_as_special_event,
+                      CreateElementForAdditionExtraInformation(addition));
                   }
 
                 }
@@ -565,16 +592,23 @@ function CreateElementForAdditionExtraInformation(addition) {
 function displayAdditionWithChildren(parentAddition, additions)
 {
   var first = true;
-  $('#additions').append('<h2 class="ui sub header">' + parentAddition.addition_description + '</h2>');
+  AppendAdditionToCorrectGroup(
+    parentAddition.print_as_special_event,
+    '<h2 class="ui sub header">' + parentAddition.addition_description + '</h2>');
 
   
   if (parentAddition.extra_information !== null) {
-    $('#additions').append(CreateElementForAdditionExtraInformation(parentAddition));
+    AppendAdditionToCorrectGroup(
+      parentAddition.print_as_special_event,
+      CreateElementForAdditionExtraInformation(parentAddition));
   }
 
   // This is a VERY ugly hack.
-  if (eventId == 3)
-    $('#additions').append('<div class="sub header"><i>Jenter anbefales å velge en størrelse lavere enn vanlig</i></div>');
+  if (eventId == 3) {
+    AppendAdditionToCorrectGroup(
+      parentAddition.print_as_special_event,
+      '<div class="sub header"><i>Jenter anbefales å velge en størrelse lavere enn vanlig</i></div>');
+  }
 
   sortArrayByNumber(additions, 'addition_id');
   $.each(additions, function(i, children)
@@ -582,19 +616,22 @@ function displayAdditionWithChildren(parentAddition, additions)
     if (children.parent_addition_id == parentAddition.addition_id)
     {
       // Print the addition.
-      $('#additions').append(
+      AppendAdditionToCorrectGroup(
+        parentAddition.print_as_special_event,
         '<div class="field"> \
             <div class="ui radio checkbox"> \
                 <input type="radio" id="' + parentAddition.addition_description + ', ' + children.addition_description + '" value="' + children.addition_id + '" name="fruit" tabindex="0" ' + (first ? ' checked ' : '') + ' class="hidden"> \
                 <label>' + children.addition_description + ' ' + ' (' + children.addition_fee + ' ,-)' + '</label> \
             </div> \
-         </div>'
-        );
+         </div>');
 
       first = false;
     }
   });
-  $('#additions').append('<br>');
+
+  AppendAdditionToCorrectGroup(
+    parentAddition.print_as_special_event,
+    '<br>');
 }
 
 var next_sport_box_id = 2;
@@ -1024,7 +1061,7 @@ function createJSON(){
 //Iterate the additions-checkboxes and see which have been checked
 function uiGetAdditions(){
     var additions = [];
-    $('#additions input:checked').each(function()
+    $('div[data-name="additions-container"] input:checked').each(function()
     {
         var addition_id = parseInt($(this).attr('value'));
         if (addition_id != flippedBanquetId)
@@ -1038,7 +1075,7 @@ function uiGetAdditions(){
     // Check if we have any flipped banquet (...like "skal IKKE delta på bankett").
     if (flippedBanquetId != null)
     {
-        $('#additions input:checkbox:not(:checked)').each(function()
+        $('div[data-name="additions-container"] input:checkbox:not(:checked)').each(function()
         {
             var addition_id = parseInt($(this).attr('value'));
             if (addition_id == flippedBanquetId)

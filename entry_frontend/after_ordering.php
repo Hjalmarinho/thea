@@ -237,7 +237,7 @@ Primary use:  Allow participants to buy additions after they have
           </div>
 
           <h4 class="ui dividing header">Tillegg</h4>
-          <div class="inline fields" id="additions-container">
+          <div class="inline fields" id="additions-container" data-name="additions-container">
             <label class="field four wide">Tillegg</label>
             <div class="grouped fields" id="additions">
               <!-- Additions-checkboxes are populated here from api_handler on page load -->
