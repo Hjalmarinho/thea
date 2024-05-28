@@ -91,5 +91,5 @@ h4{
 
 
 div[data-name=additions-container] div.field {
-	margin-bottom: 0;
+	margin-bottom: 0 !important;
 }
