@@ -88,3 +88,8 @@ h4{
   width: 200px;
   height: 175px;
 }
+
+
+div[data-name=additions-container] div.field {
+	margin-bottom: 0;
+}
