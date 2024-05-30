@@ -85,6 +85,12 @@ function displayEventInfo(event_obj) {
     let header = document.getElementById('event_questions_header');
     header.innerText = '';
     header.classList.remove('dividing');
+
+    // TODO: This should be part of the backend instead.
+    let specialEventsHeader = document.getElementById('special_events_header');
+    let txt = document.createElement('p');
+    txt.innerText = 'På kveldstid er det spennende innslag av Kulturarrangement med alt fra Åpningsseremoni og vårt helt unike Sportshow til Bankett! Kjøp billett nå før det blir utsolgt!';
+    specialEventsHeader.parentNode.insertBefore(txt, specialEventsHeader.nextSibling);
   }
 
   // Print out any event questions
