@@ -77,7 +77,7 @@ function displayEventInfo(event_obj) {
     $('#terms_url').attr('href', event_obj.terms_url);
   }
 
-  if (event_obj.event_questions.length == 0 || event_obj.event_id == 67) {
+  if (event_obj.event_questions.length == 0) {
     $('#event_questions_header').hide();
   }
 
