@@ -81,6 +81,12 @@ function displayEventInfo(event_obj) {
     $('#event_questions_header').hide();
   }
 
+  if (event_obj.event_id == 67) {
+    let header = document.getElementById('event_questions_header');
+    header.innerText = '';
+    header.classList.remove('dividing');
+  }
+
   // Print out any event questions
   for (let i = 0; i < event_obj.event_questions.length; ++i) {
     var eventQuestion = event_obj.event_questions[i];
