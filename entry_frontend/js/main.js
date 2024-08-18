@@ -89,7 +89,7 @@ function displayEventInfo(event_obj) {
     // TODO: This should be part of the backend instead.
     let specialEventsHeader = document.getElementById('special_events_header');
     let txt = document.createElement('p');
-    txt.innerText = 'På kveldstid er det spennende innslag av Kulturarrangement med alt fra Åpningsseremoni og vårt helt unike Sportshow til Bankett! Kjøp billett nå før det blir utsolgt!';
+    txt.innerText = 'På kveldstid vil det være spennende innslag av kulturarrangementer. Blant annet holder vi åpningsseremoni, presenterer det nye konseptet Sportshow - Japansk Gameshow, før vi avslutter helgen med bankett i Grieghallen.';
     specialEventsHeader.parentNode.insertBefore(txt, specialEventsHeader.nextSibling);
   }
 
@@ -955,7 +955,7 @@ function createJSON() {
   person["email"] = $('#email').val();
   person["gender"] = $('#gender').val();
   person["birthdate"] = $('#birthyear').val() + '-' + $('#birthmonth').val() + '-' + lpad($('#birthday').val(), 2, '0');
-  person["allergies"] = $('#allergies').val();
+  person["allergies"] = $('#allergies').length == 0 ? '' : $('#allergies').val();
   var portrait = {};
   portrait["portrait_data"] = $('#portrait').attr('src');
   person["portrait"] = portrait;
