@@ -970,18 +970,16 @@ function createJSON() {
 
   entry["sports"] = uiGetSports(ticket_type);
 
-  var numPlayingSports = 0;
+  let seenSportIds = new Set();
   for (const sport of entry["sports"]) {
     // Do we have at least one exercise with "is_playing"?
     for (const exercise of sport.exercises) {
       if (('is_player' in exercise) && exercise.is_player) {
-        numPlayingSports++;
-        break;
+        seenSportIds.add(sport.sport_id);
       }
 
       if (!('is_player' in exercise)) {
-        numPlayingSports++;
-        break;
+        seenSportIds.add(sport.sport_id);
       }
     }
   }
@@ -993,8 +991,8 @@ function createJSON() {
   //Add all checked additions
   entry["additions"] = uiGetAdditions();
 
-  if (eventId == 67 && numPlayingSports > 1) {
-    entry["additions"].push({ "addition_id": 277, "num_items": numPlayingSports - 1 });
+  if (eventId == 67 && seenSportIds.size > 1) {
+    entry["additions"].push({ "addition_id": 277, "num_items": seenSportIds.size - 1 });
   }
 
   // Event questions
