@@ -60,13 +60,19 @@ Primary use:  Allow participants to buy additions after they have
       else
       {
         var addition_label = addition.addition_description + ' (' + addition.addition_fee + ' ,-)';
-        $('#additions').append(generateCheckbox(addition_label, addition.addition_id, false, ''));
+        $('#additions').append(generateCheckbox(addition_label, addition.addition_id, false, '', false));
         
         if (addition.extra_information !== null) {
           $('#additions').append(CreateElementForAdditionExtraInformation(addition));
         }
       }
     });
+
+    if (eventId == 67) {
+      $('#additions').append(generateCheckbox("Ekstra idrett (50,-)", 277, false, '', true));
+      $('#additions').append("<p>Send e-post til <a href='mailto:support@bergenchallenge.no'>support@bergenchallenge.no</a> etter betaling med hvilke idretter du ønsker å meldes opp i");
+    }
+
 
     // "Activate" any radiobuttons.
     $('.ui.radio.checkbox').checkbox();
@@ -132,18 +138,27 @@ Primary use:  Allow participants to buy additions after they have
     $('#image_modal').modal('show');
   }
 
-  function generateCheckbox(label, value, checked, onchange)
+  function generateCheckbox(label, value, checked, onchange, showNumberOfItems)
   {
     var checkedStr = '';
     if (checked === true)
         checkedStr = ' checked ';
 
-    return '<div class="field"> \
+    let output = '<div class="field"> \
       <div class="ui checkbox"> \
         <input type="checkbox" value="' + value + '" id="addition_id_' + value + '" onchange="' + onchange + '" ' + checkedStr + '> \
         <label for="addition_id_' + value + '">' + label + '</label> \
       </div> \
     </div>';
+
+    if (showNumberOfItems) {
+      output += '<input type="number" value="1" id="addition_num_items_' + value + '" style=" \
+          display: inline; \
+          width: 80px; \
+      ">';
+    }
+
+    return output;
   }
 
 
@@ -172,6 +187,12 @@ Primary use:  Allow participants to buy additions after they have
     {
       var addition_id = parseInt($(this).attr('value'));
       var num_items = parseInt('1');
+
+      let numItemsElement = document.getElementById("addition_num_items_" + addition_id);
+      if (numItemsElement != null) {
+        num_items = parseInt(numItemsElement.value);
+      }
+
       additions.push({'addition_id': addition_id, 'num_items': num_items});
     });
 
