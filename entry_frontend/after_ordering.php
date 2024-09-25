@@ -23,7 +23,7 @@ Primary use:  Allow participants to buy additions after they have
   $( document ).ready(function()
   {
     // API-calls on page load, parameter is the callback-function
-    var req = apiGetAdditions(displayAdditions, showError, eventId);
+    var req = apiGetAdditions(displayAdditions, showError, eventId, false);
     $.when(req).always(function()
     {
       $('#mainLoader').removeClass('active');
@@ -69,7 +69,7 @@ Primary use:  Allow participants to buy additions after they have
     });
 
     if (eventId == 67) {
-      $('#additions').append(generateCheckbox("Ekstra idrett (50,-)", 277, false, '', true));
+      $('#additions').append(generateCheckbox("Ekstra idretter (50,- per stk.)", 277, false, '', true));
       $('#additions').append("<p>Send e-post til <a href='mailto:support@bergenchallenge.no'>support@bergenchallenge.no</a> etter betaling med hvilke idretter du ønsker å meldes opp i");
     }
 

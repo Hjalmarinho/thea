@@ -30,8 +30,8 @@ $(document).ready(function()
 
   var getSportsRequest = apiGetSports(getSports, errorHandler, event_id);
   var getTeamsRequest = apiGetAllTeams(getTeams, errorHandler, event_id, false, true);
-  var getAdditionsRequest = apiGetAdditions(getAdditions, errorHandler, event_id);
-  $.when(getSportsRequest, getTeamsRequest).done(function()
+  var getAdditionsRequest = apiGetAdditions(getAdditions, errorHandler, event_id, true);
+  $.when(getSportsRequest, getTeamsRequest, getAdditionsRequest).done(function()
   {
     loadParticipant();
   });

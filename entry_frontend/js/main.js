@@ -24,7 +24,7 @@ $(document).ready(function () {
   //API-calls on page load, parameter is the callback-function
   var req1 = apiGetClubs(displayClubs, showError);
   var req2 = apiGetSports(saveSports, showError, eventId);
-  var req3 = apiGetAdditions(displayAdditions, showError, eventId);
+  var req3 = apiGetAdditions(displayAdditions, showError, eventId, false);
   var req4 = apiGetEvent(displayEventInfo, showError, eventId);
 
   $.when(req1, req2, req3, req4).always(function () {

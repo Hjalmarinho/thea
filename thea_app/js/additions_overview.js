@@ -4,7 +4,7 @@ var event_id = sessionStorage.getItem('event_id');
 
 $(document).ready(function()
 {
-  var request = apiGetAdditionsOverview(displayAdditions, handleError, event_id);
+  var request = apiGetAdditionsOverview(displayAdditions, handleError, event_id, false);
   $.when(request).always(function() { removeLoader(); });
 });
 

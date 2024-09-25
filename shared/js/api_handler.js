@@ -179,8 +179,12 @@ function apiGetTeam(successCallback, errorCallback, eventId, teamId) {
 }
 
 // http://docs.thea.apiary.io/#reference/sport/sportsidexercises/list-all-exercises
-function apiGetAdditions(successCallback, errorCallback, eventId) {
-    return doGet(baseURL + 'events/' + eventId + '/additions/', successCallback, errorCallback);
+function apiGetAdditions(successCallback, errorCallback, eventId, includeHidden) {
+    let url = baseURL + 'events/' + eventId + '/additions/';
+    if (includeHidden) {
+        url += '?include_hidden=true';
+    }
+    return doGet(url, successCallback, errorCallback);
 }
 
 
