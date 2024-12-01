@@ -995,6 +995,10 @@ function createJSON() {
     entry["additions"].push({ "addition_id": 277, "num_items": seenSportIds.size - 1 });
   }
 
+
+  if (eventId == 70 && seenSportIds.size > 1) {
+    entry["additions"].push({ "addition_id": 297, "num_items": seenSportIds.size - 1 });
+  }
   // Event questions
   var eventQuestionElements = $('input[name="event_question"]')
   for (let i = 0; i < eventQuestionElements.length; ++i) {
