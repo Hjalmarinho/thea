@@ -960,6 +960,7 @@ function createJSON() {
   entry["is_clubmember"] = (($('#is_clubmember').val() == 1) ? true : false);
   entry["is_student"] = (($('#is_student').val() == 1) ? true : false);
   entry["travel_information"] = $('#travel_information  option:selected').text();
+  entry["travel_method_id"] = parseInt(document.getElementById('travel_method').value);
 
   var person = {};
   person["first_name"] = $('#first_name').val();
