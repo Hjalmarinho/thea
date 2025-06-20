@@ -134,9 +134,6 @@ function apiGetTravelMethods(successCallback, errorCallback) {
     return doGet(baseURLv2 + 'travel_methods', successCallback, errorCallback);
 }
 
-function apiGetTravelMethods(successCallback, errorCallback) {
-    return doGet(baseURL + 'clubs', successCallback, errorCallback);
-}
 
 // http://docs.thea.apiary.io/#reference/sport/sports/list-all-sports
 function apiGetSports(successCallback, errorCallback, eventId) {
