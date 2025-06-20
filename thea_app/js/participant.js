@@ -31,7 +31,7 @@ $(document).ready(function()
   var getSportsRequest = apiGetSports(getSports, errorHandler, event_id);
   var getTeamsRequest = apiGetAllTeams(getTeams, errorHandler, event_id, false, true);
   var getAdditionsRequest = apiGetAdditions(getAdditions, errorHandler, event_id, true);
-  var getTravelMethods = apiGetTravelMethods(getTravelMethods, errorHandler);
+  var getTravelMethods = apiGetTravelMethods(printTravelMethods, errorHandler);
 
   $.when(getSportsRequest, getTeamsRequest, getAdditionsRequest, getTravelMethods).done(function()
   {
@@ -200,7 +200,7 @@ function displayAdditionWithChildren(parentAddition, additions)
 // }
 
 
-function getTravelMethods(travelMethods) {
+function printTravelMethods(travelMethods) {
   let container = document.getElementById('travel_method');
   for (const travelMethod of travelMethods) {
     let option = document.createElement('option');
