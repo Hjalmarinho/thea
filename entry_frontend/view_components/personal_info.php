@@ -208,6 +208,15 @@ if (!defined('SKIP_TRAVEL_INFORMATION'))
   </div>
 </div>
 
+<div class="inline fields">
+  <label class="field four wide">Transportmiddel</label>
+  <div class="field twelve wide">
+    <select class="ui search dropdown" name="travel_method" id="travel_method">
+      <option value="">Hvilket transportmiddel reiser du med?</option>
+      <!-- Clubs are populated here from api_handler on page load -->
+    </select>
+  </div>
+</div>
 <?php
 }
 ?>

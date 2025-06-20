@@ -26,8 +26,9 @@ $(document).ready(function () {
   var req2 = apiGetSports(saveSports, showError, eventId);
   var req3 = apiGetAdditions(displayAdditions, showError, eventId, false);
   var req4 = apiGetEvent(displayEventInfo, showError, eventId);
+  var req5 = apiGetTravelMethods(displayTravelMethods, showError);
 
-  $.when(req1, req2, req3, req4).always(function () {
+  $.when(req1, req2, req3, req4, req5).always(function () {
     $("#mainLoader").remove();
   });
 
@@ -123,6 +124,20 @@ function displayClubs(clubs) {
 
   PrintClubs("clubs");
 }
+
+let allTravelMethods = [];
+function displayTravelMethods(travelMethods) {
+  allTravelMethods = travelMethods;
+  let container = document.getElementById('travel_method');
+  for (const travelMethod of travelMethods) {
+    let option = document.createElement('option');
+    option.value = travelMethod.travel_method_id;
+    option.innerText = travelMethod.description;
+
+    container.appendChild(option);
+  }
+}
+
 
 function PrintClubs(container_id) {
   $.each(allClubs, function (i, club) {
@@ -767,8 +782,16 @@ function createConfirmModal() {
   personal_html += generateLabelPair('Epost', entryData.entry.person.email);
   personal_html += generateLabelPair('Mobil', entryData.entry.person.phone);
 
-  if (ticket_type != TICKET_TYPE_EXTRA)
+  if (ticket_type != TICKET_TYPE_EXTRA) {
     personal_html += generateLabelPair('Reiseinfo', entryData.entry.travel_information);
+
+    for (const travelMethod of allTravelMethods) {
+      if (travelMethod.travel_method_id == entryData.entry.travel_method_id) {
+        personal_html += generateLabelPair('Transportmiddel', travelMethod.description);
+        break;
+      }
+    }
+  }
 
   if (ticket_type == TICKET_TYPE_EXTRA) {
     personal_html += generateLabelPair('Funksjon/rolle', entryData.entry.role);
@@ -947,6 +970,7 @@ function createJSON() {
   entry["is_clubmember"] = (($('#is_clubmember').val() == 1) ? true : false);
   entry["is_student"] = (($('#is_student').val() == 1) ? true : false);
   entry["travel_information"] = $('#travel_information  option:selected').text();
+  entry["travel_method_id"] = parseInt(document.getElementById('travel_method').value);
 
   var person = {};
   person["first_name"] = $('#first_name').val();
