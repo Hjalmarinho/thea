@@ -31,7 +31,9 @@ $(document).ready(function()
   var getSportsRequest = apiGetSports(getSports, errorHandler, event_id);
   var getTeamsRequest = apiGetAllTeams(getTeams, errorHandler, event_id, false, true);
   var getAdditionsRequest = apiGetAdditions(getAdditions, errorHandler, event_id, true);
-  $.when(getSportsRequest, getTeamsRequest, getAdditionsRequest).done(function()
+  var getTravelMethods = apiGetTravelMethods(getTravelMethods, errorHandler);
+
+  $.when(getSportsRequest, getTeamsRequest, getAdditionsRequest, getTravelMethods).done(function()
   {
     loadParticipant();
   });
@@ -198,6 +200,16 @@ function displayAdditionWithChildren(parentAddition, additions)
 // }
 
 
+function getTravelMethods(travelMethods) {
+  let container = document.getElementById('travel_method');
+  for (const travelMethod of travelMethods) {
+    let option = document.createElement('option');
+    option.value = travelMethod.travel_method_id;
+    option.innerText = travelMethod.description;
+    container.appendChild(option);
+  }
+}
+
 function getSports(sports_array)
 {
   sports = sports_array;
@@ -250,6 +262,7 @@ function displayParticipant(participant)
   var id_last_name = $('#last_name');
   var id_gender = $('#selectgender');
   var id_clubs = $('#clubs');
+  var id_travel_method = $('#travel_method');
   var id_student = $('#studentCheckbox');
   var id_clubmember = $('#clubmemberCheckbox');
   var id_accreditated = $('#accreditatedCheckbox');
@@ -298,7 +311,7 @@ function displayParticipant(participant)
 
   // Travel information
   if(participant.travel_information){
-  id_travel_information.val(escapeHtml(participant.travel_information));
+    id_travel_information.val(escapeHtml(participant.travel_information));
   }
   
   // Allergies
@@ -317,6 +330,9 @@ function displayParticipant(participant)
 
   // Club
   id_clubs.dropdown('set selected', participant.club.club_id);
+
+  id_travel_method.dropdown('set selected', participant.travel_method_id);
+
 
   // Member of club
   id_clubmember.val(id_clubmember.prop('checked', participant.is_clubmember));
@@ -671,6 +687,11 @@ function isAccreditatedChanged(sender)
 function clubChanged(sender)
 {
   changes_to_save['club_id'] = $(sender).val();
+}
+
+function travelMethodChanged(sender)
+{
+  changes_to_save['travel_method_id'] = $(sender).val();
 }
 
 function isClubMemberChanged(sender)

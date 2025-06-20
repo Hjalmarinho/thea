@@ -239,6 +239,14 @@
                 </div>
 
                 <div class="inline fields">
+                  <label class="field four wide">Transportmiddel</label>
+                  <div class="field nine wide">
+                    <select class="ui fluid dropdown" id="travel_method" onchange="travelMethodChanged(this);">
+                    </select>
+                  </div>
+                </div>
+
+                <div class="inline fields">
                   <label class="field four wide">Allergier</label>
                   <div class="field nine wide">
                     <input type="text" value="" id="allergies" onchange="allergiesChanged(this);">
