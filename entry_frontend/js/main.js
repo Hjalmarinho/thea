@@ -26,8 +26,9 @@ $(document).ready(function () {
   var req2 = apiGetSports(saveSports, showError, eventId);
   var req3 = apiGetAdditions(displayAdditions, showError, eventId, false);
   var req4 = apiGetEvent(displayEventInfo, showError, eventId);
+  var req5 = apiGetTravelMethods(displayTravelMethods, showError);
 
-  $.when(req1, req2, req3, req4).always(function () {
+  $.when(req1, req2, req3, req4, req5).always(function () {
     $("#mainLoader").remove();
   });
 
@@ -123,6 +124,18 @@ function displayClubs(clubs) {
 
   PrintClubs("clubs");
 }
+
+function displayTravelMethods(travelMethods) {
+  let container = document.getElementById('travel_method');
+  for (const travelMethod of travelMethods) {
+    let option = document.createElement('option');
+    option.value = travelMethod.travel_method_id;
+    option.innerText = travelMethod.description;
+
+    container.appendChild(option);
+  }
+}
+
 
 function PrintClubs(container_id) {
   $.each(allClubs, function (i, club) {
